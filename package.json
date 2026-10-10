@@ -1,21 +1,29 @@
 {
-  "name": "agriconnect",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "dependencies": {
-    "bcrypt": "^6.0.0",
-    "dotenv": "^18.0.7",
-    "express": "^5.2.1",
-    "jsonwebtoken": "^9.0.3",
-    "multer": "^2.2.0",
-    "mysql2": "^3.24.2"
-  }
+    "name": "agriconnect",
+    "version": "1.0.0",
+    "description": "Web platform connecting farmers, buyers, agricultural experts and equipment providers, with an admin panel.",
+    "main": "backend/server.js",
+    "scripts": {
+        "start": "node backend/server.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [
+        "agriculture",
+        "marketplace",
+        "nodejs",
+        "express",
+        "mysql"
+    ],
+    "author": "Kilshan2801",
+    "license": "ISC",
+    "type": "commonjs",
+    "dependencies": {
+        "bcrypt": "^6.0.0",
+        "dotenv": "^18.0.7",
+        "express": "^5.2.1",
+        "jimp": "^1.6.1",
+        "jsonwebtoken": "^9.0.3",
+        "multer": "^2.2.0",
+        "mysql2": "^3.24.2"
+    }
 }

@@ -21,7 +21,7 @@ Common to all roles: notifications, messaging, history, help and support, settin
 - **Backend:** Node.js, Express
 - **Database:** MySQL / MariaDB (`mysql2`)
 - **Frontend:** HTML, CSS and vanilla JavaScript
-- **Other:** `multer` (file uploads), `bcrypt` (password hashing), `dotenv` (configuration)
+- **Other:** `multer` (file uploads), `bcrypt` (password hashing), `jsonwebtoken` (login tokens), `jimp` (image search), `dotenv` (configuration)
 
 ## Project structure
 
@@ -72,6 +72,12 @@ DB_NAME=agriconnect
 DB_PORT=3307
 ADMIN_EMAIL=admin@agriconnect.com
 ADMIN_PASSWORD=your_admin_password
+JWT_SECRET=a_long_random_string
+```
+
+Generate a random `JWT_SECRET` with:
+```bash
+node -e "console.log(require('crypto').randomBytes(32).toString('hex'))"
 ```
 
 > The `.env` file contains secrets and is excluded from Git. Never commit it.
@@ -84,7 +90,7 @@ mkdir uploads
 
 ### 5. Run the server
 ```bash
-node backend/server.js
+npm start
 ```
 
 Open **http://localhost:5000** in your browser.

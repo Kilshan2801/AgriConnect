@@ -1158,7 +1158,7 @@ const loginUser = async (req, res) => {
                         role
                 },
 
-                "AGRICONNECT_SECRET_KEY",
+                process.env.JWT_SECRET,
 
                 {
                     expiresIn:
