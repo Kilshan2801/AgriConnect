@@ -1,0 +1,4772 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AgriConnect - Rental Messages</title>
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f7f5;
+
+            color: #172033;
+
+            min-height: 100vh;
+
+        }
+
+
+        button,
+        input,
+        textarea {
+
+            font-family: inherit;
+
+        }
+
+
+        /* =====================================================
+           MAIN DASHBOARD
+        ===================================================== */
+
+        .dashboard {
+
+            min-height: 100vh;
+
+            display: flex;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+    min-width: 255px;
+
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 255px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #ff7900 0%,
+                    #f15d00 100%
+                );
+
+            color: white;
+
+            z-index: 1000;
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow-y: auto;
+
+        }
+
+
+        .sidebar::-webkit-scrollbar {
+
+            width: 7px;
+
+        }
+
+
+        .sidebar::-webkit-scrollbar-thumb {
+
+            background:
+                rgba(255,255,255,0.35);
+
+            border-radius: 10px;
+
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .sidebar-logo {
+    height: 86px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.sidebar-logo img {
+    width: 160px;
+    height: auto;
+    max-height: 62px;
+    object-fit: contain;
+    display: block;
+}
+
+
+        /* =====================================================
+           SIDEBAR NAV
+        ===================================================== */
+
+        .sidebar-nav {
+
+            padding: 13px 10px;
+
+            flex: 1;
+
+        }
+
+
+        .nav-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            min-height: 45px;
+
+            padding: 11px 12px;
+
+            margin-bottom: 4px;
+
+            border-radius: 8px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            font-weight: 600;
+
+            transition:
+                background 0.2s,
+                transform 0.15s;
+
+        }
+
+
+        .nav-item:hover {
+
+            background:
+                rgba(255,255,255,0.12);
+
+        }
+
+
+        .nav-item.active {
+
+            background:
+                rgba(255,255,255,0.20);
+
+            border-left:
+                4px solid white;
+
+            padding-left: 14px;
+
+        }
+
+
+        .nav-icon {
+
+            width: 22px;
+
+            min-width: 22px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+        }
+
+
+        .nav-text {
+
+            white-space: nowrap;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+        ===================================================== */
+
+        .sidebar-bottom {
+
+            padding:
+                0 10px 14px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .sidebar-divider {
+
+            height: 1px;
+
+            background:
+                rgba(255,255,255,0.25);
+
+            margin:
+                5px 12px 10px;
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .main-content {
+
+            margin-left: 255px;
+
+            width:
+                calc(100% - 255px);
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+
+            min-height: 78px;
+
+            background: white;
+
+            border-bottom:
+                1px solid #e0e5e2;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                16px 38px;
+
+        }
+
+
+        .header-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+        }
+
+
+        .mobile-menu {
+
+            display: none;
+
+            width: 40px;
+
+            height: 40px;
+
+            border: none;
+
+            background: #ff7900;
+
+            color: white;
+
+            border-radius: 7px;
+
+            font-size: 18px;
+
+            cursor: pointer;
+
+        }
+
+
+        .welcome-section h1 {
+
+            font-size: 29px;
+
+            font-weight: 600;
+
+            color: #111827;
+
+        }
+
+
+        .welcome-section p {
+
+            margin-top: 5px;
+
+            color: #64748b;
+
+            font-size: 15px;
+
+        }
+
+
+        /* =====================================================
+           HEADER RIGHT
+        ===================================================== */
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        .header-notification {
+
+            position: relative;
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            font-size: 25px;
+
+        }
+
+
+        .header-badge {
+
+            position: absolute;
+
+            right: -2px;
+
+            top: -1px;
+
+            min-width: 20px;
+
+            height: 20px;
+
+            padding: 0 5px;
+
+            border-radius: 20px;
+
+            background: #e83b35;
+
+            color: white;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            cursor: pointer;
+
+            user-select: none;
+
+        }
+
+
+        .profile-picture {
+    font-size: 17px;
+
+
+            width: 43px;
+
+            height: 43px;
+
+            border-radius: 50%;
+
+            border:
+                1px solid #07853e;
+
+            object-fit: cover;
+
+            background: #e9f4ec;
+
+        }
+
+
+        .profile-info {
+
+            min-width: 135px;
+
+        }
+
+
+        .profile-name {
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            color: #111827;
+
+        }
+
+
+        .profile-role {
+
+            margin-top: 3px;
+
+            font-size: 14px;
+
+            color: #07853e;
+
+        }
+
+
+        .profile-arrow {
+
+            color: #64748b;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================================
+           PROFILE DROPDOWN
+        ===================================================== */
+
+        .profile-dropdown {
+
+            position: absolute;
+
+            right: 0;
+
+            top: 70px;
+
+            width: 300px;
+
+            background: white;
+
+            border:
+                1px solid #dfe5e1;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 15px 35px
+                rgba(0,0,0,0.15);
+
+            padding: 18px;
+
+            display: none;
+
+            z-index: 2000;
+
+        }
+
+
+        .profile.open .profile-dropdown {
+
+            display: block;
+
+        }
+
+
+        .dropdown-user {
+
+            padding-bottom: 14px;
+
+            border-bottom:
+                1px solid #e4e9e6;
+
+        }
+
+
+        .dropdown-user-name {
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            color: #172033;
+
+        }
+
+
+        .dropdown-user-role {
+
+            color: #07853e;
+
+            font-size: 14px;
+
+            margin-top: 4px;
+
+        }
+
+
+        .dropdown-title {
+
+            color: #7b8794;
+
+            font-size: 13px;
+
+            margin-top: 17px;
+
+            margin-bottom: 9px;
+
+        }
+
+
+        .role-option {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            border: none;
+
+            background: white;
+
+            padding: 11px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            text-align: left;
+
+            color: #172033;
+
+            font-size: 15px;
+
+        }
+
+
+        .role-option.selected {
+
+            background: #fff0e5;
+
+            color: #e95d00;
+
+            font-weight: 700;
+
+        }
+
+
+        .role-option:hover {
+
+            background: #fff0e5;
+
+        }
+
+
+        .role-check {
+
+            margin-left: auto;
+
+            color: #e95d00;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+
+            flex: 1;
+
+            padding:
+                34px 38px 85px;
+
+        }
+
+
+        .page-title {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .page-title h2 {
+
+            font-size: 29px;
+
+            color: #111827;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .page-title p {
+
+            color: #64748b;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =====================================================
+           MESSAGES CONTAINER
+        ===================================================== */
+
+        .messages-container {
+
+            width: 100%;
+
+            min-height: 610px;
+
+            background: white;
+
+            border:
+                1px solid #dfe5e1;
+
+            border-radius: 16px;
+
+            overflow: hidden;
+
+            display: flex;
+
+            box-shadow:
+                0 2px 7px
+                rgba(0,0,0,0.03);
+
+        }
+
+
+        /* =====================================================
+           FARMER LIST PANEL
+        ===================================================== */
+
+        .conversation-panel {
+
+            width: 390px;
+
+            min-width: 390px;
+
+            border-right:
+                1px solid #e1e6e3;
+
+            display: flex;
+
+            flex-direction: column;
+
+            background: white;
+
+        }
+
+
+        /* =====================================================
+           PANEL TITLE
+        ===================================================== */
+
+        .conversation-title {
+
+            padding:
+                21px 22px 14px;
+
+            border-bottom:
+                1px solid #e7ebe9;
+
+        }
+
+
+        .conversation-title h3 {
+
+            font-size: 18px;
+
+            color: #172033;
+
+        }
+
+
+        .conversation-title p {
+
+            margin-top: 4px;
+
+            font-size: 13px;
+
+            color: #07853e;
+
+        }
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        .search-wrapper {
+
+            padding: 15px;
+
+            border-bottom:
+                1px solid #e7ebe9;
+
+        }
+
+
+        .search-box {
+
+            height: 48px;
+
+            border:
+                1px solid #d8dfdb;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                0 13px;
+
+            background: #fafcfb;
+
+        }
+
+
+        .search-box span {
+
+            font-size: 18px;
+
+        }
+
+
+        .search-box input {
+
+            flex: 1;
+
+            border: none;
+
+            outline: none;
+
+            background: transparent;
+
+            font-size: 14px;
+
+            color: #172033;
+
+        }
+
+
+        /* =====================================================
+           CONVERSATION LIST
+        ===================================================== */
+
+        .conversation-list {
+
+            flex: 1;
+
+            overflow-y: auto;
+
+        }
+
+
+        .conversation-list::-webkit-scrollbar {
+
+            width: 6px;
+
+        }
+
+
+        .conversation-list::-webkit-scrollbar-thumb {
+
+            background: #cfd8d3;
+
+            border-radius: 10px;
+
+        }
+
+
+        .conversation-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding:
+                16px 17px;
+
+            border-bottom:
+                1px solid #edf0ee;
+
+            cursor: pointer;
+
+            transition: background 0.2s;
+
+        }
+
+
+        .conversation-item:hover {
+
+            background: #f7faf8;
+
+        }
+
+
+        .conversation-item.active {
+
+            background: #eef8f1;
+
+            box-shadow:
+                inset 4px 0 0 #07853e;
+
+        }
+
+
+        .conversation-avatar {
+
+            width: 48px;
+
+            height: 48px;
+
+            min-width: 48px;
+
+            border-radius: 50%;
+
+            background: #e9f4ec;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 22px;
+
+            position: relative;
+
+        }
+
+
+        .online-dot {
+
+            position: absolute;
+
+            right: 0;
+
+            bottom: 1px;
+
+            width: 11px;
+
+            height: 11px;
+
+            background: #20b653;
+
+            border:
+                2px solid white;
+
+            border-radius: 50%;
+
+        }
+
+
+        .conversation-info {
+
+            min-width: 0;
+
+            flex: 1;
+
+        }
+
+
+        .conversation-top {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 8px;
+
+        }
+
+
+        .conversation-name {
+
+            font-size: 15px;
+
+            font-weight: 700;
+
+            color: #172033;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+        }
+
+
+        .conversation-time {
+
+            font-size: 11px;
+
+            color: #82908a;
+
+            white-space: nowrap;
+
+        }
+
+
+        .conversation-preview {
+
+            margin-top: 5px;
+
+            font-size: 13px;
+
+            color: #64748b;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+
+        }
+
+
+        .conversation-context {
+
+            display: inline-block;
+
+            margin-top: 6px;
+
+            padding:
+                3px 7px;
+
+            background: #edf8f0;
+
+            color: #07853e;
+
+            border-radius: 5px;
+
+            font-size: 10px;
+
+        }
+
+
+        .unread-count {
+
+            min-width: 22px;
+
+            height: 22px;
+
+            padding: 0 5px;
+
+            border-radius: 50%;
+
+            background: #20b653;
+
+            color: white;
+
+            font-size: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================================
+           EMPTY FARMER LIST
+        ===================================================== */
+
+        .empty-list {
+
+            padding: 55px 25px;
+
+            text-align: center;
+
+            color: #7b8794;
+
+        }
+
+
+        .empty-list-icon {
+
+            font-size: 45px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .empty-list h3 {
+
+            color: #172033;
+
+            font-size: 17px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .empty-list p {
+
+            font-size: 13px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =====================================================
+           CHAT PANEL
+        ===================================================== */
+
+        .chat-panel {
+
+            flex: 1;
+
+            min-width: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        /* =====================================================
+           CHAT HEADER
+        ===================================================== */
+
+        .chat-header {
+
+            min-height: 82px;
+
+            padding:
+                15px 20px;
+
+            border-bottom:
+                1px solid #e1e6e3;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+        }
+
+
+        .chat-back {
+
+            display: none;
+
+            width: 35px;
+
+            height: 35px;
+
+            border: none;
+
+            background: #f0f5f1;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 17px;
+
+        }
+
+
+        .chat-header-avatar {
+
+            width: 50px;
+
+            height: 50px;
+
+            border-radius: 50%;
+
+            background: #e9f4ec;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 23px;
+
+        }
+
+
+        .chat-header-info {
+
+            flex: 1;
+
+            min-width: 0;
+
+        }
+
+
+        .chat-header-name {
+
+            font-size: 18px;
+
+            font-weight: 700;
+
+            color: #172033;
+
+        }
+
+
+        .chat-header-status {
+
+            margin-top: 4px;
+
+            color: #07853e;
+
+            font-size: 13px;
+
+        }
+
+
+        .chat-header-actions {
+
+            display: flex;
+
+            gap: 8px;
+
+        }
+
+
+        .chat-header-button {
+
+            width: 40px;
+
+            height: 40px;
+
+            border: none;
+
+            background: #f1f6f2;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 18px;
+
+        }
+
+
+        /* =====================================================
+           TRANSACTION BAR
+        ===================================================== */
+
+        .transaction-bar {
+
+            min-height: 43px;
+
+            padding:
+                10px 18px;
+
+            background: #f6fbf7;
+
+            border-bottom:
+                1px solid #e2ebe5;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            color: #07853e;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =====================================================
+           CHAT MESSAGES
+        ===================================================== */
+
+        .chat-messages {
+
+            flex: 1;
+
+            min-height: 400px;
+
+            overflow-y: auto;
+
+            padding:
+                22px;
+
+            background: #f8faf9;
+
+        }
+
+
+        .empty-conversations {
+
+            height: 100%;
+
+            min-height: 430px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: center;
+
+            text-align: center;
+
+            color: #7b8794;
+
+        }
+
+
+        .empty-conversations-icon {
+
+            font-size: 50px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .empty-conversations h3 {
+
+            color: #172033;
+
+            font-size: 18px;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .empty-conversations p {
+
+            font-size: 13px;
+
+        }
+
+
+        .date-divider {
+
+            width: max-content;
+
+            margin:
+                5px auto 20px;
+
+            padding:
+                5px 12px;
+
+            border-radius: 20px;
+
+            background: #e9f0eb;
+
+            color: #65736c;
+
+            font-size: 11px;
+
+        }
+
+
+        .message-row {
+
+            display: flex;
+
+            margin-bottom: 13px;
+
+        }
+
+
+        .message-row.received {
+
+            justify-content: flex-start;
+
+        }
+
+
+        .message-row.sent {
+
+            justify-content: flex-end;
+
+        }
+
+
+        .message-bubble {
+
+            max-width: 70%;
+
+            padding:
+                11px 14px;
+
+            border-radius: 13px;
+
+            font-size: 14px;
+
+            line-height: 1.45;
+
+        }
+
+
+        .message-row.received
+        .message-bubble {
+
+            background: white;
+
+            border:
+                1px solid #e1e7e3;
+
+            border-top-left-radius: 4px;
+
+        }
+
+
+        .message-row.sent
+        .message-bubble {
+
+            background: #07853e;
+
+            color: white;
+
+            border-top-right-radius: 4px;
+
+        }
+
+
+        .message-meta {
+
+            margin-top: 5px;
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            align-items: center;
+
+            gap: 5px;
+
+            font-size: 10px;
+
+            opacity: 0.7;
+
+        }
+
+
+        .message-check {
+
+            font-size: 10px;
+
+        }
+
+
+        .message-attachment {
+
+            padding: 6px 8px;
+
+            margin-bottom: 4px;
+
+            background:
+                rgba(255,255,255,0.2);
+
+            border-radius: 6px;
+
+            font-size: 12px;
+
+        }
+
+
+        /* =====================================================
+           CHAT INPUT
+        ===================================================== */
+
+        .chat-input-area {
+
+            padding:
+                12px 16px;
+
+            background: white;
+
+            border-top:
+                1px solid #e1e6e3;
+
+        }
+
+
+        .chat-input-wrapper {
+
+            display: flex;
+
+            align-items: flex-end;
+
+            gap: 8px;
+
+        }
+
+
+        .attach-button,
+        .send-button {
+
+            width: 42px;
+
+            height: 42px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .attach-button {
+
+            background: #f0f5f1;
+
+        }
+
+
+        .send-button {
+
+            background: #07853e;
+
+            color: white;
+
+        }
+
+
+        .send-button:disabled {
+
+            background: #b8c8be;
+
+            cursor: not-allowed;
+
+        }
+
+
+        .message-input {
+
+            flex: 1;
+
+            min-height: 42px;
+
+            max-height: 110px;
+
+            resize: none;
+
+            border:
+                1px solid #d8dfdb;
+
+            border-radius: 10px;
+
+            outline: none;
+
+            padding:
+                11px 13px;
+
+            font-size: 14px;
+
+            line-height: 20px;
+
+        }
+
+
+        .message-input:focus {
+
+            border-color: #07853e;
+
+        }
+
+
+        .input-note {
+
+            margin-top: 5px;
+
+            margin-left: 52px;
+
+            color: #8a9690;
+
+            font-size: 10px;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+
+            position: fixed;
+
+            left: 255px;
+
+            right: 0;
+
+            bottom: 0;
+
+            min-height: 45px;
+
+            background: #05652f;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 10px;
+
+            font-size: 10px;
+
+            z-index: 900;
+
+        }
+
+
+        .footer a {
+
+            color: white;
+
+            text-decoration: none;
+
+        }
+
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                left: -255px;
+
+                transition: left 0.25s ease;
+
+            }
+
+
+            .sidebar.open {
+
+                left: 0;
+
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+                width: 100%;
+
+            }
+
+
+            .footer {
+
+                left: 0;
+
+            }
+
+
+            .mobile-menu {
+
+                display: flex;
+
+                align-items: center;
+
+                justify-content: center;
+
+            }
+
+
+            .header {
+
+                padding:
+                    14px 20px;
+
+            }
+
+
+            .content {
+
+                padding:
+                    22px 20px 75px;
+
+            }
+
+
+            .conversation-panel {
+
+                width: 340px;
+
+                min-width: 340px;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .header {
+
+                min-height: 82px;
+
+                padding:
+                    10px 14px;
+
+            }
+
+
+            .welcome-section h1 {
+
+                font-size: 21px;
+
+            }
+
+
+            .welcome-section p {
+
+                display: none;
+
+            }
+
+
+            .profile-info,
+            .profile-arrow {
+
+                display: none;
+
+            }
+
+
+            .profile-picture {
+
+                width: 45px;
+
+                height: 45px;
+
+            }
+
+
+            .header-right {
+
+                gap: 8px;
+
+            }
+
+
+            .content {
+
+                padding:
+                    18px 12px 70px;
+
+            }
+
+
+            .page-title h2 {
+
+                font-size: 26px;
+
+            }
+
+
+            .messages-container {
+
+                min-height: 570px;
+
+            }
+
+
+            .conversation-panel {
+
+                width: 100%;
+
+                min-width: 100%;
+
+            }
+
+
+            .chat-panel {
+
+                display: none;
+
+            }
+
+
+            .messages-container.chat-open
+            .conversation-panel {
+
+                display: none;
+
+            }
+
+
+            .messages-container.chat-open
+            .chat-panel {
+
+                display: flex;
+
+                width: 100%;
+
+            }
+
+
+            .chat-back {
+
+                display: flex;
+
+            }
+
+
+            .footer {
+
+                font-size: 10px;
+
+                height: 48px;
+
+            }
+
+        }
+
+    
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- LOGO -->
+
+        <div class="sidebar-logo">
+
+            <img
+                src="assets/agriconnect-logo-white.png"
+                alt="AgriConnect"
+            >
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="rental-dashboard.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ▦
+                </span>
+
+                <span class="nav-text">
+                    My Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- MY EQUIPMENTS -->
+
+            <a
+                href="rental-equipment.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🚜
+                </span>
+
+                <span class="nav-text">
+                    My Equipments
+                </span>
+
+            </a>
+
+
+            <!-- RENTAL ORDERS -->
+
+            <a
+                href="rental-orders.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    📋
+                </span>
+
+                <span class="nav-text">
+                    Rental Orders
+                </span>
+
+            </a>
+
+
+            <!-- MESSAGES -->
+
+            <a
+                href="rental-messages.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    💬
+                </span>
+
+                <span class="nav-text">
+                    Messages
+                </span>
+
+                <span
+                    id="sidebarMessagesBadge"
+                    style="display:none;margin-left:auto;background:#e0433c;color:#fff;font-size:11px;font-weight:bold;min-width:20px;height:20px;border-radius:50%;align-items:center;justify-content:center;"
+                >
+                    0
+                </span>
+                </span>
+
+            </a>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <a
+                href="rental-notifications.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🔔
+                </span>
+
+                <span class="nav-text">
+                    Notifications
+                </span>
+
+            </a>
+
+
+            <!-- REPORT ISSUES -->
+
+            <a
+                href="rental-report-issues.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚠️
+                </span>
+
+                <span class="nav-text">
+                    Report Issues
+                </span>
+
+            </a>
+
+
+            <!-- HISTORY -->
+
+            <a
+                href="rental-history.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span class="nav-text">
+                    History
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-divider"></div>
+
+
+            <!-- HELP -->
+
+            <a
+                href="rental-help-support.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ?
+                </span>
+
+                <span class="nav-text">
+                    Help &amp; Support
+                </span>
+
+            </a>
+
+
+            <!-- SETTINGS -->
+
+            <a
+                href="rental-settings.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                <span class="nav-text">
+                    Settings
+                </span>
+
+            </a>
+
+
+            <!-- LOGOUT -->
+
+            <a
+                href="index.html"
+                class="nav-item"
+                id="logoutButton"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                <span class="nav-text">
+                    Logout
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+
+            <div class="header-left">
+
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                    type="button"
+                >
+                    ☰
+                </button>
+
+
+                <div class="welcome-section">
+
+                    <h1>
+                        Welcome back, <span id="userName">User</span>!
+                    </h1>
+
+                    <p>
+                        Chat with farmers renting your equipment.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- HEADER RIGHT -->
+
+            <div class="header-right">
+
+
+                <!-- NOTIFICATION -->
+
+                <div
+                    class="header-notification"
+                    id="notificationButton"
+                    title="Notifications"
+                >
+
+                    🔔
+
+                    <span
+                        class="header-badge"
+                        id="notificationBadge"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+
+                <!-- PROFILE -->
+
+                <div
+                    class="profile"
+                    id="profile"
+                >
+
+
+                    <img
+                        src="https://ui-avatars.com/api/?name=User&background=e9f4ec&color=07853e"
+                        alt="Profile"
+                        class="profile-picture"
+                        id="profilePicture"
+                    >
+
+
+                    <div class="profile-info">
+
+
+                        <div
+                            class="profile-name"
+                            id="profileName"
+                        >
+                            Only Provider
+                        </div>
+
+
+                        <div
+                            class="profile-role"
+                            id="profileRole"
+                        >
+                            Equipment Provider
+                        </div>
+
+
+                    </div>
+
+
+                    <span class="profile-arrow">
+                        ▼
+                    </span>
+
+
+
+                    <!-- PROFILE DROPDOWN -->
+
+                    <div
+                        class="profile-dropdown"
+                        id="profileDropdown"
+                    >
+
+
+                        <div class="dropdown-user">
+
+
+                            <div
+                                class="dropdown-user-name"
+                                id="dropdownUserName"
+                            >
+                                Only Provider
+                            </div>
+
+
+                            <div
+                                class="dropdown-user-role"
+                                id="dropdownUserRole"
+                            >
+                                Equipment Provider
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="dropdown-title">
+                            CURRENT ROLE
+                        </div>
+
+
+                        <!-- ROLE OPTIONS -->
+
+                        <div
+                            id="roleOptions"
+                        ></div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =====================================================
+             CONTENT
+        ===================================================== -->
+
+        <section class="content">
+
+
+            <div class="page-title">
+
+                <h2>
+                    Messages
+                </h2>
+
+                <p>
+                    Your conversations with farmers who have rented your equipment are shown here.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MESSAGES
+            ================================================= -->
+
+            <div
+                class="messages-container"
+                id="messagesContainer"
+            >
+
+
+                <!-- =================================================
+                     FARMER LIST
+                ================================================= -->
+
+                <div class="conversation-panel">
+
+
+                    <div class="conversation-title">
+
+                        <h3>
+                            Farmers
+                        </h3>
+
+                        <p>
+                            Farmers who rented your equipment
+                        </p>
+
+                    </div>
+
+
+                    <!-- SEARCH -->
+
+                    <div class="search-wrapper">
+
+                        <div class="search-box">
+
+                            <span>
+                                🔍
+                            </span>
+
+                            <input
+                                type="text"
+                                id="searchInput"
+                                placeholder="Search farmers or rentals..."
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONVERSATION LIST -->
+
+                    <div
+                        class="conversation-list"
+                        id="conversationList"
+                    ></div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CHAT PANEL
+                ================================================= -->
+
+                <div class="chat-panel">
+
+
+                    <!-- CHAT HEADER -->
+
+                    <div class="chat-header">
+
+
+                        <button
+                            class="chat-back"
+                            id="chatBack"
+                            type="button"
+                        >
+                            ←
+                        </button>
+
+
+                        <div
+                            class="chat-header-avatar"
+                            id="chatAvatar"
+                        >
+                            👨‍🌾
+                        </div>
+
+
+                        <div class="chat-header-info">
+
+
+                            <div
+                                class="chat-header-name"
+                                id="chatName"
+                            >
+                                Select a conversation
+                            </div>
+
+
+                            <div
+                                class="chat-header-status"
+                                id="chatStatus"
+                            >
+                                Choose a farmer to start messaging
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="chat-header-actions">
+
+
+                            <button
+                                class="chat-header-button"
+                                type="button"
+                                title="Search messages"
+                            >
+                                🔍
+                            </button>
+
+
+                            <button
+                                class="chat-header-button"
+                                type="button"
+                                title="Conversation information"
+                            >
+                                ℹ️
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- TRANSACTION BAR -->
+
+                    <div
+                        class="transaction-bar"
+                        id="transactionBar"
+                        style="display:none;"
+                    >
+
+                        <span>
+                            📋
+                        </span>
+
+                        <span id="transactionText"></span>
+
+                    </div>
+
+
+
+                    <!-- CHAT MESSAGES -->
+
+                    <div
+                        class="chat-messages"
+                        id="chatMessages"
+                    >
+
+
+                        <div class="empty-conversations">
+
+
+                            <div class="empty-conversations-icon">
+                                💬
+                            </div>
+
+
+                            <h3>
+                                Select a conversation
+                            </h3>
+
+
+                            <p>
+                                Choose a farmer who rented your equipment from the list.
+                            </p>
+
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- INPUT -->
+
+                    <!-- ATTACHMENT PREVIEW -->
+
+                    <div
+                        id="attachmentPreview"
+                        style="
+                            display:none;
+                            align-items:center;
+                            gap:10px;
+                            padding:10px 16px;
+                            background:#f1f7f3;
+                            border-top:1px solid #e1e6eb;
+                        "
+                    >
+                        <img
+                            id="attachmentPreviewImage"
+                            style="width:56px;height:56px;object-fit:cover;border-radius:8px;"
+                        >
+                        <span
+                            id="attachmentPreviewName"
+                            style="flex:1;font-size:12px;color:#536274;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                        ></span>
+                        <button
+                            type="button"
+                            id="attachmentPreviewCancel"
+                            style="border:none;background:transparent;font-size:18px;cursor:pointer;color:#536274;"
+                            title="Remove"
+                        >
+                            ×
+                        </button>
+                    </div>
+
+
+                    <div class="chat-input-area">
+
+
+                        <div class="chat-input-wrapper">
+
+
+                            <button
+                                class="attach-button"
+                                id="attachButton"
+                                type="button"
+                                title="Attach file"
+                            >
+                                📎
+                            </button>
+
+
+                            <input
+                                type="file"
+                                id="fileInput"
+                                hidden
+                            >
+
+
+                            <textarea
+                                class="message-input"
+                                id="messageInput"
+                                rows="1"
+                                placeholder="Type a message to the farmer..."
+                                disabled
+                            ></textarea>
+
+
+                            <button
+                                class="send-button"
+                                id="sendButton"
+                                type="button"
+                                disabled
+                                title="Send message"
+                            >
+                                ➤
+                            </button>
+
+
+                        </div>
+
+
+                        <div class="input-note">
+                            Press Enter to send • Shift + Enter for new line
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <span>
+        © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>|</span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+
+<script>
+
+    /* =====================================================
+       USER
+    ===================================================== */
+
+    let user = null;
+
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+    }
+
+    catch (error) {
+
+        user = null;
+
+    }
+
+
+
+    /* =====================================================
+       USER DISPLAY
+    ===================================================== */
+
+    function displayUser() {
+
+        let name =
+            "Only Provider";
+
+
+        if (user) {
+
+            const firstName =
+                user.first_name ||
+                user.firstName ||
+                "";
+
+
+            const lastName =
+                user.last_name ||
+                user.lastName ||
+                "";
+
+
+            const fullName =
+                `${firstName} ${lastName}`.trim();
+
+
+            if (fullName) {
+
+                name =
+                    fullName;
+
+            }
+
+            else if (user.name) {
+
+                name =
+                    user.name;
+
+            }
+
+        }
+
+
+        document.getElementById(
+            "profileName"
+        ).textContent =
+            name;
+
+
+        const welcomeNameEl =
+            document.getElementById(
+                "userName"
+            );
+
+        if (welcomeNameEl) {
+
+            welcomeNameEl.textContent =
+                name;
+
+        }
+
+
+        document.getElementById(
+            "dropdownUserName"
+        ).textContent =
+            name;
+
+
+        const initials =
+            name
+                .split(" ")
+                .filter(Boolean)
+                .map(
+                    part =>
+                        part.charAt(0)
+                )
+                .join("")
+                .substring(0, 2)
+                .toUpperCase();
+
+
+        document.getElementById(
+            "profilePicture"
+        ).src =
+            "https://ui-avatars.com/api/?name="
+            +
+            encodeURIComponent(
+                name
+            )
+            +
+            "&background=e9f4ec&color=07853e";
+
+    }
+
+
+
+
+    /* =====================================================
+       ROLE SYSTEM
+
+       This page is specifically the Equipment Provider
+       Messages page. It must show only roles that belong
+       to the currently logged-in account.
+
+       AgriConnect rule:
+       Farmer / Expert / Equipment Provider accounts can
+       also use the Buyer role.
+    ===================================================== */
+
+    const roleNames = {
+
+        farmer:
+            "Farmer",
+
+        buyer:
+            "Buyer",
+
+        expert:
+            "Agricultural Expert",
+
+        equipment_provider:
+            "Equipment Provider"
+
+    };
+
+
+    const roleIcons = {
+
+        farmer:
+            "🌱",
+
+        buyer:
+            "🛒",
+
+        expert:
+            "🧑‍🔬",
+
+        equipment_provider:
+            "🚜"
+
+    };
+
+
+    function normalizeRole(role) {
+
+        const value =
+            String(role || "")
+                .trim()
+                .toLowerCase();
+
+        if (
+            value === "equipment provider" ||
+            value === "equipment_provider" ||
+            value === "equipment-provider" ||
+            value === "equipmentprovider" ||
+            value === "provider"
+        ) {
+
+            return "equipment_provider";
+
+        }
+
+
+        if (
+            value === "agricultural expert" ||
+            value === "agriculture expert" ||
+            value === "agri expert" ||
+            value === "expert"
+        ) {
+
+            return "expert";
+
+        }
+
+
+        if (
+            value === "buyer" ||
+            value === "buyer/user"
+        ) {
+
+            return "buyer";
+
+        }
+
+
+        if (
+            value === "farmer"
+        ) {
+
+            return "farmer";
+
+        }
+
+
+        return value;
+
+    }
+
+
+    function getAccountRoles() {
+
+        let roles = [];
+
+
+        if (
+            user &&
+            Array.isArray(user.roles)
+        ) {
+
+            roles =
+                [...user.roles];
+
+        }
+
+
+        if (
+            roles.length === 0 &&
+            user &&
+            Array.isArray(user.registeredRoles)
+        ) {
+
+            roles =
+                [...user.registeredRoles];
+
+        }
+
+
+        if (
+            roles.length === 0 &&
+            user &&
+            user.role
+        ) {
+
+            roles =
+                Array.isArray(user.role)
+                    ? [...user.role]
+                    : [user.role];
+
+        }
+
+
+        roles =
+            roles
+                .map(normalizeRole)
+                .filter(Boolean);
+
+
+        roles =
+            [...new Set(roles)];
+
+
+        /*
+           A Farmer, Expert or Equipment Provider can
+           also act as a Buyer in AgriConnect.
+        */
+
+        const hasNonBuyer =
+            roles.some(
+                role =>
+                    role !== "buyer"
+            );
+
+
+        if (
+            hasNonBuyer &&
+            !roles.includes("buyer")
+        ) {
+
+            roles.push("buyer");
+
+        }
+
+
+        return [
+            ...new Set(roles)
+        ];
+
+    }
+
+
+    const accountRoles =
+        getAccountRoles();
+
+
+    /*
+       This page is the Equipment Provider page.
+       Therefore Equipment Provider is always the
+       selected role while this page is open.
+    */
+
+    let currentRole =
+        "equipment_provider";
+
+
+    /*
+       Ensure the current page role is available.
+       This does NOT create any other role.
+    */
+
+    if (
+        !accountRoles.includes(
+            "equipment_provider"
+        )
+    ) {
+
+        accountRoles.unshift(
+            "equipment_provider"
+        );
+
+    }
+
+
+    /* =====================================================
+       UPDATE ROLE DISPLAY
+    ===================================================== */
+
+    function updateRoleDisplay() {
+
+        const roleName =
+            roleNames[currentRole] ||
+            "Equipment Provider";
+
+
+        document.getElementById(
+            "profileRole"
+        ).textContent =
+            roleName;
+
+
+        document.getElementById(
+            "dropdownUserRole"
+        ).textContent =
+            roleName;
+
+    }
+
+
+    /* =====================================================
+       RENDER ROLE OPTIONS
+    ===================================================== */
+
+    function renderRoles() {
+
+        const container =
+            document.getElementById(
+                "roleOptions"
+            );
+
+
+        if (!container) {
+
+            return;
+
+        }
+
+
+        container.innerHTML =
+            "";
+
+
+        accountRoles.forEach(
+            function(role) {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+                    "role-option";
+
+
+                if (
+                    role === currentRole
+                ) {
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+                }
+
+
+                button.innerHTML = `
+
+                    <span>
+                        ${roleIcons[role] || "👤"}
+                    </span>
+
+                    <span>
+                        ${roleNames[role] || role}
+                    </span>
+
+                    <span class="role-check">
+                        ${
+                            role === currentRole
+                                ? "✓"
+                                : ""
+                        }
+                    </span>
+
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(event) {
+
+                        event.preventDefault();
+
+                        event.stopPropagation();
+
+                        switchRole(
+                            role
+                        );
+
+                    }
+                );
+
+
+                container.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       SWITCH ROLE
+    ===================================================== */
+
+    function switchRole(role) {
+
+        const normalizedRole =
+            normalizeRole(role);
+
+
+        /*
+           Never allow a role that does not belong
+           to the logged-in account.
+        */
+
+        if (
+            !accountRoles.includes(
+                normalizedRole
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        currentRole =
+            normalizedRole;
+
+
+        sessionStorage.setItem(
+            "currentRole",
+            currentRole
+        );
+
+
+        sessionStorage.setItem(
+            "selectedRole",
+            currentRole
+        );
+
+
+        if (
+            currentRole ===
+            "equipment_provider"
+        ) {
+
+            window.location.href =
+                "rental-dashboard.html";
+
+            return;
+
+        }
+
+
+        if (
+            currentRole ===
+            "buyer"
+        ) {
+
+            window.location.href =
+                "buyer-dashboard.html";
+
+            return;
+
+        }
+
+
+        if (
+            currentRole ===
+            "farmer"
+        ) {
+
+            window.location.href =
+                "farmer-dashboard.html";
+
+            return;
+
+        }
+
+
+        if (
+            currentRole ===
+            "expert"
+        ) {
+
+            window.location.href =
+                "expert-dashboard.html";
+
+            return;
+
+        }
+
+    }
+
+
+    updateRoleDisplay();
+
+    renderRoles();
+
+
+    /* =====================================================
+       SAMPLE RENTAL CONVERSATIONS
+       
+       IMPORTANT:
+       
+       This page contains ONLY farmers who rented
+       equipment from this equipment provider.
+
+       There are NO:
+       - Buyer conversations
+       - Agricultural Expert conversations
+       - Expert tab
+       - Buyer tab
+    ===================================================== */
+
+    let conversations = [];
+
+
+    function formatConversationTime(isoString) {
+
+        if (!isoString) {
+            return "";
+        }
+
+        return new Date(isoString).toLocaleTimeString(
+            [],
+            { hour: "numeric", minute: "2-digit" }
+        );
+
+    }
+
+
+    function mapConversationRow(row) {
+
+        return {
+
+            id: row.id,
+            contextId: row.context_id,
+            otherUserId: row.other_user_id,
+            name: `${row.first_name || ""} ${row.last_name || ""}`.trim() || "Renter",
+            avatar: "\uD83D\uDC68\u200D\uD83C\uDF3E",
+            online: false,
+            context: row.context_id ? `Rental #${row.context_id}` : "Rental",
+            lastMessage: row.last_message_text || "No messages yet.",
+            time: formatConversationTime(row.last_message_at || row.created_at),
+            unread: row.unread_count || 0,
+            messages: []
+
+        };
+
+    }
+
+
+    async function findProviderId(userId) {
+
+        const response =
+            await fetch(`/api/rentals/providers`);
+
+        const data =
+            await response.json();
+
+        if (!data || !data.success || !Array.isArray(data.providers)) {
+            return null;
+        }
+
+        const match =
+            data.providers.find(
+                p => Number(p.user_id) === Number(userId)
+            );
+
+        return match ? match.provider_id : null;
+
+    }
+
+
+    async function loadConversations() {
+
+        const userId = user && user.id;
+
+        if (!userId) {
+            return;
+        }
+
+        conversations = [];
+
+        try {
+
+            const response =
+                await fetch(`/api/messages/conversations?user_id=${userId}&context_type=rental`);
+
+            const data =
+                await response.json();
+
+            if (data && data.success && Array.isArray(data.conversations)) {
+
+                conversations =
+                    data.conversations.map(mapConversationRow);
+
+            }
+
+        } catch (error) {
+
+            console.error("Unable to load conversations:", error);
+
+        }
+
+
+        /*
+         * Show every renter this provider actually has a
+         * rental with, not only the ones already messaged.
+         */
+
+        try {
+
+            const providerId =
+                await findProviderId(userId);
+
+            if (providerId) {
+
+                const rentalsResponse =
+                    await fetch(`/api/rentals/provider/${providerId}`);
+
+                const rentalsData =
+                    await rentalsResponse.json();
+
+                if (rentalsData && rentalsData.success && Array.isArray(rentalsData.rentals)) {
+
+                    rentalsData.rentals.forEach(rental => {
+
+                        const alreadyShown =
+                            conversations.some(
+                                item => Number(item.otherUserId) === Number(rental.renter_id)
+                            );
+
+                        if (!alreadyShown) {
+
+                            conversations.push({
+                                id: null,
+                                contextId: rental.rental_id,
+                                otherUserId: rental.renter_id,
+                                name: `${rental.renter_first_name || ""} ${rental.renter_last_name || ""}`.trim() || "Renter",
+                                avatar: "\uD83D\uDC68\u200D\uD83C\uDF3E",
+                                online: false,
+                                context: `Rental #${rental.rental_id}`,
+                                lastMessage: "No messages yet.",
+                                time: "",
+                                unread: 0,
+                                messages: []
+                            });
+
+                        }
+
+                    });
+
+                }
+
+            }
+
+        } catch (error) {
+
+            console.error("Unable to load rentals for the conversation list:", error);
+
+        }
+
+    }
+
+
+
+
+
+    /* =====================================================
+       STATE
+    ===================================================== */
+
+    let activeConversation = null;
+
+    let pendingAttachment = null;
+
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHtml(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+
+        }
+
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+
+    /* =====================================================
+       SORT
+    ===================================================== */
+
+    function getTimeRank(time) {
+
+        if (!time) {
+
+            return 0;
+
+        }
+
+
+        if (
+            time.toLowerCase()
+                .includes("yesterday")
+        ) {
+
+            return 50000;
+
+        }
+
+
+        if (
+            time.toLowerCase()
+                .includes("monday")
+        ) {
+
+            return 30000;
+
+        }
+
+
+        const match =
+            time.match(
+                /(\d+):(\d+)\s*(AM|PM)/i
+            );
+
+
+        if (!match) {
+
+            return 0;
+
+        }
+
+
+        let hour =
+            parseInt(
+                match[1]
+            );
+
+
+        const minute =
+            parseInt(
+                match[2]
+            );
+
+
+        const period =
+            match[3]
+                .toUpperCase();
+
+
+        if (
+            period === "PM" &&
+            hour !== 12
+        ) {
+
+            hour += 12;
+
+        }
+
+
+        if (
+            period === "AM" &&
+            hour === 12
+        ) {
+
+            hour = 0;
+
+        }
+
+
+        return (
+            100000 +
+            hour * 60 +
+            minute
+        );
+
+    }
+
+
+
+    function sortedConversations() {
+
+        return [...conversations].sort(
+            (a, b) =>
+                getTimeRank(b.time)
+                -
+                getTimeRank(a.time)
+        );
+
+    }
+
+
+
+    /* =====================================================
+       RENDER FARMERS
+    ===================================================== */
+
+    function renderConversations() {
+
+        const list =
+            document.getElementById(
+                "conversationList"
+            );
+
+
+        const search =
+            document.getElementById(
+                "searchInput"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+
+        let data =
+            sortedConversations();
+
+
+        if (search) {
+
+            data =
+                data.filter(
+                    conversation => {
+
+                        return (
+
+                            conversation.name
+                                .toLowerCase()
+                                .includes(search)
+
+                            ||
+
+                            conversation.context
+                                .toLowerCase()
+                                .includes(search)
+
+                            ||
+
+                            conversation.lastMessage
+                                .toLowerCase()
+                                .includes(search)
+
+                        );
+
+                    }
+                );
+
+        }
+
+
+        list.innerHTML =
+            "";
+
+
+        if (!data.length) {
+
+            list.innerHTML = `
+
+                <div class="empty-list">
+
+                    <div class="empty-list-icon">
+                        👨‍🌾
+                    </div>
+
+                    <h3>
+                        No farmers found
+                    </h3>
+
+                    <p>
+                        No rental conversation matches your search.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        data.forEach(
+            conversation => {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "conversation-item";
+
+
+                if (
+                    activeConversation &&
+                    activeConversation.id ===
+                    conversation.id
+                ) {
+
+                    item.classList.add(
+                        "active"
+                    );
+
+                }
+
+
+                item.innerHTML = `
+
+                    <div class="conversation-avatar">
+
+                        ${escapeHtml(
+                            conversation.avatar
+                        )}
+
+                        ${
+                            conversation.online
+                                ? `
+                                    <span
+                                        class="online-dot"
+                                    ></span>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+
+                    <div class="conversation-info">
+
+
+                        <div class="conversation-top">
+
+                            <div class="conversation-name">
+
+                                ${escapeHtml(
+                                    conversation.name
+                                )}
+
+                            </div>
+
+
+                            <div class="conversation-time">
+
+                                ${escapeHtml(
+                                    conversation.time
+                                )}
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="conversation-preview">
+
+                            ${escapeHtml(
+                                conversation.lastMessage
+                            )}
+
+                        </div>
+
+
+                        <span class="conversation-context">
+
+                            ${escapeHtml(
+                                conversation.context
+                            )}
+
+                        </span>
+
+
+                    </div>
+
+
+                    ${
+                        conversation.unread > 0
+                            ? `
+                                <span class="unread-count">
+                                    ${conversation.unread}
+                                </span>
+                              `
+                            : ""
+                    }
+
+                `;
+
+
+                item.addEventListener(
+                    "click",
+                    function() {
+
+                        openConversation(
+                            conversation
+                        );
+
+                    }
+                );
+
+
+                list.appendChild(
+                    item
+                );
+
+            }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       OPEN CONVERSATION
+    ===================================================== */
+
+    async function openConversation(
+        conversation
+    ) {
+
+        activeConversation =
+            conversation;
+
+
+        /*
+         * Virtual entry (real conversation not created yet) -
+         * create it now that the provider is actually opening it.
+         */
+
+        if (!conversation.id) {
+
+            const userId = user && user.id;
+
+            try {
+
+                const startResponse =
+                    await fetch(
+                        "/api/messages/conversations/start",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                user_id: userId,
+                                other_user_id: conversation.otherUserId,
+                                context_type: "rental",
+                                context_id: conversation.contextId
+                            })
+                        }
+                    );
+
+                const startData =
+                    await startResponse.json();
+
+                if (startResponse.ok && startData.success) {
+
+                    conversation.id =
+                        startData.conversation.id;
+
+                }
+
+            } catch (error) {
+
+                console.error("Unable to start conversation:", error);
+
+            }
+
+        }
+
+
+        conversation.unread =
+            0;
+
+        updateSidebarMessagesBadge();
+
+
+        document
+            .getElementById(
+                "messagesContainer"
+            )
+            .classList.add(
+                "chat-open"
+            );
+
+
+        document
+            .getElementById(
+                "chatAvatar"
+            )
+            .textContent =
+                conversation.avatar;
+
+
+        document
+            .getElementById(
+                "chatName"
+            )
+            .textContent =
+                conversation.name;
+
+
+        document
+            .getElementById(
+                "chatStatus"
+            )
+            .textContent =
+                conversation.online
+                    ? "🟢 Online • Farmer"
+                    : "Offline • Farmer";
+
+
+        document
+            .getElementById(
+                "transactionBar"
+            )
+            .style.display =
+                "flex";
+
+
+        document
+            .getElementById(
+                "transactionText"
+            )
+            .innerHTML =
+                `<strong>${escapeHtml(
+                    conversation.context
+                )}</strong>`;
+
+
+        document
+            .getElementById(
+                "messageInput"
+            )
+            .disabled =
+                false;
+
+
+        document
+            .getElementById(
+                "sendButton"
+            )
+            .disabled =
+                false;
+
+
+        await loadMessagesForConversation(
+            conversation
+        );
+
+
+        renderMessages();
+
+        renderConversations();
+
+    }
+
+
+    async function loadMessagesForConversation(
+        conversation
+    ) {
+
+        const userId = user && user.id;
+
+        if (!userId || !conversation.id) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/messages/conversations/${conversation.id}/messages?user_id=${userId}`
+                );
+
+            const data =
+                await response.json();
+
+            if (
+                data && data.success && Array.isArray(data.messages)
+            ) {
+
+                conversation.messages =
+                    data.messages.map(
+                        row => ({
+                            type: Number(row.sender_id) === Number(userId) ? "sent" : "received",
+                            text: row.message_text,
+                            time: formatConversationTime(row.created_at),
+                            attachment: row.attachment || null
+                        })
+                    );
+
+            }
+
+        } catch (error) {
+
+            console.error("Unable to load messages:", error);
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       RENDER CHAT
+    ===================================================== */
+
+    function renderMessages() {
+
+        const container =
+            document.getElementById(
+                "chatMessages"
+            );
+
+
+        container.innerHTML =
+            "";
+
+
+        if (!activeConversation) {
+
+            container.innerHTML = `
+
+                <div class="empty-conversations">
+
+                    <div class="empty-conversations-icon">
+                        💬
+                    </div>
+
+                    <h3>
+                        Select a conversation
+                    </h3>
+
+                    <p>
+                        Choose a farmer who rented your equipment from the list.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        activeConversation.messages.forEach(
+            message => {
+
+                if (
+                    message.type ===
+                    "date"
+                ) {
+
+                    const divider =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    divider.className =
+                        "date-divider";
+
+
+                    divider.textContent =
+                        message.text;
+
+
+                    container.appendChild(
+                        divider
+                    );
+
+
+                    return;
+
+                }
+
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                row.className =
+                    `message-row ${message.type}`;
+
+
+                const bubble =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                bubble.className =
+                    "message-bubble";
+
+
+                bubble.innerHTML = `
+
+                    ${
+                        message.attachment
+                            ? (
+                                /\.(png|jpe?g|gif|webp)$/i.test(message.attachment)
+                                    ? `<a href="${escapeHtml(message.attachment)}" target="_blank" rel="noopener noreferrer"><img src="${escapeHtml(message.attachment)}" alt="Attachment" style="max-width:220px;max-height:220px;border-radius:8px;display:block;margin-bottom:6px;"></a>`
+                                    : /\.pdf$/i.test(message.attachment)
+                                        ? `<a href="${escapeHtml(message.attachment)}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;margin-bottom:6px;text-decoration:none;max-width:220px;"><span style="flex-shrink:0;width:34px;height:34px;border-radius:6px;background:#e0433c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;">PDF</span><span style="font-size:12px;color:#172033;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(message.attachment.split("/").pop())}</span></a>`
+                                        : `<div class="message-attachment">📎 <a href="${escapeHtml(message.attachment)}" target="_blank" rel="noopener noreferrer">${escapeHtml(message.attachment.split("/").pop())}</a></div>`
+                              )
+                            : ""
+                    }
+
+
+                    <div>
+                        ${escapeHtml(
+                            message.text
+                        )}
+                    </div>
+
+
+                    <div class="message-meta">
+
+                        <span>
+                            ${escapeHtml(
+                                message.time || ""
+                            )}
+                        </span>
+
+
+                        ${
+                            message.type ===
+                            "sent"
+                                ? `
+                                    <span class="message-check">
+                                        ✓✓
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+                `;
+
+
+                row.appendChild(
+                    bubble
+                );
+
+
+                container.appendChild(
+                    row
+                );
+
+            }
+        );
+
+
+        container.scrollTop =
+            container.scrollHeight;
+
+    }
+
+
+
+    /* =====================================================
+       SEND MESSAGE
+    ===================================================== */
+
+    async function sendMessage() {
+
+        if (!activeConversation) {
+
+            return;
+
+        }
+
+
+        const input =
+            document.getElementById(
+                "messageInput"
+            );
+
+
+        const text =
+            input.value.trim();
+
+
+        if (!text && !pendingAttachment) {
+
+            return;
+
+        }
+
+
+        const userId = user && user.id;
+
+        if (!userId) {
+
+            return;
+
+        }
+
+
+        input.value =
+            "";
+
+
+        autoResizeTextarea();
+
+        const attachmentToSend = pendingAttachment;
+        pendingAttachment = null;
+        document.getElementById("attachmentPreview").style.display = "none";
+        document.getElementById("attachmentPreviewImage").src = "";
+
+
+        let time =
+            getCurrentTime();
+
+
+        try {
+
+            let response;
+
+            if (attachmentToSend) {
+
+                const formData = new FormData();
+                formData.append("sender_id", userId);
+                if (text) formData.append("message_text", text);
+                formData.append("attachment", attachmentToSend);
+
+                response = await fetch(
+                    `/api/messages/conversations/${activeConversation.id}/messages`,
+                    { method: "POST", body: formData }
+                );
+
+            } else {
+
+                response = await fetch(
+                    `/api/messages/conversations/${activeConversation.id}/messages`,
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            sender_id: userId,
+                            message_text: text
+                        })
+                    }
+                );
+
+            }
+
+            const data =
+                await response.json();
+
+            if (!response.ok || !data || !data.success) {
+
+                console.error("Failed to send message:", data);
+                if (data && data.message) alert(data.message);
+                return;
+
+            }
+
+            time =
+                formatConversationTime(data.message.created_at);
+
+            activeConversation.messages.push({
+
+                type:
+                    "sent",
+
+                text:
+                    data.message.message_text || "",
+
+                attachment:
+                    data.message.attachment || null,
+
+                time:
+                    time
+
+            });
+
+        } catch (error) {
+
+            console.error("Failed to send message:", error);
+            return;
+
+        }
+
+
+        activeConversation.lastMessage =
+            text;
+
+
+        activeConversation.time =
+            time;
+
+
+        renderMessages();
+
+        renderConversations();
+
+    }
+
+
+
+    /* =====================================================
+       CURRENT TIME
+    ===================================================== */
+
+    function getCurrentTime() {
+
+        return new Date()
+            .toLocaleTimeString(
+                [],
+                {
+                    hour:
+                        "numeric",
+
+                    minute:
+                        "2-digit"
+                }
+            );
+
+    }
+
+
+
+    /* =====================================================
+       AUTO RESIZE
+    ===================================================== */
+
+    function autoResizeTextarea() {
+
+        const input =
+            document.getElementById(
+                "messageInput"
+            );
+
+
+        input.style.height =
+            "42px";
+
+
+        input.style.height =
+            Math.min(
+                input.scrollHeight,
+                110
+            ) + "px";
+
+    }
+
+
+
+    /* =====================================================
+       SEARCH
+    ===================================================== */
+
+    document
+        .getElementById(
+            "searchInput"
+        )
+        .addEventListener(
+            "input",
+            function() {
+
+                renderConversations();
+
+            }
+        );
+
+
+
+    /* =====================================================
+       ENTER TO SEND
+    ===================================================== */
+
+    document
+        .getElementById(
+            "messageInput"
+        )
+        .addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key === "Enter" &&
+                    !event.shiftKey
+                ) {
+
+                    event.preventDefault();
+
+                    sendMessage();
+
+                }
+
+            }
+        );
+
+
+    document
+        .getElementById(
+            "sendButton"
+        )
+        .addEventListener(
+            "click",
+            function() {
+
+                sendMessage();
+
+            }
+        );
+
+
+
+    /* =====================================================
+       INPUT RESIZE
+    ===================================================== */
+
+    document
+        .getElementById(
+            "messageInput"
+        )
+        .addEventListener(
+            "input",
+            autoResizeTextarea
+        );
+
+
+
+    /* =====================================================
+       ATTACHMENT
+    ===================================================== */
+
+    document
+        .getElementById(
+            "attachButton"
+        )
+        .addEventListener(
+            "click",
+            function() {
+
+                if (!activeConversation) {
+
+                    return;
+
+                }
+
+
+                document
+                    .getElementById(
+                        "fileInput"
+                    )
+                    .click();
+
+            }
+        );
+
+
+    document
+        .getElementById(
+            "fileInput"
+        )
+        .addEventListener(
+            "change",
+            function() {
+
+                if (
+                    !this.files.length ||
+                    !activeConversation
+                ) {
+
+                    return;
+
+                }
+
+
+                pendingAttachment =
+                    this.files[0];
+
+                this.value = "";
+
+                const previewBox =
+                    document.getElementById("attachmentPreview");
+
+                const previewImage =
+                    document.getElementById("attachmentPreviewImage");
+
+                const previewName =
+                    document.getElementById("attachmentPreviewName");
+
+                previewName.textContent =
+                    pendingAttachment.name;
+
+                if (/^image\//.test(pendingAttachment.type)) {
+
+                    const reader = new FileReader();
+
+                    reader.onload = function(event) {
+                        previewImage.src = event.target.result;
+                        previewImage.style.display = "block";
+                    };
+
+                    reader.readAsDataURL(pendingAttachment);
+
+                } else {
+
+                    previewImage.style.display = "none";
+
+                }
+
+                previewBox.style.display = "flex";
+
+            }
+        );
+
+
+    document
+        .getElementById("attachmentPreviewCancel")
+        .addEventListener("click", function() {
+
+            pendingAttachment = null;
+
+            document.getElementById("attachmentPreview").style.display = "none";
+            document.getElementById("attachmentPreviewImage").src = "";
+
+        });
+
+
+
+    /* =====================================================
+       MOBILE BACK
+    ===================================================== */
+
+    document
+        .getElementById(
+            "chatBack"
+        )
+        .addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById(
+                        "messagesContainer"
+                    )
+                    .classList.remove(
+                        "chat-open"
+                    );
+
+            }
+        );
+
+
+
+    /* =====================================================
+       PROFILE
+    ===================================================== */
+
+    document
+        .getElementById(
+            "profile"
+        )
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+                this.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+
+    document.addEventListener(
+        "click",
+        function() {
+
+            document
+                .getElementById(
+                    "profile"
+                )
+                .classList.remove(
+                    "open"
+                );
+
+        }
+    );
+
+
+
+    /* =====================================================
+       NOTIFICATIONS
+    ===================================================== */
+
+    document
+        .getElementById(
+            "notificationButton"
+        )
+        .addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "rental-notifications.html";
+
+            }
+        );
+
+
+
+    /* =====================================================
+       MOBILE MENU
+    ===================================================== */
+
+    document
+        .getElementById(
+            "mobileMenu"
+        )
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+
+                document
+                    .getElementById(
+                        "sidebar"
+                    )
+                    .classList.toggle(
+                        "open"
+                    );
+
+            }
+        );
+
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    document
+        .getElementById(
+            "logoutButton"
+        )
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.preventDefault();
+
+
+                if (
+                    !confirm(
+                        "Are you sure you want to logout?"
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                sessionStorage.removeItem(
+                    "token"
+                );
+
+
+                sessionStorage.removeItem(
+                    "user"
+                );
+
+
+                sessionStorage.removeItem(
+                    "selectedRole"
+                );
+
+
+                window.location.href =
+                    "index.html";
+
+            }
+        );
+
+
+
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+    displayUser();
+
+    function updateNotificationCount() {
+
+        const userId = user && user.id;
+
+        if (!userId) {
+            return;
+        }
+
+        fetch(`/api/notifications/unread-count?user_id=${userId}`)
+            .then(response => response.json())
+            .then(data => {
+
+                const unread = (data && data.success) ? data.unread : 0;
+
+                const badge = document.getElementById("notificationBadge");
+
+                if (badge) {
+                    badge.textContent = unread;
+                    badge.style.display = unread > 0 ? "flex" : "none";
+                }
+
+            })
+            .catch(error => {
+                console.error("Unable to load notification count:", error);
+            });
+
+    }
+
+    updateNotificationCount();
+
+    loadConversations().then(function() {
+
+        renderConversations();
+
+        renderMessages();
+
+        updateSidebarMessagesBadge();
+
+
+        /*
+         * Automatically open the conversation selected from
+         * the Rentals page ("Message" button).
+         */
+
+        let deepLink = null;
+
+        try {
+
+            deepLink =
+                JSON.parse(
+                    localStorage.getItem(
+                        "selectedProviderConversation"
+                    ) || "null"
+                );
+
+        } catch (error) {
+
+            deepLink = null;
+
+        }
+
+        if (deepLink && deepLink.conversationId) {
+
+            localStorage.removeItem(
+                "selectedProviderConversation"
+            );
+
+            const match =
+                conversations.find(
+                    item =>
+                        Number(item.id) ===
+                        Number(deepLink.conversationId)
+                );
+
+            if (match) {
+
+                openConversation(match);
+
+            }
+
+        }
+
+    });
+
+
+    function updateSidebarMessagesBadge() {
+
+        const badge =
+            document.getElementById("sidebarMessagesBadge");
+
+        if (!badge) return;
+
+        const unreadConversations =
+            conversations.filter(c => c.unread > 0).length;
+
+        if (unreadConversations > 0) {
+            badge.textContent = unreadConversations;
+            badge.style.display = "flex";
+        } else {
+            badge.style.display = "none";
+        }
+
+    }
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+
+</body>
+
+</html>

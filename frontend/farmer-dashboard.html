@@ -1,0 +1,4847 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AgriConnect - Farmer Dashboard</title>
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+           ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           BODY
+           ===================================================== */
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f7f5;
+
+            color: #1f2937;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================================
+           DASHBOARD LAYOUT
+           ===================================================== */
+
+        .dashboard {
+
+            display: flex;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+           ===================================================== */
+
+        .sidebar {
+    min-width: 255px;
+
+
+            width: 255px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #087b38 0%,
+                    #05652f 100%
+                );
+
+            color: white;
+
+            display: flex;
+
+            flex-direction: column;
+
+            position: fixed;
+
+            left: 0;
+
+            top: 0;
+
+            bottom: 0;
+
+            z-index: 100;
+
+            overflow-y: auto;
+
+        }
+
+
+        /* =====================================================
+           LOGO
+           ===================================================== */
+
+        .sidebar-logo {
+
+            height:
+                86px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            padding: 0 20px;
+
+            border-bottom:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.12
+                );
+
+            flex-shrink:
+                0;
+
+        }
+
+
+        .sidebar-logo img {
+    max-height: 62px;
+
+
+            width:
+                160px;
+
+            max-width:
+                80%;
+
+            height:
+                auto;
+
+            display:
+                block;
+
+            object-fit:
+                contain;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR NAVIGATION
+           ===================================================== */
+
+        .sidebar-nav {
+
+            padding:
+                15px 12px;
+
+            flex: 1;
+
+        }
+
+
+        .nav-item {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding:
+                11px 13px;
+
+            margin-bottom: 5px;
+
+            border-radius: 8px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition:
+                background 0.2s,
+                transform 0.15s;
+
+        }
+
+
+        .nav-item:hover {
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+        }
+
+
+        .nav-item.active {
+
+            background:
+                rgba(0, 70, 30, 0.55);
+
+            box-shadow:
+                inset 3px 0 0 white;
+
+        }
+
+
+        .nav-icon {
+
+            width: 22px;
+
+            min-width: 22px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+        }
+
+
+        .nav-text {
+
+            flex: 1;
+
+        }
+
+
+        .notification-count {
+
+            min-width: 23px;
+
+            height: 23px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #25b94b;
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+           ===================================================== */
+
+        .sidebar-bottom {
+
+            padding:
+                10px 12px 15px;
+
+        }
+
+
+        .sidebar-divider {
+
+            height: 1px;
+
+            background:
+                rgba(255, 255, 255, 0.20);
+
+            margin:
+                5px 15px 12px;
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+           ===================================================== */
+
+        .main-content {
+
+            margin-left: 255px;
+
+            width: calc(100% - 255px);
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        .header {
+
+            height: 78px;
+
+            background: white;
+
+            border-bottom:
+                1px solid #e5e7eb;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                15px 30px;
+
+        }
+
+
+        .welcome-section h1 {
+
+            font-size: 25px;
+
+            font-weight: 500;
+
+            color: #111827;
+
+        }
+
+
+        .welcome-section h1 span {
+
+            color: #149447;
+
+            font-weight: 700;
+
+        }
+
+
+        .welcome-section p {
+
+            margin-top: 4px;
+
+            color: #6b7280;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =====================================================
+           HEADER RIGHT
+           ===================================================== */
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        .header-notification {
+
+            position: relative;
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            cursor: pointer;
+
+            color: #374151;
+
+            font-size: 21px;
+
+        }
+
+
+        .header-notification:hover {
+
+            background: #f1f5f2;
+
+        }
+
+
+        .header-badge {
+
+            position: absolute;
+
+            top: 1px;
+
+            right: 0;
+
+            width: 17px;
+
+            height: 17px;
+
+            border-radius: 50%;
+
+            background: #1ca545;
+
+            color: white;
+
+            font-size: 9px;
+
+            font-weight: bold;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+        }
+
+
+        /* =====================================================
+           PROFILE
+           ===================================================== */
+
+        .profile {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            cursor: pointer;
+
+            padding:
+                5px 7px;
+
+            border-radius: 9px;
+
+        }
+
+
+        .profile:hover {
+
+            background: #f5f7f6;
+
+        }
+
+
+        .profile-picture {
+    font-size: 17px;
+
+
+            width: 43px;
+
+            height: 43px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border:
+                2px solid #d7e9dc;
+
+            background: #e9f4ec;
+
+        }
+
+
+        .profile-info {
+
+            line-height: 1.25;
+
+        }
+
+
+        .profile-name {
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #222;
+
+        }
+
+
+        .profile-role {
+
+            font-size: 12px;
+
+            color: #229447;
+
+            margin-top: 2px;
+
+        }
+
+
+        .profile-arrow {
+
+            font-size: 12px;
+
+            margin-left: 3px;
+
+            color: #555;
+
+            transition:
+                transform 0.2s;
+
+        }
+
+
+        .profile.open .profile-arrow {
+
+            transform:
+                rotate(180deg);
+
+        }
+
+
+        /* =====================================================
+           PROFILE DROPDOWN
+           ===================================================== */
+
+        .profile-dropdown {
+
+            display: none;
+
+            position: absolute;
+
+            top: 58px;
+
+            right: 0;
+
+            width: 225px;
+
+            background: white;
+
+            border:
+                1px solid #e5e7eb;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0, 0, 0, 0.15);
+
+            padding: 8px;
+
+            z-index: 300;
+
+        }
+
+
+        .profile.open .profile-dropdown {
+
+            display: block;
+
+        }
+
+
+        .dropdown-title {
+
+            padding:
+                8px 10px 6px;
+
+            font-size: 11px;
+
+            color: #888;
+
+            text-transform: uppercase;
+
+            font-weight: bold;
+
+        }
+
+
+        .dropdown-role {
+
+            width: 100%;
+
+            padding:
+                10px;
+
+            border: none;
+
+            background: transparent;
+
+            border-radius: 7px;
+
+            text-align: left;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            color: #333;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+        }
+
+
+        .dropdown-role:hover {
+
+            background: #f1f7f3;
+
+        }
+
+
+        .dropdown-role.current {
+
+            background: #e9f6ed;
+
+            color: #13883f;
+
+            font-weight: bold;
+
+        }
+
+
+        .role-check {
+
+            margin-left: auto;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================================
+           PAGE CONTENT
+           ===================================================== */
+
+        .page-content {
+
+            padding:
+                22px 30px 30px;
+
+            flex: 1;
+
+        }
+
+
+        /* =====================================================
+           SUMMARY CARDS
+           ===================================================== */
+
+        .summary-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 18px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .summary-card {
+
+            background: white;
+
+            min-height: 115px;
+
+            border-radius: 12px;
+
+            padding: 18px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            border:
+                1px solid #e9ecea;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0, 0, 0, 0.04);
+
+            transition:
+                transform 0.2s,
+                box-shadow 0.2s;
+
+        }
+
+
+        .summary-card:hover {
+
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 5px 14px
+                rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        .summary-icon {
+
+            width: 58px;
+
+            height: 58px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 27px;
+
+            flex-shrink: 0;
+
+        }
+
+
+        .summary-icon.green {
+
+            background: #dff5e5;
+
+        }
+
+
+        .summary-icon.blue {
+
+            background: #dff3f7;
+
+        }
+
+
+        .summary-icon.orange {
+
+            background: #fff0e5;
+
+        }
+
+
+        .summary-icon.purple {
+
+            background: #eee7fa;
+
+        }
+
+
+        .summary-info {
+
+            flex: 1;
+
+        }
+
+
+        .summary-title {
+
+            font-size: 12px;
+
+            color: #555;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .summary-number {
+
+            font-size: 25px;
+
+            font-weight: bold;
+
+            color: #111;
+
+        }
+
+
+        .summary-status {
+
+            font-size: 11px;
+
+            color: #777;
+
+            margin-top: 3px;
+
+        }
+
+
+        /* =====================================================
+           MAIN GRID
+           ===================================================== */
+
+        .main-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1.05fr
+                0.95fr;
+
+            gap: 20px;
+
+        }
+
+
+        /* =====================================================
+           CARD
+           ===================================================== */
+
+        .dashboard-card {
+
+            background: white;
+
+            border:
+                1px solid #e6eae7;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 2px 8px
+                rgba(0, 0, 0, 0.04);
+
+            overflow: hidden;
+
+        }
+
+
+        .card-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                17px 18px 13px;
+
+            border-bottom:
+                1px solid #edf0ee;
+
+        }
+
+
+        .card-title {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            color: #222;
+
+        }
+
+
+        .card-title-icon {
+
+            color: #138841;
+
+            font-size: 19px;
+
+        }
+
+
+        .view-all {
+
+            color: #138841;
+
+            text-decoration: none;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+        }
+
+
+        .view-all:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =====================================================
+           MARKET PRICES
+           ===================================================== */
+
+        .market-table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        .market-table th {
+
+            text-align: left;
+
+            padding:
+                10px 16px;
+
+            background: #f3f5f4;
+
+            color: #4b5563;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+        }
+
+
+        .market-table td {
+
+            padding:
+                9px 16px;
+
+            border-bottom:
+                1px solid #edf0ee;
+
+            font-size: 12px;
+
+        }
+
+
+        .market-table tr:last-child td {
+
+            border-bottom: none;
+
+        }
+
+
+        .price {
+
+            font-weight: bold;
+
+        }
+
+
+        .price-up {
+
+            color: #138841;
+
+            font-weight: bold;
+
+        }
+
+
+        .price-down {
+
+            color: #d73d3d;
+
+            font-weight: bold;
+
+        }
+
+
+        .price-same {
+
+            color: #64748b;
+
+        }
+
+
+        /* =====================================================
+           LISTINGS
+           ===================================================== */
+
+        .listing {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                10px 16px;
+
+            border-bottom:
+                1px solid #edf0ee;
+
+        }
+
+
+        .listing:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .listing-image {
+
+            width: 58px;
+
+            height: 48px;
+
+            border-radius: 7px;
+
+            object-fit: cover;
+
+            background: #eef4ef;
+
+        }
+
+
+        .listing-info {
+
+            flex: 1;
+
+        }
+
+
+        .listing-name {
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #222;
+
+        }
+
+
+        .listing-details {
+
+            margin-top: 4px;
+
+            font-size: 11px;
+
+            color: #697386;
+
+        }
+
+
+        .status {
+
+            padding:
+                6px 10px;
+
+            border-radius: 20px;
+
+            background: #d9f7df;
+
+            color: #16833a;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================================
+           LOWER GRID
+           ===================================================== */
+
+        .lower-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1.3fr
+                1fr;
+
+            gap: 20px;
+
+            margin-top: 20px;
+
+        }
+
+
+        /* =====================================================
+           ACTIVITIES
+           ===================================================== */
+
+        .activity {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                10px 16px;
+
+            border-bottom:
+                1px solid #edf0ee;
+
+        }
+
+
+        .activity:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .activity-icon {
+
+            width: 38px;
+
+            height: 38px;
+
+            border-radius: 50%;
+
+            background: #e2f6e7;
+
+            color: #138841;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 17px;
+
+        }
+
+
+        .activity-info {
+
+            flex: 1;
+
+        }
+
+
+        .activity-title {
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            color: #333;
+
+        }
+
+
+        .activity-location {
+
+            font-size: 10px;
+
+            color: #7a8491;
+
+            margin-top: 3px;
+
+        }
+
+
+        .activity-date {
+
+            text-align: right;
+
+            color: #697386;
+
+            font-size: 10px;
+
+            line-height: 1.5;
+
+        }
+
+
+        /* =====================================================
+           RECENT NOTIFICATIONS
+           ===================================================== */
+
+        .notification-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            padding:
+                11px 16px;
+
+            border-bottom:
+                1px solid #edf0ee;
+
+        }
+
+
+        .notification-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .notification-icon {
+
+            width: 37px;
+
+            height: 37px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 16px;
+
+            background: #e7f5ea;
+
+            color: #138841;
+
+        }
+
+
+        .notification-text {
+
+            flex: 1;
+
+            font-size: 11px;
+
+            color: #333;
+
+            line-height: 1.4;
+
+        }
+
+
+        .notification-time {
+
+            display: block;
+
+            color: #89919c;
+
+            font-size: 9px;
+
+            margin-top: 3px;
+
+        }
+
+
+        /* =====================================================
+           PROMOTION CARD
+           ===================================================== */
+
+        .promotion-card {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #dff5dc,
+                    #c7edca
+                );
+
+            border:
+                1px solid #c8e9ca;
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            min-height: 220px;
+
+            position: relative;
+
+            overflow: hidden;
+
+        }
+
+
+        .promotion-card h2 {
+
+            font-size: 19px;
+
+            line-height: 1.25;
+
+            color: #164b27;
+
+            width: 70%;
+
+        }
+
+
+        .promotion-card p {
+
+            margin-top: 10px;
+
+            width: 70%;
+
+            font-size: 12px;
+
+            line-height: 1.5;
+
+            color: #34533b;
+
+        }
+
+
+        .promotion-button {
+
+            display: inline-block;
+
+            margin-top: 16px;
+
+            padding:
+                9px 13px;
+
+            border-radius: 7px;
+
+            background: #087b38;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+        }
+
+
+        .promotion-button:hover {
+
+            background: #05652f;
+
+        }
+
+
+        .promotion-decoration {
+
+            position: absolute;
+
+            right: -10px;
+
+            bottom: -25px;
+
+            font-size: 105px;
+
+            opacity: 0.18;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        .footer {
+    left: 255px;
+
+
+            min-height: 42px;
+
+            background:
+                #075e31;
+
+            color: #d8e8dc;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 14px;
+
+            font-size: 10px;
+
+        }
+
+
+        .footer a {
+
+            color: #9bd7ad;
+
+            text-decoration: none;
+
+        }
+
+
+        .footer a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =====================================================
+           MOBILE SIDEBAR BUTTON
+           ===================================================== */
+
+        .mobile-menu {
+
+            display: none;
+
+            border: none;
+
+            background: #087b38;
+
+            color: white;
+
+            width: 40px;
+
+            height: 40px;
+
+            border-radius: 7px;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 1200px) {
+
+            .summary-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+
+            .lower-grid {
+
+                grid-template-columns:
+                    1fr 1fr;
+
+            }
+
+
+            .promotion-card {
+
+                grid-column:
+                    span 2;
+
+            }
+
+        }
+
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform 0.25s;
+
+            }
+
+
+            .sidebar.open {
+
+                transform:
+                    translateX(0);
+
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+                width: 100%;
+
+            }
+
+
+            .mobile-menu {
+
+                display: block;
+
+            }
+
+
+            .header {
+
+                padding:
+                    15px 18px;
+
+            }
+
+
+            .main-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .page-content {
+
+                padding:
+                    15px;
+
+            }
+
+
+            .summary-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .lower-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .promotion-card {
+
+                grid-column: auto;
+
+            }
+
+
+            .profile-info {
+
+                display: none;
+
+            }
+
+
+            .header-right {
+
+                gap: 8px;
+
+            }
+
+
+            .welcome-section h1 {
+
+                font-size: 20px;
+
+            }
+
+
+            .welcome-section p {
+
+                font-size: 11px;
+
+            }
+
+
+            .footer {
+
+                flex-wrap: wrap;
+
+                padding:
+                    10px;
+
+            }
+
+        }
+
+    
+.messages-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+    <!-- =================================================
+         SIDEBAR
+         ================================================= -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- LOGO -->
+
+        <div class="sidebar-logo">
+
+            <img
+                src="assets/agriconnect-logo-white.png"
+                alt="AgriConnect"
+            >
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <!-- Dashboard -->
+
+            <a
+                href="farmer-dashboard.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ▦
+                </span>
+
+                <span class="nav-text">
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- =================================================
+                 MY CROPS - CONNECTED
+                 ================================================= -->
+
+            <a
+                href="my-crops.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🌿
+                </span>
+
+                <span class="nav-text">
+                    My Crops
+                </span>
+
+            </a>
+
+
+            <!-- Orders -->
+
+            <a
+                href="orders.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🛒
+                </span>
+
+                <span class="nav-text">
+                    Orders
+                </span>
+
+            </a>
+
+
+            <!-- Equipment Rental -->
+
+            <a
+                href="equipment-rental.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🚜
+                </span>
+
+                <span class="nav-text">
+                    Equipment Rental
+                </span>
+
+            </a>
+
+
+            <!-- Consultations -->
+
+            <a
+                href="consultations.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    👨‍🌾
+                </span>
+
+                <span class="nav-text">
+                    Consultations
+                </span>
+
+            </a>
+
+
+            <!-- Messages -->
+
+            <a
+                href="messages.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    💬
+                </span>
+
+                <span class="nav-text">
+                    Messages
+                </span>
+
+                <span class="messages-badge" id="messagesBadge" style="display:none;">0</span>
+
+            </a>
+
+
+            <!-- Reports -->
+
+            <a
+                href="report-issues.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    📄
+                </span>
+
+                <span class="nav-text">
+                    Reports
+                </span>
+
+            </a>
+
+
+            <!-- Calendar -->
+
+            <a
+                href="calendar.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    📅
+                </span>
+
+                <span class="nav-text">
+                    Calendar
+                </span>
+
+            </a>
+
+
+            <!-- Notifications -->
+
+            <a
+                href="notifications.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🔔
+                </span>
+
+                <span class="nav-text">
+                    Notifications
+                </span>
+
+                <span
+                    class="notification-count"
+                    id="notificationCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- History -->
+
+            <a
+                href="history.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span class="nav-text">
+                    History
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- =================================================
+             SIDEBAR BOTTOM
+             ================================================= -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-divider"></div>
+
+
+            <!-- Help & Support -->
+
+            <a
+                href="help-support.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ?
+                </span>
+
+                <span class="nav-text">
+                    Help &amp; Support
+                </span>
+
+            </a>
+
+
+            <!-- Settings -->
+
+            <a
+                href="settings.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                <span class="nav-text">
+                    Settings
+                </span>
+
+            </a>
+
+
+            <!-- Logout -->
+
+            <a
+                href="#"
+                class="nav-item"
+                id="logoutButton"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                <span class="nav-text">
+                    Logout
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- =================================================
+         MAIN CONTENT
+         ================================================= -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+
+            <div
+                style="
+                    display:flex;
+                    align-items:center;
+                    gap:14px;
+                "
+            >
+
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                >
+                    ☰
+                </button>
+
+
+                <div class="welcome-section">
+
+                    <h1>
+
+                        Welcome back,
+                        <span id="userName">
+                            User
+                        </span>!
+
+                    </h1>
+
+
+                    <p>
+                        Let's make your farm more productive today.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- HEADER RIGHT -->
+
+            <div class="header-right">
+
+
+                <!-- Weather -->
+
+                <div
+                    class="header-weather"
+                    id="headerWeather"
+                    title="Current weather"
+                    style="display:none;align-items:center;gap:6px;padding:6px 12px;background:#f1f7f3;border-radius:20px;font-size:13px;color:#17331f;margin-right:6px;"
+                >
+                    <span id="weatherIcon" style="font-size:16px;">⛅</span>
+                    <span id="weatherTemp">--°C</span>
+                </div>
+
+
+                <!-- Notification -->
+
+                <div
+                    class="header-notification"
+                    onclick="openNotifications()"
+                >
+
+                    🔔
+
+                    <span
+                        class="header-badge"
+                        id="headerNotificationCount"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <!-- Profile -->
+
+                <div
+                    class="profile"
+                    id="profile"
+                >
+
+
+                    <img
+                        src="assets/profile-placeholder.png"
+                        alt="Profile"
+                        class="profile-picture"
+                        onerror="this.src='https://ui-avatars.com/api/?name=User&background=e9f4ec&color=17833c'"
+                    >
+
+
+                    <div class="profile-info">
+
+                        <div
+                            class="profile-name"
+                            id="profileName"
+                        >
+                            User Name
+                        </div>
+
+
+                        <div
+                            class="profile-role"
+                            id="profileRole"
+                        >
+                            Farmer
+                        </div>
+
+                    </div>
+
+
+                    <span class="profile-arrow">
+                        ▼
+                    </span>
+
+
+                    <!-- PROFILE DROPDOWN -->
+
+                    <div class="profile-dropdown">
+
+
+                        <div class="dropdown-title">
+                            Switch Role
+                        </div>
+
+
+                        <div id="roleOptions">
+
+                            <!-- Roles generated by JavaScript -->
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+        </header>
+
+
+        <!-- =================================================
+             PAGE CONTENT
+             ================================================= -->
+
+        <section class="page-content">
+
+
+            <!-- =================================================
+                 SUMMARY CARDS
+                 ================================================= -->
+
+            <div class="summary-grid">
+
+
+                <!-- =================================================
+                     MY CROPS - CONNECTED
+                     ================================================= -->
+
+                <a
+                    href="my-crops.html"
+                    class="summary-card"
+                    style="
+                        text-decoration:none;
+                        color:inherit;
+                    "
+                >
+
+                    <div class="summary-icon green">
+                        🌱
+                    </div>
+
+
+                    <div class="summary-info">
+
+                        <div class="summary-title">
+                            My Crops
+                        </div>
+
+
+                        <div class="summary-number" id="statMyCrops">
+                            05
+                        </div>
+
+
+                        <div class="summary-status">
+                            Active
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Consultations -->
+
+                <a
+                    href="consultations.html"
+                    class="summary-card"
+                    style="
+                        text-decoration:none;
+                        color:inherit;
+                        cursor:pointer;
+                    "
+                >
+
+                    <div class="summary-icon blue">
+                        💬
+                    </div>
+
+
+                    <div class="summary-info">
+
+                        <div class="summary-title">
+                            Consultations
+                        </div>
+
+
+                        <div class="summary-number" id="statConsultations">
+                            02
+                        </div>
+
+
+                        <div class="summary-status">
+                            Ongoing
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Rentals -->
+
+                <a
+                    href="equipment-rental.html"
+                    class="summary-card"
+                    style="
+                        text-decoration:none;
+                        color:inherit;
+                        cursor:pointer;
+                    "
+                >
+
+                    <div class="summary-icon orange">
+                        🚜
+                    </div>
+
+
+                    <div class="summary-info">
+
+                        <div class="summary-title">
+                            Rentals
+                        </div>
+
+
+                        <div class="summary-number" id="statRentals">
+                            01
+                        </div>
+
+
+                        <div class="summary-status">
+                            Active
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+                <!-- Orders -->
+
+                <a
+                    href="orders.html"
+                    class="summary-card"
+                    style="
+                        text-decoration:none;
+                        color:inherit;
+                        cursor:pointer;
+                    "
+                >
+
+                    <div class="summary-icon purple">
+                        🛒
+                    </div>
+
+
+                    <div class="summary-info">
+
+                        <div class="summary-title">
+                            Orders
+                        </div>
+
+
+                        <div class="summary-number" id="statOrders">
+                            07
+                        </div>
+
+
+                        <div class="summary-status">
+                            Total
+                        </div>
+
+                    </div>
+
+                </a>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 MAIN TWO-COLUMN SECTION
+                 ================================================= -->
+
+            <div class="main-grid">
+
+
+                <!-- =================================================
+                     UPCOMING ACTIVITIES
+                     ================================================= -->
+
+                <div class="dashboard-card">
+
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <span class="card-title-icon">
+                                📅
+                            </span>
+
+                            Upcoming Activities
+
+                        </div>
+
+
+                        <a
+                            href="calendar.html"
+                            class="view-all"
+                        >
+                            View All →
+                        </a>
+
+                    </div>
+
+
+                    <div id="dashboardActivitiesList">
+
+                        <p style="padding:20px;color:#6b7683;">Loading...</p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     RECENT LISTINGS
+                     ================================================= -->
+
+                <div class="dashboard-card">
+
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <span class="card-title-icon">
+                                🧺
+                            </span>
+
+                            My Recent Listings
+
+                        </div>
+
+
+                        <a
+                            href="my-crops.html"
+                            class="view-all"
+                        >
+                            View All →
+                        </a>
+
+                    </div>
+
+
+                    <!--
+                         Recent listings are loaded from the same
+                         crops database used by My Crops.
+                         The four most recently uploaded crops are
+                         displayed here.
+                    -->
+
+                    <div
+                        id="recentListings"
+                    >
+
+                        <div
+                            style="
+                                padding:24px 16px;
+                                text-align:center;
+                                color:#697386;
+                                font-size:12px;
+                            "
+                        >
+                            Loading recent listings...
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 LOWER SECTION
+                 ================================================= -->
+
+            <div class="lower-grid">
+
+
+
+
+                <!-- =================================================
+                     RECENT NOTIFICATIONS
+                     ================================================= -->
+
+                <div class="dashboard-card">
+
+
+                    <div class="card-header">
+
+                        <div class="card-title">
+
+                            <span class="card-title-icon">
+                                🔔
+                            </span>
+
+                            Recent Notifications
+
+                        </div>
+
+
+                        <a
+                            href="notifications.html"
+                            class="view-all"
+                        >
+                            View All →
+                        </a>
+
+                    </div>
+
+
+                    <div id="dashboardNotificationsList">
+
+                        <p style="padding:20px;color:#6b7683;">Loading...</p>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- =================================================
+                     PROMOTION
+                     ================================================= -->
+
+                <div class="promotion-card">
+
+
+                    <h2>
+
+                        Grow More,
+                        <br>
+                        Earn More
+
+                    </h2>
+
+
+                    <p>
+
+                        Get expert tips and best
+                        practices to increase your
+                        yield.
+
+                    </p>
+
+
+                    <a
+                        href="consultations.html"
+                        class="promotion-button"
+                    >
+                        Explore Now →
+                    </a>
+
+
+                    <div class="promotion-decoration">
+                        🌾
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             FOOTER
+             ================================================= -->
+
+        <footer class="footer">
+
+            <span>
+                © 2026 AgriConnect. All Rights Reserved
+            </span>
+
+            <span>
+                |
+            </span>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <span>
+                |
+            </span>
+
+            <a href="#">
+                Terms of Service
+            </a>
+
+        </footer>
+
+
+    </main>
+
+
+</div>
+
+
+<script>
+
+
+    /* =====================================================
+       GET CURRENT LOGGED-IN USER
+       ===================================================== */
+
+    let user = null;
+
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem("user") || "null"
+            );
+
+    }
+
+    catch (error) {
+
+        user = null;
+
+    }
+
+
+    /*
+     * Keep compatibility with older pages that may still
+     * have the session under loggedInUser.
+     *
+     * We only use this when the canonical user key is absent.
+     */
+
+    if (!user) {
+
+        try {
+
+            user =
+                JSON.parse(
+                    sessionStorage.getItem("loggedInUser") || "null"
+                );
+
+        }
+
+        catch (error) {
+
+            user = null;
+
+        }
+
+    }
+
+
+    /*
+     * A dashboard must belong to a logged-in account.
+     * Never invent a user name or role when the session is missing.
+     */
+
+    if (!user) {
+
+        window.location.href = "login.html";
+
+    }
+
+
+    /* =====================================================
+       DISPLAY USER NAME
+       ===================================================== */
+
+    function getUserFullName() {
+
+        if (!user) {
+
+            return "";
+
+        }
+
+
+        const firstName =
+            user.first_name ||
+            user.firstName ||
+            "";
+
+
+        const lastName =
+            user.last_name ||
+            user.lastName ||
+            "";
+
+
+        const fullName =
+            `${firstName} ${lastName}`.trim();
+
+
+        return (
+            fullName ||
+            user.name ||
+            user.username ||
+            ""
+        );
+
+    }
+
+
+    const userName =
+        getUserFullName();
+
+
+    if (userName) {
+
+        const userNameElement =
+            document.getElementById("userName");
+
+
+        const profileNameElement =
+            document.getElementById("profileName");
+
+
+        if (userNameElement) {
+
+            userNameElement.textContent =
+                userName;
+
+        }
+
+
+        if (profileNameElement) {
+
+            profileNameElement.textContent =
+                userName;
+
+        }
+
+
+        const profilePictureElement =
+            document.querySelector(".profile-picture");
+
+        if (profilePictureElement) {
+
+            profilePictureElement.src =
+                "https://ui-avatars.com/api/?name=" +
+                encodeURIComponent(userName) +
+                "&background=e9f4ec&color=17833c";
+
+            profilePictureElement.onerror =
+                function() {
+
+                    this.onerror = null;
+
+                    this.src =
+                        "https://ui-avatars.com/api/?name=" +
+                        encodeURIComponent(userName) +
+                        "&background=e9f4ec&color=17833c";
+
+                };
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ROLE INFORMATION
+       ===================================================== */
+
+    const roleNames = {
+
+        farmer:
+            "Farmer",
+
+        buyer:
+            "Buyer",
+
+        expert:
+            "Agricultural Expert",
+
+        equipment_provider:
+            "Equipment Provider"
+
+    };
+
+
+    const roleIcons = {
+
+        farmer:
+            "🌱",
+
+        buyer:
+            "🛒",
+
+        expert:
+            "👨‍🌾",
+
+        equipment_provider:
+            "🚜"
+
+    };
+
+
+    /* =====================================================
+       NORMALIZE ROLE
+       ===================================================== */
+
+    function normalizeRole(role) {
+
+        if (!role) {
+
+            return "";
+
+        }
+
+
+        const value =
+            String(role)
+                .toLowerCase()
+                .trim()
+                .replace(/-/g, "_");
+
+
+        if (value === "farmer") {
+
+            return "farmer";
+
+        }
+
+
+        if (value === "buyer" || value === "buyer/user") {
+
+            return "buyer";
+
+        }
+
+
+        if (
+            value === "expert" ||
+            value === "agricultural_expert" ||
+            value === "agricultural expert" ||
+            value === "agriculture_expert" ||
+            value === "agriculture expert" ||
+            value === "agri_expert" ||
+            value === "agri expert"
+        ) {
+
+            return "expert";
+
+        }
+
+
+        if (
+            value === "equipment_provider" ||
+            value === "equipment provider" ||
+            value === "equipmentprovider" ||
+            value === "provider"
+        ) {
+
+            return "equipment_provider";
+
+        }
+
+
+        return "";
+
+    }
+
+
+    /* =====================================================
+       GET REGISTERED ACCOUNT ROLES
+
+       IMPORTANT:
+       Roles are read from the CURRENT logged-in account.
+
+       We do not use a global registeredRoles value when
+       user.roles exists, because that value can be stale after
+       another account logs in.
+       ===================================================== */
+
+    function getRegisteredRoles() {
+
+        if (!user) {
+
+            return [];
+
+        }
+
+
+        let roles = [];
+
+
+        /* Preferred source from login.html. */
+
+        if (
+            Array.isArray(user.roles)
+        ) {
+
+            roles =
+                [...user.roles];
+
+        }
+
+
+        /* Compatibility with alternative role-array names. */
+
+        if (
+            roles.length === 0 &&
+            Array.isArray(user.registered_roles)
+        ) {
+
+            roles =
+                [...user.registered_roles];
+
+        }
+
+
+        if (
+            roles.length === 0 &&
+            Array.isArray(user.registeredRoles)
+        ) {
+
+            roles =
+                [...user.registeredRoles];
+
+        }
+
+
+        /*
+         * Compatibility with older session data.
+         * Only use the global value when the CURRENT user has
+         * absolutely no role information of its own.
+         */
+
+        if (
+            roles.length === 0
+        ) {
+
+            try {
+
+                const storedRoles =
+                    JSON.parse(
+                        sessionStorage.getItem("registeredRoles") || "null"
+                    );
+
+
+                if (
+                    Array.isArray(storedRoles)
+                ) {
+
+                    roles =
+                        [...storedRoles];
+
+                }
+
+            }
+
+            catch (error) {
+
+                roles = [];
+
+            }
+
+        }
+
+
+        /* Compatibility with a single stored role. */
+
+        if (
+            roles.length === 0 &&
+            user.role
+        ) {
+
+            roles =
+                Array.isArray(user.role)
+                    ? [...user.role]
+                    : [user.role];
+
+        }
+
+
+        /* Normalize and remove duplicates/invalid values. */
+
+        roles =
+            roles
+                .map(normalizeRole)
+                .filter(
+                    role =>
+                        !!role &&
+                        !!roleNames[role]
+                );
+
+
+        return [
+            ...new Set(roles)
+        ];
+
+    }
+
+
+    /* =====================================================
+       GET ACCOUNT ROLES
+
+       These are the roles available to THIS account.
+
+       The login system already adds Buyer for Farmer,
+       Agricultural Expert and Equipment Provider accounts
+       where Buyer access is part of the AgriConnect design.
+       We therefore do not add roles here again.
+       ===================================================== */
+
+    function getAccountRoles() {
+
+        const roles =
+            getRegisteredRoles();
+
+
+        return [
+            ...new Set(roles)
+        ];
+
+    }
+
+
+    /* =====================================================
+       CURRENT DASHBOARD ROLE
+
+       This file is farmer-dashboard.html.
+
+       Therefore Farmer is always the active role when the
+       account has Farmer access, regardless of which role was
+       active immediately before the redirect.
+
+       This prevents:
+
+           Buyer ✓
+
+       from appearing while the user is actually on the
+       Farmer Dashboard.
+       ===================================================== */
+
+    const availableRoles =
+        getAccountRoles();
+
+
+    let currentRole =
+        "farmer";
+
+
+    /*
+     * Farmer is the current dashboard role.
+     * Do not let an old selectedRole/currentRole value decide
+     * which role receives the tick on this page.
+     */
+
+    if (
+        availableRoles.includes("farmer")
+    ) {
+
+        currentRole =
+            "farmer";
+
+    }
+
+    else if (
+        availableRoles.length > 0
+    ) {
+
+        /*
+         * This is a safety fallback for an invalid/stale URL.
+         * It does not add Farmer to a Buyer-only account.
+         */
+
+        currentRole =
+            availableRoles[0];
+
+    }
+
+
+    /*
+     * Keep both legacy role keys synchronized.
+     * They represent the ACTIVE dashboard only, not the
+     * account's registered roles.
+     */
+
+    sessionStorage.setItem(
+        "selectedRole",
+        currentRole
+    );
+
+
+    sessionStorage.setItem(
+        "currentRole",
+        currentRole
+    );
+
+
+    /* =====================================================
+       DISPLAY CURRENT ROLE
+       ===================================================== */
+
+    const profileRoleElement =
+        document.getElementById("profileRole");
+
+
+    if (profileRoleElement) {
+
+        profileRoleElement.textContent =
+            roleNames[currentRole] ||
+            "Farmer";
+
+    }
+
+
+    /* =====================================================
+       PROFILE DROPDOWN
+       ===================================================== */
+
+    const profile =
+        document.getElementById("profile");
+
+
+    profile.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+            profile.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       CLOSE PROFILE DROPDOWN
+       ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function() {
+
+            profile.classList.remove(
+                "open"
+            );
+
+        }
+    );
+
+
+    /* =====================================================
+       LOAD USER ROLES
+
+       Only roles belonging to the CURRENT account are shown.
+       Farmer is ticked because this is the Farmer Dashboard.
+       ===================================================== */
+
+    function loadRoles() {
+
+        const roleOptions =
+            document.getElementById(
+                "roleOptions"
+            );
+
+
+        roleOptions.innerHTML =
+            "";
+
+
+        const roles =
+            getAccountRoles();
+
+
+        /*
+         * Always show the current role first, regardless of the
+         * order the account's roles happen to be stored in.
+         */
+
+        const sortedRoles =
+            [...roles].sort(
+                function(a, b) {
+
+                    if (a === currentRole) return -1;
+                    if (b === currentRole) return 1;
+                    return 0;
+
+                }
+            );
+
+
+        sortedRoles.forEach(
+            function(role) {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+                    "dropdown-role";
+
+
+                if (
+                    role === currentRole
+                ) {
+
+                    button.classList.add(
+                        "current"
+                    );
+
+                }
+
+
+                button.innerHTML = `
+
+                    <span>
+                        ${roleIcons[role] || "👤"}
+                    </span>
+
+                    <span>
+                        ${roleNames[role] || role}
+                    </span>
+
+                    <span class="role-check">
+                        ${
+                            role === currentRole
+                                ? "✓"
+                                : ""
+                        }
+                    </span>
+
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(event) {
+
+                        event.stopPropagation();
+
+                        switchRole(
+                            role
+                        );
+
+                    }
+                );
+
+
+                roleOptions.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       ROLE ICON
+       ===================================================== */
+
+    function getRoleIcon(role) {
+
+        return roleIcons[
+            normalizeRole(role)
+        ] || "👤";
+
+    }
+
+
+    /* =====================================================
+       SWITCH ROLE
+
+       Only roles registered for THIS ACCOUNT can be selected.
+       The current user object is never replaced during a role
+       switch, so the account name remains unchanged.
+       ===================================================== */
+
+    function switchRole(role) {
+
+        const normalizedRole =
+            normalizeRole(role);
+
+
+        if (
+            !normalizedRole
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            !getAccountRoles().includes(
+                normalizedRole
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        currentRole =
+            normalizedRole;
+
+
+        /* Active dashboard role only. */
+
+        sessionStorage.setItem(
+            "selectedRole",
+            currentRole
+        );
+
+
+        sessionStorage.setItem(
+            "currentRole",
+            currentRole
+        );
+
+
+        /*
+         * Do NOT change localStorage.user here.
+         * The logged-in account remains the same account.
+         */
+
+        if (
+            currentRole === "farmer"
+        ) {
+
+            window.location.href =
+                "farmer-dashboard.html";
+
+            return;
+
+        }
+
+
+        if (
+            currentRole === "buyer"
+        ) {
+
+            window.location.href =
+                "buyer-dashboard.html";
+
+            return;
+
+        }
+
+
+        if (
+            currentRole === "expert"
+        ) {
+
+            window.location.href =
+                "expert-dashboard.html";
+
+            return;
+
+        }
+
+
+        if (
+            currentRole ===
+            "equipment_provider"
+        ) {
+
+            window.location.href =
+                "rental-dashboard.html";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ESCAPE HTML
+       ===================================================== */
+
+    function escapeHtml(value) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+        div.textContent =
+            value == null
+                ? ""
+                : String(value);
+
+        return div.innerHTML;
+
+    }
+
+
+    /* =====================================================
+       RECENT LISTINGS
+       ===================================================== */
+
+    /*
+     * Load the four newest crops belonging to the CURRENT
+     * logged-in farmer.
+     *
+     * This intentionally uses the SAME endpoint and the SAME
+     * farmer ID source used by my-crops.html:
+     *
+     *     GET /api/crops/farmer/{farmerId}
+     *
+     * No Authorization header is added here because the My Crops
+     * page already proves that this endpoint can be requested
+     * directly from the logged-in browser session.
+     */
+
+    async function loadRecentListings() {
+
+        const container =
+            document.getElementById(
+                "recentListings"
+            );
+
+
+        if (!container) {
+
+            return;
+
+        }
+
+
+        /*
+         * Use the same logged-in account stored by login.html.
+         * Support the possible ID property names used by the
+         * different AgriConnect pages.
+         */
+
+        const currentUser =
+            user || {};
+
+
+        const farmerId =
+            currentUser.id ||
+            currentUser.userId ||
+            currentUser.user_id ||
+            currentUser.farmer_id ||
+            currentUser.farmerId;
+
+
+        if (!farmerId) {
+
+            container.innerHTML = `
+
+                <div
+                    style="
+                        padding:24px 16px;
+                        text-align:center;
+                        color:#697386;
+                        font-size:12px;
+                    "
+                >
+                    Unable to identify the farmer account.
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        try {
+
+            /* =================================================
+               GET CROPS
+               ================================================= */
+
+            const response =
+                await fetch(
+                    `/api/crops/farmer/${encodeURIComponent(farmerId)}`,
+                    {
+                        method: "GET",
+                        credentials: "same-origin",
+                        cache: "no-store"
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data?.message ||
+                    `Failed to load crops (${response.status}).`
+                );
+
+            }
+
+
+            /*
+             * The normal response from the crop API is:
+             *
+             *     { success: true, crops: [...] }
+             *
+             * The array fallback keeps this page compatible with
+             * an API version that returns the array directly.
+             */
+
+            let crops =
+                Array.isArray(data)
+                    ? [...data]
+                    : Array.isArray(data?.crops)
+                        ? [...data.crops]
+                        : Array.isArray(data?.data)
+                            ? [...data.data]
+                            : [];
+
+
+            /* =================================================
+               CURRENT FARMER SAFETY CHECK
+               ================================================= */
+
+            crops =
+                crops.filter(
+                    function(crop) {
+
+                        const cropFarmerId =
+                            crop?.farmer_id ??
+                            crop?.farmerId ??
+                            crop?.farmer?.id;
+
+
+                        if (
+                            cropFarmerId === undefined ||
+                            cropFarmerId === null ||
+                            cropFarmerId === ""
+                        ) {
+
+                            return true;
+
+                        }
+
+
+                        return (
+                            String(cropFarmerId) ===
+                            String(farmerId)
+                        );
+
+                    }
+                );
+
+
+            /* =================================================
+               NEWEST FIRST
+               ================================================= */
+
+            crops.sort(
+                function(a, b) {
+
+                    const aDate =
+                        a?.created_at ||
+                        a?.createdAt ||
+                        a?.uploaded_at ||
+                        a?.uploadedAt ||
+                        null;
+
+
+                    const bDate =
+                        b?.created_at ||
+                        b?.createdAt ||
+                        b?.uploaded_at ||
+                        b?.uploadedAt ||
+                        null;
+
+
+                    const aTime =
+                        aDate
+                            ? new Date(aDate).getTime()
+                            : NaN;
+
+
+                    const bTime =
+                        bDate
+                            ? new Date(bDate).getTime()
+                            : NaN;
+
+
+                    if (
+                        Number.isFinite(aTime) &&
+                        Number.isFinite(bTime) &&
+                        aTime !== bTime
+                    ) {
+
+                        return bTime - aTime;
+
+                    }
+
+
+                    /*
+                     * If created_at is unavailable, use the
+                     * database ID as the newest-item fallback.
+                     */
+
+                    const aId =
+                        Number(a?.id);
+
+
+                    const bId =
+                        Number(b?.id);
+
+
+                    if (
+                        Number.isFinite(aId) &&
+                        Number.isFinite(bId)
+                    ) {
+
+                        return bId - aId;
+
+                    }
+
+
+                    return 0;
+
+                }
+            );
+
+
+            const recentCrops =
+                crops.slice(0, 4);
+
+
+            /* =================================================
+               EMPTY STATE
+               ================================================= */
+
+            if (
+                recentCrops.length === 0
+            ) {
+
+                container.innerHTML = `
+
+                    <div
+                        style="
+                            padding:24px 16px;
+                            text-align:center;
+                            color:#697386;
+                            font-size:12px;
+                        "
+                    >
+                        No crops uploaded yet.
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            /* =================================================
+               RENDER THE FOUR LATEST CROPS
+               ================================================= */
+
+            container.innerHTML = "";
+
+
+            recentCrops.forEach(
+                function(crop) {
+
+                    const listing =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    listing.className =
+                        "listing";
+
+
+                    const cropName =
+                        crop?.crop_name ||
+                        crop?.name ||
+                        "Crop";
+
+
+                    /* -----------------------------------------
+                       IMAGE
+                       ----------------------------------------- */
+
+                    let imageUrl = "";
+
+
+                    if (
+                        Array.isArray(crop?.images) &&
+                        crop.images.length > 0
+                    ) {
+
+                        imageUrl =
+                            crop.images[0] ||
+                            "";
+
+                    }
+
+                    else if (
+                        crop?.image
+                    ) {
+
+                        imageUrl =
+                            crop.image;
+
+                    }
+
+                    else if (
+                        crop?.image_url
+                    ) {
+
+                        imageUrl =
+                            crop.image_url;
+
+                    }
+
+                    else if (
+                        crop?.imageUrl
+                    ) {
+
+                        imageUrl =
+                            crop.imageUrl;
+
+                    }
+
+
+                    imageUrl =
+                        String(imageUrl || "").trim();
+
+
+                    /*
+                     * The backend may return either a full URL or
+                     * a relative path such as uploads/crops/file.jpg.
+                     */
+
+                    if (
+                        imageUrl &&
+                        !/^https?:\/\//i.test(imageUrl) &&
+                        !imageUrl.startsWith("/") &&
+                        !imageUrl.startsWith("data:") &&
+                        !imageUrl.startsWith("blob:")
+                    ) {
+
+                        imageUrl =
+                            `/${imageUrl}`;
+
+                    }
+
+
+                    const safeName =
+                        escapeHtml(
+                            cropName
+                        );
+
+
+                    const safeImageUrl =
+                        escapeHtml(
+                            imageUrl
+                        );
+
+
+                    const imageHtml =
+                        imageUrl
+                            ? `
+                                <img
+                                    src="${safeImageUrl}"
+                                    class="listing-image"
+                                    alt="${safeName}"
+                                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                >
+
+                                <div
+                                    class="listing-image"
+                                    style="
+                                        display:none;
+                                        align-items:center;
+                                        justify-content:center;
+                                        font-size:24px;
+                                    "
+                                >
+                                    🌱
+                                </div>
+                              `
+                            : `
+                                <div
+                                    class="listing-image"
+                                    style="
+                                        display:flex;
+                                        align-items:center;
+                                        justify-content:center;
+                                        font-size:24px;
+                                    "
+                                >
+                                    🌱
+                                </div>
+                              `;
+
+
+                    /* -----------------------------------------
+                       PRICE
+                       ----------------------------------------- */
+
+                    const priceNumber =
+                        Number(
+                            crop?.price_per_kg
+                        );
+
+
+                    const priceText =
+                        Number.isFinite(priceNumber)
+                            ? `Rs ${priceNumber.toFixed(2)}/kg`
+                            : "Price not available";
+
+
+                    /*
+                     * Your current My Crops form does not submit
+                     * quantity. If a future API version provides it,
+                     * it will automatically be displayed here.
+                     */
+
+                    const quantity =
+                        crop?.quantity ??
+                        crop?.available_quantity ??
+                        crop?.availableQuantity ??
+                        null;
+
+
+                    const detailsText =
+                        quantity !== null &&
+                        quantity !== undefined &&
+                        quantity !== ""
+                            ? `${quantity} kg • ${priceText}`
+                            : priceText;
+
+
+                    /* -----------------------------------------
+                       STATUS
+                       ----------------------------------------- */
+
+                    const status =
+                        crop?.status ||
+                        (crop?.is_active === false
+                            ? "Inactive"
+                            : "Active");
+
+
+                    listing.innerHTML = `
+
+                        ${imageHtml}
+
+
+                        <div class="listing-info">
+
+                            <div class="listing-name">
+                                ${safeName}
+                            </div>
+
+
+                            <div class="listing-details">
+                                ${escapeHtml(detailsText)}
+                            </div>
+
+                        </div>
+
+
+                        <span class="status">
+                            ${escapeHtml(status)}
+                        </span>
+
+                    `;
+
+
+                    container.appendChild(
+                        listing
+                    );
+
+                }
+            );
+
+
+            /*
+             * Keep a small per-account cache as a fallback only.
+             * The live API response is always used first.
+             */
+
+            try {
+
+                localStorage.setItem(
+                    `agriConnectRecentCrops_${String(farmerId)}`,
+                    JSON.stringify(
+                        recentCrops
+                    )
+                );
+
+            }
+
+            catch (cacheError) {
+
+                console.warn(
+                    "Could not cache recent crops:",
+                    cacheError
+                );
+
+            }
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Recent listings API error:",
+                error
+            );
+
+
+            /* =================================================
+               ACCOUNT-SPECIFIC FALLBACK CACHE
+               ================================================= */
+
+            let cachedCrops = [];
+
+
+            try {
+
+                cachedCrops =
+                    JSON.parse(
+                        localStorage.getItem(
+                            `agriConnectRecentCrops_${String(farmerId)}`
+                        ) ||
+                        "[]"
+                    );
+
+
+                if (
+                    !Array.isArray(cachedCrops)
+                ) {
+
+                    cachedCrops = [];
+
+                }
+
+            }
+
+            catch (cacheError) {
+
+                cachedCrops = [];
+
+            }
+
+
+            if (
+                cachedCrops.length > 0
+            ) {
+
+                /*
+                 * Re-render cached data using the same renderer
+                 * logic above, but do not show another account's
+                 * data because the cache key contains farmerId.
+                 */
+
+                container.innerHTML = "";
+
+
+                cachedCrops
+                    .slice(0, 4)
+                    .forEach(
+                        function(crop) {
+
+                            const listing =
+                                document.createElement(
+                                    "div"
+                                );
+
+
+                            listing.className =
+                                "listing";
+
+
+                            const cropName =
+                                crop?.crop_name ||
+                                crop?.name ||
+                                "Crop";
+
+
+                            let imageUrl =
+                                Array.isArray(crop?.images) &&
+                                crop.images.length > 0
+                                    ? crop.images[0]
+                                    : crop?.image ||
+                                      crop?.image_url ||
+                                      crop?.imageUrl ||
+                                      "";
+
+
+                            imageUrl =
+                                String(imageUrl || "").trim();
+
+
+                            if (
+                                imageUrl &&
+                                !/^https?:\/\//i.test(imageUrl) &&
+                                !imageUrl.startsWith("/") &&
+                                !imageUrl.startsWith("data:") &&
+                                !imageUrl.startsWith("blob:")
+                            ) {
+
+                                imageUrl =
+                                    `/${imageUrl}`;
+
+                            }
+
+
+                            const safeName =
+                                escapeHtml(
+                                    cropName
+                                );
+
+
+                            const imageHtml =
+                                imageUrl
+                                    ? `
+                                        <img
+                                            src="${escapeHtml(imageUrl)}"
+                                            class="listing-image"
+                                            alt="${safeName}"
+                                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                                        >
+
+                                        <div
+                                            class="listing-image"
+                                            style="
+                                                display:none;
+                                                align-items:center;
+                                                justify-content:center;
+                                                font-size:24px;
+                                            "
+                                        >
+                                            🌱
+                                        </div>
+                                      `
+                                    : `
+                                        <div
+                                            class="listing-image"
+                                            style="
+                                                display:flex;
+                                                align-items:center;
+                                                justify-content:center;
+                                                font-size:24px;
+                                            "
+                                        >
+                                            🌱
+                                        </div>
+                                      `;
+
+
+                            const priceNumber =
+                                Number(
+                                    crop?.price_per_kg
+                                );
+
+
+                            const priceText =
+                                Number.isFinite(priceNumber)
+                                    ? `Rs ${priceNumber.toFixed(2)}/kg`
+                                    : "Price not available";
+
+
+                            const quantity =
+                                crop?.quantity ??
+                                crop?.available_quantity ??
+                                crop?.availableQuantity ??
+                                null;
+
+
+                            const detailsText =
+                                quantity !== null &&
+                                quantity !== undefined &&
+                                quantity !== ""
+                                    ? `${quantity} kg • ${priceText}`
+                                    : priceText;
+
+
+                            const status =
+                                crop?.status ||
+                                (crop?.is_active === false
+                                    ? "Inactive"
+                                    : "Active");
+
+
+                            listing.innerHTML = `
+
+                                ${imageHtml}
+
+
+                                <div class="listing-info">
+
+                                    <div class="listing-name">
+                                        ${safeName}
+                                    </div>
+
+
+                                    <div class="listing-details">
+                                        ${escapeHtml(detailsText)}
+                                    </div>
+
+                                </div>
+
+
+                                <span class="status">
+                                    ${escapeHtml(status)}
+                                </span>
+
+                            `;
+
+
+                            container.appendChild(
+                                listing
+                            );
+
+                        }
+                    );
+
+
+                const cacheNotice =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                cacheNotice.style.cssText =
+                    "padding:6px 16px 10px;text-align:right;color:#6e757c;font-size:9px;";
+
+
+                cacheNotice.textContent =
+                    "Showing recently loaded listings";
+
+
+                container.appendChild(
+                    cacheNotice
+                );
+
+                return;
+
+            }
+
+
+            /*
+             * Show the real error instead of silently pretending
+             * that there are no crops. This makes any remaining
+             * backend/API problem immediately identifiable.
+             */
+
+            const errorMessage =
+                error?.message ||
+                "Could not connect to the crop service.";
+
+
+            container.innerHTML = `
+
+                <div
+                    style="
+                        padding:24px 16px;
+                        text-align:center;
+                        color:#697386;
+                        font-size:12px;
+                    "
+                >
+                    ${escapeHtml(errorMessage)}
+                </div>
+
+            `;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       NOTIFICATIONS
+       ===================================================== */
+
+    function openNotifications() {
+
+        window.location.href =
+            "notifications.html";
+
+    }
+
+
+    /* =====================================================
+       INITIALIZE ROLE SWITCHER
+       =====================================================
+
+       The role buttons are created dynamically by loadRoles().
+       This call is required when the Farmer Dashboard loads.
+       Without it, #roleOptions remains empty and there is
+       nothing to click for switching roles.
+       ===================================================== */
+
+    loadRoles();
+
+    /* Load the four latest crops uploaded by this farmer. */
+
+    loadRecentListings();
+
+
+    /* =====================================================
+       NOTIFICATION COUNT
+       ===================================================== */
+
+    function updateNotificationCount() {
+
+        let userId = null;
+
+        try {
+            const rawUser = sessionStorage.getItem("user");
+            const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+            userId = parsedUser && parsedUser.id;
+        } catch (error) {
+            userId = null;
+        }
+
+        if (!userId) {
+            return;
+        }
+
+        fetch(`/api/notifications/unread-count?user_id=${userId}`)
+            .then(response => response.json())
+            .then(data => {
+
+                const unread = (data && data.success) ? data.unread : 0;
+
+                const headerCount = document.getElementById("headerNotificationCount");
+                const sidebarCount = document.getElementById("notificationCount");
+
+                if (headerCount) headerCount.textContent = unread;
+                if (sidebarCount) sidebarCount.textContent = unread;
+
+            })
+            .catch(error => {
+                console.error("Unable to load notification count:", error);
+            });
+
+    }
+
+    updateNotificationCount();
+
+
+    /* =====================================================
+       LOGOUT
+       ===================================================== */
+
+    document
+        .getElementById("logoutButton")
+        .addEventListener(
+            "click",
+            async function(event) {
+
+
+                event.preventDefault();
+
+
+                const confirmed =
+                    await customConfirm(
+                        "Are you sure you want to logout?"
+                    );
+
+
+                if (!confirmed) {
+
+                    return;
+
+                }
+
+
+                sessionStorage.removeItem(
+                    "token"
+                );
+
+
+                sessionStorage.removeItem(
+                    "user"
+                );
+
+
+                sessionStorage.removeItem(
+                    "selectedRole"
+                );
+
+
+                window.location.href =
+                    "index.html";
+
+            }
+        );
+
+
+    /* =====================================================
+       MOBILE MENU
+       ===================================================== */
+
+    document
+        .getElementById("mobileMenu")
+        .addEventListener(
+            "click",
+            function(event) {
+
+
+                event.stopPropagation();
+
+
+                document
+                    .getElementById("sidebar")
+                    .classList.toggle(
+                        "open"
+                    );
+
+            }
+        );
+
+
+    /* =====================================================
+       CLOSE MOBILE SIDEBAR
+       ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+
+            const sidebar =
+                document.getElementById(
+                    "sidebar"
+                );
+
+
+            const menu =
+                document.getElementById(
+                    "mobileMenu"
+                );
+
+
+            if (
+                window.innerWidth <= 900 &&
+                !sidebar.contains(
+                    event.target
+                ) &&
+                event.target !== menu
+            ) {
+
+                sidebar.classList.remove(
+                    "open"
+                );
+
+            }
+
+        }
+    );
+
+
+
+
+function updateMessagesBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(
+                    c => (c.context_type === "order" || c.context_type === "rental" || c.context_type === "consultation")
+                        && c.unread_count > 0
+                ).length;
+
+            const badgeEl =
+                document.getElementById("messagesBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load messages badge count:", error);
+        });
+
+}
+
+updateMessagesBadge();
+
+
+/* =========================================================
+   DASHBOARD: UPCOMING ACTIVITIES (4 nearest by date)
+========================================================= */
+
+function escapeHtmlDashAct(value) {
+    const div = document.createElement("div");
+    div.textContent = value == null ? "" : String(value);
+    return div.innerHTML;
+}
+
+function activityIconFor(activity) {
+    const text = `${activity.title || ""} ${activity.activity_type || ""}`.toLowerCase();
+
+    if (text.includes("fertiliz")) return "🌱";
+    if (text.includes("irrigat") || text.includes("water")) return "💧";
+    if (text.includes("pest") || text.includes("spray")) return "🐛";
+    if (text.includes("harvest")) return "🌾";
+    if (text.includes("plant") || text.includes("sow")) return "🌿";
+    if (text.includes("weed")) return "🌾";
+    if (text.includes("soil")) return "🪱";
+
+    return "📅";
+}
+
+function formatActivityDate(dateStr) {
+    if (!dateStr) return "";
+    const d = new Date(dateStr);
+    if (isNaN(d)) return dateStr;
+    return d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+}
+
+async function loadDashboardActivities() {
+
+    const container = document.getElementById("dashboardActivitiesList");
+
+    if (!container) return;
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        container.innerHTML = `<p style="padding:20px;color:#6b7683;">Unable to load activities.</p>`;
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`/api/activities?user_id=${userId}`);
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load activities.");
+        }
+
+        const todayStr = new Date().toISOString().split("T")[0];
+
+        const upcoming = (Array.isArray(data.activities) ? data.activities : [])
+            .filter(a => a.status === "pending" && a.activity_date >= todayStr)
+            .sort((a, b) => new Date(a.activity_date) - new Date(b.activity_date))
+            .slice(0, 4);
+
+        if (upcoming.length === 0) {
+            container.innerHTML = `<p style="padding:20px;color:#6b7683;">No upcoming activities scheduled.</p>`;
+            return;
+        }
+
+        container.innerHTML = upcoming.map(activity => `
+            <div class="activity">
+
+                <div class="activity-icon">
+                    ${activityIconFor(activity)}
+                </div>
+
+                <div class="activity-info">
+
+                    <div class="activity-title">
+                        ${escapeHtmlDashAct(activity.title)}
+                    </div>
+
+                    <div class="activity-location">
+                        ${escapeHtmlDashAct(activity.description || "")}
+                    </div>
+
+                </div>
+
+                <div class="activity-date">
+                    ${formatActivityDate(activity.activity_date)}
+                </div>
+
+            </div>
+        `).join("");
+
+    } catch (error) {
+
+        console.error("Unable to load dashboard activities:", error);
+        container.innerHTML = `<p style="padding:20px;color:#c0392b;">Unable to load activities right now.</p>`;
+
+    }
+
+}
+
+loadDashboardActivities();
+
+
+/* =========================================================
+   HEADER WEATHER WIDGET (live, via Open-Meteo - free, no key)
+========================================================= */
+
+const districtCoordinates = {
+    "Ampara": [7.2975, 81.6747],
+    "Anuradhapura": [8.3114, 80.4037],
+    "Badulla": [6.9895, 81.0567],
+    "Batticaloa": [7.7310, 81.6747],
+    "Colombo": [6.9271, 79.8612],
+    "Galle": [6.0535, 80.2210],
+    "Gampaha": [7.0917, 79.9990],
+    "Hambantota": [6.1241, 81.1185],
+    "Jaffna": [9.6615, 80.0255],
+    "Kalutara": [6.5854, 79.9607],
+    "Kandy": [7.2906, 80.6337],
+    "Kegalle": [7.2513, 80.3464],
+    "Kilinochchi": [9.3961, 80.3982],
+    "Kurunegala": [7.4863, 80.3647],
+    "Mannar": [8.9810, 79.9044],
+    "Matale": [7.4675, 80.6234],
+    "Matara": [5.9549, 80.5550],
+    "Monaragala": [6.8714, 81.3507],
+    "Mullaitivu": [9.2670, 80.8142],
+    "Nuwara Eliya": [6.9497, 80.7891],
+    "Polonnaruwa": [7.9403, 81.0188],
+    "Puttalam": [8.0362, 79.8283],
+    "Ratnapura": [6.6828, 80.3992],
+    "Trincomalee": [8.5874, 81.2152],
+    "Vavuniya": [8.7514, 80.4971]
+};
+
+function weatherIconForCode(code) {
+
+    if (code === 0) return "☀️";
+    if (code === 1 || code === 2) return "🌤️";
+    if (code === 3) return "☁️";
+    if (code === 45 || code === 48) return "🌫️";
+    if (code >= 51 && code <= 57) return "🌦️";
+    if (code >= 61 && code <= 67) return "🌧️";
+    if (code >= 71 && code <= 77) return "❄️";
+    if (code >= 80 && code <= 82) return "🌧️";
+    if (code >= 85 && code <= 86) return "❄️";
+    if (code >= 95) return "⛈️";
+
+    return "⛅";
+
+}
+
+async function loadHeaderWeather() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) return;
+
+    try {
+
+        const districtResponse = await fetch(`/api/auth/my-district/${userId}`);
+        const districtData = await districtResponse.json();
+
+        if (!districtResponse.ok || !districtData.success) return;
+
+        const district = districtData.district;
+        const coords = districtCoordinates[district];
+
+        if (!coords) return;
+
+        const [lat, lon] = coords;
+
+        const weatherResponse = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+        );
+
+        const weatherData = await weatherResponse.json();
+
+        if (!weatherResponse.ok || !weatherData.current_weather) return;
+
+        const temp = Math.round(weatherData.current_weather.temperature);
+        const code = weatherData.current_weather.weathercode;
+
+        const widget = document.getElementById("headerWeather");
+        const iconEl = document.getElementById("weatherIcon");
+        const tempEl = document.getElementById("weatherTemp");
+
+        if (widget && iconEl && tempEl) {
+            iconEl.textContent = weatherIconForCode(code);
+            tempEl.textContent = `${temp}°C`;
+            widget.title = `Current weather in ${district}`;
+            widget.style.display = "flex";
+        }
+
+    } catch (error) {
+        console.error("Unable to load weather:", error);
+    }
+
+}
+
+loadHeaderWeather();
+
+
+/* =========================================================
+   DASHBOARD: RECENT NOTIFICATIONS (live)
+========================================================= */
+
+function notificationIconFor(notification) {
+    const text = `${notification.title || ""} ${notification.message || ""}`.toLowerCase();
+
+    if (text.includes("rental")) return "🚜";
+    if (text.includes("consultation")) return "💬";
+    if (text.includes("order")) return "🛒";
+    if (text.includes("crop") || text.includes("price")) return "📈";
+    if (text.includes("message")) return "✉️";
+
+    return "🔔";
+}
+
+function timeAgo(dateStr) {
+    if (!dateStr) return "";
+
+    const now = new Date();
+    const then = new Date(dateStr);
+    const diffMs = now - then;
+    const diffMinutes = Math.floor(diffMs / 60000);
+
+    if (diffMinutes < 1) return "Just now";
+    if (diffMinutes < 60) return `${diffMinutes} minute${diffMinutes === 1 ? "" : "s"} ago`;
+
+    const diffHours = Math.floor(diffMinutes / 60);
+    if (diffHours < 24) return `${diffHours} hour${diffHours === 1 ? "" : "s"} ago`;
+
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays === 1) return "Yesterday";
+    if (diffDays < 7) return `${diffDays} days ago`;
+
+    return then.toLocaleDateString("en-GB", { day: "2-digit", month: "short" });
+}
+
+async function loadDashboardNotifications() {
+
+    const container = document.getElementById("dashboardNotificationsList");
+
+    if (!container) return;
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        container.innerHTML = `<p style="padding:20px;color:#6b7683;">Unable to load notifications.</p>`;
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`/api/notifications?user_id=${userId}`);
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Unable to load notifications.");
+        }
+
+        const recent = (Array.isArray(data.notifications) ? data.notifications : []).slice(0, 3);
+
+        if (recent.length === 0) {
+            container.innerHTML = `<p style="padding:20px;color:#6b7683;">No notifications yet.</p>`;
+            return;
+        }
+
+        container.innerHTML = recent.map(notification => `
+            <div class="notification-item">
+
+                <div class="notification-icon">
+                    ${notificationIconFor(notification)}
+                </div>
+
+                <div class="notification-text">
+
+                    ${escapeHtmlDashAct(notification.message || notification.title || "")}
+
+                    <span class="notification-time">
+                        ${timeAgo(notification.created_at)}
+                    </span>
+
+                </div>
+
+            </div>
+        `).join("");
+
+    } catch (error) {
+
+        console.error("Unable to load dashboard notifications:", error);
+        container.innerHTML = `<p style="padding:20px;color:#c0392b;">Unable to load notifications right now.</p>`;
+
+    }
+
+}
+
+loadDashboardNotifications();
+
+
+/* =========================================================
+   TOP STAT CARDS (My Crops / Consultations / Rentals / Orders)
+========================================================= */
+
+async function loadDashboardStats() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) return;
+
+    const setStat = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = String(value).padStart(2, "0");
+    };
+
+    // My Crops - total active listings
+    try {
+        const response = await fetch(`/api/crops/farmer/${userId}`);
+        const data = await response.json();
+        if (data.success) {
+            setStat("statMyCrops", Array.isArray(data.crops) ? data.crops.length : 0);
+        }
+    } catch (error) {
+        console.error("Unable to load crop count:", error);
+    }
+
+    // Consultations - ongoing (not yet completed)
+    try {
+        const response = await fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`);
+        const data = await response.json();
+        if (data.success) {
+            const ongoing = (Array.isArray(data.conversations) ? data.conversations : [])
+                .filter(c => !c.completed_at).length;
+            setStat("statConsultations", ongoing);
+        }
+    } catch (error) {
+        console.error("Unable to load consultation count:", error);
+    }
+
+    // Rentals - active (approved or currently active)
+    try {
+        const response = await fetch(`/api/rentals/my/${userId}`);
+        const data = await response.json();
+        if (data.success) {
+            const active = (Array.isArray(data.rentals) ? data.rentals : [])
+                .filter(r => r.status === "approved" || r.status === "active").length;
+            setStat("statRentals", active);
+        }
+    } catch (error) {
+        console.error("Unable to load rental count:", error);
+    }
+
+    // Orders - total incoming orders for this farmer's crops
+    try {
+        const response = await fetch(`/api/orders/farmer/${userId}`);
+        const data = await response.json();
+        if (data.success) {
+            setStat("statOrders", Array.isArray(data.orders) ? data.orders.length : 0);
+        }
+    } catch (error) {
+        console.error("Unable to load order count:", error);
+    }
+
+}
+
+loadDashboardStats();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

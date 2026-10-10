@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AgriConnect</title>
+
+    <style>
+
+        /* =================================================
+           GENERAL
+           ================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.15),
+                    rgba(255, 255, 255, 0.15)
+                ),
+                url("assets/agri-background.png");
+
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+
+            display: flex;
+            flex-direction: column;
+
+        }
+
+
+        /* =================================================
+           MAIN CONTENT
+           ================================================= */
+
+        .main-container {
+
+            flex: 1;
+
+            padding:
+                20px 30px 25px;
+
+        }
+
+
+        /* =================================================
+           LOGO
+           ================================================= */
+
+        .logo-section {
+
+            text-align: center;
+
+        }
+
+        .logo {
+
+            width: 440px;
+
+            max-width: 65%;
+
+            height: auto;
+
+        }
+
+
+        /* =================================================
+           PLATFORM DESCRIPTION
+           ================================================= */
+
+        .platform-name {
+
+            text-align: center;
+
+            margin-top: 5px;
+
+            font-size: 18px;
+
+            color: #111;
+
+        }
+
+
+        /* =================================================
+           WELCOME SECTION
+           ================================================= */
+
+        .welcome-section {
+
+            text-align: center;
+
+            margin-top: 25px;
+
+            margin-bottom: 25px;
+
+        }
+
+        .welcome-title {
+
+            font-size: 26px;
+
+            font-weight: normal;
+
+            color: #111;
+
+            margin-bottom: 10px;
+
+        }
+
+        .welcome-subtitle {
+
+            font-size: 20px;
+
+            color: #111;
+
+        }
+
+
+        /* =================================================
+           CONTENT AREA
+           ================================================= */
+
+        .content-area {
+
+            max-width: 1100px;
+
+            margin: 0 auto;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 40px;
+
+        }
+
+
+        /* =================================================
+           DESCRIPTION
+           ================================================= */
+
+        .description-section {
+
+            flex: 1;
+
+            max-width: 450px;
+
+            text-align: center;
+
+        }
+
+        .description {
+
+            font-size: 22px;
+
+            line-height: 1.25;
+
+            color: #111;
+
+        }
+
+
+        /* =================================================
+           LOGIN CARDS
+           ================================================= */
+
+        .login-section {
+
+            display: flex;
+
+            gap: 20px;
+
+            justify-content: center;
+
+        }
+
+        .login-card {
+
+            width: 230px;
+
+            min-height: 315px;
+
+            background:
+                rgba(255, 255, 255, 0.95);
+
+            border-radius: 10px;
+
+            padding: 22px 18px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            text-align: center;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0, 0, 0, 0.12);
+
+        }
+
+
+        /* =================================================
+           LOGIN ICONS
+           ================================================= */
+
+        .login-icon {
+
+            width: 92px;
+
+            height: 92px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 45px;
+
+            margin-bottom: 15px;
+
+        }
+
+        .user-icon {
+
+            background: #e1f2e5;
+
+        }
+
+        .admin-icon {
+
+            background: #eee4ff;
+
+        }
+
+
+        /* =================================================
+           CARD TITLES
+           ================================================= */
+
+        .card-title {
+
+            font-size: 20px;
+
+            color: #111;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        /* =================================================
+           CARD DESCRIPTION
+           ================================================= */
+
+        .card-description {
+
+            min-height: 48px;
+
+            font-size: 13px;
+
+            line-height: 1.35;
+
+            color: #333;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        /* =================================================
+           CARD BUTTONS
+           ================================================= */
+
+        .login-button {
+
+            width: 100%;
+
+            padding: 10px;
+
+            border: none;
+
+            border-radius: 7px;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            margin-top: auto;
+
+            transition:
+                opacity 0.2s,
+                transform 0.1s;
+
+        }
+
+        .login-button:hover {
+
+            opacity: 0.88;
+
+        }
+
+        .login-button:active {
+
+            transform: scale(0.98);
+
+        }
+
+        .user-button {
+
+            background: #2e9e42;
+
+        }
+
+        .admin-button {
+
+            background: #641db8;
+
+        }
+
+
+        /* =================================================
+           REGISTER LINK
+           ================================================= */
+
+        .register-section {
+
+            text-align: center;
+
+            margin-top: 10px;
+
+            font-size: 20px;
+
+            color: #111;
+
+        }
+
+        .register-section a {
+
+            color: #1262d6;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            margin-left: 8px;
+
+        }
+
+        .register-section a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =================================================
+           FOOTER
+           ================================================= */
+
+        footer {
+
+            min-height: 45px;
+
+            background:
+                rgba(22, 91, 31, 0.96);
+
+            color: #ddd;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 15px;
+
+            font-size: 12px;
+
+        }
+
+        footer a {
+
+            color: #4f8edc;
+
+            text-decoration: none;
+
+        }
+
+        footer a:hover {
+
+            text-decoration: underline;
+
+        }
+
+        .footer-divider {
+
+            color: #aaa;
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE DESIGN
+           ================================================= */
+
+        @media (max-width: 950px) {
+
+            .content-area {
+
+                flex-direction: column;
+
+            }
+
+            .description-section {
+
+                max-width: 600px;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .main-container {
+
+                padding:
+                    15px 15px 25px;
+
+            }
+
+            .logo {
+
+                max-width: 85%;
+
+            }
+
+            .platform-name {
+
+                font-size: 15px;
+
+            }
+
+            .welcome-title {
+
+                font-size: 23px;
+
+            }
+
+            .welcome-subtitle {
+
+                font-size: 17px;
+
+            }
+
+            .login-section {
+
+                flex-direction: column;
+
+                align-items: center;
+
+            }
+
+            .login-card {
+
+                width: 280px;
+
+            }
+
+            .description {
+
+                font-size: 18px;
+
+            }
+
+            .register-section {
+
+                font-size: 17px;
+
+            }
+
+            footer {
+
+                flex-wrap: wrap;
+
+                padding: 10px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         MAIN CONTENT
+         ================================================= -->
+
+    <main class="main-container">
+
+
+        <!-- =================================================
+             AGRICONNECT LOGO
+             ================================================= -->
+
+        <section class="logo-section">
+
+            <img
+                src="assets/agriconnect-logo.png"
+                alt="AgriConnect Logo"
+                class="logo"
+            >
+
+            <p class="platform-name">
+                Smart Farmer Support &amp; Marketplace Platform
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             WELCOME
+             ================================================= -->
+
+        <section class="welcome-section">
+
+            <h1 class="welcome-title">
+                Welcome!
+            </h1>
+
+            <p class="welcome-subtitle">
+                Choose How You Wanted to Enter The Platform
+            </p>
+
+        </section>
+
+
+        <!-- =================================================
+             CONTENT AREA
+             ================================================= -->
+
+        <section class="content-area">
+
+
+            <!-- =================================================
+                 PLATFORM DESCRIPTION
+                 ================================================= -->
+
+            <div class="description-section">
+
+                <p class="description">
+                    Connecting farmers, buyers,
+                    experts, and equipment
+                    providers to create a
+                    smarter, more efficient
+                    agricultural community.
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 LOGIN CARDS
+                 ================================================= -->
+
+            <div class="login-section">
+
+
+                <!-- =================================================
+                     USER LOGIN
+                     ================================================= -->
+
+                <div class="login-card">
+
+                    <div class="login-icon user-icon">
+                        👥
+                    </div>
+
+                    <h2 class="card-title">
+                        User Login
+                    </h2>
+
+                    <p class="card-description">
+                        Farmers, Buyers, Agricultural
+                        Experts and Equipment Providers
+                    </p>
+
+                    <a
+                        href="select-role.html"
+                        class="login-button user-button"
+                    >
+                        Continue To User Login
+                    </a>
+
+                </div>
+
+
+                <!-- =================================================
+                     ADMIN LOGIN
+                     ================================================= -->
+
+                <div class="login-card">
+
+                    <div class="login-icon admin-icon">
+                        🔐
+                    </div>
+
+                    <h2 class="card-title">
+                        Administrator Login
+                    </h2>
+
+                    <p class="card-description">
+                        Secure Access for System
+                        Administrators Only
+                    </p>
+
+                    <a
+                        href="admin-login.html"
+                        class="login-button admin-button"
+                    >
+                        Admin Login
+                    </a>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+        <!-- =================================================
+             REGISTER
+             ================================================= -->
+
+        <div class="register-section">
+
+            New to AgriConnect?
+
+            <a href="register.html">
+                Register
+            </a>
+
+        </div>
+
+
+    </main>
+
+
+    <!-- =================================================
+         FOOTER
+         ================================================= -->
+
+    <footer>
+
+        <span>
+            © 2026 AgriConnect: All Rights Served
+        </span>
+
+        <span class="footer-divider">
+            |
+        </span>
+
+        <a href="#">
+            Privacy Policy
+        </a>
+
+        <span class="footer-divider">
+            |
+        </span>
+
+        <a href="#">
+            Terms of Service
+        </a>
+
+    </footer>
+
+
+</body>
+
+</html>

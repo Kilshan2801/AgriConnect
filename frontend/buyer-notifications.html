@@ -1,0 +1,3827 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Buyer Notifications</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7f9;
+    color: #10233f;
+}
+
+button {
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+
+    width: 255px;
+    min-width: 255px;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    background: linear-gradient(
+        180deg,
+        #0643ad 0%,
+        #07368f 100%
+    );
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.sidebar-logo {
+
+    height: 86px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.18);
+}
+
+.sidebar-logo img {
+    max-height: 62px;
+
+
+    width: 160px;
+
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+========================================================= */
+
+.sidebar-nav {
+
+    padding:
+        18px 13px;
+
+    flex: 1;
+}
+
+.nav-item {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding:
+        10px 15px;
+
+    margin-bottom: 6px;
+
+    border-radius: 10px;
+
+    color: white;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+.nav-item:hover {
+
+    background:
+        rgba(255,255,255,0.10);
+}
+
+.nav-item.active {
+
+    background:
+        #07566b;
+
+    box-shadow:
+        inset 4px 0 0 white;
+}
+
+.nav-icon {
+
+    width: 25px;
+
+    min-width: 25px;
+
+    text-align: center;
+
+    font-size: 20px;
+}
+
+.nav-text {
+
+    flex: 1;
+}
+
+.notification-count {
+
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background:
+        #f32929;
+
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+
+    padding:
+        5px 13px 15px;
+}
+
+.sidebar-divider {
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.22);
+
+    margin:
+        6px 10px 15px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top-header {
+
+    height: 78px;
+
+    background: white;
+
+    padding:
+        0 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    border-bottom:
+        1px solid #e2e6ea;
+}
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   HEADER NOTIFICATION
+========================================================= */
+
+.notification-bell {
+
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+.notification-number {
+
+    position: absolute;
+
+    top: -3px;
+    right: -3px;
+
+    min-width: 19px;
+    height: 19px;
+
+    padding:
+        0 4px;
+
+    border-radius: 50%;
+
+    background:
+        #f12626;
+
+    color: white;
+
+    font-size: 9px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-area {
+
+    position: relative;
+}
+
+.profile-button {
+
+    border: none;
+
+    background: transparent;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+}
+
+.profile-avatar {
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #07832f;
+
+    color:
+        #07832f;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.profile-name {
+
+    display: block;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color:
+        #101828;
+
+    text-align: left;
+}
+
+.profile-role {
+
+    display: block;
+
+    color:
+        #07823d;
+
+    font-size: 12px;
+
+    margin-top: 2px;
+
+    text-align: left;
+}
+
+.profile-arrow {
+
+    color:
+        #63758a;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+.profile-dropdown {
+
+    display: none;
+
+    position: absolute;
+
+    right: 0;
+    top: 55px;
+
+    width: 275px;
+
+    background: white;
+
+    border:
+        1px solid #dce4e0;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.15);
+
+    overflow: hidden;
+
+    z-index: 5000;
+}
+
+.profile-dropdown.show {
+
+    display: block;
+}
+
+.dropdown-user {
+
+    padding:
+        17px 20px;
+
+    border-bottom:
+        1px solid #e5eae7;
+}
+
+.dropdown-user-name {
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    color:
+        #172840;
+}
+
+.dropdown-user-role {
+
+    color:
+        #07823d;
+
+    font-size: 13px;
+
+    margin-top: 3px;
+}
+
+.switch-title {
+
+    padding:
+        15px 20px 7px;
+
+    color:
+        #718096;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.role-option {
+
+    margin:
+        0 10px 5px;
+
+    padding:
+        11px 13px;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    cursor: pointer;
+
+    color:
+        #334155;
+
+    font-size: 13px;
+}
+
+.role-option:hover {
+
+    background:
+        #f2f6f4;
+}
+
+.role-option.selected {
+
+    background:
+        #e3f5e8;
+
+    color:
+        #07823d;
+
+    font-weight: bold;
+}
+
+.role-icon {
+
+    width: 23px;
+
+    text-align: center;
+
+    font-size: 17px;
+}
+
+.role-check {
+
+    margin-left: auto;
+
+    color:
+        #07823d;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+
+    flex: 1;
+
+    padding:
+        38px 38px 35px;
+
+    background:
+        #f5f7f9;
+}
+
+
+/* =========================================================
+   TITLE
+========================================================= */
+
+.page-title {
+
+    font-size: 34px;
+
+    font-weight: bold;
+
+    color:
+        #101c31;
+
+    margin-bottom: 8px;
+}
+
+.page-title span {
+
+    color:
+        #07823d;
+}
+
+.title-underline {
+
+    width: 44px;
+
+    height: 3px;
+
+    background:
+        #07823d;
+
+    margin-top: 9px;
+}
+
+.page-subtitle {
+
+    font-size: 14px;
+
+    color:
+        #63758a;
+
+    margin-top: 13px;
+
+    margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   NOTIFICATION CARD
+========================================================= */
+
+.notification-card {
+
+    background:
+        white;
+
+    border:
+        1px solid #e0e5e9;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.04);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   FILTER BAR
+========================================================= */
+
+.filter-bar {
+
+    min-height: 72px;
+
+    padding:
+        15px 20px;
+
+    border-bottom:
+        1px solid #e4e8eb;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.filter-button {
+
+    border:
+        1px solid #d1d9df;
+
+    background:
+        white;
+
+    color:
+        #536071;
+
+    border-radius: 7px;
+
+    padding:
+        9px 18px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+.filter-button:hover {
+
+    background:
+        #f4f7f6;
+}
+
+.filter-unread-badge {
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 16px;
+    height: 16px;
+    padding: 0 5px;
+    margin-left: 6px;
+    border-radius: 20px;
+    background: #e0302b;
+    color: #fff;
+    font-size: 10px;
+}
+
+.filter-button.active {
+
+    background:
+        #07833b;
+
+    color:
+        white;
+
+    border-color:
+        #07833b;
+}
+
+
+/* =========================================================
+   NOTIFICATION HEADER
+========================================================= */
+
+.notification-header {
+
+    padding:
+        16px 22px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid #e8ecef;
+}
+
+.notification-header-title {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color:
+        #172840;
+}
+
+.mark-all-button {
+
+    border: none;
+
+    background: transparent;
+
+    color:
+        #07823d;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.mark-all-button:hover {
+
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   NOTIFICATION ITEM
+========================================================= */
+
+.notification-item {
+
+    min-height: 105px;
+
+    padding:
+        17px 22px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    border-bottom:
+        1px solid #e8ecef;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+
+    position: relative;
+}
+
+.notification-item:last-child {
+
+    border-bottom: none;
+}
+
+.notification-item:hover {
+
+    background:
+        #fafcfc;
+}
+
+.notification-item.unread {
+
+    background:
+        #f5faf6;
+}
+
+.notification-item.unread::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 4px;
+
+    background:
+        #07833b;
+}
+
+
+/* =========================================================
+   NOTIFICATION ICON
+========================================================= */
+
+.notification-icon {
+
+    width: 45px;
+    height: 45px;
+
+    min-width: 45px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+}
+
+.icon-order {
+
+    background:
+        #eaf2ff;
+
+    color:
+        #1559d4;
+}
+
+.icon-report {
+
+    background:
+        #fff4df;
+
+    color:
+        #df8c00;
+}
+
+.icon-system {
+
+    background:
+        #e9f7ed;
+
+    color:
+        #07823d;
+}
+
+.icon-message {
+
+    background:
+        #f1e9fc;
+
+    color:
+        #6b2fc7;
+}
+
+
+/* =========================================================
+   NOTIFICATION CONTENT
+========================================================= */
+
+.notification-content {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+.notification-title {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color:
+        #172840;
+
+    margin-bottom: 6px;
+}
+
+.notification-message {
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color:
+        #536071;
+
+    margin-bottom: 7px;
+}
+
+.notification-meta {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    font-size: 9px;
+
+    color:
+        #8a97a7;
+}
+
+.notification-category {
+
+    padding:
+        3px 7px;
+
+    border-radius: 10px;
+
+    font-size: 8px;
+
+    font-weight: bold;
+}
+
+.category-order {
+
+    background:
+        #eaf2ff;
+
+    color:
+        #1559d4;
+}
+
+.category-report {
+
+    background:
+        #fff3dc;
+
+    color:
+        #c47b00;
+}
+
+.category-system {
+
+    background:
+        #e7f5eb;
+
+    color:
+        #07823d;
+}
+
+.category-message {
+
+    background:
+        #f1e9fc;
+
+    color:
+        #6b2fc7;
+}
+
+
+/* =========================================================
+   UNREAD DOT
+========================================================= */
+
+.unread-dot {
+
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+
+    background:
+        #07833b;
+
+    margin-top: 6px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+
+    padding:
+        75px 25px;
+
+    text-align: center;
+}
+
+.empty-icon {
+
+    width: 65px;
+    height: 65px;
+
+    margin:
+        0 auto 15px;
+
+    border-radius: 50%;
+
+    background:
+        #edf3f7;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+}
+
+.empty-state h3 {
+
+    font-size: 18px;
+
+    color:
+        #172840;
+
+    margin-bottom: 7px;
+}
+
+.empty-state p {
+
+    font-size: 12px;
+
+    color:
+        #718096;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    left: 255px;
+
+
+    min-height: 56px;
+
+    background:
+        #00552d;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 14px;
+
+    font-size: 10px;
+}
+
+.footer a {
+
+    color: white;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    background:
+        #172b43;
+
+    color: white;
+
+    padding:
+        13px 19px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.2);
+
+    opacity: 0;
+
+    transform:
+        translateY(15px);
+
+    pointer-events: none;
+
+    transition:
+        0.25s ease;
+
+    z-index: 10000;
+}
+
+.toast.show {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .sidebar {
+
+        width: 250px;
+        min-width: 250px;
+    }
+
+    .main {
+
+        margin-left: 250px;
+
+        width:
+            calc(100% - 250px);
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .sidebar {
+
+        width: 210px;
+        min-width: 210px;
+    }
+
+    .main {
+
+        margin-left: 210px;
+
+        width:
+            calc(100% - 210px);
+    }
+
+    .content {
+
+        padding:
+            25px 18px;
+    }
+
+    .notification-item {
+
+        padding:
+            15px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+
+        <a
+            href="buyer-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-text">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-search-crops.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔍
+            </span>
+
+            <span class="nav-text">
+                Search for Crops
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-orders.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🛒
+            </span>
+
+            <span class="nav-text">
+                My Orders
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-messages.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-text">
+                Messages
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-notifications.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-text">
+                Notifications
+            </span>
+
+            <span
+                class="notification-count"
+                id="notificationCount"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-text">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-text">
+                History
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="buyer-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-text">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-text">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="login.html"
+            class="nav-item"
+            onclick="logout(event)"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-text">
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+<header class="top-header">
+
+
+    <div class="header-right">
+
+
+        <div
+            class="notification-bell"
+            onclick="openNotifications()"
+        >
+
+            🔔
+
+            <span
+                class="notification-number"
+                id="headerNotificationCount"
+            >
+                0
+            </span>
+
+        </div>
+
+
+        <div class="profile-area">
+
+
+            <button
+                class="profile-button"
+                id="profileButton"
+                type="button"
+            >
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    KI
+                </div>
+
+
+                <div>
+
+                    <span
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Kilshan
+                    </span>
+
+                    <span
+                        class="profile-role"
+                    >
+                        Buyer
+                    </span>
+
+                </div>
+
+
+                <span
+                    class="profile-arrow"
+                    id="profileArrow"
+                >
+                    ▼
+                </span>
+
+            </button>
+
+
+            <div
+                class="profile-dropdown"
+                id="profileDropdown"
+            >
+
+                <div class="dropdown-user">
+
+                    <div
+                        class="dropdown-user-name"
+                        id="dropdownUserName"
+                    >
+                        Kilshan
+                    </div>
+
+                    <div
+                        class="dropdown-user-role"
+                    >
+                        Buyer
+                    </div>
+
+                </div>
+
+
+                <div class="switch-title">
+                    SWITCH ROLE
+                </div>
+
+
+                <div
+                    id="rolesContainer"
+                ></div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</header>
+
+
+
+<!-- =========================================================
+     CONTENT
+========================================================= -->
+
+<section class="content">
+
+
+    <div class="page-title">
+
+        Notifications
+        <span>Center</span>
+
+        <div class="title-underline"></div>
+
+    </div>
+
+
+    <div class="page-subtitle">
+
+        Stay updated about your orders, reported issues and AgriConnect system updates.
+
+    </div>
+
+
+    <div class="notification-card">
+
+
+        <!-- FILTERS -->
+
+        <div class="filter-bar">
+
+
+            <button
+                class="filter-button active"
+                data-filter="all"
+                onclick="filterNotifications('all', this)"
+            >
+                All
+            </button>
+
+
+            <button
+                class="filter-button"
+                data-filter="order"
+                onclick="filterNotifications('order', this)"
+            >
+                Orders
+            </button>
+
+
+            <button
+                class="filter-button"
+                data-filter="report"
+                onclick="filterNotifications('report', this)"
+            >
+                My Reports
+            </button>
+
+
+            <button
+                class="filter-button"
+                data-filter="message"
+                onclick="filterNotifications('message', this)"
+            >
+                Messages
+                <span class="filter-unread-badge" id="unreadMessagesBadge" style="display:none;"></span>
+            </button>
+
+
+            <button
+                class="filter-button"
+                data-filter="system"
+                onclick="filterNotifications('system', this)"
+            >
+                System
+            </button>
+
+
+        </div>
+
+
+
+        <!-- NOTIFICATION HEADER -->
+
+        <div class="notification-header">
+
+
+            <div
+                class="notification-header-title"
+                id="notificationHeaderTitle"
+            >
+                All Notifications
+            </div>
+
+
+            <button
+                class="mark-all-button"
+                onclick="markAllAsRead()"
+            >
+                Mark all as read
+            </button>
+
+
+        </div>
+
+
+
+        <!-- NOTIFICATIONS -->
+
+        <div
+            id="notificationList"
+        ></div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <span>
+        🌿
+    </span>
+
+    <span>
+        © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+</main>
+
+</div>
+
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+
+<script>
+
+/* =========================================================
+   CURRENT FILTER
+========================================================= */
+
+let currentFilter = "all";
+
+
+/* =========================================================
+   NOTIFICATION STORAGE
+========================================================= */
+
+const STORAGE_KEY =
+    "buyerNotifications";
+
+
+/* =========================================================
+   CURRENT USER
+========================================================= */
+
+function getCurrentUserId() {
+
+    try {
+
+        const user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+        return user && user.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+/* =========================================================
+   MAP BACKEND TYPE -> THIS PAGE'S FILTER TABS
+   (all / order / report / system)
+========================================================= */
+
+function mapBuyerNotificationType(type) {
+
+    if (type === "order") {
+        return "order";
+    }
+
+    if (type === "report") {
+        return "report";
+    }
+
+    if (type === "admin_warning") {
+        return "admin_warning";
+    }
+
+    if (type === "message") {
+        return "message";
+    }
+
+    // "rental", "registration", "account" and anything
+    // unrecognized fall back to System.
+    return "system";
+
+}
+
+
+/* =========================================================
+   FORMAT A TIMESTAMP LIKE THE EXISTING DEMO DATA
+   ("Today, 10:30 AM" / "Yesterday, 3:20 PM" / "Sep 2, 3:20 PM")
+========================================================= */
+
+function formatNotificationTime(isoString) {
+
+    const date = new Date(isoString);
+
+    if (isNaN(date)) {
+        return "";
+    }
+
+    const now = new Date();
+
+    const isToday =
+        date.toDateString() === now.toDateString();
+
+    const yesterday = new Date(now);
+    yesterday.setDate(yesterday.getDate() - 1);
+
+    const isYesterday =
+        date.toDateString() === yesterday.toDateString();
+
+    const timePart =
+        date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+
+    if (isToday) {
+        return `Today, ${timePart}`;
+    }
+
+    if (isYesterday) {
+        return `Yesterday, ${timePart}`;
+    }
+
+    const datePart =
+        date.toLocaleDateString([], { month: "short", day: "numeric" });
+
+    return `${datePart}, ${timePart}`;
+
+}
+
+
+/* =========================================================
+   LIVE NOTIFICATIONS CACHE (populated from the backend)
+========================================================= */
+
+let __liveNotifications = [];
+
+
+/* =========================================================
+   REFRESH NOTIFICATIONS FROM THE BACKEND
+========================================================= */
+
+async function refreshNotifications() {
+
+    const userId = getCurrentUserId();
+
+    if (!userId) {
+
+        __liveNotifications = [];
+        return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(`/api/notifications?user_id=${userId}`);
+
+        const data =
+            await response.json();
+
+        if (data && data.success && Array.isArray(data.notifications)) {
+
+            __liveNotifications =
+                data.notifications.map(row => ({
+                    id: "srv-" + row.id,
+                    backendId: row.id,
+                    type: mapBuyerNotificationType(row.type),
+                    title: row.title,
+                    message: row.message,
+                    time: formatNotificationTime(row.created_at),
+                    read: !!row.is_read
+                }));
+
+        } else {
+
+            __liveNotifications = [];
+
+        }
+
+    } catch (error) {
+
+        console.error("Unable to load notifications:", error);
+
+        __liveNotifications = [];
+
+    }
+
+}
+
+
+/* =========================================================
+   GET NOTIFICATIONS
+========================================================= */
+
+function getNotifications() {
+
+    return __liveNotifications;
+
+}
+
+
+/* =========================================================
+   SAVE NOTIFICATIONS
+========================================================= */
+
+function saveNotifications(
+    notifications
+) {
+
+    __liveNotifications = notifications;
+
+}
+
+
+/* =========================================================
+   DEMO NOTIFICATIONS
+========================================================= */
+
+function createDemoNotifications() {
+
+    const existing =
+        getNotifications();
+
+
+    /*
+     * Don't overwrite notifications
+     * already created by the system.
+     */
+
+    if (
+        existing.length > 0
+    ) {
+
+        return;
+
+    }
+
+
+    const demo = [
+
+        {
+
+            id:
+                "buyer-demo-1",
+
+            type:
+                "order",
+
+            title:
+                "Order Confirmed",
+
+            message:
+                "Your Tomato order has been accepted by Kumar Farm.",
+
+            time:
+                "Today, 10:30 AM",
+
+            read:
+                false,
+
+            orderId:
+                "ORD-1001"
+
+        },
+
+
+        {
+
+            id:
+                "buyer-demo-2",
+
+            type:
+                "order",
+
+            title:
+                "Order Status Updated",
+
+            message:
+                "Your Rice order is currently being processed.",
+
+            time:
+                "Today, 09:15 AM",
+
+            read:
+                false,
+
+            orderId:
+                "ORD-1005"
+
+        },
+
+
+        {
+
+            id:
+                "buyer-demo-3",
+
+            type:
+                "report",
+
+            title:
+                "Report Received",
+
+            message:
+                "Your reported issue has been received and is being reviewed by the administrator.",
+
+            time:
+                "Yesterday, 03:20 PM",
+
+            read:
+                true
+
+        },
+
+
+        {
+
+            id:
+                "buyer-demo-4",
+
+            type:
+                "report",
+
+            title:
+                "Issue Resolved",
+
+            message:
+                "The issue you reported has been resolved by the administrator.",
+
+            time:
+                "Yesterday, 11:40 AM",
+
+            read:
+                false
+
+        },
+
+
+        {
+
+            id:
+                "buyer-demo-5",
+
+            type:
+                "system",
+
+            title:
+                "System Update",
+
+            message:
+                "AgriConnect has been updated with improvements to the marketplace and notification system.",
+
+            time:
+                "28 Aug 2026",
+
+            read:
+                true
+
+        }
+
+    ];
+
+
+    saveNotifications(
+        demo
+    );
+
+}
+
+
+/* =========================================================
+   ICON
+========================================================= */
+
+function getNotificationIcon(
+    type
+) {
+
+    if (
+        type === "order"
+    ) {
+
+        return "🛒";
+
+    }
+
+
+    if (
+        type === "report"
+    ) {
+
+        return "⚠";
+
+    }
+
+
+    if (
+        type === "admin_warning"
+    ) {
+
+        return "🛡️";
+
+    }
+
+
+    if (
+        type === "message"
+    ) {
+
+        return "💬";
+
+    }
+
+
+    return "⚙";
+
+}
+
+
+/* =========================================================
+   CATEGORY NAME
+========================================================= */
+
+function getCategoryName(
+    type
+) {
+
+    if (
+        type === "order"
+    ) {
+
+        return "Order";
+
+    }
+
+
+    if (
+        type === "report"
+    ) {
+
+        return "My Report";
+
+    }
+
+
+    if (
+        type === "admin_warning"
+    ) {
+
+        return "Admin Message";
+
+    }
+
+
+    if (
+        type === "message"
+    ) {
+
+        return "Message";
+
+    }
+
+
+    return "System";
+
+}
+
+
+/* =========================================================
+   CATEGORY CLASS
+========================================================= */
+
+function getCategoryClass(
+    type
+) {
+
+    if (
+        type === "order"
+    ) {
+
+        return "category-order";
+
+    }
+
+
+    if (
+        type === "report"
+    ) {
+
+        return "category-report";
+
+    }
+
+
+    if (
+        type === "admin_warning"
+    ) {
+
+        return "category-report";
+
+    }
+
+
+    if (
+        type === "message"
+    ) {
+
+        return "category-message";
+
+    }
+
+
+    return "category-system";
+
+}
+
+
+/* =========================================================
+   ICON CLASS
+========================================================= */
+
+function getIconClass(
+    type
+) {
+
+    if (
+        type === "order"
+    ) {
+
+        return "icon-order";
+
+    }
+
+
+    if (
+        type === "report"
+    ) {
+
+        return "icon-report";
+
+    }
+
+
+    if (
+        type === "admin_warning"
+    ) {
+
+        return "icon-report";
+
+    }
+
+
+    if (
+        type === "message"
+    ) {
+
+        return "icon-message";
+
+    }
+
+
+    return "icon-system";
+
+}
+
+
+/* =========================================================
+   RENDER NOTIFICATIONS
+========================================================= */
+
+function renderNotifications() {
+
+    const list =
+        document.getElementById(
+            "notificationList"
+        );
+
+
+    const allNotifications =
+        getNotifications();
+
+
+    const filtered =
+        currentFilter === "all"
+
+            ? allNotifications
+
+            : currentFilter === "system"
+
+                ? allNotifications.filter(
+                    notification =>
+                        notification.type === "system" ||
+                        notification.type === "admin_warning"
+                )
+
+                : allNotifications.filter(
+                    notification =>
+                        notification.type ===
+                        currentFilter
+                );
+
+
+    list.innerHTML = "";
+
+
+    if (
+        filtered.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div
+                class="empty-state"
+            >
+
+                <div
+                    class="empty-icon"
+                >
+                    🔔
+                </div>
+
+                <h3>
+                    No notifications
+                </h3>
+
+                <p>
+                    There are no notifications
+                    in this category.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    filtered.forEach(
+        notification => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "notification-item";
+
+
+            if (
+                !notification.read
+            ) {
+
+                item.classList.add(
+                    "unread"
+                );
+
+            }
+
+
+            item.innerHTML = `
+
+                <div
+                    class="
+                        notification-icon
+                        ${getIconClass(
+                            notification.type
+                        )}
+                    "
+                >
+                    ${getNotificationIcon(
+                        notification.type
+                    )}
+                </div>
+
+
+                <div
+                    class="
+                        notification-content
+                    "
+                >
+
+                    <div
+                        class="
+                            notification-title
+                        "
+                    >
+                        ${escapeHtml(
+                            notification.title
+                        )}
+                    </div>
+
+
+                    <div
+                        class="
+                            notification-message
+                        "
+                    >
+                        ${escapeHtml(
+                            notification.message
+                        )}
+                    </div>
+
+
+                    <div
+                        class="
+                            notification-meta
+                        "
+                    >
+
+                        <span
+                            class="
+                                notification-category
+                                ${getCategoryClass(
+                                    notification.type
+                                )}
+                            "
+                        >
+                            ${getCategoryName(
+                                notification.type
+                            )}
+                        </span>
+
+
+                        <span>
+                            ${escapeHtml(
+                                notification.time ||
+                                "Just now"
+                            )}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                ${
+                    !notification.read
+
+                    ? `
+
+                        <span
+                            class="unread-dot"
+                        ></span>
+
+                    `
+
+                    : ""
+
+                }
+
+            `;
+
+
+            item.addEventListener(
+                "click",
+                function() {
+
+                    markNotificationRead(
+                        notification.id
+                    );
+
+                    if (
+                        notification.type ===
+                        "admin_warning"
+                    ) {
+
+                        document.getElementById(
+                            "adminMessageSubject"
+                        ).textContent =
+                            notification.title || "Message from Admin";
+
+                        document.getElementById(
+                            "adminMessageBody"
+                        ).textContent =
+                            notification.message || "";
+
+                        document.getElementById(
+                            "adminMessageDate"
+                        ).textContent =
+                            notification.time || "";
+
+                        document.getElementById(
+                            "adminMessageOverlay"
+                        ).style.display = "flex";
+
+                    }
+
+                }
+            );
+
+
+            list.appendChild(
+                item
+            );
+
+        }
+    );
+
+
+    updateNotificationCount();
+
+}
+
+
+/* =========================================================
+   FILTER
+========================================================= */
+
+function filterNotifications(
+    filter,
+    button
+) {
+
+    currentFilter =
+        filter;
+
+
+    document
+        .querySelectorAll(
+            ".filter-button"
+        )
+        .forEach(
+            btn => {
+
+                btn.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    const title =
+        document.getElementById(
+            "notificationHeaderTitle"
+        );
+
+
+    if (
+        filter === "order"
+    ) {
+
+        title.textContent =
+            "Order Notifications";
+
+    }
+
+    else if (
+        filter === "report"
+    ) {
+
+        title.textContent =
+            "My Report Notifications";
+
+    }
+
+    else if (
+        filter === "system"
+    ) {
+
+        title.textContent =
+            "System Notifications";
+
+    }
+
+    else if (
+        filter === "message"
+    ) {
+
+        title.textContent =
+            "Message Notifications";
+
+    }
+
+    else {
+
+        title.textContent =
+            "All Notifications";
+
+    }
+
+
+    renderNotifications();
+
+}
+
+
+/* =========================================================
+   MARK ONE READ
+========================================================= */
+
+function markNotificationRead(
+    id
+) {
+
+    const notifications =
+        getNotifications();
+
+
+    const notification =
+        notifications.find(
+            item =>
+                String(
+                    item.id
+                ) ===
+                String(
+                    id
+                )
+        );
+
+
+    if (
+        notification
+    ) {
+
+        notification.read =
+            true;
+
+    }
+
+
+    saveNotifications(
+        notifications
+    );
+
+
+    renderNotifications();
+
+
+    if (notification && notification.backendId) {
+
+        const userId = getCurrentUserId();
+
+        if (userId) {
+
+            fetch(`/api/notifications/${notification.backendId}/read`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: userId })
+            }).catch(error => console.error("Failed to sync read status:", error));
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   MARK ALL READ
+========================================================= */
+
+function markAllAsReadSilently() {
+
+    const notifications =
+        getNotifications();
+
+
+    notifications.forEach(
+        notification => {
+
+            notification.read =
+                true;
+
+        }
+    );
+
+
+    saveNotifications(
+        notifications
+    );
+
+
+    renderNotifications();
+
+
+    const userId = getCurrentUserId();
+
+    if (userId) {
+
+        fetch(`/api/notifications/read-all`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user_id: userId })
+        }).catch(error => console.error("Failed to sync mark-all-read:", error));
+
+    }
+
+}
+
+
+function markAllAsRead() {
+
+    markAllAsReadSilently();
+
+    showToast(
+        "All notifications marked as read."
+    );
+
+}
+
+
+/* =========================================================
+   NOTIFICATION COUNT
+========================================================= */
+
+function updateNotificationCount() {
+
+    const notifications =
+        getNotifications();
+
+
+    const unread =
+        notifications.filter(
+            notification =>
+                !notification.read
+        ).length;
+
+
+    document.getElementById(
+        "notificationCount"
+    ).textContent =
+        unread;
+
+
+    document.getElementById(
+        "headerNotificationCount"
+    ).textContent =
+        unread;
+
+
+    const unreadMessages =
+        notifications.filter(
+            notification =>
+                !notification.read &&
+                notification.type === "message"
+        ).length;
+
+    const messagesBadge =
+        document.getElementById("unreadMessagesBadge");
+
+    if (messagesBadge) {
+
+        if (unreadMessages > 0) {
+            messagesBadge.textContent = unreadMessages;
+            messagesBadge.style.display = "inline-flex";
+        } else {
+            messagesBadge.style.display = "none";
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   ADD BUYER NOTIFICATION
+========================================================= */
+
+function addBuyerNotification(
+    type,
+    title,
+    message,
+    extra = {}
+) {
+
+    const notifications =
+        getNotifications();
+
+
+    notifications.unshift({
+
+        id:
+            "buyer-" +
+            Date.now(),
+
+        type:
+            type,
+
+        title:
+            title,
+
+        message:
+            message,
+
+        time:
+            "Just now",
+
+        read:
+            false,
+
+        ...extra
+
+    });
+
+
+    saveNotifications(
+        notifications
+    );
+
+
+    renderNotifications();
+
+}
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+let user = null;
+
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem(
+                "user"
+            ) || "null"
+        );
+
+}
+
+catch (error) {
+
+    user = null;
+
+}
+
+
+if (!user) {
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem(
+                    "loggedInUser"
+                ) || "null"
+            );
+
+    }
+
+    catch (error) {
+
+        user = null;
+
+    }
+
+}
+
+
+const userName =
+    user?.name ||
+    user?.username ||
+    "Kilshan";
+
+
+/* =========================================================
+   INITIALS
+========================================================= */
+
+function getInitials(
+    name
+) {
+
+    const parts =
+        String(
+            name
+        )
+        .trim()
+        .split(
+            /\s+/
+        );
+
+
+    if (
+        parts.length === 1
+    ) {
+
+        return parts[0]
+            .substring(
+                0,
+                2
+            )
+            .toUpperCase();
+
+    }
+
+
+    return (
+
+        parts[0][0] +
+        parts[1][0]
+
+    ).toUpperCase();
+
+}
+
+
+/* =========================================================
+   ROLES
+========================================================= */
+
+function getRegisteredRoles() {
+
+    let roles = [];
+
+
+    if (
+        user &&
+        Array.isArray(
+            user.roles
+        )
+    ) {
+
+        roles =
+            [...user.roles];
+
+    }
+
+
+    if (
+        roles.length === 0
+    ) {
+
+        try {
+
+            const saved =
+                JSON.parse(
+                    sessionStorage.getItem(
+                        "registeredRoles"
+                    ) || "null"
+                );
+
+
+            if (
+                Array.isArray(
+                    saved
+                )
+            ) {
+
+                roles =
+                    [...saved];
+
+            }
+
+        }
+
+        catch (error) {
+
+            roles = [];
+
+        }
+
+    }
+
+
+    roles =
+        roles
+            .map(
+                role =>
+                    String(
+                        role
+                    ).trim()
+            )
+            .filter(
+                Boolean
+            );
+
+
+    roles =
+        [
+            ...new Set(
+                roles
+            )
+        ];
+
+
+    if (
+        roles.length === 0
+    ) {
+
+        roles.push(
+            "Buyer"
+        );
+
+    }
+
+
+    if (
+        !roles.some(
+            role =>
+                role.toLowerCase() ===
+                "buyer"
+        )
+    ) {
+
+        roles.push(
+            "Buyer"
+        );
+
+    }
+
+
+    return roles;
+
+}
+
+
+const registeredRoles =
+    getRegisteredRoles();
+
+
+/* =========================================================
+   ROLE ICON
+========================================================= */
+
+function getRoleIcon(
+    role
+) {
+
+    const r =
+        role.toLowerCase();
+
+
+    if (
+        r === "buyer"
+    ) {
+
+        return "🛒";
+
+    }
+
+
+    if (
+        r === "farmer"
+    ) {
+
+        return "🧑‍🌾";
+
+    }
+
+
+    if (
+        r.includes(
+            "expert"
+        )
+    ) {
+
+        return "🧑‍🔬";
+
+    }
+
+
+    if (
+        r.includes(
+            "equipment"
+        )
+    ) {
+
+        return "🚜";
+
+    }
+
+
+    return "👤";
+
+}
+
+
+/* =========================================================
+   RENDER ROLES
+========================================================= */
+
+function renderRoles() {
+
+    const container =
+        document.getElementById(
+            "rolesContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    registeredRoles.forEach(
+        role => {
+
+            const option =
+                document.createElement(
+                    "div"
+                );
+
+
+            option.className =
+                "role-option";
+
+
+            const selected =
+                role.toLowerCase() ===
+                "buyer";
+
+
+            if (
+                selected
+            ) {
+
+                option.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            option.innerHTML = `
+
+                <span
+                    class="role-icon"
+                >
+                    ${getRoleIcon(
+                        role
+                    )}
+                </span>
+
+
+                <span>
+                    ${escapeHtml(
+                        role
+                    )}
+                </span>
+
+
+                <span
+                    class="role-check"
+                    style="
+                        display:
+                        ${
+                            selected
+                                ? "block"
+                                : "none"
+                        };
+                    "
+                >
+                    ✓
+                </span>
+
+            `;
+
+
+            option.addEventListener(
+                "click",
+                function() {
+
+                    switchRole(
+                        role
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SWITCH ROLE
+========================================================= */
+
+function switchRole(
+    role
+) {
+
+    const normalized =
+        String(
+            role
+        ).toLowerCase();
+
+
+    if (
+        normalized ===
+        "buyer"
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            "Buyer"
+        );
+
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+
+        return;
+
+    }
+
+
+    if (
+        normalized ===
+        "farmer"
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            "Farmer"
+        );
+
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+
+        return;
+
+    }
+
+
+    if (
+        normalized.includes(
+            "expert"
+        )
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            role
+        );
+
+
+        window.location.href =
+            "expert-dashboard.html";
+
+
+        return;
+
+    }
+
+
+    if (
+        normalized.includes(
+            "equipment"
+        )
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            role
+        );
+
+
+        window.location.href =
+            "rental-dashboard.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function updateProfile() {
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        userName;
+
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        userName;
+
+
+    document.getElementById(
+        "profileAvatar"
+    ).textContent =
+        getInitials(
+            userName
+        );
+
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+document
+    .getElementById(
+        "profileButton"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            const dropdown =
+                document.getElementById(
+                    "profileDropdown"
+                );
+
+
+            const arrow =
+                document.getElementById(
+                    "profileArrow"
+                );
+
+
+            dropdown.classList.toggle(
+                "show"
+            );
+
+
+            arrow.textContent =
+                dropdown.classList.contains(
+                    "show"
+                )
+                    ? "▲"
+                    : "▼";
+
+        }
+    );
+
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const area =
+            document.querySelector(
+                ".profile-area"
+            );
+
+
+        if (
+            area &&
+            !area.contains(
+                event.target
+            )
+        ) {
+
+            document
+                .getElementById(
+                    "profileDropdown"
+                )
+                .classList.remove(
+                    "show"
+                );
+
+
+            document.getElementById(
+                "profileArrow"
+            ).textContent =
+                "▼";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   OPEN NOTIFICATIONS
+========================================================= */
+
+function openNotifications() {
+
+    /*
+     * Already on Buyer Notifications.
+     */
+
+    window.location.href =
+        "buyer-notifications.html";
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(event) {
+
+    event.preventDefault();
+
+
+    const confirmed =
+        await customConfirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if (
+        !confirmed
+    ) {
+
+        return;
+
+    }
+
+
+    sessionStorage.removeItem(
+        "currentRole"
+    );
+
+
+    sessionStorage.removeItem(
+        "loggedInUser"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+function showToast(
+    message
+) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        function() {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        2500
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value == null
+            ? ""
+            : String(
+                value
+            );
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function() {
+
+        /*
+         * Keep this page in Buyer role.
+         */
+
+        sessionStorage.setItem(
+            "currentRole",
+            "Buyer"
+        );
+
+
+        await refreshNotifications();
+
+
+        updateProfile();
+
+
+        renderRoles();
+
+
+        renderNotifications();
+
+
+        updateNotificationCount();
+
+
+        /*
+         * Opening this page counts as having seen the
+         * notifications - clear the unread badge everywhere
+         * without requiring the user to click each item.
+         */
+
+        markAllAsReadSilently();
+
+    }
+);
+
+
+/* =========================================================
+   REFRESH WHEN STORAGE CHANGES
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    function() {
+
+        renderNotifications();
+
+        updateNotificationCount();
+
+    }
+);
+
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (
+            !document.hidden
+        ) {
+
+            renderNotifications();
+
+            updateNotificationCount();
+
+        }
+
+    }
+);
+
+</script>
+
+
+<!-- =========================================================
+     CUSTOM CONFIRM / ALERT DIALOG
+     Replaces the native browser confirm()/alert() popups with
+     a styled in-app dialog consistent with the rest of the UI.
+========================================================= -->
+
+<div
+    id="customDialogOverlay"
+    style="display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;"
+>
+
+    <div
+        style="background:#fff;border-radius:16px;padding:26px 28px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);"
+    >
+
+        <div
+            id="customDialogIcon"
+            style="width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin-bottom:16px;"
+        >
+            !
+        </div>
+
+        <div
+            id="customDialogTitle"
+            style="font-size:16px;font-weight:700;color:#172033;margin-bottom:8px;"
+        >
+        </div>
+
+        <div
+            id="customDialogMessage"
+            style="font-size:13px;color:#536274;line-height:1.55;margin-bottom:22px;white-space:pre-line;"
+        >
+        </div>
+
+        <div
+            id="customDialogButtons"
+            style="display:flex;gap:10px;justify-content:flex-end;"
+        >
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   CUSTOM CONFIRM / ALERT (replaces window.confirm / window.alert)
+========================================================= */
+
+function customConfirm(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Please Confirm";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "?";
+        icon.style.background = "#fff0e5";
+        icon.style.color = "#e86600";
+
+        buttons.innerHTML = "";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.type = "button";
+        cancelBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:1px solid #dde3e0;background:#fff;color:#536274;font-weight:600;cursor:pointer;font-size:13px;";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish(result) {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") finish(false);
+            if (e.key === "Enter") finish(true);
+        }
+
+        cancelBtn.onclick = () => finish(false);
+        okBtn.onclick = () => finish(true);
+
+        buttons.appendChild(cancelBtn);
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+function customAlert(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Notice";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "i";
+        icon.style.background = "#eaf1ff";
+        icon.style.color = "#2469e9";
+
+        buttons.innerHTML = "";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 22px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish() {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve();
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape" || e.key === "Enter") finish();
+        }
+
+        okBtn.onclick = finish;
+
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+
+<!-- ================= ADMIN MESSAGE MODAL ================= -->
+
+<div
+    id="adminMessageOverlay"
+    style="display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;"
+>
+
+    <div
+        style="background:#fff;border-radius:16px;padding:26px 28px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);"
+    >
+
+        <div
+            style="width:46px;height:46px;border-radius:50%;background:#fdeceb;color:#c0392b;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;"
+        >
+            🛡️
+        </div>
+
+        <div
+            id="adminMessageSubject"
+            style="font-size:17px;font-weight:700;color:#172033;margin-bottom:6px;"
+        >
+        </div>
+
+        <div
+            id="adminMessageDate"
+            style="font-size:12px;color:#8a94a6;margin-bottom:16px;"
+        >
+        </div>
+
+        <div
+            id="adminMessageBody"
+            style="font-size:13px;color:#3f4a58;line-height:1.6;white-space:pre-line;background:#f7f8fa;border-radius:10px;padding:14px 16px;margin-bottom:22px;"
+        >
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;">
+
+            <button
+                type="button"
+                onclick="document.getElementById('adminMessageOverlay').style.display='none';"
+                style="padding:10px 22px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

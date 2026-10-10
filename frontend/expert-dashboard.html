@@ -1,0 +1,2988 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Agricultural Expert Dashboard</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7f8;
+    color: #17202a;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   SAME MEASUREMENTS AS ADMIN DASHBOARD
+========================================================= */
+
+.sidebar {
+    min-width: 255px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #00543f 0%,
+            #003f32 100%
+        );
+
+    color: white;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGO
+========================================================= */
+
+.sidebar-logo {
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.10);
+
+    flex-shrink: 0;
+}
+
+.sidebar-logo img {
+    width: 160px;
+
+    height: auto;
+
+    max-height: 62px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================================================
+   SIDEBAR CONTENT
+========================================================= */
+
+.sidebar-content {
+    padding: 13px 10px;
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav-item {
+    width: 100%;
+
+    min-height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    background:
+        rgba(255,255,255,0.08);
+}
+
+.nav-item.active {
+    background:
+        linear-gradient(
+            90deg,
+            #19945f,
+            #087a4d
+        );
+}
+
+.nav-icon {
+    width: 22px;
+
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+    padding: 8px 10px 14px;
+
+    flex-shrink: 0;
+}
+
+.sidebar-divider {
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.13);
+
+    margin:
+        5px 12px 10px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 42px;
+}
+
+
+/* =========================================================
+   HEADER
+   SAME MEASUREMENTS AS ADMIN
+========================================================= */
+
+.header {
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e8ee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    padding: 0 28px;
+}
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.notification {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    color: #003f32;
+
+    transition: 0.2s;
+}
+
+.notification:hover {
+    transform: scale(1.06);
+}
+
+.notification-badge {
+    position: absolute;
+
+    top: -1px;
+    right: -3px;
+
+    min-width: 18px;
+
+    height: 18px;
+
+    padding: 0 4px;
+
+    border-radius: 50px;
+
+    background: #ef3c35;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #006b4f;
+
+    background: #eaf7f1;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #006b4f;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.profile-info {
+    line-height: 17px;
+}
+
+.profile-name {
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #182033;
+}
+
+.profile-role {
+    font-size: 10px;
+
+    color: #087a4d;
+
+    margin-top: 2px;
+}
+
+.profile-arrow {
+    font-size: 11px;
+
+    margin-left: 2px;
+}
+
+
+/* =========================================================
+   CONTENT
+   SAME BASE MEASUREMENT AS ADMIN
+========================================================= */
+
+.content {
+    padding:
+        23px 18px 22px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+.page-header h1 {
+    font-size: 29px;
+
+    line-height: 34px;
+
+    color: #121826;
+
+    font-weight: 700;
+
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    font-size: 13px;
+
+    color: #555f70;
+
+    line-height: 18px;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+}
+
+.summary-card {
+    background: white;
+
+    border:
+        1px solid #e7eaf0;
+
+    border-radius: 9px;
+
+    min-height: 100px;
+
+    padding: 14px 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+.summary-icon {
+    width: 48px;
+    height: 48px;
+
+    min-width: 48px;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+}
+
+.summary-icon.green {
+    background: #e2f6e8;
+
+    color: #087f42;
+}
+
+.summary-icon.blue {
+    background: #e1edff;
+
+    color: #1765d3;
+}
+
+.summary-icon.orange {
+    background: #fff0df;
+
+    color: #ed9200;
+}
+
+.summary-title {
+    display: block;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #454d5c;
+
+    margin-bottom: 4px;
+}
+
+.summary-value {
+    display: block;
+
+    font-size: 23px;
+
+    font-weight: bold;
+
+    color: #111827;
+
+    margin-bottom: 4px;
+}
+
+.summary-bottom {
+    display: block;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.summary-bottom.green {
+    color: #16833c;
+}
+
+.summary-bottom.blue {
+    color: #2469e9;
+}
+
+.summary-bottom.orange {
+    color: #e18a00;
+}
+
+
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.45fr 1fr;
+
+    gap: 11px;
+
+    align-items: stretch;
+
+    margin-bottom: 11px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+.card-header {
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.card-title {
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #202633;
+}
+
+.view-all {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #087b48;
+
+    text-decoration: none;
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   RECENT CONSULTATIONS
+========================================================= */
+
+.consultations {
+    padding: 0 14px;
+}
+
+.consultation-item {
+    min-height: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.consultation-item:last-child {
+    border-bottom: none;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 50%;
+
+    background: #e2f6e8;
+
+    color: #087f42;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.consultation-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.user-name {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #202633;
+
+    margin-bottom: 3px;
+}
+
+.topic {
+    font-size: 10px;
+
+    color: #30404a;
+
+    font-weight: bold;
+
+    margin-bottom: 3px;
+}
+
+.preview {
+    font-size: 10px;
+
+    color: #667080;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    max-width: 340px;
+}
+
+.consultation-meta {
+    min-width: 78px;
+
+    text-align: right;
+
+    align-self: center;
+}
+
+.status {
+    display: inline-block;
+
+    padding:
+        5px 7px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+.status.pending {
+    background: #fff0d6;
+
+    color: #d87600;
+}
+
+.status.completed {
+    background: #def5e4;
+
+    color: #16833c;
+}
+
+.time {
+    display: block;
+
+    font-size: 10px;
+
+    color: #687180;
+}
+
+.consultations-footer {
+    padding:
+        8px 0 10px;
+
+    text-align: right;
+}
+
+.consultations-footer a {
+    color: #087b48;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   RIGHT COLUMN
+========================================================= */
+
+.right-column {
+    display: grid;
+
+    grid-template-rows:
+        1fr 1fr;
+
+    gap: 11px;
+}
+
+
+/* =========================================================
+   CONSULTATION OVERVIEW
+========================================================= */
+
+.overview-card {
+    min-height: 275px;
+}
+
+.overview-content {
+    min-height: 225px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 30px;
+
+    padding: 15px;
+}
+
+
+/* =========================================================
+   DONUT CHART
+========================================================= */
+
+.chart-wrapper {
+    position: relative;
+
+    width: 145px;
+    height: 145px;
+
+    min-width: 145px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.donut {
+    width: 145px;
+    height: 145px;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            #159447 0deg 225deg,
+            #2469e9 225deg 360deg
+        );
+
+    position: relative;
+}
+
+.donut::after {
+    content: "";
+
+    position: absolute;
+
+    width: 76px;
+    height: 76px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    background: white;
+
+    border-radius: 50%;
+}
+
+.chart-center {
+    position: absolute;
+
+    z-index: 2;
+
+    text-align: center;
+}
+
+.chart-total {
+    font-size: 21px;
+
+    font-weight: bold;
+
+    color: #1c242a;
+}
+
+.chart-label {
+    font-size: 10px;
+
+    color: #68757e;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   LEGEND
+========================================================= */
+
+.legend {
+    min-width: 160px;
+}
+
+.legend-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+
+    min-width: 8px;
+
+    border-radius: 50%;
+}
+
+.legend-dot.completed {
+    background: #159447;
+}
+
+.legend-dot.pending {
+    background: #2469e9;
+}
+
+.legend-name {
+    flex: 1;
+
+    font-size: 11px;
+
+    color: #34404a;
+}
+
+.legend-value {
+    font-size: 11px;
+
+    font-weight: bold;
+
+    color: #20272d;
+}
+
+.legend-total {
+    border-top:
+        1px solid #e5e8ea;
+
+    padding-top: 13px;
+
+    margin-top: 4px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   RESOURCES
+========================================================= */
+
+.resources-card {
+    min-height: 275px;
+}
+
+.resources {
+    padding:
+        4px 14px 8px;
+}
+
+.resource-item {
+    min-height: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.resource-item:last-child {
+    border-bottom: none;
+}
+
+.resource-image {
+    width: 58px;
+    height: 48px;
+
+    min-width: 58px;
+
+    border-radius: 7px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+}
+
+.resource-image.pest {
+    background: #e8f4e6;
+}
+
+.resource-image.soil {
+    background: #e8f0ff;
+}
+
+.resource-image.vegetable {
+    background: #fff0df;
+}
+
+.resource-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.resource-title {
+    font-size: 11px;
+
+    font-weight: bold;
+
+    color: #273038;
+
+    margin-bottom: 4px;
+}
+
+.resource-description {
+    font-size: 9px;
+
+    color: #68757d;
+
+    line-height: 13px;
+}
+
+.resource-view {
+    border: none;
+
+    background: #e6f5e9;
+
+    color: #087c43;
+
+    border-radius: 6px;
+
+    padding:
+        7px 9px;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.resource-view:hover {
+    background: #d7eedc;
+}
+
+
+
+
+/* =========================================================
+   FOOTER
+   SAME MEASUREMENT AS ADMIN
+========================================================= */
+
+.footer {
+    position: fixed;
+
+    left: 255px;
+    right: 0;
+    bottom: 0;
+
+    height: 42px;
+
+    background: #004d2a;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    font-size: 10px;
+
+    z-index: 900;
+}
+
+.footer a {
+    color: white;
+
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1250px) {
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+
+@media (max-width: 950px) {
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .right-column {
+        grid-template-rows:
+            auto auto;
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s ease;
+    }
+
+    .sidebar.open {
+        transform:
+            translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    .footer {
+        left: 0;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .content {
+        padding:
+            18px 12px 30px;
+    }
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .overview-content {
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    .header {
+        padding:
+            0 15px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .profile-arrow {
+        display: none;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .summary-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background:
+        rgba(255,255,255,0.20);
+
+    border-radius: 5px;
+}
+
+/* =====================================================
+   PROFILE DROPDOWN
+   ===================================================== */
+
+.profile-dropdown {
+
+    display: none;
+
+    position: absolute;
+
+    top: 58px;
+
+    right: 0;
+
+    width: 225px;
+
+    background: white;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.15);
+
+    padding: 8px;
+
+    z-index: 300;
+
+}
+
+
+.profile.open .profile-dropdown {
+
+    display: block;
+
+}
+
+
+.dropdown-title {
+
+    padding:
+        8px 10px 6px;
+
+    font-size: 11px;
+
+    color: #888;
+
+    text-transform: uppercase;
+
+    font-weight: bold;
+
+}
+
+
+.dropdown-role {
+
+    width: 100%;
+
+    padding:
+        10px;
+
+    border: none;
+
+    background: transparent;
+
+    border-radius: 7px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    color: #333;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+}
+
+
+.dropdown-role:hover {
+
+    background: #f1f7f3;
+
+}
+
+
+.dropdown-role.current {
+
+    background: #e9f6ed;
+
+    color: #13883f;
+
+    font-weight: bold;
+
+}
+
+
+.role-check {
+
+    margin-left: auto;
+
+    font-size: 14px;
+
+}
+
+
+.profile {
+
+    position: relative;
+
+}
+
+
+.consultation-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="expert-dashboard.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- CONSULTATIONS -->
+
+        <a
+            href="expert-consultations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-label">
+                Consultations
+            </span>
+
+            <span class="consultation-badge" id="consultationBadge" style="display:none;">0</span>
+
+        </a>
+
+
+        <!-- RESOURCES -->
+
+        <a
+            href="expert-resources.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                📖
+            </span>
+
+            <span class="nav-label">
+                Resources
+            </span>
+
+        </a>
+
+
+        <!-- REPORT ISSUES -->
+
+        <a
+            href="expert-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-label">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="expert-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="expert-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="expert-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="expert-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="logout(); return false;"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="header-right">
+
+
+            <!-- NOTIFICATION -->
+
+            <div
+                class="notification"
+                onclick="goToNotifications()"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="notification-badge"
+                    id="headerNotificationCount"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    DN
+                </div>
+
+                <div class="profile-info">
+
+                    <div
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Dr. Nimal
+                    </div>
+
+                    <div
+                        class="profile-role"
+                        id="profileRole"
+                    >
+                        Agricultural Expert
+                    </div>
+
+                </div>
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+                <!-- PROFILE DROPDOWN -->
+
+                <div class="profile-dropdown">
+
+                    <div class="dropdown-title">
+                        Switch Role
+                    </div>
+
+                    <div id="roleOptions">
+
+                        <!-- Roles generated by JavaScript -->
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </header>
+
+
+
+    <!-- CONTENT -->
+
+    <section class="content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1 id="welcomeHeading">
+                    Welcome, Dr. Nimal!
+                </h1>
+
+                <p>
+                    Here's an overview of your activities.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUMMARY CARDS
+        ================================================= -->
+
+        <div class="summary-grid">
+
+
+            <!-- TOTAL CONSULTATIONS -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon green">
+                    💬
+                </div>
+
+                <div>
+
+                    <span class="summary-title">
+                        Total Consultations
+                    </span>
+
+                    <span
+                        class="summary-value"
+                        id="totalConsultationsValue"
+                    >
+                        0
+                    </span>
+
+                    <span class="summary-bottom green">
+                        This Month
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- PENDING -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon blue">
+                    ◷
+                </div>
+
+                <div>
+
+                    <span class="summary-title">
+                        Pending
+                    </span>
+
+                    <span
+                        class="summary-value"
+                        id="pendingConsultationsValue"
+                    >
+                        0
+                    </span>
+
+                    <span class="summary-bottom blue">
+                        Awaiting Reply
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMPLETED -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon orange">
+                    ✓
+                </div>
+
+                <div>
+
+                    <span class="summary-title">
+                        Completed
+                    </span>
+
+                    <span
+                        class="summary-value"
+                        id="completedConsultationsValue"
+                    >
+                        0
+                    </span>
+
+                    <span class="summary-bottom orange">
+                        This Month
+                    </span>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             RECENT CONSULTATIONS + RIGHT COLUMN
+        ================================================= -->
+
+        <div class="dashboard-grid">
+
+
+            <!-- RECENT CONSULTATIONS -->
+
+            <div class="card">
+
+
+                <div class="card-header">
+
+                    <span class="card-title">
+                        Recent Consultations
+                    </span>
+
+                    <a
+                        href="expert-consultations.html"
+                        class="view-all"
+                    >
+                        View All
+                    </a>
+
+                </div>
+
+
+                <div
+                    class="consultations"
+                    id="consultationsList"
+                ></div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RIGHT COLUMN
+            ================================================= -->
+
+            <div class="right-column">
+
+
+                <!-- CONSULTATION OVERVIEW -->
+
+                <div class="card overview-card">
+
+
+                    <div class="card-header">
+
+                        <span class="card-title">
+                            Consultation Overview
+                        </span>
+
+                        <span
+                            style="
+                                font-size:12px;
+                                font-weight:bold;
+                                color:#45545e;
+                            "
+                        >
+                            This Month
+                        </span>
+
+                    </div>
+
+
+                    <div class="overview-content">
+
+
+                        <div class="chart-wrapper">
+
+                            <div
+                                class="donut"
+                                id="donutChart"
+                            ></div>
+
+                            <div class="chart-center">
+
+                                <div
+                                    class="chart-total"
+                                    id="chartTotalValue"
+                                >
+                                    0
+                                </div>
+
+                                <div class="chart-label">
+                                    Consultations
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="legend">
+
+
+                            <div class="legend-item">
+
+                                <span class="legend-dot completed"></span>
+
+                                <span class="legend-name">
+                                    Completed
+                                </span>
+
+                                <span
+                                    class="legend-value"
+                                    id="completedLegendValue"
+                                >
+                                    0 (0%)
+                                </span>
+
+                            </div>
+
+
+                            <div class="legend-item">
+
+                                <span class="legend-dot pending"></span>
+
+                                <span class="legend-name">
+                                    Pending
+                                </span>
+
+                                <span
+                                    class="legend-value"
+                                    id="pendingLegendValue"
+                                >
+                                    0 (0%)
+                                </span>
+
+                            </div>
+
+
+                            <div class="legend-total">
+
+                                <span>
+                                    Total
+                                </span>
+
+                                <span>
+                                    16 Consultations
+                                </span>
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- SPECIFICATION RELATED BOOKS & MEDIA -->
+
+                <div class="card resources-card">
+
+
+                    <div class="card-header">
+
+                        <span class="card-title">
+                            Specification Related Books &amp; Media
+                        </span>
+
+                        <a
+                            href="expert-resources.html"
+                            class="view-all"
+                        >
+                            View All
+                        </a>
+
+                    </div>
+
+
+                    <div class="resources">
+
+
+                        <!-- RESOURCE 1 -->
+
+                        <div class="resource-item">
+
+                            <div class="resource-image pest">
+                                🌿
+                            </div>
+
+                            <div class="resource-info">
+
+                                <div class="resource-title">
+                                    Integrated Pest Management Guide
+                                </div>
+
+                                <div class="resource-description">
+                                    A comprehensive guide on IPM techniques
+                                </div>
+
+                            </div>
+
+                            <button
+                                class="resource-view"
+                                onclick="viewResource(
+                                    'Integrated Pest Management Guide'
+                                )"
+                            >
+                                View ↗
+                            </button>
+
+                        </div>
+
+
+                        <!-- RESOURCE 2 -->
+
+                        <div class="resource-item">
+
+                            <div class="resource-image soil">
+                                🌱
+                            </div>
+
+                            <div class="resource-info">
+
+                                <div class="resource-title">
+                                    Soil Fertility Management
+                                </div>
+
+                                <div class="resource-description">
+                                    Best practices for healthy soil &amp; high yield
+                                </div>
+
+                            </div>
+
+                            <button
+                                class="resource-view"
+                                onclick="viewResource(
+                                    'Soil Fertility Management'
+                                )"
+                            >
+                                View ↗
+                            </button>
+
+                        </div>
+
+
+                        <!-- RESOURCE 3 -->
+
+                        <div class="resource-item">
+
+                            <div class="resource-image vegetable">
+                                🥕
+                            </div>
+
+                            <div class="resource-info">
+
+                                <div class="resource-title">
+                                    Vegetable Crop Production Manual
+                                </div>
+
+                                <div class="resource-description">
+                                    Step by step vegetable cultivation guide
+                                </div>
+
+                            </div>
+
+                            <button
+                                class="resource-view"
+                                onclick="viewResource(
+                                    'Vegetable Crop Production Manual'
+                                )"
+                            >
+                                View ↗
+                            </button>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <span>
+         © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>|</span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+
+<script>
+
+let user = null;
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem("user")
+        );
+
+} catch (error) {
+
+    user = null;
+
+}
+
+
+const roleNames = {
+
+    farmer: "Farmer",
+    buyer: "Buyer",
+    expert: "Agricultural Expert",
+    equipment_provider: "Equipment Provider"
+
+};
+
+
+const roleIcons = {
+
+    farmer: "🌱",
+    buyer: "🛒",
+    expert: "👨‍🌾",
+    equipment_provider: "🚜"
+
+};
+
+
+function normalizeRole(role) {
+
+    if (!role) {
+        return "";
+    }
+
+    const value =
+        String(role)
+            .toLowerCase()
+            .trim()
+            .replace(/-/g, "_");
+
+    if (value === "farmer") {
+        return "farmer";
+    }
+
+    if (value === "buyer" || value === "buyer/user") {
+        return "buyer";
+    }
+
+    if (
+        value === "expert" ||
+        value === "agricultural_expert" ||
+        value === "agricultural expert" ||
+        value === "agriculture_expert" ||
+        value === "agriculture expert" ||
+        value === "agri_expert" ||
+        value === "agri expert"
+    ) {
+        return "expert";
+    }
+
+    if (
+        value === "equipment_provider" ||
+        value === "equipment provider" ||
+        value === "equipmentprovider" ||
+        value === "provider"
+    ) {
+        return "equipment_provider";
+    }
+
+    return "";
+
+}
+
+
+function getRegisteredRoles() {
+
+    if (!user) {
+        return [];
+    }
+
+    let roles = [];
+
+    if (Array.isArray(user.roles)) {
+        roles = [...user.roles];
+    }
+
+    if (roles.length === 0 && Array.isArray(user.registered_roles)) {
+        roles = [...user.registered_roles];
+    }
+
+    if (roles.length === 0 && Array.isArray(user.registeredRoles)) {
+        roles = [...user.registeredRoles];
+    }
+
+    if (roles.length === 0) {
+
+        try {
+
+            const storedRoles =
+                JSON.parse(
+                    sessionStorage.getItem("registeredRoles") || "null"
+                );
+
+            if (Array.isArray(storedRoles)) {
+                roles = [...storedRoles];
+            }
+
+        } catch (error) {
+
+            roles = [];
+
+        }
+
+    }
+
+    if (roles.length === 0 && user.role) {
+
+        roles =
+            Array.isArray(user.role)
+                ? [...user.role]
+                : [user.role];
+
+    }
+
+    roles =
+        roles
+            .map(normalizeRole)
+            .filter(role => !!role && !!roleNames[role]);
+
+    return [...new Set(roles)];
+
+}
+
+
+function getAccountRoles() {
+
+    return [...new Set(getRegisteredRoles())];
+
+}
+
+
+/*
+ * This file is expert-dashboard.html, so Expert is always
+ * the active role when the account has Expert access,
+ * regardless of which role was active immediately before
+ * the redirect.
+ */
+
+let currentRole = "expert";
+
+
+function loadRoles() {
+
+    const roleOptions =
+        document.getElementById("roleOptions");
+
+    if (!roleOptions) {
+        return;
+    }
+
+    roleOptions.innerHTML = "";
+
+    const roles =
+        getAccountRoles();
+
+    /*
+     * Always show the current role first, regardless of the
+     * order the account's roles happen to be stored in.
+     */
+
+    const sortedRoles =
+        [...roles].sort(function(a, b) {
+
+            if (a === currentRole) return -1;
+            if (b === currentRole) return 1;
+            return 0;
+
+        });
+
+    sortedRoles.forEach(function(role) {
+
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+        button.className = "dropdown-role";
+
+        if (role === currentRole) {
+            button.classList.add("current");
+        }
+
+        button.innerHTML = `
+
+            <span>
+                ${roleIcons[role] || "👤"}
+            </span>
+
+            <span>
+                ${roleNames[role] || role}
+            </span>
+
+            <span class="role-check">
+                ${role === currentRole ? "✓" : ""}
+            </span>
+
+        `;
+
+        button.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            switchRole(role);
+
+        });
+
+        roleOptions.appendChild(button);
+
+    });
+
+}
+
+
+function switchRole(role) {
+
+    const normalizedRole =
+        normalizeRole(role);
+
+    if (!normalizedRole) {
+        return;
+    }
+
+    if (!getAccountRoles().includes(normalizedRole)) {
+        return;
+    }
+
+    currentRole = normalizedRole;
+
+    sessionStorage.setItem("selectedRole", currentRole);
+    sessionStorage.setItem("currentRole", currentRole);
+
+    if (currentRole === "farmer") {
+        window.location.href = "farmer-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "buyer") {
+        window.location.href = "buyer-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "expert") {
+        window.location.href = "expert-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "equipment_provider") {
+        window.location.href = "rental-dashboard.html";
+    }
+
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const profile =
+        document.getElementById("profile");
+
+    if (profile) {
+
+        profile.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            profile.classList.toggle("open");
+
+        });
+
+        document.addEventListener("click", function() {
+
+            profile.classList.remove("open");
+
+        });
+
+    }
+
+    loadRoles();
+
+});
+
+
+/* =========================================================
+   DISPLAY LOGGED-IN USER
+========================================================= */
+
+function displayUser() {
+
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+    } catch (error) {
+
+        user = null;
+
+    }
+
+    if (!user) {
+
+        return;
+
+    }
+
+    const firstName =
+        user.first_name ||
+        user.firstName ||
+        "";
+
+    const lastName =
+        user.last_name ||
+        user.lastName ||
+        "";
+
+    const fullName =
+        `${firstName} ${lastName}`.trim() ||
+        "Agricultural Expert";
+
+    const initials =
+        (
+            (firstName.charAt(0) || "") +
+            (lastName.charAt(0) || "")
+        ).toUpperCase() ||
+        "AE";
+
+    const profileNameEl =
+        document.getElementById("profileName");
+
+    if (profileNameEl) {
+        profileNameEl.textContent = fullName;
+    }
+
+    const profileAvatarEl =
+        document.getElementById("profileAvatar");
+
+    if (profileAvatarEl) {
+        profileAvatarEl.textContent = initials;
+    }
+
+    const profileRoleEl =
+        document.getElementById("profileRole");
+
+    if (profileRoleEl) {
+        profileRoleEl.textContent = roleNames[currentRole] || "Agricultural Expert";
+    }
+
+    const welcomeHeadingEl =
+        document.getElementById("welcomeHeading");
+
+    if (welcomeHeadingEl) {
+        welcomeHeadingEl.textContent = `Welcome, ${fullName}!`;
+    }
+
+}
+
+/* =========================================================
+   LOAD REAL CONSULTATIONS (dashboard stats, chart, list)
+========================================================= */
+
+function getCurrentUserId() {
+
+    try {
+
+        const rawUser =
+            sessionStorage.getItem("user");
+
+        const parsedUser =
+            rawUser ? JSON.parse(rawUser) : null;
+
+        return parsedUser && parsedUser.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+function escapeHtmlDash(value) {
+
+    const div = document.createElement("div");
+    div.textContent = value == null ? "" : String(value);
+    return div.innerHTML;
+
+}
+
+
+function formatConsultationTimeAgo(isoString) {
+
+    if (!isoString) {
+        return "";
+    }
+
+    const date = new Date(isoString);
+
+    if (isNaN(date)) {
+        return "";
+    }
+
+    const diffMinutes =
+        Math.floor((Date.now() - date.getTime()) / 60000);
+
+    if (diffMinutes < 1) {
+        return "Just now";
+    }
+
+    if (diffMinutes < 60) {
+        return `${diffMinutes} minute${diffMinutes === 1 ? "" : "s"} ago`;
+    }
+
+    const diffHours = Math.floor(diffMinutes / 60);
+
+    if (diffHours < 24) {
+        return `${diffHours} hour${diffHours === 1 ? "" : "s"} ago`;
+    }
+
+    const diffDays = Math.floor(diffHours / 24);
+
+    return diffDays === 1 ? "Yesterday" : `${diffDays} days ago`;
+
+}
+
+
+function buildConsultationItemHtml(row) {
+
+    const name =
+        `${row.first_name || ""} ${row.last_name || ""}`.trim() || "Farmer";
+
+    const initial =
+        name.charAt(0).toUpperCase() || "F";
+
+    const isCompleted =
+        !!row.completed_at;
+
+    return `
+        <div
+            class="consultation-item"
+            style="cursor:pointer;"
+            onclick="openConsultationFromDashboard(${row.id})"
+        >
+
+            <div class="user-avatar">
+                ${escapeHtmlDash(initial)}
+            </div>
+
+            <div class="consultation-info">
+
+                <div class="user-name">
+                    ${escapeHtmlDash(name)}
+                </div>
+
+                <div class="topic">
+                    Consultation
+                </div>
+
+                <div class="preview">
+                    ${escapeHtmlDash(row.last_message_text || "No messages yet.")}
+                </div>
+
+            </div>
+
+            <div class="consultation-meta">
+
+                <span class="status ${isCompleted ? "completed" : "pending"}">
+                    ${isCompleted ? "Completed" : "Pending"}
+                </span>
+
+                <span class="time">
+                    ${escapeHtmlDash(formatConsultationTimeAgo(row.last_message_at || row.created_at))}
+                </span>
+
+            </div>
+
+        </div>
+    `;
+
+}
+
+
+function openConsultationFromDashboard(conversationId) {
+
+    localStorage.setItem(
+
+        "selectedFarmerConversation",
+
+        JSON.stringify({ conversationId: conversationId })
+
+    );
+
+    window.location.href =
+        "messages.html";
+
+}
+
+
+async function loadExpertDashboardData() {
+
+    const userId =
+        getCurrentUserId();
+
+    if (!userId) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`);
+
+        const data =
+            await response.json();
+
+        const consultations =
+            (data && data.success && Array.isArray(data.conversations))
+                ? data.conversations
+                : [];
+
+        const total =
+            consultations.length;
+
+        const completed =
+            consultations.filter(c => c.completed_at).length;
+
+        const pending =
+            total - completed;
+
+        const totalEl = document.getElementById("totalConsultationsValue");
+        const pendingEl = document.getElementById("pendingConsultationsValue");
+        const completedEl = document.getElementById("completedConsultationsValue");
+
+        if (totalEl) totalEl.textContent = String(total).padStart(2, "0");
+        if (pendingEl) pendingEl.textContent = String(pending).padStart(2, "0");
+        if (completedEl) completedEl.textContent = String(completed).padStart(2, "0");
+
+        // Donut chart + legend
+        const completedPct =
+            total > 0 ? Math.round((completed / total) * 100) : 0;
+
+        const completedDeg =
+            total > 0 ? (completed / total) * 360 : 0;
+
+        const donutEl = document.getElementById("donutChart");
+
+        if (donutEl) {
+
+            donutEl.style.background =
+                total > 0
+                    ? `conic-gradient(#159447 0deg ${completedDeg}deg, #2469e9 ${completedDeg}deg 360deg)`
+                    : "#e5eae7";
+
+        }
+
+        const chartTotalEl = document.getElementById("chartTotalValue");
+
+        if (chartTotalEl) chartTotalEl.textContent = total;
+
+        const completedLegendEl = document.getElementById("completedLegendValue");
+        const pendingLegendEl = document.getElementById("pendingLegendValue");
+
+        if (completedLegendEl) completedLegendEl.textContent = `${completed} (${completedPct}%)`;
+        if (pendingLegendEl) pendingLegendEl.textContent = `${pending} (${total > 0 ? 100 - completedPct : 0}%)`;
+
+        // Recent consultations list (top 5, already sorted newest-active-first by the API)
+        const listEl = document.getElementById("consultationsList");
+
+        if (listEl) {
+
+            if (consultations.length === 0) {
+
+                listEl.innerHTML = `
+                    <div style="padding: 20px; text-align:center; color:#6b7683; font-size:13px;">
+                        No consultations yet.
+                    </div>
+                `;
+
+            } else {
+
+                listEl.innerHTML =
+                    consultations.slice(0, 5).map(buildConsultationItemHtml).join("");
+
+            }
+
+        }
+
+    } catch (error) {
+
+        console.error("Unable to load consultations:", error);
+
+    }
+
+}
+
+loadExpertDashboardData();
+
+
+displayUser();
+
+
+function updateNotificationCount() {
+
+    const userId =
+        getCurrentUserId();
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const headerCount = document.getElementById("headerNotificationCount");
+
+            if (headerCount) headerCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+updateNotificationCount();
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function goToNotifications() {
+
+    window.location.href =
+        "expert-notifications.html";
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function openProfile() {
+
+    /*
+     * There's no profile/settings page built yet, so this
+     * intentionally does nothing rather than link to a page
+     * that doesn't exist.
+     */
+
+}
+
+
+/* =========================================================
+   RESOURCE
+========================================================= */
+
+function viewResource(resourceName) {
+
+    window.location.href =
+        "expert-resources.html";
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout() {
+
+    const confirmed =
+        await customConfirm("Are you sure you want to logout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+    localStorage.removeItem(
+        "expertLoggedIn"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+
+function updateConsultationBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(c => c.unread_count > 0).length;
+
+            const badgeEl =
+                document.getElementById("consultationBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load consultation badge count:", error);
+        });
+
+}
+
+updateConsultationBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

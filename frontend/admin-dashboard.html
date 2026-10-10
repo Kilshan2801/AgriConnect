@@ -1,0 +1,2608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriConnect - Admin Dashboard</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #182033;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    min-width: 255px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 255px;
+    background: linear-gradient(180deg, #281064 0%, #170a45 100%);
+    color: white;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    height: 86px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.sidebar-logo img {
+    width: 160px;
+    height: auto;
+    max-height: 62px;
+    object-fit: contain;
+    display: block;
+}
+
+/* ================= NAVIGATION ================= */
+
+.sidebar-content {
+    padding: 13px 10px;
+}
+
+.nav-section-title {
+    font-size: 11px;
+    font-weight: bold;
+    color: rgba(255,255,255,0.75);
+    padding: 14px 12px 10px;
+    text-transform: uppercase;
+}
+
+.nav-item {
+    width: 100%;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, #7131c8, #5520a7);
+}
+
+.nav-icon {
+    width: 22px;
+    min-width: 22px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+.nav-arrow {
+    font-size: 12px;
+}
+
+.submenu {
+    display: none;
+    padding-left: 35px;
+    margin-bottom: 5px;
+}
+
+.submenu.show {
+    display: block;
+}
+
+.submenu a {
+    display: block;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.submenu a:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+/* ================= SIDEBAR BOTTOM ================= */
+
+.sidebar-bottom {
+    padding: 8px 10px 14px;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.13);
+    margin: 5px 12px 10px;
+}
+
+/* ================= MAIN ================= */
+
+.main {
+    margin-left: 255px;
+    width: calc(100% - 255px);
+    min-height: 100vh;
+    padding-bottom: 48px;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+    height: 78px;
+    background: white;
+    border-bottom: 1px solid #e5e8ee;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 28px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+/* Notification */
+
+.notification {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    cursor: pointer;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -1px;
+    right: -3px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 50px;
+    background: #ff3b30;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Profile */
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    border: 2px solid #6429c1;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6429c1;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.profile-info {
+    line-height: 17px;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.profile-role {
+    font-size: 10px;
+    color: #6429c1;
+}
+
+.profile-arrow {
+    font-size: 11px;
+}
+
+/* ================= CONTENT ================= */
+
+.content {
+    padding: 23px 18px 22px;
+}
+
+/* Welcome */
+
+.welcome {
+    margin-bottom: 18px;
+}
+
+.welcome h1 {
+    font-size: 29px;
+    color: #121826;
+    margin-bottom: 5px;
+}
+
+.welcome p {
+    font-size: 13px;
+    color: #555f70;
+}
+
+/* ================= STAT CARDS ================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #e7eaf0;
+    border-radius: 9px;
+    padding: 14px 12px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.025);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.stat-purple {
+    background: #eee4ff;
+}
+
+.stat-green {
+    background: #e2f6e8;
+}
+
+.stat-blue {
+    background: #e1edff;
+}
+
+.stat-orange {
+    background: #fff0df;
+}
+
+.stat-red {
+    background: #ffe3e3;
+}
+
+.stat-title {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    color: #454d5c;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 23px;
+    font-weight: bold;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.stat-change {
+    display: block;
+    font-size: 10px;
+    color: #16833c;
+    font-weight: bold;
+}
+
+.stat-change.red {
+    color: #ef3030;
+}
+
+/* ================= DASHBOARD GRID ================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 11px;
+    margin-bottom: 11px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e5e9ef;
+    border-radius: 9px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.025);
+}
+
+.card-header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    border-bottom: 1px solid #edf0f3;
+}
+
+.card-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #202633;
+}
+
+.view-all {
+    font-size: 12px;
+    font-weight: bold;
+    color: #6c20cf;
+    text-decoration: none;
+}
+
+/* ================= CHART ================= */
+
+.chart-container {
+    height: 230px;
+    padding: 12px 12px 5px;
+}
+
+#userChart {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-footer {
+    padding: 4px 13px 11px;
+    display: flex;
+    gap: 18px;
+    font-size: 12px;
+    color: #535b68;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.legend-green {
+    background: #159447;
+}
+
+.legend-blue {
+    background: #2469e9;
+}
+
+.legend-orange {
+    background: #f47b20;
+}
+
+.legend-purple {
+    background: #7432c8;
+}
+
+.month-select {
+    border: 1px solid #dfe4ea;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 12px;
+    background: white;
+}
+
+/* ================= DONUT ================= */
+
+.role-chart {
+    min-height: 275px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 15px;
+}
+
+.donut {
+    width: 145px;
+    height: 145px;
+    min-width: 145px;
+    border-radius: 50%;
+    background:
+        conic-gradient(
+            #159447 0deg 247deg,
+            #2469e9 247deg 315deg,
+            #f47b20 315deg 344deg,
+            #7432c8 344deg 360deg
+        );
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.donut::after {
+    content: "";
+    position: absolute;
+    width: 76px;
+    height: 76px;
+    background: white;
+    border-radius: 50%;
+}
+
+.role-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.role-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+.role-color {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.role-color.green {
+    background: #159447;
+}
+
+.role-color.blue {
+    background: #2469e9;
+}
+
+.role-color.orange {
+    background: #f47b20;
+}
+
+.role-color.purple {
+    background: #7432c8;
+}
+
+.role-name {
+    font-weight: bold;
+}
+
+.role-number {
+    font-weight: bold;
+}
+
+/* ================= LOWER GRID ================= */
+
+.lower-grid {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 11px;
+    margin-bottom: 11px;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    font-size: 12px;
+    color: #323945;
+    padding: 9px 10px;
+    border-bottom: 1px solid #edf0f3;
+    white-space: nowrap;
+}
+
+td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #f0f2f5;
+    font-size: 12px;
+    color: #343b47;
+    white-space: nowrap;
+}
+
+.person {
+    font-weight: bold;
+    color: #202633;
+}
+
+.role-small {
+    font-size: 12px;
+    color: #707887;
+    margin-top: 2px;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 7px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status.open {
+    background: #ffe3e3;
+    color: #ec2929;
+}
+
+.status.review {
+    background: #fff0d6;
+    color: #d87600;
+}
+
+.status.resolved {
+    background: #def5e4;
+    color: #16833c;
+}
+
+.action-button {
+    border: 1px solid #7a36d1;
+    color: #6c20cf;
+    background: white;
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ================= RECENT ACTIVITY ================= */
+
+.activity-list {
+    padding: 4px 12px 9px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.activity-icon {
+    width: 31px;
+    height: 31px;
+    min-width: 31px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.activity-icon.green {
+    background: #e0f5e6;
+}
+
+.activity-icon.orange {
+    background: #fff0dd;
+}
+
+.activity-icon.purple {
+    background: #eee3ff;
+}
+
+.activity-icon.red {
+    background: #ffe2e2;
+}
+
+.activity-text {
+    flex: 1;
+}
+
+.activity-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #262d39;
+    margin-bottom: 2px;
+}
+
+.activity-description {
+    font-size: 10px;
+    color: #667080;
+}
+
+.activity-time {
+    font-size: 12px;
+    color: #687180;
+    white-space: nowrap;
+}
+
+/* ================= QUICK ACTIONS ================= */
+
+.quick-actions {
+    background: white;
+    border: 1px solid #e5e9ef;
+    border-radius: 9px;
+    padding: 12px;
+}
+
+.quick-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+
+.quick-button {
+    min-height: 55px;
+    border: 1px solid #e4e8ed;
+    background: white;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222b39;
+}
+
+.quick-button:hover {
+    border-color: #8d55d1;
+    background: #fbf9fe;
+}
+
+.quick-icon {
+    width: 31px;
+    height: 31px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.quick-green {
+    background: #e2f6e8;
+}
+
+.quick-blue {
+    background: #e2edff;
+}
+
+.quick-orange {
+    background: #fff0df;
+}
+
+.quick-purple {
+    background: #eee4ff;
+}
+
+.quick-red {
+    background: #ffe2e2;
+}
+
+.quick-text {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+    position: fixed;
+    left: 255px;
+    right: 0;
+    bottom: 0;
+    height: 42px;
+    background: #004d2a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    font-size: 10px;
+    z-index: 800;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1250px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 950px) {
+
+    .dashboard-grid,
+    .lower-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: 0.25s;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .footer {
+        left: 0;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .role-chart {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .stats-grid,
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+
+        <!-- AgriConnect White Logo -->
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+        <!-- Dashboard -->
+
+        <a
+            href="admin-dashboard.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">▦</span>
+
+            <span class="nav-label">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <div class="nav-section-title">
+            Management
+        </div>
+
+
+        <!-- Manage Users -->
+
+        <div
+            class="nav-item"
+            id="manageUsersButton"
+        >
+
+            <span class="nav-icon">♙</span>
+
+            <span class="nav-label">
+                Manage Users
+            </span>
+
+            <span class="nav-arrow">
+                ▼
+            </span>
+
+        </div>
+
+
+        <div
+            class="submenu"
+            id="userSubmenu"
+        >
+
+            <a href="admin-manage-users.html?type=farmer">
+                Farmers
+            </a>
+
+            <a href="admin-manage-users.html?type=buyer">
+                Buyers
+            </a>
+
+            <a href="admin-manage-users.html?type=expert">
+                Agri Experts
+            </a>
+
+            <a href="admin-manage-users.html?type=provider">
+                Equipment Providers
+            </a>
+
+        </div>
+
+
+        <!-- Inspect Registration -->
+
+        <a
+            href="admin-registrations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">▤</span>
+
+            <span class="nav-label">
+                Inspect Registration
+            </span>
+
+        </a>
+
+
+        <!-- Reported Conflicts -->
+
+        <a
+            href="admin-conflicts.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">⚿</span>
+
+            <span class="nav-label">
+                Reported Conflicts
+            </span>
+
+        </a>
+
+
+        <!-- Notifications -->
+
+        <a
+            href="admin-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">🔔</span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- History -->
+
+        <a
+            href="admin-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">◷</span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- Bottom Navigation -->
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="admin-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">?</span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="admin-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">⚙</span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="logout()"
+        >
+
+            <span class="nav-icon">↪</span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="header-right">
+
+            <!-- Notification -->
+
+            <div
+                class="notification"
+                onclick="openNotifications()"
+            >
+
+                🔔
+
+                <span class="notification-badge" id="headerNotificationBadge" style="display:none;">
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- Admin Profile -->
+
+            <div class="profile">
+
+                <div class="profile-avatar" id="profileAvatar">
+                    AI
+                </div>
+
+                <div class="profile-info">
+
+                    <div class="profile-name" id="profileName">
+                        Admin
+                    </div>
+
+                    <div class="profile-role">
+                        Super Admin
+                    </div>
+
+                </div>
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <section class="content">
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h1 id="welcomeHeading">
+                Welcome, Admin!
+            </h1>
+
+            <p>
+                Here's what's happening on AgriConnect today.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             STATISTICS
+        ================================================= -->
+
+        <div class="stats-grid">
+
+
+            <!-- Total Users -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon stat-purple">
+                    👥
+                </div>
+
+                <div>
+
+                    <span class="stat-title">
+                        Total Users
+                    </span>
+
+                    <span class="stat-value" id="statTotalUsers">
+                        -
+                    </span>
+
+                    <span class="stat-change" id="statTotalUsersChange">
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Farmers -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon stat-green">
+                    👨‍🌾
+                </div>
+
+                <div>
+
+                    <span class="stat-title">
+                        Farmers
+                    </span>
+
+                    <span class="stat-value" id="statFarmers">
+                        -
+                    </span>
+
+                    <span class="stat-change" id="statFarmersChange">
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Buyers -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon stat-blue">
+                    🛒
+                </div>
+
+                <div>
+
+                    <span class="stat-title">
+                        Buyers
+                    </span>
+
+                    <span class="stat-value" id="statBuyers">
+                        -
+                    </span>
+
+                    <span class="stat-change" id="statBuyersChange">
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Experts -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon stat-orange">
+                    🎓
+                </div>
+
+                <div>
+
+                    <span class="stat-title">
+                        Agri Experts
+                    </span>
+
+                    <span class="stat-value" id="statExperts">
+                        -
+                    </span>
+
+                    <span class="stat-change" id="statExpertsChange">
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Providers -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon stat-purple">
+                    🚜
+                </div>
+
+                <div>
+
+                    <span class="stat-title">
+                        Equipment Providers
+                    </span>
+
+                    <span class="stat-value" id="statProviders">
+                        -
+                    </span>
+
+                    <span class="stat-change" id="statProvidersChange">
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- Conflicts -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon stat-red">
+                    ⚠️
+                </div>
+
+                <div>
+
+                    <span class="stat-title">
+                        Active Conflicts
+                    </span>
+
+                    <span class="stat-value" id="statConflicts">
+                        -
+                    </span>
+
+                    <span class="stat-change red" id="statConflictsChange">
+                        -
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             CHART SECTION
+        ================================================= -->
+
+        <div class="dashboard-grid">
+
+
+            <!-- USER OVERVIEW -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <span class="card-title">
+                        User Overview
+                    </span>
+
+                    <select class="month-select" id="chartPeriodSelect">
+
+                        <option value="thisMonth">
+                            This Month
+                        </option>
+
+                        <option value="lastMonth">
+                            Last Month
+                        </option>
+
+                        <option value="last3Months">
+                            Last 3 Months
+                        </option>
+
+                        <option value="custom">
+                            Customize
+                        </option>
+
+                    </select>
+
+
+                    <div
+                        id="customDateRangeRow"
+                        style="display:none;align-items:center;gap:6px;margin-left:10px;"
+                    >
+
+                        <input
+                            type="date"
+                            id="customStartDate"
+                            class="month-select"
+                            style="min-width:auto;"
+                        >
+
+                        <span style="font-size:12px;color:#6b7683;">to</span>
+
+                        <input
+                            type="date"
+                            id="customEndDate"
+                            class="month-select"
+                            style="min-width:auto;"
+                        >
+
+                        <button
+                            type="button"
+                            id="applyCustomDateRange"
+                            class="month-select"
+                            style="min-width:auto;cursor:pointer;background:#2e8b3a;color:#fff;border:0;font-weight:700;"
+                        >
+                            Apply
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="userChart"></canvas>
+
+                </div>
+
+
+                <div class="chart-footer">
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot legend-green"></span>
+
+                        Farmers
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot legend-blue"></span>
+
+                        Buyers
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot legend-orange"></span>
+
+                        Agri Experts
+
+                    </div>
+
+
+                    <div class="legend-item">
+
+                        <span class="legend-dot legend-purple"></span>
+
+                        Equipment Providers
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- USERS BY ROLE -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <span class="card-title">
+                        Users by Role
+                    </span>
+
+                </div>
+
+
+                <div class="role-chart">
+
+                    <div class="donut" id="roleDonut"></div>
+
+
+                    <div class="role-legend">
+
+
+                        <div class="role-legend-item">
+
+                            <span class="role-color green"></span>
+
+                            <span class="role-name">
+                                Farmers
+                            </span>
+
+                            <span class="role-number" id="roleFarmersNumber">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="role-legend-item">
+
+                            <span class="role-color blue"></span>
+
+                            <span class="role-name">
+                                Buyers
+                            </span>
+
+                            <span class="role-number" id="roleBuyersNumber">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="role-legend-item">
+
+                            <span class="role-color orange"></span>
+
+                            <span class="role-name">
+                                Agri Experts
+                            </span>
+
+                            <span class="role-number" id="roleExpertsNumber">
+                                -
+                            </span>
+
+                        </div>
+
+
+                        <div class="role-legend-item">
+
+                            <span class="role-color purple"></span>
+
+                            <span class="role-name">
+                                Equipment Providers
+                            </span>
+
+                            <span class="role-number" id="roleProvidersNumber">
+                                -
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- =================================================
+             LOWER SECTION
+        ================================================= -->
+
+        <div class="lower-grid">
+
+
+            <!-- REPORTED CONFLICTS -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <span class="card-title">
+                        Reported Conflicts
+                    </span>
+
+                    <a
+                        href="admin-conflicts.html"
+                        class="view-all"
+                    >
+                        View All Conflicts →
+                    </a>
+
+                </div>
+
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+
+                                <th>
+                                    Reported By
+                                </th>
+
+                                <th>
+                                    Type
+                                </th>
+
+                                <th>
+                                    Related To
+                                </th>
+
+                                <th>
+                                    Status
+                                </th>
+
+                                <th>
+                                    Reported Date
+                                </th>
+
+                                <th>
+                                    Action
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="conflictsTableBody"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+
+            <!-- RECENT ACTIVITY -->
+
+            <div class="card">
+
+                <div class="card-header">
+
+                    <span class="card-title">
+                        Recent Activity
+                    </span>
+
+                    <a
+                        href="admin-history.html"
+                        class="view-all"
+                    >
+                        View All Activities →
+                    </a>
+
+                </div>
+
+
+                <div class="activity-list" id="activityList"></div>
+
+            </div>
+
+
+        </div>
+
+
+
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <span>
+        🌱 © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>|</span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function escapeHtml(value) {
+
+    const div = document.createElement("div");
+    div.textContent = value === null || value === undefined ? "" : String(value);
+    return div.innerHTML;
+
+}
+
+
+function formatTimeAgo(dateStr) {
+
+    if (!dateStr) return "";
+
+    const now = new Date();
+    const then = new Date(dateStr);
+    const diffMs = now - then;
+    const diffMinutes = Math.floor(diffMs / 60000);
+
+    if (diffMinutes < 1) return "Just now";
+    if (diffMinutes < 60) return `${diffMinutes} min${diffMinutes === 1 ? "" : "s"} ago`;
+
+    const diffHours = Math.floor(diffMinutes / 60);
+    if (diffHours < 24) return `${diffHours} hour${diffHours === 1 ? "" : "s"} ago`;
+
+    const diffDays = Math.floor(diffHours / 24);
+    if (diffDays === 1) return "Yesterday";
+    if (diffDays < 7) return `${diffDays} days ago`;
+
+    return then.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+
+}
+
+
+function formatDateTime(dateStr) {
+
+    if (!dateStr) return "-";
+
+    const d = new Date(dateStr);
+
+    const datePart = d.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" });
+    const timePart = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
+
+    return `${datePart}<br>${timePart}`;
+
+}
+
+
+/* =====================================================
+   CURRENT ADMIN
+===================================================== */
+
+let currentAdmin = null;
+
+try {
+    currentAdmin = JSON.parse(sessionStorage.getItem("user") || "null");
+} catch (error) {
+    currentAdmin = null;
+}
+
+(function displayAdminIdentity() {
+
+    const name =
+        currentAdmin
+            ? `${currentAdmin.first_name || ""} ${currentAdmin.last_name || ""}`.trim() || "Admin"
+            : "Admin";
+
+    const initials =
+        name
+            .split(" ")
+            .filter(Boolean)
+            .map(part => part[0])
+            .slice(0, 2)
+            .join("")
+            .toUpperCase() || "AI";
+
+    const profileNameEl = document.getElementById("profileName");
+    if (profileNameEl) profileNameEl.textContent = name;
+
+    const profileAvatarEl = document.getElementById("profileAvatar");
+    if (profileAvatarEl) profileAvatarEl.textContent = initials;
+
+    const welcomeEl = document.getElementById("welcomeHeading");
+    if (welcomeEl) welcomeEl.textContent = `Welcome, ${name.split(" ")[0] || "Admin"}!`;
+
+})();
+
+
+function updateHeaderNotificationBadge() {
+
+    const userId = currentAdmin && currentAdmin.id;
+
+    if (!userId) return;
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const badge = document.getElementById("headerNotificationBadge");
+            if (!badge) return;
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = "flex";
+            } else {
+                badge.style.display = "none";
+            }
+
+        })
+        .catch(error => console.error("Unable to load notification count:", error));
+
+}
+
+updateHeaderNotificationBadge();
+
+
+/* =====================================================
+   MANAGE USERS DROPDOWN
+===================================================== */
+
+const manageUsersButton =
+    document.getElementById("manageUsersButton");
+
+const userSubmenu =
+    document.getElementById("userSubmenu");
+
+
+manageUsersButton.addEventListener(
+    "click",
+    function() {
+
+        userSubmenu.classList.toggle("show");
+
+    }
+);
+
+
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
+
+function openNotifications() {
+
+    window.location.href =
+        "admin-notifications.html";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout() {
+
+    const confirmed =
+        await customConfirm("Are you sure you want to logout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("selectedRole");
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   VIEW CONFLICT
+===================================================== */
+
+function viewConflict() {
+
+    window.location.href =
+        "admin-conflicts.html";
+
+}
+
+
+/* =====================================================
+   USER OVERVIEW CHART
+===================================================== */
+
+const canvas =
+    document.getElementById("userChart");
+
+const ctx =
+    canvas ? canvas.getContext("2d") : null;
+
+
+function drawChart() {
+
+    if (!ctx || !canvas) return;
+
+    const rect =
+        canvas.getBoundingClientRect();
+
+    const dpr =
+        window.devicePixelRatio || 1;
+
+
+    canvas.width =
+        rect.width * dpr;
+
+    canvas.height =
+        rect.height * dpr;
+
+
+    ctx.setTransform(
+        dpr,
+        0,
+        0,
+        dpr,
+        0,
+        0
+    );
+
+
+    const width =
+        rect.width;
+
+    const height =
+        rect.height;
+
+
+    const left = 42;
+    const right = 10;
+    const top = 12;
+    const bottom = 28;
+
+
+    const chartWidth =
+        width - left - right;
+
+    const chartHeight =
+        height - top - bottom;
+
+
+    ctx.clearRect(
+        0,
+        0,
+        width,
+        height
+    );
+
+
+    /* GRID */
+
+    ctx.strokeStyle =
+        "#e8edf2";
+
+    ctx.lineWidth = 1;
+
+
+    const yValues = [
+        0,
+        250,
+        500,
+        750,
+        1000,
+        1250,
+        1500
+    ];
+
+
+    // Build weekly series from the real growth-chart rows fetched
+    // from the backend. Falls back to an empty chart (all zeros)
+    // if no data has loaded yet.
+
+    const rawRows =
+        window.growthChartRaw || [];
+
+    const weekKeys =
+        [...new Set(rawRows.map(r => r.year_week))].sort();
+
+    const labels =
+        weekKeys.map(wk => {
+            const row = rawRows.find(r => r.year_week === wk);
+            if (!row) return "";
+            const d = new Date(row.week_start);
+            return d.toLocaleDateString("en-GB", { day: "numeric", month: "short" });
+        });
+
+    function seriesFor(role) {
+        return weekKeys.map(wk => {
+            const row = rawRows.find(r => r.year_week === wk && r.role === role);
+            return row ? row.count : 0;
+        });
+    }
+
+    const farmers = seriesFor("farmer");
+    const buyers = seriesFor("buyer");
+    const experts = seriesFor("expert");
+    const providers = seriesFor("equipment_provider");
+
+    const allValues =
+        [...farmers, ...buyers, ...experts, ...providers];
+
+    const rawMax =
+        allValues.length ? Math.max(...allValues) : 0;
+
+    const yMax =
+        rawMax <= 5 ? 5 : Math.ceil(rawMax / 5) * 5;
+
+    const gridSteps = 5;
+
+    const dynamicYValues =
+        Array.from({ length: gridSteps + 1 }, (_, i) => Math.round((yMax / gridSteps) * i));
+
+
+    /* GRID */
+
+    ctx.strokeStyle =
+        "#e8edf2";
+
+    ctx.lineWidth = 1;
+
+
+    dynamicYValues.forEach(
+        value => {
+
+            const y =
+                top +
+                chartHeight -
+                (value / (yMax || 1)) *
+                chartHeight;
+
+
+            ctx.beginPath();
+
+            ctx.moveTo(
+                left,
+                y
+            );
+
+            ctx.lineTo(
+                width - right,
+                y
+            );
+
+            ctx.stroke();
+
+
+            ctx.fillStyle =
+                "#6b7280";
+
+            ctx.font =
+                "10px Arial";
+
+            ctx.textAlign =
+                "right";
+
+
+            ctx.fillText(
+                value,
+                left - 7,
+                y + 3
+            );
+
+        }
+    );
+
+
+    /* DATA */
+
+    const datasets = [
+
+        {
+            values: farmers,
+            color: "#159447"
+        },
+
+        {
+            values: buyers,
+            color: "#2469e9"
+        },
+
+        {
+            values: experts,
+            color: "#f47b20"
+        },
+
+        {
+            values: providers,
+            color: "#7432c8"
+        }
+
+    ];
+
+
+    if (labels.length < 2) {
+
+        ctx.fillStyle = "#9aa3b2";
+        ctx.font = "12px Arial";
+        ctx.textAlign = "center";
+        ctx.fillText("Not enough registration history yet to chart.", width / 2, height / 2);
+
+        return;
+
+    }
+
+
+    const xStep =
+        chartWidth /
+        (labels.length - 1);
+
+
+    /* X LABELS */
+
+    labels.forEach(
+        (label,index) => {
+
+            const x =
+                left +
+                index * xStep;
+
+
+            ctx.fillStyle =
+                "#697180";
+
+            ctx.font =
+                "10px Arial";
+
+            ctx.textAlign =
+                "center";
+
+
+            ctx.fillText(
+                label,
+                x,
+                height - 8
+            );
+
+        }
+    );
+
+
+    /* LINES */
+
+    datasets.forEach(
+        (dataset, datasetIndex) => {
+
+            ctx.beginPath();
+
+
+            // A tiny, fixed per-series offset so that when two
+            // series happen to have identical values (e.g. both
+            // flat at 0 then 1 in the same weeks), their lines
+            // don't sit exactly on top of each other and hide one
+            // another - each stays visible as its own line.
+            const seriesOffset =
+                (datasetIndex - (datasets.length - 1) / 2) * 3;
+
+
+            dataset.values.forEach(
+                (value,index) => {
+
+                    const x =
+                        left +
+                        index * xStep;
+
+
+                    const y =
+                        top +
+                        chartHeight -
+                        (value / (yMax || 1)) *
+                        chartHeight +
+                        seriesOffset;
+
+
+                    if(index === 0) {
+
+                        ctx.moveTo(
+                            x,
+                            y
+                        );
+
+                    } else {
+
+                        ctx.lineTo(
+                            x,
+                            y
+                        );
+
+                    }
+
+                }
+            );
+
+
+            ctx.strokeStyle =
+                dataset.color;
+
+            ctx.lineWidth = 2.4;
+
+            ctx.stroke();
+
+
+            /* POINTS */
+
+            dataset.values.forEach(
+                (value,index) => {
+
+                    const x =
+                        left +
+                        index * xStep;
+
+
+                    const y =
+                        top +
+                        chartHeight -
+                        (value / (yMax || 1)) *
+                        chartHeight +
+                        seriesOffset;
+
+
+                    ctx.beginPath();
+
+                    ctx.arc(
+                        x,
+                        y,
+                        3,
+                        0,
+                        Math.PI * 2
+                    );
+
+
+                    ctx.fillStyle =
+                        dataset.color;
+
+                    ctx.fill();
+
+                }
+            );
+
+        }
+    );
+
+}
+
+
+/* Draw */
+
+window.addEventListener(
+    "resize",
+    drawChart
+);
+
+drawChart();
+
+
+/* =====================================================
+   LOAD DASHBOARD (all live data)
+===================================================== */
+
+async function loadDashboard() {
+
+    try {
+
+        const periodSelect =
+            document.getElementById("chartPeriodSelect");
+
+        const period =
+            periodSelect ? periodSelect.value : "thisMonth";
+
+        let url =
+            `/api/admin/dashboard-stats?period=${period}`;
+
+        if (period === "custom") {
+
+            const startDate =
+                document.getElementById("customStartDate").value;
+
+            const endDate =
+                document.getElementById("customEndDate").value;
+
+            if (startDate && endDate) {
+
+                url +=
+                    `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+
+            } else {
+
+                // Nothing picked yet - don't fetch until the admin
+                // has actually chosen both dates and clicked Apply.
+                return;
+
+            }
+
+        }
+
+        const response =
+            await fetch(url);
+
+        const data =
+            await response.json();
+
+        if (!response.ok || !data.success) {
+            console.error("Failed to load dashboard stats:", data);
+            return;
+        }
+
+        const setText = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
+
+        const s = data.stats;
+
+        setText("statTotalUsers", Number(s.totalUsers).toLocaleString());
+        setText("statTotalUsersChange", `↑ ${s.newUsersThisWeek} this week`);
+
+        setText("statFarmers", Number(s.farmers).toLocaleString());
+        setText("statFarmersChange", `↑ ${s.newFarmersThisWeek} this week`);
+
+        setText("statBuyers", Number(s.buyers).toLocaleString());
+        setText("statBuyersChange", `↑ ${s.newBuyersThisWeek} this week`);
+
+        setText("statExperts", Number(s.experts).toLocaleString());
+        setText("statExpertsChange", `↑ ${s.newExpertsThisWeek} this week`);
+
+        setText("statProviders", Number(s.providers).toLocaleString());
+        setText("statProvidersChange", `↑ ${s.newProvidersThisWeek} this week`);
+
+        setText("statConflicts", Number(s.activeConflicts).toLocaleString());
+        setText(
+            "statConflictsChange",
+            s.resolvedConflictsThisWeek > 0
+                ? `↓ ${s.resolvedConflictsThisWeek} resolved this week`
+                : "0 resolved this week"
+        );
+
+
+        // ---- Users by role donut ----
+
+        const roleColors = {
+            farmer: "#159447",
+            buyer: "#2469e9",
+            expert: "#f47b20",
+            equipment_provider: "#7432c8"
+        };
+
+        const roleNumberIds = {
+            farmer: "roleFarmersNumber",
+            buyer: "roleBuyersNumber",
+            expert: "roleExpertsNumber",
+            equipment_provider: "roleProvidersNumber"
+        };
+
+        let cumulativeDeg = 0;
+
+        const gradientStops = [];
+
+        (data.usersByRole || []).forEach(role => {
+
+            const el = document.getElementById(roleNumberIds[role.role]);
+            if (el) el.textContent = `${role.count} (${role.percent}%)`;
+
+            const deg = (role.percent / 100) * 360;
+
+            gradientStops.push(
+                `${roleColors[role.role]} ${cumulativeDeg}deg ${cumulativeDeg + deg}deg`
+            );
+
+            cumulativeDeg += deg;
+
+        });
+
+        const donutEl = document.getElementById("roleDonut");
+
+        if (donutEl && gradientStops.length) {
+            donutEl.style.background = `conic-gradient(${gradientStops.join(", ")})`;
+        }
+
+
+        // ---- Reported conflicts table ----
+
+        const tbody =
+            document.getElementById("conflictsTableBody");
+
+        if (tbody) {
+
+            if (!data.recentConflicts || data.recentConflicts.length === 0) {
+
+                tbody.innerHTML =
+                    `<tr><td colspan="6" style="text-align:center;color:#8a94a6;padding:24px;">No conflicts reported.</td></tr>`;
+
+            } else {
+
+                const statusClassMap = {
+                    pending: "open",
+                    in_review: "review",
+                    resolved: "resolved",
+                    rejected: "resolved",
+                    dismissed: "resolved"
+                };
+
+                const statusLabelMap = {
+                    pending: "Open",
+                    in_review: "In Review",
+                    resolved: "Resolved",
+                    rejected: "Dismissed",
+                    dismissed: "Dismissed"
+                };
+
+                const roleLabelMap = {
+                    farmer: "Farmer",
+                    buyer: "Buyer",
+                    expert: "Agri Expert",
+                    equipment_provider: "Equipment Provider"
+                };
+
+                tbody.innerHTML =
+                    data.recentConflicts.map(row => `
+                        <tr>
+                            <td>
+                                <div class="person">
+                                    ${escapeHtml(`${row.first_name || ""} ${row.last_name || ""}`.trim() || "Removed Account")}
+                                </div>
+                                <div class="role-small">
+                                    ${escapeHtml(roleLabelMap[row.reporter_role] || row.reporter_role || "User")}
+                                </div>
+                            </td>
+                            <td>
+                                ${escapeHtml(row.report_type || "Other")}
+                            </td>
+                            <td>
+                                ${escapeHtml(row.related_to || "-")}${row.related_id ? " #" + escapeHtml(String(row.related_id)) : ""}
+                            </td>
+                            <td>
+                                <span class="status ${statusClassMap[row.status] || "open"}">
+                                    ${escapeHtml(statusLabelMap[row.status] || row.status)}
+                                </span>
+                            </td>
+                            <td>
+                                ${formatDateTime(row.created_at)}
+                            </td>
+                            <td>
+                                <button class="action-button" onclick="viewConflict()">
+                                    View
+                                </button>
+                            </td>
+                        </tr>
+                    `).join("");
+
+            }
+
+        }
+
+
+        // ---- Recent activity feed ----
+
+        const activityList =
+            document.getElementById("activityList");
+
+        if (activityList) {
+
+            if (!data.recentActivity || data.recentActivity.length === 0) {
+
+                activityList.innerHTML =
+                    `<p style="padding:20px;color:#8a94a6;">No recent activity.</p>`;
+
+            } else {
+
+                activityList.innerHTML =
+                    data.recentActivity.map(item => `
+                        <div class="activity-item">
+                            <div class="activity-icon ${escapeHtml(item.iconClass)}">
+                                ${item.icon}
+                            </div>
+                            <div class="activity-text">
+                                <div class="activity-title">
+                                    ${escapeHtml(item.title)}
+                                </div>
+                                <div class="activity-description">
+                                    ${escapeHtml(item.description || "")}
+                                </div>
+                            </div>
+                            <span class="activity-time">
+                                ${escapeHtml(formatTimeAgo(item.time))}
+                            </span>
+                        </div>
+                    `).join("");
+
+            }
+
+        }
+
+
+        // ---- Growth chart ----
+
+        window.growthChartRaw = data.growthChart || [];
+        drawChart();
+
+    } catch (error) {
+
+        console.error("Unable to load dashboard stats:", error);
+
+    }
+
+}
+
+loadDashboard();
+
+
+const chartPeriodSelectEl =
+    document.getElementById("chartPeriodSelect");
+
+const customDateRangeRowEl =
+    document.getElementById("customDateRangeRow");
+
+if (chartPeriodSelectEl) {
+
+    chartPeriodSelectEl.addEventListener(
+        "change",
+        function () {
+
+            if (this.value === "custom") {
+
+                customDateRangeRowEl.style.display = "flex";
+                // Don't fetch yet - wait for the admin to pick
+                // both dates and click Apply.
+
+            } else {
+
+                customDateRangeRowEl.style.display = "none";
+                loadDashboard();
+
+            }
+
+        }
+    );
+
+}
+
+
+const applyCustomDateRangeBtn =
+    document.getElementById("applyCustomDateRange");
+
+if (applyCustomDateRangeBtn) {
+
+    applyCustomDateRangeBtn.addEventListener(
+        "click",
+        loadDashboard
+    );
+
+}
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

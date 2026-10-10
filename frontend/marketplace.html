@@ -1,0 +1,6704 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>AgriConnect - Marketplace</title>
+
+
+<style>
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f4f7f5;
+
+    color: #1f2937;
+
+    min-height: 100vh;
+
+}
+
+
+.dashboard {
+
+    display: flex;
+
+    min-height: 100vh;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+   ===================================================== */
+
+.sidebar {
+    min-width: 255px;
+
+
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #087b38 0%,
+            #05652f 100%
+        );
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+    position: fixed;
+
+    left: 0;
+
+    top: 0;
+
+    bottom: 0;
+
+    z-index: 100;
+
+    overflow-y: auto;
+
+}
+
+
+.sidebar-logo {
+
+    height: 86px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.12);
+
+}
+
+
+.sidebar-logo img {
+    max-height: 62px;
+
+
+    width: 160px;
+
+    height: auto;
+
+}
+
+
+.sidebar-nav {
+
+    padding: 15px 12px;
+
+    flex: 1;
+
+}
+
+
+.nav-item {
+
+    width: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 11px 13px;
+
+    margin-bottom: 5px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition:
+        background 0.2s;
+
+}
+
+
+.nav-item:hover {
+
+    background:
+        rgba(255,255,255,0.12);
+
+}
+
+
+.nav-item.active {
+
+    background:
+        rgba(0,70,30,0.55);
+
+    box-shadow:
+        inset 3px 0 0 white;
+
+}
+
+
+.nav-icon {
+
+    width: 22px;
+
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 17px;
+
+}
+
+
+.nav-text {
+
+    flex: 1;
+
+}
+
+
+.notification-count {
+
+    min-width: 23px;
+
+    height: 23px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #25b94b;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+}
+
+
+.sidebar-bottom {
+
+    padding:
+        10px 12px 15px;
+
+}
+
+
+.sidebar-divider {
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.20);
+
+    margin:
+        5px 15px 12px;
+
+}
+
+
+/* =====================================================
+   MAIN
+   ===================================================== */
+
+.main-content {
+
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.header {
+
+    min-height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        15px 30px;
+
+}
+
+
+.welcome-section h1 {
+
+    font-size: 25px;
+
+    font-weight: 500;
+
+    color: #111827;
+
+}
+
+
+.welcome-section h1 span {
+
+    color: #149447;
+
+    font-weight: 700;
+
+}
+
+
+.welcome-section p {
+
+    margin-top: 4px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+}
+
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+
+.header-notification {
+
+    position: relative;
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 20px;
+
+}
+
+
+.header-notification:hover {
+
+    background: #f1f5f2;
+
+}
+
+
+.header-badge {
+
+    position: absolute;
+
+    top: 1px;
+
+    right: 0;
+
+    width: 17px;
+
+    height: 17px;
+
+    border-radius: 50%;
+
+    background: #1ca545;
+
+    color: white;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+/* =====================================================
+   PROFILE
+   ===================================================== */
+
+.profile {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+
+    padding: 5px 7px;
+
+    border-radius: 9px;
+
+}
+
+
+.profile:hover {
+
+    background: #f5f7f6;
+
+}
+
+
+.profile-picture {
+    font-size: 17px;
+
+
+    width: 43px;
+
+    height: 43px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        2px solid #d7e9dc;
+
+    background: #e9f4ec;
+
+}
+
+
+.profile-info {
+
+    line-height: 1.25;
+
+}
+
+
+.profile-name {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #222;
+
+}
+
+
+.profile-role {
+
+    font-size: 12px;
+
+    color: #229447;
+
+    margin-top: 2px;
+
+}
+
+
+.profile-arrow {
+
+    font-size: 11px;
+
+    color: #555;
+
+}
+
+
+.profile-dropdown {
+
+    display: none;
+
+    position: absolute;
+
+    top: 58px;
+
+    right: 0;
+
+    width: 225px;
+
+    background: white;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.15);
+
+    padding: 8px;
+
+    z-index: 300;
+
+}
+
+
+.profile.open
+.profile-dropdown {
+
+    display: block;
+
+}
+
+
+.dropdown-title {
+
+    padding:
+        8px 10px 6px;
+
+    font-size: 11px;
+
+    color: #888;
+
+    text-transform: uppercase;
+
+    font-weight: bold;
+
+}
+
+
+.dropdown-role {
+
+    width: 100%;
+
+    padding: 10px;
+
+    border: none;
+
+    background: transparent;
+
+    border-radius: 7px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    color: #333;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+}
+
+
+.dropdown-role:hover {
+
+    background: #f1f7f3;
+
+}
+
+
+.dropdown-role.current {
+
+    background: #e9f6ed;
+
+    color: #13883f;
+
+    font-weight: bold;
+
+}
+
+
+.role-check {
+
+    margin-left: auto;
+
+}
+
+
+/* =====================================================
+   PAGE
+   ===================================================== */
+
+.page-content {
+
+    padding:
+        25px 30px 30px;
+
+    flex: 1;
+
+}
+
+
+.page-heading {
+
+    margin-bottom: 18px;
+
+}
+
+
+.page-heading h2 {
+
+    font-size: 25px;
+
+    color: #1f2937;
+
+}
+
+
+.page-heading p {
+
+    margin-top: 5px;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+}
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+.search-section {
+
+    background: white;
+
+    border:
+        1px solid #e4e9e5;
+
+    border-radius: 11px;
+
+    padding: 15px;
+
+    margin-bottom: 22px;
+
+    box-shadow:
+        0 2px 7px
+        rgba(0,0,0,0.03);
+
+}
+
+
+.search-row {
+
+    display: flex;
+
+    gap: 10px;
+
+}
+
+
+.search-box {
+
+    position: relative;
+
+    flex: 1;
+
+}
+
+
+.search-box input {
+
+    width: 100%;
+
+    padding:
+        13px 15px 13px 43px;
+
+    border:
+        1px solid #d8ded9;
+
+    border-radius: 8px;
+
+    font-size: 13px;
+
+    outline: none;
+
+}
+
+
+.search-box input:focus {
+
+    border-color: #2e8b3a;
+
+}
+
+
+.search-icon {
+
+    position: absolute;
+
+    left: 15px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    color: #7b857d;
+
+    font-size: 17px;
+
+}
+
+
+.search-button {
+
+    border: none;
+
+    background: #2e8b3a;
+
+    color: white;
+
+    border-radius: 8px;
+
+    padding:
+        0 22px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.search-button:hover {
+
+    background: #256d2e;
+
+}
+
+
+/* =====================================================
+   BREADCRUMB
+   ===================================================== */
+
+.breadcrumb {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 11px;
+
+    color: #78827c;
+
+    margin-bottom: 15px;
+
+}
+
+
+.breadcrumb button {
+
+    border: none;
+
+    background: transparent;
+
+    color: #1b7f3d;
+
+    cursor: pointer;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+}
+
+
+.breadcrumb-separator {
+
+    color: #adb5b0;
+
+}
+
+
+/* =====================================================
+   SECTION HEADER
+   ===================================================== */
+
+.section-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+
+}
+
+
+.section-header h3 {
+
+    font-size: 17px;
+
+    color: #222;
+
+}
+
+
+.section-header p {
+
+    margin-top: 4px;
+
+    color: #7a847e;
+
+    font-size: 11px;
+
+}
+
+
+/* =====================================================
+   CATEGORY GRID
+   ===================================================== */
+
+.category-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+
+}
+
+
+.category-card {
+
+    background: white;
+
+    border:
+        1px solid #e1e7e3;
+
+    border-radius: 11px;
+
+    padding: 14px;
+
+    min-height: 105px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,0.03);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s,
+        border-color 0.2s;
+
+}
+
+
+.category-card:hover {
+
+    transform:
+        translateY(-2px);
+
+    border-color: #9bcaaa;
+
+    box-shadow:
+        0 7px 16px
+        rgba(0,0,0,0.07);
+
+}
+
+
+.category-image {
+
+    width: 68px;
+
+    height: 68px;
+
+    border-radius: 9px;
+
+    object-fit: cover;
+
+    background: #edf5ef;
+
+    flex-shrink: 0;
+
+}
+
+
+.category-placeholder {
+
+    width: 68px;
+
+    height: 68px;
+
+    border-radius: 9px;
+
+    background: #edf5ef;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 34px;
+
+    flex-shrink: 0;
+
+}
+
+
+.category-info {
+
+    flex: 1;
+
+}
+
+
+.category-name {
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #222;
+
+}
+
+
+.category-count {
+
+    margin-top: 5px;
+
+    color: #7c867f;
+
+    font-size: 10px;
+
+}
+
+
+.category-view {
+
+    margin-top: 8px;
+
+    color: #1b813c;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   SPECIFIC CATEGORIES
+   ===================================================== */
+
+.specific-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 15px;
+
+}
+
+
+.specific-card {
+
+    background: white;
+
+    border:
+        1px solid #e1e7e3;
+
+    border-radius: 11px;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,0.03);
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+
+}
+
+
+.specific-card:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 8px 18px
+        rgba(0,0,0,0.08);
+
+}
+
+
+.specific-image {
+
+    width: 100%;
+
+    height: 130px;
+
+    object-fit: cover;
+
+    background: #edf4ef;
+
+}
+
+
+.specific-placeholder {
+
+    width: 100%;
+
+    height: 130px;
+
+    background: #edf4ef;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 55px;
+
+}
+
+
+.specific-content {
+
+    padding: 14px;
+
+}
+
+
+.specific-name {
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #222;
+
+}
+
+
+.specific-description {
+
+    margin-top: 5px;
+
+    color: #7a847e;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+}
+
+
+.specific-action {
+
+    margin-top: 12px;
+
+    color: #19843e;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   RESULTS
+   ===================================================== */
+
+.results-toolbar {
+
+    background: white;
+
+    border:
+        1px solid #e3e9e4;
+
+    border-radius: 10px;
+
+    padding: 12px 15px;
+
+    margin-bottom: 12px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+.results-count {
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #333;
+
+}
+
+
+.results-subtitle {
+
+    font-size: 10px;
+
+    color: #7c857f;
+
+    margin-top: 3px;
+
+}
+
+
+.back-button {
+
+    border:
+        1px solid #b5cdbb;
+
+    background: white;
+
+    color: #217b3d;
+
+    border-radius: 7px;
+
+    padding: 8px 13px;
+
+    cursor: pointer;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+}
+
+
+.back-button:hover {
+
+    background: #f0f8f2;
+
+}
+
+
+.results-list {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+}
+
+
+.result-card {
+
+    background: white;
+
+    border:
+        1px solid #e1e7e3;
+
+    border-radius: 10px;
+
+    padding: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(0,0,0,0.03);
+
+}
+
+
+.result-image {
+
+    width: 105px;
+
+    height: 82px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    background: #edf4ef;
+
+    flex-shrink: 0;
+
+}
+
+
+.result-placeholder {
+
+    width: 105px;
+
+    height: 82px;
+
+    border-radius: 8px;
+
+    background: #edf4ef;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 38px;
+
+    flex-shrink: 0;
+
+}
+
+
+.result-main {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+
+.result-crop-name {
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #222;
+
+}
+
+
+.result-farmer {
+
+    margin-top: 5px;
+
+    font-size: 11px;
+
+    color: #555;
+
+}
+
+
+.result-farmer span {
+
+    color: #19813c;
+
+    font-weight: bold;
+
+}
+
+
+.result-location {
+
+    margin-top: 4px;
+
+    font-size: 10px;
+
+    color: #7b857e;
+
+}
+
+
+.result-columns {
+
+    display: flex;
+
+    gap: 35px;
+
+    align-items: center;
+
+}
+
+
+.result-data {
+
+    min-width: 90px;
+
+}
+
+
+.result-data-label {
+
+    font-size: 9px;
+
+    color: #89928c;
+
+}
+
+
+.result-data-value {
+
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #333;
+
+}
+
+
+.result-price {
+
+    color: #15803d;
+
+}
+
+
+.view-result-button {
+
+    border:
+        1px solid #83bd91;
+
+    background: white;
+
+    color: #217c3d;
+
+    border-radius: 7px;
+
+    padding: 9px 14px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.view-result-button:hover {
+
+    background: #edf8ef;
+
+}
+
+
+/* =====================================================
+   DETAILS
+   ===================================================== */
+
+.detail-layout {
+
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1.3fr)
+        minmax(320px, 0.7fr);
+
+    gap: 20px;
+
+}
+
+
+.detail-card {
+
+    background: white;
+
+    border:
+        1px solid #e1e7e3;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    box-shadow:
+        0 3px 10px
+        rgba(0,0,0,0.04);
+
+}
+
+
+.detail-image {
+
+    width: 100%;
+
+    height: 330px;
+
+    object-fit: cover;
+
+    border-radius: 9px;
+
+    background: #edf4ef;
+
+}
+
+
+.detail-placeholder {
+
+    width: 100%;
+
+    height: 330px;
+
+    border-radius: 9px;
+
+    background: #edf4ef;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 90px;
+
+}
+
+
+.detail-title {
+
+    margin-top: 18px;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    color: #222;
+
+}
+
+
+.detail-specific {
+
+    margin-top: 5px;
+
+    color: #718078;
+
+    font-size: 12px;
+
+}
+
+
+.detail-farmer {
+
+    margin-top: 15px;
+
+    padding-bottom: 15px;
+
+    border-bottom:
+        1px solid #edf0ee;
+
+}
+
+
+.detail-farmer-name {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #25803f;
+
+}
+
+
+.detail-location {
+
+    margin-top: 5px;
+
+    color: #777;
+
+    font-size: 11px;
+
+}
+
+
+.detail-info-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap: 10px;
+
+    margin-top: 15px;
+
+}
+
+
+.detail-info-box {
+
+    background: #f7faf8;
+
+    border-radius: 8px;
+
+    padding: 12px;
+
+}
+
+
+.detail-info-label {
+
+    font-size: 9px;
+
+    color: #7d8780;
+
+}
+
+
+.detail-info-value {
+
+    margin-top: 5px;
+
+    font-size: 12px;
+
+    color: #333;
+
+    font-weight: bold;
+
+}
+
+
+.detail-description {
+
+    margin-top: 16px;
+
+    padding-top: 15px;
+
+    border-top:
+        1px solid #edf0ee;
+
+}
+
+
+.detail-description h4 {
+
+    font-size: 12px;
+
+    color: #333;
+
+}
+
+
+.detail-description p {
+
+    margin-top: 7px;
+
+    font-size: 11px;
+
+    line-height: 1.7;
+
+    color: #666;
+
+}
+
+
+/* =====================================================
+   PURCHASE PANEL
+   ===================================================== */
+
+.purchase-card {
+
+    background: white;
+
+    border:
+        1px solid #bcdac3;
+
+    border-radius: 12px;
+
+    padding: 20px;
+
+    box-shadow:
+        0 4px 12px
+        rgba(0,0,0,0.05);
+
+    height: fit-content;
+
+    position: sticky;
+
+    top: 20px;
+
+}
+
+
+.purchase-card h3 {
+
+    font-size: 18px;
+
+    color: #222;
+
+    margin-bottom: 17px;
+
+}
+
+
+.purchase-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 10px 0;
+
+    border-bottom:
+        1px solid #edf0ee;
+
+    font-size: 11px;
+
+}
+
+
+.purchase-row span:first-child {
+
+    color: #718078;
+
+}
+
+
+.purchase-row strong {
+
+    color: #16803c;
+
+}
+
+
+.quantity-group {
+
+    margin-top: 17px;
+
+}
+
+
+.quantity-group label {
+
+    display: block;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    color: #333;
+
+    margin-bottom: 7px;
+
+}
+
+
+.quantity-input {
+
+    width: 100%;
+
+    padding: 11px;
+
+    border:
+        1px solid #d5ddd7;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    outline: none;
+
+}
+
+
+.quantity-input:focus {
+
+    border-color: #2e8b3a;
+
+}
+
+
+.total-display {
+
+    margin-top: 17px;
+
+    padding: 13px;
+
+    background: #eaf6ed;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+.total-display span {
+
+    color: #477052;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+}
+
+
+.total-display strong {
+
+    color: #16803c;
+
+    font-size: 18px;
+
+}
+
+
+.detail-order-button {
+
+    width: 100%;
+
+    margin-top: 15px;
+
+    padding: 12px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2e8b3a;
+
+    color: white;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.detail-order-button:hover {
+
+    background: #256d2e;
+
+}
+
+
+/* =====================================================
+   EMPTY
+   ===================================================== */
+
+.empty-state {
+
+    background: white;
+
+    border:
+        1px solid #e4e9e5;
+
+    border-radius: 12px;
+
+    padding: 60px 20px;
+
+    text-align: center;
+
+}
+
+
+.empty-icon {
+
+    font-size: 50px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.empty-state h3 {
+
+    font-size: 18px;
+
+    color: #333;
+
+    margin-bottom: 6px;
+
+}
+
+
+.empty-state p {
+
+    font-size: 12px;
+
+    color: #777;
+
+}
+
+
+/* =====================================================
+   ORDER MODAL
+   ===================================================== */
+
+.modal-overlay {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0,0,0,0.48);
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 500;
+
+    padding: 20px;
+
+}
+
+
+.modal-overlay.show {
+
+    display: flex;
+
+}
+
+
+.modal {
+
+    width: 100%;
+
+    max-width: 570px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: white;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 15px 40px
+        rgba(0,0,0,0.20);
+
+}
+
+
+.modal-header {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        18px 20px;
+
+    border-bottom:
+        1px solid #edf0ee;
+
+}
+
+
+.modal-header h3 {
+
+    font-size: 19px;
+
+    color: #222;
+
+}
+
+
+.close-modal {
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 25px;
+
+    color: #777;
+
+    cursor: pointer;
+
+}
+
+
+.modal-body {
+
+    padding: 20px;
+
+}
+
+
+.order-crop-summary {
+
+    display: flex;
+
+    gap: 13px;
+
+    padding-bottom: 16px;
+
+    border-bottom:
+        1px solid #edf0ee;
+
+}
+
+
+.order-crop-image {
+
+    width: 75px;
+
+    height: 75px;
+
+    object-fit: cover;
+
+    border-radius: 8px;
+
+    background: #edf4ef;
+
+}
+
+
+.order-crop-name {
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    color: #222;
+
+}
+
+
+.order-crop-price {
+
+    margin-top: 5px;
+
+    font-size: 12px;
+
+    color: #15803b;
+
+    font-weight: bold;
+
+}
+
+
+.form-group {
+
+    margin-top: 17px;
+
+}
+
+
+.form-group label {
+
+    display: block;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    color: #333;
+
+    margin-bottom: 7px;
+
+}
+
+
+.form-group input,
+.form-group textarea {
+
+    width: 100%;
+
+    border:
+        1px solid #d5ddd7;
+
+    border-radius: 7px;
+
+    padding: 11px;
+
+    font-size: 12px;
+
+    outline: none;
+
+    font-family: inherit;
+
+}
+
+
+.form-group input:focus,
+.form-group textarea:focus {
+
+    border-color: #2e8b3a;
+
+}
+
+
+.form-group textarea {
+
+    resize: vertical;
+
+    min-height: 75px;
+
+}
+
+
+.total-box {
+
+    margin-top: 17px;
+
+    padding: 13px;
+
+    border-radius: 8px;
+
+    background: #eaf6ed;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+}
+
+
+.total-label {
+
+    font-size: 12px;
+
+    color: #477052;
+
+    font-weight: bold;
+
+}
+
+
+.total-value {
+
+    font-size: 18px;
+
+    color: #15803b;
+
+    font-weight: bold;
+
+}
+
+
+.modal-footer {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    padding:
+        15px 20px;
+
+    border-top:
+        1px solid #edf0ee;
+
+}
+
+
+.modal-button {
+
+    padding:
+        9px 18px;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+.cancel-button {
+
+    border:
+        1px solid #ccd3ce;
+
+    background: white;
+
+    color: #555;
+
+}
+
+
+.place-order-button {
+
+    border: none;
+
+    background: #2e8b3a;
+
+    color: white;
+
+}
+
+
+.place-order-button:hover {
+
+    background: #256d2e;
+
+}
+
+
+.place-order-button:disabled {
+
+    background: #9cb9a3;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =====================================================
+   TOAST
+   ===================================================== */
+
+.success-toast {
+
+    position: fixed;
+
+    top: 25px;
+
+    right: 30px;
+
+    min-width: 320px;
+
+    background: white;
+
+    border-left:
+        5px solid #2e8b3a;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,0.15);
+
+    padding:
+        15px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    z-index: 1000;
+
+    opacity: 0;
+
+    transform:
+        translateX(120%);
+
+    transition:
+        opacity 0.3s ease,
+        transform 0.3s ease;
+
+}
+
+
+.success-toast.show {
+
+    opacity: 1;
+
+    transform:
+        translateX(0);
+
+}
+
+
+.toast-icon {
+
+    width: 34px;
+
+    height: 34px;
+
+    border-radius: 50%;
+
+    background: #e7f6eb;
+
+    color: #23863a;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+}
+
+
+.toast-content {
+
+    flex: 1;
+
+}
+
+
+.toast-title {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #222;
+
+    margin-bottom: 3px;
+
+}
+
+
+.toast-message {
+
+    font-size: 12px;
+
+    color: #707070;
+
+}
+
+
+.toast-close {
+
+    border: none;
+
+    background: transparent;
+
+    color: #999;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+}
+
+
+/* =====================================================
+   FOOTER
+   ===================================================== */
+
+.footer {
+    left: 255px;
+
+
+    min-height: 42px;
+
+    background: #075e31;
+
+    color: #d8e8dc;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 14px;
+
+    font-size: 10px;
+
+}
+
+
+.footer a {
+
+    color: #9bd7ad;
+
+    text-decoration: none;
+
+}
+
+
+.mobile-menu {
+
+    display: none;
+
+    border: none;
+
+    background: #087b38;
+
+    color: white;
+
+    width: 40px;
+
+    height: 40px;
+
+    border-radius: 7px;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width:1100px) {
+
+    .category-grid,
+    .specific-grid {
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+    .detail-layout {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .purchase-card {
+
+        position: static;
+
+    }
+
+}
+
+
+@media (max-width:900px) {
+
+    .sidebar {
+
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s;
+
+    }
+
+
+    .sidebar.open {
+
+        transform:
+            translateX(0);
+
+    }
+
+
+    .main-content {
+
+        margin-left: 0;
+
+        width: 100%;
+
+    }
+
+
+    .mobile-menu {
+
+        display: block;
+
+    }
+
+
+    .result-columns {
+
+        gap: 15px;
+
+    }
+
+}
+
+
+@media (max-width:700px) {
+
+    .page-content {
+
+        padding:
+            18px 15px;
+
+    }
+
+
+    .header {
+
+        padding:
+            15px 18px;
+
+    }
+
+
+    .category-grid,
+    .specific-grid {
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .profile-info {
+
+        display:none;
+
+    }
+
+
+    .search-row {
+
+        flex-direction: column;
+
+    }
+
+
+    .search-button {
+
+        height: 40px;
+
+    }
+
+
+    .result-card {
+
+        flex-wrap: wrap;
+
+    }
+
+
+    .result-columns {
+
+        width: 100%;
+
+        justify-content: space-between;
+
+    }
+
+
+    .detail-info-grid {
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .success-toast {
+
+        left:15px;
+
+        right:15px;
+
+        min-width:auto;
+
+    }
+
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- =====================================================
+     SIDEBAR
+     ===================================================== -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+
+        <a
+            href="buyer-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-text">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <a
+            href="marketplace.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                🛒
+            </span>
+
+            <span class="nav-text">
+                Marketplace
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-orders.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🛒
+            </span>
+
+            <span class="nav-text">
+                My Orders
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-text">
+                Messages
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                👨‍🌾
+            </span>
+
+            <span class="nav-text">
+                Consultations
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                📄
+            </span>
+
+            <span class="nav-text">
+                Reports
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-text">
+                Notifications
+            </span>
+
+            <span
+                class="notification-count"
+                id="notificationCount"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-text">
+                History
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-text">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-text">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+            id="logoutButton"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-text">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+     ===================================================== -->
+
+<main class="main-content">
+
+
+<header class="header">
+
+
+    <div
+        style="
+            display:flex;
+            align-items:center;
+            gap:14px;
+        "
+    >
+
+
+        <button
+            class="mobile-menu"
+            id="mobileMenu"
+            type="button"
+        >
+            ☰
+        </button>
+
+
+        <div class="welcome-section">
+
+            <h1>
+
+                Welcome back,
+                <span id="userName">
+                    User
+                </span>!
+
+            </h1>
+
+
+            <p>
+                Find fresh crops directly
+                from farmers.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="header-right">
+
+
+        <div
+            class="header-notification"
+            onclick="openNotifications()"
+        >
+
+            🔔
+
+            <span
+                class="header-badge"
+                id="headerBadge"
+            >
+                0
+            </span>
+
+        </div>
+
+
+        <div
+            class="profile"
+            id="profile"
+        >
+
+
+            <img
+                src="https://ui-avatars.com/api/?name=User&background=e9f4ec&color=17833c"
+                alt="Profile"
+                class="profile-picture"
+                id="profilePicture"
+            >
+
+
+            <div class="profile-info">
+
+                <div
+                    class="profile-name"
+                    id="profileName"
+                >
+                    User Name
+                </div>
+
+
+                <div
+                    class="profile-role"
+                    id="profileRole"
+                >
+                    Buyer
+                </div>
+
+            </div>
+
+
+            <span class="profile-arrow">
+                ▼
+            </span>
+
+
+            <div class="profile-dropdown">
+
+                <div class="dropdown-title">
+                    Switch Role
+                </div>
+
+                <div id="roleOptions"></div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</header>
+
+
+<!-- =====================================================
+     PAGE
+     ===================================================== -->
+
+<section class="page-content">
+
+
+    <div class="page-heading">
+
+        <h2>
+            Marketplace
+        </h2>
+
+        <p>
+            Discover fresh crops from farmers
+            by category or search directly.
+        </p>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-section">
+
+
+        <div class="search-row">
+
+
+            <div class="search-box">
+
+                <span class="search-icon">
+                    🔍
+                </span>
+
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by crop, specific name or farmer..."
+                >
+
+            </div>
+
+
+            <button
+                class="search-button"
+                type="button"
+                onclick="performSearch()"
+            >
+                Search
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+    <!-- DYNAMIC CONTENT -->
+
+    <div id="marketplaceContent"></div>
+
+
+</section>
+
+
+<footer class="footer">
+
+    <span>
+        © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>|</span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+</main>
+
+</div>
+
+
+<!-- =====================================================
+     ORDER MODAL
+     ===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="orderModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h3>
+                Place Order
+            </h3>
+
+
+            <button
+                class="close-modal"
+                onclick="closeOrderModal()"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <div
+                class="order-crop-summary"
+                id="orderCropSummary"
+            ></div>
+
+
+            <div class="form-group">
+
+                <label for="quantity">
+                    Quantity (kg) *
+                </label>
+
+
+                <input
+                    type="number"
+                    id="quantity"
+                    min="0.01"
+                    step="0.01"
+                    placeholder="Enter quantity in kg"
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label for="deliveryAddress">
+                    Delivery Address *
+                </label>
+
+
+                <textarea
+                    id="deliveryAddress"
+                    placeholder="Enter your delivery address"
+                ></textarea>
+
+            </div>
+
+
+            <div class="total-box">
+
+                <span class="total-label">
+                    Total Amount
+                </span>
+
+
+                <span
+                    class="total-value"
+                    id="orderTotal"
+                >
+                    Rs. 0.00
+                </span>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="modal-footer">
+
+
+            <button
+                class="modal-button cancel-button"
+                onclick="closeOrderModal()"
+                type="button"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                class="modal-button place-order-button"
+                id="placeOrderButton"
+                onclick="placeOrder()"
+                type="button"
+            >
+                Place Order
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     TOAST
+     ===================================================== -->
+
+<div
+    class="success-toast"
+    id="successToast"
+>
+
+
+    <div class="toast-icon">
+        ✓
+    </div>
+
+
+    <div class="toast-content">
+
+        <div class="toast-title">
+            Success
+        </div>
+
+
+        <div
+            class="toast-message"
+            id="toastMessage"
+        >
+            Order placed successfully!
+        </div>
+
+    </div>
+
+
+    <button
+        class="toast-close"
+        onclick="hideToast()"
+        type="button"
+    >
+        ×
+    </button>
+
+
+</div>
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+/* =====================================================
+   API
+   ===================================================== */
+
+const API_BASE_URL =
+    "http://localhost:5000/api";
+
+
+/* =====================================================
+   USER
+   ===================================================== */
+
+let user = null;
+
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem("user")
+        );
+
+}
+catch (error) {
+
+    user = null;
+
+}
+
+
+let currentRole =
+    sessionStorage.getItem(
+        "selectedRole"
+    ) || "buyer";
+
+
+let crops = [];
+
+let selectedCrop = null;
+
+
+/* =====================================================
+   ROLE DATA
+   ===================================================== */
+
+const roleNames = {
+
+    farmer:
+        "Farmer",
+
+    buyer:
+        "Buyer",
+
+    expert:
+        "Agricultural Expert",
+
+    equipment_provider:
+        "Equipment Provider"
+
+};
+
+
+const roleIcons = {
+
+    farmer:
+        "🌱",
+
+    buyer:
+        "🛒",
+
+    expert:
+        "👨‍🌾",
+
+    equipment_provider:
+        "🚜"
+
+};
+
+
+/* =====================================================
+   CURRENT MARKETPLACE LEVEL
+   ===================================================== */
+
+let currentView =
+    "categories";
+
+
+let selectedCropName =
+    null;
+
+
+let selectedSpecificName =
+    null;
+
+
+/* =====================================================
+   BUYER CHECK
+   ===================================================== */
+
+function isBuyer() {
+
+    return currentRole === "buyer";
+
+}
+
+
+/* =====================================================
+   USER ID
+   ===================================================== */
+
+function getUserId() {
+
+    if (!user) {
+
+        return null;
+
+    }
+
+
+    return (
+        user.id ||
+        user.user_id ||
+        user.userId ||
+        null
+    );
+
+}
+
+
+/* =====================================================
+   DISPLAY USER
+   ===================================================== */
+
+function displayUser() {
+
+    if (!user) {
+
+        return;
+
+    }
+
+
+    const fullName =
+        `${user.first_name || ""} ${user.last_name || ""}`
+            .trim();
+
+
+    if (fullName) {
+
+        document.getElementById(
+            "userName"
+        ).textContent =
+            fullName;
+
+
+        document.getElementById(
+            "profileName"
+        ).textContent =
+            fullName;
+
+
+        document.getElementById(
+            "profilePicture"
+        ).src =
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=e9f4ec&color=17833c`;
+
+    }
+
+
+    document.getElementById(
+        "profileRole"
+    ).textContent =
+        roleNames[currentRole] ||
+        "Buyer";
+
+}
+
+
+/* =====================================================
+   PROFILE
+   ===================================================== */
+
+const profile =
+    document.getElementById(
+        "profile"
+    );
+
+
+profile.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        profile.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    function() {
+
+        profile.classList.remove(
+            "open"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   LOAD ROLES
+   ===================================================== */
+
+function loadRoles() {
+
+    const roleOptions =
+        document.getElementById(
+            "roleOptions"
+        );
+
+
+    roleOptions.innerHTML =
+        "";
+
+
+    let roles = [];
+
+
+    if (
+        user &&
+        Array.isArray(user.roles)
+    ) {
+
+        roles =
+            user.roles;
+
+    }
+
+
+    if (
+        roles.length === 0
+    ) {
+
+        roles =
+            [currentRole];
+
+    }
+
+
+    roles.forEach(
+        function(role) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "dropdown-role";
+
+
+            if (
+                role === currentRole
+            ) {
+
+                button.classList.add(
+                    "current"
+                );
+
+            }
+
+
+            button.innerHTML = `
+
+                <span>
+                    ${roleIcons[role] || "👤"}
+                </span>
+
+                <span>
+                    ${roleNames[role] || role}
+                </span>
+
+                ${
+                    role === currentRole
+                        ? '<span class="role-check">✓</span>'
+                        : ''
+                }
+
+            `;
+
+
+            button.addEventListener(
+                "click",
+                function(event) {
+
+                    event.stopPropagation();
+
+                    switchRole(
+                        role
+                    );
+
+                }
+            );
+
+
+            roleOptions.appendChild(
+                button
+            );
+
+        }
+    );
+
+    moveCurrentRoleToFront(roleOptions);
+
+
+}
+
+
+/* =====================================================
+   SWITCH ROLE
+   ===================================================== */
+
+function switchRole(
+    role
+) {
+
+    sessionStorage.setItem(
+        "selectedRole",
+        role
+    );
+
+
+    if (
+        role === "farmer"
+    ) {
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+    }
+
+    else if (
+        role === "buyer"
+    ) {
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+    }
+
+    else if (
+        role === "expert"
+    ) {
+
+        window.location.href =
+            "expert-dashboard.html";
+
+    }
+
+    else if (
+        role === "equipment_provider"
+    ) {
+
+        window.location.href =
+            "rental-dashboard.html";
+
+    }
+
+}
+
+
+/* =====================================================
+   FORMAT CURRENCY
+   ===================================================== */
+
+function formatCurrency(
+    value
+) {
+
+    return "Rs. " +
+        Number(
+            value || 0
+        )
+        .toLocaleString(
+            "en-LK",
+            {
+                minimumFractionDigits:
+                    2,
+
+                maximumFractionDigits:
+                    2
+            }
+        );
+
+}
+
+
+/* =====================================================
+   FORMAT DATE
+   ===================================================== */
+
+function formatDate(
+    value
+) {
+
+    if (!value) {
+
+        return "-";
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "-";
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day:
+                "2-digit",
+
+            month:
+                "short",
+
+            year:
+                "numeric"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   IMAGE URL
+   ===================================================== */
+
+function getImageURL(
+    imagePath
+) {
+
+    if (!imagePath) {
+
+        return "";
+
+    }
+
+
+    if (
+        imagePath.startsWith(
+            "http://"
+        ) ||
+        imagePath.startsWith(
+            "https://"
+        )
+    ) {
+
+        return imagePath;
+
+    }
+
+
+    if (
+        imagePath.startsWith("/")
+    ) {
+
+        return (
+            "http://localhost:5000" +
+            imagePath
+        );
+
+    }
+
+
+    return (
+        "http://localhost:5000/uploads/crops/" +
+        imagePath
+    );
+
+}
+
+
+/* =====================================================
+   GET CROP IMAGE
+   ===================================================== */
+
+function getCropImage(
+    crop
+) {
+
+    if (
+        crop.images &&
+        crop.images.length > 0
+    ) {
+
+        return getImageURL(
+            crop.images[0]
+        );
+
+    }
+
+
+    if (crop.image) {
+
+        return getImageURL(
+            crop.image
+        );
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+   ===================================================== */
+
+function escapeHTML(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value == null
+            ? ""
+            : value;
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   GET FARMER NAME
+   ===================================================== */
+
+function getFarmerName(
+    crop
+) {
+
+    const name =
+        `${crop.farmer_first_name || ""} ${crop.farmer_last_name || ""}`
+            .trim();
+
+
+    return name ||
+        "Farmer";
+
+}
+
+
+/* =====================================================
+   LOAD CROPS
+   ===================================================== */
+
+async function loadCrops() {
+
+    const content =
+        document.getElementById(
+            "marketplaceContent"
+        );
+
+
+    content.innerHTML = `
+
+        <div class="empty-state">
+
+            <div class="empty-icon">
+                🌱
+            </div>
+
+            <h3>
+                Loading crops...
+            </h3>
+
+            <p>
+                Please wait while we load
+                available crops.
+            </p>
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/crops`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Failed to load crops."
+            );
+
+        }
+
+
+        crops =
+            Array.isArray(
+                data.crops
+            )
+                ? data.crops
+                : [];
+
+
+        renderCurrentView();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Load crops error:",
+            error
+        );
+
+
+        content.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ⚠️
+                </div>
+
+                <h3>
+                    Unable to load crops
+                </h3>
+
+                <p>
+                    Please make sure the server
+                    is running and try again.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   GET UNIQUE CROP NAMES
+   ===================================================== */
+
+function getCropCategories() {
+
+    const map =
+        new Map();
+
+
+    crops.forEach(
+        function(crop) {
+
+            const name =
+                String(
+                    crop.crop_name ||
+                    ""
+                )
+                .trim();
+
+
+            if (!name) {
+
+                return;
+
+            }
+
+
+            const key =
+                name.toLowerCase();
+
+
+            if (!map.has(key)) {
+
+                map.set(
+                    key,
+                    {
+                        name:
+                            name,
+
+                        crops:
+                            []
+                    }
+                );
+
+            }
+
+
+            map.get(key)
+                .crops
+                .push(crop);
+
+        }
+    );
+
+
+    return Array.from(
+        map.values()
+    );
+
+}
+
+
+/* =====================================================
+   GET SPECIFIC CATEGORIES
+   ===================================================== */
+
+function getSpecificCategories(
+    cropName
+) {
+
+    const map =
+        new Map();
+
+
+    crops
+        .filter(
+            function(crop) {
+
+                return String(
+                    crop.crop_name ||
+                    ""
+                )
+                .trim()
+                .toLowerCase() ===
+                    cropName
+                    .trim()
+                    .toLowerCase();
+
+            }
+        )
+        .forEach(
+            function(crop) {
+
+                const specific =
+                    String(
+                        crop.specific_name ||
+                        ""
+                    )
+                    .trim();
+
+
+                if (!specific) {
+
+                    return;
+
+                }
+
+
+                const key =
+                    specific.toLowerCase();
+
+
+                if (!map.has(key)) {
+
+                    map.set(
+                        key,
+                        {
+                            name:
+                                specific,
+
+                            crops:
+                                []
+                        }
+                    );
+
+                }
+
+
+                map.get(key)
+                    .crops
+                    .push(crop);
+
+            }
+        );
+
+
+    return Array.from(
+        map.values()
+    );
+
+}
+
+
+/* =====================================================
+   RENDER CURRENT VIEW
+   ===================================================== */
+
+function renderCurrentView() {
+
+    if (
+        currentView ===
+        "categories"
+    ) {
+
+        renderCategories();
+
+    }
+
+    else if (
+        currentView ===
+        "specific"
+    ) {
+
+        renderSpecificCategories();
+
+    }
+
+    else if (
+        currentView ===
+        "results"
+    ) {
+
+        renderResults();
+
+    }
+
+    else if (
+        currentView ===
+        "details"
+    ) {
+
+        renderDetails();
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER MAIN CATEGORIES
+   ===================================================== */
+
+function renderCategories() {
+
+    const content =
+        document.getElementById(
+            "marketplaceContent"
+        );
+
+
+    const categories =
+        getCropCategories();
+
+
+    if (
+        categories.length === 0
+    ) {
+
+        content.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🌱
+                </div>
+
+                <h3>
+                    No crops available
+                </h3>
+
+                <p>
+                    Farmers have not uploaded
+                    any crops yet.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    content.innerHTML = `
+
+        <div class="section-header">
+
+            <div>
+
+                <h3>
+                    🌱 Recommended Crop Categories
+                </h3>
+
+                <p>
+                    Select a crop category to
+                    explore available varieties.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="category-grid">
+
+            ${categories
+                .map(
+                    function(category) {
+
+                        const firstCrop =
+                            category.crops[0];
+
+
+                        const image =
+                            getCropImage(
+                                firstCrop
+                            );
+
+
+                        return `
+
+                            <div
+                                class="category-card"
+                                onclick="
+                                    openCropCategory(
+                                        '${escapeAttribute(category.name)}'
+                                    )
+                                "
+                            >
+
+                                ${
+                                    image
+
+                                        ? `
+
+                                            <img
+                                                class="category-image"
+                                                src="${image}"
+                                                alt="${escapeHTML(category.name)}"
+                                                onerror="this.outerHTML='<div class=&quot;category-placeholder&quot;>🌱</div>'"
+                                            >
+
+                                          `
+
+                                        : `
+
+                                            <div class="category-placeholder">
+                                                🌱
+                                            </div>
+
+                                          `
+                                }
+
+
+                                <div class="category-info">
+
+                                    <div class="category-name">
+
+                                        ${escapeHTML(
+                                            category.name
+                                        )}
+
+                                    </div>
+
+
+                                    <div class="category-count">
+
+                                        ${category.crops.length}
+                                        listing${category.crops.length === 1 ? "" : "s"}
+
+                                    </div>
+
+
+                                    <div class="category-view">
+
+                                        View →
+                                    
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+                )
+                .join("")}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   ESCAPE ATTRIBUTE
+   ===================================================== */
+
+function escapeAttribute(
+    value
+) {
+
+    return String(
+        value || ""
+    )
+    .replace(
+        /\\/g,
+        "\\\\"
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    );
+
+}
+
+
+/* =====================================================
+   OPEN CROP CATEGORY
+   ===================================================== */
+
+function openCropCategory(
+    cropName
+) {
+
+    selectedCropName =
+        cropName;
+
+    selectedSpecificName =
+        null;
+
+
+    const specificCategories =
+        getSpecificCategories(
+            cropName
+        );
+
+
+    /*
+    -----------------------------------------------------
+    If the crop has specific categories,
+    show them.
+    -----------------------------------------------------
+    */
+
+    if (
+        specificCategories.length > 0
+    ) {
+
+        currentView =
+            "specific";
+
+    }
+
+    /*
+    -----------------------------------------------------
+    If farmers did not provide specific names,
+    go directly to listings.
+    -----------------------------------------------------
+    */
+
+    else {
+
+        currentView =
+            "results";
+
+    }
+
+
+    renderCurrentView();
+
+}
+
+
+/* =====================================================
+   RENDER SPECIFIC CATEGORIES
+   ===================================================== */
+
+function renderSpecificCategories() {
+
+    const content =
+        document.getElementById(
+            "marketplaceContent"
+        );
+
+
+    const specificCategories =
+        getSpecificCategories(
+            selectedCropName
+        );
+
+
+    content.innerHTML = `
+
+        <div class="breadcrumb">
+
+            <button
+                onclick="goToCategories()"
+            >
+                Marketplace
+            </button>
+
+            <span class="breadcrumb-separator">
+                ›
+            </span>
+
+            <span>
+                ${escapeHTML(
+                    selectedCropName
+                )}
+            </span>
+
+        </div>
+
+
+        <div class="section-header">
+
+            <div>
+
+                <h3>
+                    ${escapeHTML(
+                        selectedCropName
+                    )}
+                </h3>
+
+                <p>
+                    Select the specific type
+                    you are looking for.
+                </p>
+
+            </div>
+
+
+            <button
+                class="back-button"
+                onclick="goToCategories()"
+            >
+                ← Back to Categories
+            </button>
+
+        </div>
+
+
+        <div class="specific-grid">
+
+            ${specificCategories
+                .map(
+                    function(category) {
+
+                        const firstCrop =
+                            category.crops[0];
+
+
+                        const image =
+                            getCropImage(
+                                firstCrop
+                            );
+
+
+                        return `
+
+                            <div
+                                class="specific-card"
+                                onclick="
+                                    openSpecificCategory(
+                                        '${escapeAttribute(category.name)}'
+                                    )
+                                "
+                            >
+
+                                ${
+                                    image
+
+                                        ? `
+
+                                            <img
+                                                class="specific-image"
+                                                src="${image}"
+                                                alt="${escapeHTML(category.name)}"
+                                                onerror="this.outerHTML='<div class=&quot;specific-placeholder&quot;>🌱</div>'"
+                                            >
+
+                                          `
+
+                                        : `
+
+                                            <div class="specific-placeholder">
+                                                🌱
+                                            </div>
+
+                                          `
+                                }
+
+
+                                <div class="specific-content">
+
+                                    <div class="specific-name">
+
+                                        ${escapeHTML(
+                                            category.name
+                                        )}
+
+                                    </div>
+
+
+                                    <div class="specific-description">
+
+                                        ${
+                                            getSpecificDescription(
+                                                category.name
+                                            )
+                                        }
+
+                                    </div>
+
+
+                                    <div class="specific-action">
+
+                                        View Listings →
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        `;
+
+                    }
+                )
+                .join("")}
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   SPECIFIC DESCRIPTION
+   ===================================================== */
+
+function getSpecificDescription(
+    specificName
+) {
+
+    const name =
+        specificName
+            .toLowerCase();
+
+
+    if (
+        name.includes("common")
+    ) {
+
+        return "Popular and widely cultivated variety.";
+
+    }
+
+
+    if (
+        name.includes("green")
+    ) {
+
+        return "Fresh green variety suitable for cooking.";
+
+    }
+
+
+    if (
+        name.includes("cherry")
+    ) {
+
+        return "Small, sweet and juicy variety.";
+
+    }
+
+
+    if (
+        name.includes("black")
+    ) {
+
+        return "Distinctive variety with unique characteristics.";
+
+    }
+
+
+    if (
+        name.includes("red")
+    ) {
+
+        return "Fresh and naturally grown variety.";
+
+    }
+
+
+    return "Fresh crop variety available from farmers.";
+
+}
+
+
+/* =====================================================
+   OPEN SPECIFIC CATEGORY
+   ===================================================== */
+
+function openSpecificCategory(
+    specificName
+) {
+
+    selectedSpecificName =
+        specificName;
+
+
+    currentView =
+        "results";
+
+
+    renderCurrentView();
+
+}
+
+
+/* =====================================================
+   RENDER RESULTS
+   ===================================================== */
+
+function renderResults() {
+
+    const content =
+        document.getElementById(
+            "marketplaceContent"
+        );
+
+
+    let results =
+        crops.filter(
+            function(crop) {
+
+                const cropName =
+                    String(
+                        crop.crop_name ||
+                        ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                const specificName =
+                    String(
+                        crop.specific_name ||
+                        ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                const selectedCrop =
+                    String(
+                        selectedCropName ||
+                        ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                const selectedSpecific =
+                    String(
+                        selectedSpecificName ||
+                        ""
+                    )
+                    .trim()
+                    .toLowerCase();
+
+
+                if (
+                    cropName !==
+                    selectedCrop
+                ) {
+
+                    return false;
+
+                }
+
+
+                if (
+                    selectedSpecific
+                ) {
+
+                    return (
+                        specificName ===
+                        selectedSpecific
+                    );
+
+                }
+
+
+                return true;
+
+            }
+        );
+
+
+    content.innerHTML = `
+
+        <div class="breadcrumb">
+
+            <button
+                onclick="goToCategories()"
+            >
+                Marketplace
+            </button>
+
+            <span class="breadcrumb-separator">
+                ›
+            </span>
+
+
+            <button
+                onclick="openCropCategory(
+                    '${escapeAttribute(selectedCropName)}'
+                )"
+            >
+                ${escapeHTML(
+                    selectedCropName
+                )}
+            </button>
+
+
+            ${
+                selectedSpecificName
+
+                    ? `
+
+                        <span class="breadcrumb-separator">
+                            ›
+                        </span>
+
+                        <span>
+                            ${escapeHTML(
+                                selectedSpecificName
+                            )}
+                        </span>
+
+                      `
+
+                    : ""
+            }
+
+        </div>
+
+
+        <div class="section-header">
+
+            <div>
+
+                <h3>
+
+                    ${escapeHTML(
+                        selectedSpecificName ||
+                        selectedCropName
+                    )}
+
+                </h3>
+
+                <p>
+                    Select a farmer listing to
+                    view complete crop details.
+                </p>
+
+            </div>
+
+
+            <button
+                class="back-button"
+                onclick="
+                    ${
+                        selectedSpecificName
+                            ? `openCropCategory('${escapeAttribute(selectedCropName)}')`
+                            : "goToCategories()"
+                    }
+                "
+            >
+
+                ← Back
+
+            </button>
+
+        </div>
+
+
+        <div class="results-toolbar">
+
+            <div>
+
+                <div class="results-count">
+
+                    ${results.length}
+                    Result${results.length === 1 ? "" : "s"}
+
+                </div>
+
+
+                <div class="results-subtitle">
+
+                    Uploaded by farmers on AgriConnect
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        ${
+            results.length > 0
+
+                ? `
+
+                    <div class="results-list">
+
+                        ${results
+                            .map(
+                                function(crop) {
+
+                                    return createResultCard(
+                                        crop
+                                    );
+
+                                }
+                            )
+                            .join("")}
+
+                    </div>
+
+                  `
+
+                : `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🌱
+                        </div>
+
+                        <h3>
+                            No listings found
+                        </h3>
+
+                        <p>
+                            There are no uploaded
+                            listings for this category yet.
+                        </p>
+
+                    </div>
+
+                  `
+
+        }
+
+    `;
+
+}
+
+
+/* =====================================================
+   CREATE RESULT CARD
+   ===================================================== */
+
+function createResultCard(
+    crop
+) {
+
+    const image =
+        getCropImage(
+            crop
+        );
+
+
+    const farmerName =
+        getFarmerName(
+            crop
+        );
+
+
+    return `
+
+        <div class="result-card">
+
+
+            ${
+                image
+
+                    ? `
+
+                        <img
+                            class="result-image"
+                            src="${image}"
+                            alt="${escapeHTML(crop.crop_name || "Crop")}"
+                            onerror="this.outerHTML='<div class=&quot;result-placeholder&quot;>🌱</div>'"
+                        >
+
+                      `
+
+                    : `
+
+                        <div class="result-placeholder">
+                            🌱
+                        </div>
+
+                      `
+            }
+
+
+            <div class="result-main">
+
+
+                <div class="result-crop-name">
+
+                    ${escapeHTML(
+                        crop.crop_name || "-"
+                    )}
+
+                    ${
+                        crop.specific_name
+
+                            ? `
+
+                                <span
+                                    style="
+                                        color:#7c857f;
+                                        font-size:11px;
+                                        font-weight:normal;
+                                    "
+                                >
+                                    •
+                                    ${escapeHTML(
+                                        crop.specific_name
+                                    )}
+                                </span>
+
+                              `
+
+                            : ""
+                    }
+
+                </div>
+
+
+                <div class="result-farmer">
+
+                    Farmer:
+                    <span>
+                        ${escapeHTML(
+                            farmerName
+                        )}
+                    </span>
+
+                </div>
+
+
+                <div class="result-location">
+
+                    📍 Farmer listing
+
+                </div>
+
+            </div>
+
+
+            <div class="result-columns">
+
+
+                <div class="result-data">
+
+                    <div class="result-data-label">
+                        PRICE
+                    </div>
+
+                    <div
+                        class="result-data-value result-price"
+                    >
+
+                        ${formatCurrency(
+                            crop.price_per_kg
+                        )}
+                        / kg
+
+                    </div>
+
+                </div>
+
+
+                <div class="result-data">
+
+                    <div class="result-data-label">
+                        HARVESTED
+                    </div>
+
+                    <div class="result-data-value">
+
+                        ${formatDate(
+                            crop.harvested_date
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <button
+                    class="view-result-button"
+                    onclick="openCropDetails(${Number(crop.id)})"
+                    type="button"
+                >
+                    View Details
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   OPEN CROP DETAILS
+   ===================================================== */
+
+function openCropDetails(
+    cropId
+) {
+
+    const crop =
+        crops.find(
+            function(item) {
+
+                return Number(
+                    item.id
+                ) ===
+                Number(
+                    cropId
+                );
+
+            }
+        );
+
+
+    if (!crop) {
+
+        return;
+
+    }
+
+
+    selectedCrop =
+        crop;
+
+
+    currentView =
+        "details";
+
+
+    renderCurrentView();
+
+}
+
+
+/* =====================================================
+   RENDER DETAILS
+   ===================================================== */
+
+function renderDetails() {
+
+    const content =
+        document.getElementById(
+            "marketplaceContent"
+        );
+
+
+    if (!selectedCrop) {
+
+        goToCategories();
+
+        return;
+
+    }
+
+
+    const crop =
+        selectedCrop;
+
+
+    const image =
+        getCropImage(
+            crop
+        );
+
+
+    const farmerName =
+        getFarmerName(
+            crop
+        );
+
+
+    const availableQuantity =
+        Number(
+            crop.quantity ||
+            crop.available_quantity ||
+            crop.availableQuantity ||
+            0
+        );
+
+
+    content.innerHTML = `
+
+        <div class="breadcrumb">
+
+            <button
+                onclick="goToCategories()"
+            >
+                Marketplace
+            </button>
+
+            <span class="breadcrumb-separator">
+                ›
+            </span>
+
+
+            <button
+                onclick="
+                    openCropCategory(
+                        '${escapeAttribute(
+                            crop.crop_name
+                        )}'
+                    )
+                "
+            >
+
+                ${escapeHTML(
+                    crop.crop_name || "-"
+                )}
+
+            </button>
+
+
+            ${
+                crop.specific_name
+
+                    ? `
+
+                        <span class="breadcrumb-separator">
+                            ›
+                        </span>
+
+                        <button
+                            onclick="
+                                openSpecificCategory(
+                                    '${escapeAttribute(
+                                        crop.specific_name
+                                    )}'
+                                )
+                            "
+                        >
+
+                            ${escapeHTML(
+                                crop.specific_name
+                            )}
+
+                        </button>
+
+                      `
+
+                    : ""
+
+            }
+
+
+            <span class="breadcrumb-separator">
+                ›
+            </span>
+
+
+            <span>
+                Details
+            </span>
+
+        </div>
+
+
+        <button
+            class="back-button"
+            onclick="goBackFromDetails()"
+            style="margin-bottom:15px;"
+        >
+            ← Back to Results
+        </button>
+
+
+        <div class="detail-layout">
+
+
+            <div class="detail-card">
+
+
+                ${
+                    image
+
+                        ? `
+
+                            <img
+                                class="detail-image"
+                                src="${image}"
+                                alt="${escapeHTML(
+                                    crop.crop_name || "Crop"
+                                )}"
+                                onerror="this.outerHTML='<div class=&quot;detail-placeholder&quot;>🌱</div>'"
+                            >
+
+                          `
+
+                        : `
+
+                            <div class="detail-placeholder">
+                                🌱
+                            </div>
+
+                          `
+                }
+
+
+                <div class="detail-title">
+
+                    ${escapeHTML(
+                        crop.crop_name || "-"
+                    )}
+
+                </div>
+
+
+                ${
+                    crop.specific_name
+
+                        ? `
+
+                            <div class="detail-specific">
+
+                                ${escapeHTML(
+                                    crop.specific_name
+                                )}
+
+                            </div>
+
+                          `
+
+                        : ""
+
+                }
+
+
+                <div class="detail-farmer">
+
+                    <div class="detail-farmer-name">
+
+                        👨‍🌾
+                        ${escapeHTML(
+                            farmerName
+                        )}
+
+                    </div>
+
+
+                    <div class="detail-location">
+
+                        Farmer's Crop Listing
+
+                    </div>
+
+                </div>
+
+
+                <div class="detail-info-grid">
+
+
+                    <div class="detail-info-box">
+
+                        <div class="detail-info-label">
+                            HARVESTED DATE
+                        </div>
+
+
+                        <div class="detail-info-value">
+
+                            ${formatDate(
+                                crop.harvested_date
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-info-box">
+
+                        <div class="detail-info-label">
+                            PRICE PER KG
+                        </div>
+
+
+                        <div class="detail-info-value">
+
+                            ${formatCurrency(
+                                crop.price_per_kg
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-info-box">
+
+                        <div class="detail-info-label">
+                            FARMER PHONE
+                        </div>
+
+
+                        <div class="detail-info-value">
+
+                            ${escapeHTML(
+                                crop.farmer_phone ||
+                                "-"
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="detail-info-box">
+
+                        <div class="detail-info-label">
+                            LISTING ID
+                        </div>
+
+
+                        <div class="detail-info-value">
+
+                            #${escapeHTML(
+                                String(
+                                    crop.id
+                                )
+                            )}
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="detail-description">
+
+
+                    <h4>
+                        Description
+                    </h4>
+
+
+                    <p>
+
+                        ${
+                            crop.description
+
+                                ? escapeHTML(
+                                    crop.description
+                                )
+
+                                : "No description was provided by the farmer."
+                        }
+
+                    </p>
+
+
+                </div>
+
+
+            </div>
+
+
+            <div class="purchase-card">
+
+
+                <h3>
+                    Place Your Order
+                </h3>
+
+
+                <div class="purchase-row">
+
+                    <span>
+                        Price
+                    </span>
+
+                    <strong>
+
+                        ${formatCurrency(
+                            crop.price_per_kg
+                        )}
+                        / kg
+
+                    </strong>
+
+                </div>
+
+
+                <div class="purchase-row">
+
+                    <span>
+                        Harvested
+                    </span>
+
+                    <strong>
+
+                        ${formatDate(
+                            crop.harvested_date
+                        )}
+
+                    </strong>
+
+                </div>
+
+
+                ${
+                    availableQuantity > 0
+
+                        ? `
+
+                            <div class="purchase-row">
+
+                                <span>
+                                    Available
+                                </span>
+
+                                <strong>
+
+                                    ${availableQuantity}
+                                    kg
+
+                                </strong>
+
+                            </div>
+
+                          `
+
+                        : ""
+
+                }
+
+
+                ${
+                    isBuyer()
+
+                        ? `
+
+                            <div class="quantity-group">
+
+                                <label for="detailQuantity">
+                                    Quantity Needed (kg)
+                                </label>
+
+
+                                <input
+                                    class="quantity-input"
+                                    type="number"
+                                    id="detailQuantity"
+                                    min="0.01"
+                                    step="0.01"
+                                    value="1"
+                                    ${
+                                        availableQuantity > 0
+                                            ? `max="${availableQuantity}"`
+                                            : ""
+                                    }
+                                    oninput="updateDetailTotal()"
+                                >
+
+                            </div>
+
+
+                            <div class="total-display">
+
+                                <span>
+                                    Total Amount
+                                </span>
+
+
+                                <strong
+                                    id="detailTotal"
+                                >
+                                    ${formatCurrency(
+                                        crop.price_per_kg
+                                    )}
+                                </strong>
+
+                            </div>
+
+
+                            <button
+                                class="detail-order-button"
+                                type="button"
+                                onclick="openOrderFromDetails()"
+                            >
+                                🛒 Order Now
+                            </button>
+
+                          `
+
+                        : `
+
+                            <div
+                                style="
+                                    margin-top:18px;
+                                    padding:13px;
+                                    border-radius:8px;
+                                    background:#f5f7f6;
+                                    color:#68736c;
+                                    font-size:11px;
+                                    line-height:1.6;
+                                "
+                            >
+
+                                Only buyers can place
+                                orders in the marketplace.
+
+                            </div>
+
+                          `
+
+                }
+
+
+            </div>
+
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   DETAIL TOTAL
+   ===================================================== */
+
+function updateDetailTotal() {
+
+    if (!selectedCrop) {
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "detailQuantity"
+        );
+
+
+    if (!input) {
+
+        return;
+
+    }
+
+
+    let quantity =
+        Number(
+            input.value
+        );
+
+
+    if (
+        !quantity ||
+        quantity < 0
+    ) {
+
+        quantity =
+            0;
+
+    }
+
+
+    const total =
+        quantity *
+        Number(
+            selectedCrop.price_per_kg ||
+            0
+        );
+
+
+    document.getElementById(
+        "detailTotal"
+    ).textContent =
+        formatCurrency(
+            total
+        );
+
+}
+
+
+/* =====================================================
+   OPEN ORDER FROM DETAILS
+   ===================================================== */
+
+function openOrderFromDetails() {
+
+    if (!isBuyer()) {
+
+        showToast(
+            "Only buyers can place orders."
+        );
+
+        return;
+
+    }
+
+
+    const quantityInput =
+        document.getElementById(
+            "detailQuantity"
+        );
+
+
+    const quantity =
+        Number(
+            quantityInput
+                ? quantityInput.value
+                : 1
+        );
+
+
+    openOrderModal(
+        selectedCrop.id,
+        quantity
+    );
+
+}
+
+
+/* =====================================================
+   GO TO CATEGORIES
+   ===================================================== */
+
+function goToCategories() {
+
+    currentView =
+        "categories";
+
+
+    selectedCropName =
+        null;
+
+
+    selectedSpecificName =
+        null;
+
+
+    selectedCrop =
+        null;
+
+
+    renderCurrentView();
+
+}
+
+
+/* =====================================================
+   BACK FROM DETAILS
+   ===================================================== */
+
+function goBackFromDetails() {
+
+    if (
+        selectedSpecificName
+    ) {
+
+        currentView =
+            "results";
+
+    }
+
+    else if (
+        selectedCropName
+    ) {
+
+        currentView =
+            "results";
+
+    }
+
+    else {
+
+        currentView =
+            "categories";
+
+    }
+
+
+    renderCurrentView();
+
+}
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+function performSearch() {
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const search =
+        searchInput
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    if (!search) {
+
+        goToCategories();
+
+        return;
+
+    }
+
+
+    /*
+    -----------------------------------------------------
+    FIRST: exact crop category
+    -----------------------------------------------------
+    */
+
+    const exactCrop =
+        crops.find(
+            function(crop) {
+
+                return String(
+                    crop.crop_name ||
+                    ""
+                )
+                .trim()
+                .toLowerCase() ===
+                    search;
+
+            }
+        );
+
+
+    if (exactCrop) {
+
+        openCropCategory(
+            exactCrop.crop_name
+        );
+
+        return;
+
+    }
+
+
+    /*
+    -----------------------------------------------------
+    SECOND: exact specific name
+    -----------------------------------------------------
+    */
+
+    const exactSpecific =
+        crops.find(
+            function(crop) {
+
+                return String(
+                    crop.specific_name ||
+                    ""
+                )
+                .trim()
+                .toLowerCase() ===
+                    search;
+
+            }
+        );
+
+
+    if (exactSpecific) {
+
+        selectedCropName =
+            exactSpecific.crop_name;
+
+
+        selectedSpecificName =
+            exactSpecific.specific_name;
+
+
+        currentView =
+            "results";
+
+
+        renderCurrentView();
+
+        return;
+
+    }
+
+
+    /*
+    -----------------------------------------------------
+    THIRD: partial search
+    -----------------------------------------------------
+    */
+
+    const matchingCrops =
+        crops.filter(
+            function(crop) {
+
+                const cropName =
+                    String(
+                        crop.crop_name ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const specificName =
+                    String(
+                        crop.specific_name ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const farmerName =
+                    getFarmerName(
+                        crop
+                    )
+                    .toLowerCase();
+
+
+                return (
+
+                    cropName.includes(
+                        search
+                    ) ||
+
+                    specificName.includes(
+                        search
+                    ) ||
+
+                    farmerName.includes(
+                        search
+                    )
+
+                );
+
+            }
+        );
+
+
+    renderSearchResults(
+        matchingCrops,
+        search
+    );
+
+}
+
+
+/* =====================================================
+   SEARCH ENTER KEY
+   ===================================================== */
+
+document.getElementById(
+    "searchInput"
+).addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key ===
+            "Enter"
+        ) {
+
+            performSearch();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   SEARCH RESULTS
+   ===================================================== */
+
+function renderSearchResults(
+    results,
+    search
+) {
+
+    const content =
+        document.getElementById(
+            "marketplaceContent"
+        );
+
+
+    currentView =
+        "results";
+
+
+    content.innerHTML = `
+
+        <div class="breadcrumb">
+
+            <button
+                onclick="goToCategories()"
+            >
+                Marketplace
+            </button>
+
+            <span class="breadcrumb-separator">
+                ›
+            </span>
+
+            <span>
+                Search
+            </span>
+
+        </div>
+
+
+        <div class="section-header">
+
+            <div>
+
+                <h3>
+                    Search Results
+                </h3>
+
+                <p>
+                    Results matching
+                    "${escapeHTML(search)}"
+                </p>
+
+            </div>
+
+
+            <button
+                class="back-button"
+                onclick="goToCategories()"
+            >
+                ← Back
+            </button>
+
+        </div>
+
+
+        ${
+            results.length > 0
+
+                ? `
+
+                    <div class="results-toolbar">
+
+                        <div>
+
+                            <div class="results-count">
+
+                                ${results.length}
+                                Result${results.length === 1 ? "" : "s"}
+
+                            </div>
+
+                            <div class="results-subtitle">
+                                Matching crop or specific name
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="results-list">
+
+                        ${results
+                            .map(
+                                function(crop) {
+
+                                    return createResultCard(
+                                        crop
+                                    );
+
+                                }
+                            )
+                            .join("")}
+
+                    </div>
+
+                  `
+
+                : `
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            🔍
+                        </div>
+
+                        <h3>
+                            No crops found
+                        </h3>
+
+                        <p>
+                            Try searching for a crop
+                            such as Tomato, Rice,
+                            Common Tomato, or Ginger.
+                        </p>
+
+                    </div>
+
+                  `
+
+        }
+
+    `;
+
+}
+
+
+/* =====================================================
+   ORDER MODAL
+   ===================================================== */
+
+function openOrderModal(
+    cropId,
+    initialQuantity = ""
+) {
+
+    if (!isBuyer()) {
+
+        showToast(
+            "Only buyers can place orders."
+        );
+
+        return;
+
+    }
+
+
+    selectedCrop =
+        crops.find(
+            function(crop) {
+
+                return Number(
+                    crop.id
+                ) ===
+                Number(
+                    cropId
+                );
+
+            }
+        );
+
+
+    if (!selectedCrop) {
+
+        return;
+
+    }
+
+
+    const image =
+        getCropImage(
+            selectedCrop
+        );
+
+
+    const farmerName =
+        getFarmerName(
+            selectedCrop
+        );
+
+
+    document.getElementById(
+        "orderCropSummary"
+    ).innerHTML = `
+
+        ${
+            image
+
+                ? `
+
+                    <img
+                        src="${image}"
+                        class="order-crop-image"
+                        alt="Crop"
+                    >
+
+                  `
+
+                : `
+
+                    <div
+                        class="order-crop-image"
+                        style="
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            font-size:30px;
+                        "
+                    >
+                        🌱
+                    </div>
+
+                  `
+        }
+
+
+        <div>
+
+            <div class="order-crop-name">
+
+                ${escapeHTML(
+                    selectedCrop.crop_name ||
+                    "-"
+                )}
+
+            </div>
+
+
+            ${
+                selectedCrop.specific_name
+
+                    ? `
+
+                        <div
+                            style="
+                                font-size:10px;
+                                color:#888;
+                                margin-top:3px;
+                            "
+                        >
+
+                            ${escapeHTML(
+                                selectedCrop.specific_name
+                            )}
+
+                        </div>
+
+                      `
+
+                    : ""
+
+            }
+
+
+            <div
+                style="
+                    font-size:10px;
+                    color:#777;
+                    margin-top:3px;
+                "
+            >
+
+                Farmer:
+                ${escapeHTML(
+                    farmerName
+                )}
+
+            </div>
+
+
+            <div class="order-crop-price">
+
+                ${formatCurrency(
+                    selectedCrop.price_per_kg
+                )}
+
+                / kg
+
+            </div>
+
+        </div>
+
+    `;
+
+
+    document.getElementById(
+        "quantity"
+    ).value =
+        initialQuantity || "";
+
+
+    document.getElementById(
+        "deliveryAddress"
+    ).value =
+        "";
+
+
+    calculateOrderTotal();
+
+
+    document.getElementById(
+        "placeOrderButton"
+    ).disabled =
+        false;
+
+
+    document.getElementById(
+        "placeOrderButton"
+    ).textContent =
+        "Place Order";
+
+
+    document
+        .getElementById(
+            "orderModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   CLOSE ORDER MODAL
+   ===================================================== */
+
+function closeOrderModal() {
+
+    document
+        .getElementById(
+            "orderModal"
+        )
+        .classList.remove(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   CALCULATE ORDER TOTAL
+   ===================================================== */
+
+function calculateOrderTotal() {
+
+    if (!selectedCrop) {
+
+        return;
+
+    }
+
+
+    const quantity =
+        Number(
+            document.getElementById(
+                "quantity"
+            ).value
+        );
+
+
+    const price =
+        Number(
+            selectedCrop.price_per_kg ||
+            0
+        );
+
+
+    const total =
+        quantity > 0
+            ? quantity * price
+            : 0;
+
+
+    document.getElementById(
+        "orderTotal"
+    ).textContent =
+        formatCurrency(
+            total
+        );
+
+}
+
+
+/* =====================================================
+   QUANTITY EVENT
+   ===================================================== */
+
+document.getElementById(
+    "quantity"
+).addEventListener(
+    "input",
+    calculateOrderTotal
+);
+
+
+/* =====================================================
+   PLACE ORDER
+   ===================================================== */
+
+async function placeOrder() {
+
+    if (!isBuyer()) {
+
+        showToast(
+            "Only buyers can place orders."
+        );
+
+        return;
+
+    }
+
+
+    if (!selectedCrop) {
+
+        return;
+
+    }
+
+
+    const buyerId =
+        getUserId();
+
+
+    if (!buyerId) {
+
+        showToast(
+            "Please login again before placing an order."
+        );
+
+        return;
+
+    }
+
+
+    const quantity =
+        Number(
+            document.getElementById(
+                "quantity"
+            ).value
+        );
+
+
+    const deliveryAddress =
+        document.getElementById(
+            "deliveryAddress"
+        )
+        .value
+        .trim();
+
+
+    if (
+        !quantity ||
+        quantity <= 0
+    ) {
+
+        showToast(
+            "Please enter a valid quantity."
+        );
+
+        return;
+
+    }
+
+
+    const availableQuantity =
+        Number(
+            selectedCrop.quantity ||
+            selectedCrop.available_quantity ||
+            selectedCrop.availableQuantity ||
+            0
+        );
+
+
+    if (
+        availableQuantity > 0 &&
+        quantity > availableQuantity
+    ) {
+
+        showToast(
+            `Only ${availableQuantity} kg is available.`
+        );
+
+        return;
+
+    }
+
+
+    if (!deliveryAddress) {
+
+        showToast(
+            "Please enter your delivery address."
+        );
+
+        return;
+
+    }
+
+
+    const button =
+        document.getElementById(
+            "placeOrderButton"
+        );
+
+
+    button.disabled =
+        true;
+
+
+    button.textContent =
+        "Placing...";
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/orders`,
+                {
+
+                    method:
+                        "POST",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            buyer_id:
+                                buyerId,
+
+                            crop_id:
+                                selectedCrop.id,
+
+                            quantity:
+                                quantity,
+
+                            delivery_address:
+                                deliveryAddress
+
+                        })
+
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                data.message ||
+                "Failed to place order."
+            );
+
+        }
+
+
+        closeOrderModal();
+
+
+        showToast(
+            "Your order has been placed successfully!"
+        );
+
+
+        /*
+        -------------------------------------------------
+        Refresh crop data after ordering.
+        -------------------------------------------------
+        */
+
+        await loadCrops();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Place order error:",
+            error
+        );
+
+
+        showToast(
+            error.message ||
+            "Unable to place order."
+        );
+
+    }
+
+    finally {
+
+        button.disabled =
+            false;
+
+        button.textContent =
+            "Place Order";
+
+    }
+
+}
+
+
+/* =====================================================
+   TOAST
+   ===================================================== */
+
+let toastTimer;
+
+
+function showToast(
+    message
+) {
+
+    const toast =
+        document.getElementById(
+            "successToast"
+        );
+
+
+    document.getElementById(
+        "toastMessage"
+    ).textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function() {
+
+                hideToast();
+
+            },
+            4000
+        );
+
+}
+
+
+function hideToast() {
+
+    document
+        .getElementById(
+            "successToast"
+        )
+        .classList.remove(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL BY OUTSIDE CLICK
+   ===================================================== */
+
+document.getElementById(
+    "orderModal"
+).addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target === this
+        ) {
+
+            closeOrderModal();
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   NOTIFICATIONS
+   ===================================================== */
+
+function openNotifications() {
+
+    window.location.href =
+        "notifications.html";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+   ===================================================== */
+
+document.getElementById(
+    "logoutButton"
+).addEventListener(
+    "click",
+    async function(event) {
+
+        event.preventDefault();
+
+
+        const confirmed =
+            await customConfirm(
+                "Are you sure you want to logout?"
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+
+        sessionStorage.removeItem(
+            "token"
+        );
+
+
+        sessionStorage.removeItem(
+            "user"
+        );
+
+
+        sessionStorage.removeItem(
+            "selectedRole"
+        );
+
+
+        window.location.href =
+            "index.html";
+
+    }
+);
+
+
+/* =====================================================
+   MOBILE MENU
+   ===================================================== */
+
+document.getElementById(
+    "mobileMenu"
+).addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+
+        document
+            .getElementById(
+                "sidebar"
+            )
+            .classList.toggle(
+                "open"
+            );
+
+    }
+);
+
+
+/* =====================================================
+   INITIALIZE
+   ===================================================== */
+
+loadRoles();
+
+displayUser();
+
+loadCrops();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

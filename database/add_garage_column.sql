@@ -1,0 +1,1 @@
+ALTER TABLE equipment ADD COLUMN IF NOT EXISTS garage_quantity INT NOT NULL DEFAULT 0 AFTER quantity;

@@ -1,0 +1,3765 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Consultations</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7f8;
+    color: #17202a;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ADMIN DASHBOARD REFERENCE:
+   WIDTH = 255px
+========================================================= */
+
+.sidebar {
+    min-width: 255px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #00543f 0%,
+            #003f32 100%
+        );
+
+    color: white;
+
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGO
+========================================================= */
+
+.sidebar-logo {
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.10);
+
+    flex-shrink: 0;
+}
+
+.sidebar-logo img {
+    width: 160px;
+
+    height: auto;
+
+    max-height: 62px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================================================
+   SIDEBAR CONTENT
+========================================================= */
+
+.sidebar-content {
+    padding: 13px 10px;
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav-item {
+    width: 100%;
+
+    min-height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    background:
+        rgba(255,255,255,0.08);
+}
+
+.nav-item.active {
+    background:
+        linear-gradient(
+            90deg,
+            #19945f,
+            #087a4d
+        );
+}
+
+.nav-icon {
+    width: 22px;
+
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+    padding: 8px 10px 14px;
+
+    flex-shrink: 0;
+}
+
+.sidebar-divider {
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.13);
+
+    margin:
+        5px 12px 10px;
+}
+
+
+/* =========================================================
+   MAIN
+   ADMIN DASHBOARD REFERENCE
+========================================================= */
+
+.main {
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 42px;
+}
+
+
+/* =========================================================
+   HEADER
+   HEIGHT = 78px
+========================================================= */
+
+.header {
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e8ee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    padding: 0 28px;
+}
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.notification {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    color: #003f32;
+
+    transition: 0.2s;
+}
+
+.notification:hover {
+    transform: scale(1.06);
+}
+
+.notification-badge {
+    position: absolute;
+
+    top: -1px;
+    right: -3px;
+
+    min-width: 18px;
+
+    height: 18px;
+
+    padding: 0 4px;
+
+    border-radius: 50px;
+
+    background: #ef3c35;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #006b4f;
+
+    background: #eaf7f1;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #006b4f;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.profile-info {
+    line-height: 17px;
+}
+
+.profile-name {
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #182033;
+}
+
+.profile-role {
+    font-size: 10px;
+
+    color: #087a4d;
+
+    margin-top: 2px;
+}
+
+.profile-arrow {
+    font-size: 11px;
+
+    margin-left: 2px;
+}
+
+
+/* =========================================================
+   CONTENT
+   ADMIN DASHBOARD:
+   23px 18px 22px
+========================================================= */
+
+.content {
+    padding:
+        23px 18px 22px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    margin-bottom: 18px;
+}
+
+.page-header h1 {
+    font-size: 29px;
+
+    line-height: 34px;
+
+    color: #121826;
+
+    font-weight: 700;
+
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    font-size: 13px;
+
+    color: #555f70;
+
+    line-height: 18px;
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    min-height: 59px;
+
+    padding:
+        10px 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 11px;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+
+/* =========================================================
+   FILTER TABS
+========================================================= */
+
+.tabs {
+    display: flex;
+
+    align-items: center;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 6px;
+
+    overflow: hidden;
+}
+
+.tab {
+    min-width: 90px;
+
+    height: 38px;
+
+    padding:
+        0 15px;
+
+    border: none;
+
+    background: white;
+
+    color: #26333a;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    border-right:
+        1px solid #e0e5e3;
+
+    transition: 0.2s;
+}
+
+.tab:last-child {
+    border-right: none;
+}
+
+.tab:hover {
+    background: #eef8f3;
+}
+
+.tab.active {
+    background: #00543f;
+
+    color: white;
+}
+
+
+/* =========================================================
+   TOOLS RIGHT
+========================================================= */
+
+.tools-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-left: auto;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-box {
+    width: 215px;
+
+    height: 38px;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 6px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding:
+        0 10px;
+
+    background: white;
+}
+
+.search-icon {
+    font-size: 17px;
+
+    margin-right: 8px;
+
+    color: #344c55;
+}
+
+.search-box input {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    font-size: 11px;
+
+    color: #27343b;
+}
+
+.search-box input::placeholder {
+    color: #75828a;
+}
+
+
+/* =========================================================
+   FILTER BUTTON
+========================================================= */
+
+.filter-button {
+    height: 38px;
+
+    padding:
+        0 14px;
+
+    border:
+        1px solid #dfe4ea;
+
+    background: white;
+
+    border-radius: 6px;
+
+    color: #27383f;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.filter-button:hover {
+    border-color: #087a4d;
+
+    color: #087a4d;
+}
+
+
+/* =========================================================
+   CONSULTATION CARD
+========================================================= */
+
+.consultation-card {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+thead {
+    background: #fbfcfc;
+}
+
+
+/* =========================================================
+   TABLE HEAD
+   ADMIN TABLE REFERENCE:
+   12px
+========================================================= */
+
+th {
+    height: 45px;
+
+    padding:
+        0 10px;
+
+    text-align: left;
+
+    border-bottom:
+        1px solid #edf0f3;
+
+    color: #323945;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE DATA
+========================================================= */
+
+td {
+    padding:
+        9px 10px;
+
+    border-bottom:
+        1px solid #f0f2f5;
+
+    vertical-align: middle;
+
+    color: #343b47;
+
+    font-size: 12px;
+}
+
+tbody tr {
+    min-height: 70px;
+
+    transition: 0.15s;
+}
+
+tbody tr:hover {
+    background: #fbfdfc;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   COLUMN WIDTHS
+========================================================= */
+
+th:nth-child(1),
+td:nth-child(1) {
+    width: 21%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 29%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+    width: 16%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+    width: 15%;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+    width: 19%;
+}
+
+
+/* =========================================================
+   FARMER
+========================================================= */
+
+.farmer {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+}
+
+.farmer-avatar {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #e2f6e8;
+
+    color: #087c43;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.farmer-name {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #202633;
+
+    margin-bottom: 3px;
+}
+
+.farmer-location {
+    font-size: 11px;
+
+    color: #707887;
+}
+
+
+/* =========================================================
+   TOPIC
+========================================================= */
+
+.topic-title {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #202633;
+
+    margin-bottom: 3px;
+}
+
+.topic-description {
+    font-size: 11px;
+
+    color: #667080;
+
+    line-height: 13px;
+
+    max-width: 270px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+    display: inline-block;
+
+    padding:
+        5px 7px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.status.unread {
+    background: #fff0d6;
+
+    color: #d87600;
+}
+
+.status.progress {
+    background: #e1edff;
+
+    color: #2469e9;
+}
+
+.status.completed {
+    background: #17833c;
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   UPDATED
+========================================================= */
+
+.updated {
+    font-size: 11px;
+
+    color: #687180;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTION BUTTON
+========================================================= */
+
+.action-button {
+    border:
+        1px solid #72c6a2;
+
+    color: #087b48;
+
+    background: white;
+
+    border-radius: 5px;
+
+    padding:
+        6px 10px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    white-space: nowrap;
+}
+
+.action-button:hover {
+    background: #edf9f3;
+
+    border-color: #087b48;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-row {
+    text-align: center;
+
+    padding:
+        55px 20px;
+}
+
+.empty-icon {
+    font-size: 35px;
+
+    margin-bottom: 10px;
+}
+
+.empty-title {
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #202633;
+
+    margin-bottom: 5px;
+}
+
+.empty-text {
+    font-size: 11px;
+
+    color: #6c7980;
+}
+
+
+/* =========================================================
+   TABLE FOOTER
+========================================================= */
+
+.table-footer {
+    min-height: 55px;
+
+    padding:
+        0 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    border-top:
+        1px solid #edf0f3;
+}
+
+.showing {
+    font-size: 10px;
+
+    color: #667080;
+
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+.page-button {
+    width: 32px;
+
+    height: 32px;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 5px;
+
+    background: white;
+
+    font-size: 11px;
+
+    color: #343b47;
+
+    cursor: pointer;
+}
+
+.page-button:hover {
+    border-color: #087a4d;
+
+    color: #087a4d;
+}
+
+.page-button.active {
+    background: #00543f;
+
+    border-color: #00543f;
+
+    color: white;
+}
+
+.page-button:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+}
+
+.per-page {
+    height: 32px;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 5px;
+
+    background: white;
+
+    padding:
+        0 9px;
+
+    font-size: 10px;
+
+    color: #343b47;
+}
+
+
+/* =========================================================
+   FOOTER
+   ADMIN DASHBOARD REFERENCE:
+   LEFT = 255px
+   HEIGHT = 42px
+========================================================= */
+
+.footer {
+    position: fixed;
+
+    left: 255px;
+    right: 0;
+    bottom: 0;
+
+    height: 42px;
+
+    background: #004d2a;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    font-size: 10px;
+
+    z-index: 900;
+}
+
+.footer a {
+    color: white;
+
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1250px) {
+
+    .toolbar {
+        flex-wrap: wrap;
+    }
+
+    .tools-right {
+        margin-left: auto;
+    }
+
+}
+
+
+@media (max-width: 950px) {
+
+    .toolbar {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .tools-right {
+        width: 100%;
+
+        margin-left: 0;
+
+        justify-content: flex-end;
+    }
+
+    .search-box {
+        flex: 1;
+
+        width: auto;
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s ease;
+    }
+
+    .sidebar.open {
+        transform:
+            translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    .footer {
+        left: 0;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .content {
+        padding:
+            18px 12px 30px;
+    }
+
+    .tabs {
+        width: 100%;
+    }
+
+    .tab {
+        flex: 1;
+
+        min-width: 0;
+
+        padding:
+            0 8px;
+    }
+
+    .tools-right {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .search-box,
+    .filter-button {
+        width: 100%;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 850px;
+    }
+
+    .table-footer {
+        flex-wrap: wrap;
+
+        padding:
+            10px 12px;
+    }
+
+    .header {
+        padding:
+            0 15px;
+    }
+
+    .profile-info,
+    .profile-arrow {
+        display: none;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .tabs {
+        flex-direction: column;
+
+        border: none;
+
+        gap: 5px;
+    }
+
+    .tab {
+        width: 100%;
+
+        border:
+            1px solid #dfe4ea !important;
+
+        border-radius: 6px;
+    }
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background:
+        rgba(255,255,255,0.20);
+
+    border-radius: 5px;
+}
+
+
+/* =====================================================
+   PROFILE DROPDOWN (role switcher)
+   ===================================================== */
+
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 58px;
+    right: 0;
+    width: 225px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 300;
+}
+
+.profile.open .profile-dropdown {
+    display: block;
+}
+
+.dropdown-title {
+    padding: 8px 10px 6px;
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.dropdown-role {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 7px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.dropdown-role:hover {
+    background: #f1f7f3;
+}
+
+.dropdown-role.current {
+    background: #e9f6ed;
+    color: #13883f;
+    font-weight: bold;
+}
+
+.role-check {
+    margin-left: auto;
+    font-size: 14px;
+}
+
+.profile {
+    position: relative;
+}
+
+
+.consultation-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="expert-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- CONSULTATIONS -->
+
+        <a
+            href="expert-consultations.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-label">
+                Consultations
+            </span>
+
+            <span class="consultation-badge" id="consultationBadge" style="display:none;">0</span>
+
+        </a>
+
+
+        <!-- RESOURCES -->
+
+        <a
+            href="expert-resources.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                📖
+            </span>
+
+            <span class="nav-label">
+                Resources
+            </span>
+
+        </a>
+
+
+        <!-- REPORT ISSUES -->
+
+        <a
+            href="expert-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-label">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="expert-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="expert-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <!-- HELP -->
+
+        <a
+            href="expert-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <!-- SETTINGS -->
+
+        <a
+            href="expert-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="logout(); return false;"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
+    <header class="header">
+
+
+        <div class="header-right">
+
+
+            <!-- NOTIFICATIONS -->
+
+            <div
+                class="notification"
+                onclick="goToNotifications()"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="notification-badge"
+                    id="headerNotificationCount"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+                <div class="profile-avatar" id="profileAvatar">
+                    DN
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div class="profile-name" id="profileName">
+                        Dr. Nimal
+                    </div>
+
+                    <div class="profile-role" id="profileRole">
+                        Agricultural Expert
+                    </div>
+
+                </div>
+
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+                <!-- PROFILE DROPDOWN -->
+
+                <div class="profile-dropdown">
+
+                    <div class="dropdown-title">
+                        Switch Role
+                    </div>
+
+                    <div id="roleOptions"></div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT
+    ===================================================== -->
+
+    <section class="content">
+
+
+        <!-- =================================================
+             PAGE HEADER
+        ================================================= -->
+
+        <div class="page-header">
+
+
+            <h1>
+                Consultations
+            </h1>
+
+
+            <p>
+                Manage and respond to farmers' consultation requests.
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             TOOLBAR
+        ================================================= -->
+
+        <div class="toolbar">
+
+
+            <!-- FILTER TABS -->
+
+            <div class="tabs">
+
+
+                <button
+                    class="tab active"
+                    data-filter="all"
+                    onclick="filterConsultations('all', this)"
+                >
+                    All (18)
+                </button>
+
+
+                <button
+                    class="tab"
+                    data-filter="unread"
+                    onclick="filterConsultations('unread', this)"
+                >
+                    Unread (5)
+                </button>
+
+
+                <button
+                    class="tab"
+                    data-filter="progress"
+                    onclick="filterConsultations('progress', this)"
+                >
+                    In Progress (8)
+                </button>
+
+
+            </div>
+
+
+
+            <!-- SEARCH + FILTER -->
+
+            <div class="tools-right">
+
+
+                <div class="search-box">
+
+                    <span class="search-icon">
+                        🔍
+                    </span>
+
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search by farmer name or topic..."
+                        oninput="searchConsultations()"
+                    >
+
+
+                </div>
+
+
+                <button
+                    class="filter-button"
+                    onclick="showFilterMessage()"
+                >
+
+                    ⚱ Filter &nbsp;⌄
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             CONSULTATION TABLE CARD
+        ================================================= -->
+
+        <div class="consultation-card">
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Farmer
+                            </th>
+
+                            <th>
+                                Topic
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Last Updated
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+
+                    <tbody id="consultationBody">
+
+
+                        <!-- =================================================
+                             KUMAR
+                        ================================================= -->
+
+                        <tr
+                            data-status="unread"
+                            data-name="Kumar A."
+                            data-topic="Tomato Disease"
+                        >
+
+                            <td>
+
+                                <div class="farmer">
+
+
+                                    <div class="farmer-avatar">
+                                        K
+                                    </div>
+
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Kumar A.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Jaffna, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-title">
+                                    Tomato Disease
+                                </div>
+
+                                <div class="topic-description">
+                                    My tomato leaves are turning yellow and curling.
+                                    What could be the reason?
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="status unread">
+                                    Unread
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="updated">
+                                    2 hours ago
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    onclick="replyTo('Kumar A.')"
+                                >
+                                    💬 Reply
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             BHARATH
+                        ================================================= -->
+
+                        <tr
+                            data-status="progress"
+                            data-name="Bharath S."
+                            data-topic="Paddy Cultivation"
+                        >
+
+                            <td>
+
+                                <div class="farmer">
+
+
+                                    <div
+                                        class="farmer-avatar"
+                                        style="
+                                            background:#e1edff;
+                                            color:#2469e9;
+                                        "
+                                    >
+                                        B
+                                    </div>
+
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Bharath S.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Kilinochchi, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-title">
+                                    Paddy Cultivation
+                                </div>
+
+                                <div class="topic-description">
+                                    What is the best fertilizer for paddy
+                                    at the early stage?
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="status progress">
+                                    In Progress
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="updated">
+                                    1 day ago
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    onclick="viewConsultation('Bharath S.')"
+                                >
+                                    ◉ View
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             MANOJ
+                        ================================================= -->
+
+                        <tr
+                            data-status="unread"
+                            data-name="Manoj P."
+                            data-topic="Potato Growth"
+                        >
+
+                            <td>
+
+                                <div class="farmer">
+
+
+                                    <div
+                                        class="farmer-avatar"
+                                        style="
+                                            background:#eee4ff;
+                                            color:#7432c8;
+                                        "
+                                    >
+                                        M
+                                    </div>
+
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Manoj P.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Vavuniya, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-title">
+                                    Potato Growth
+                                </div>
+
+                                <div class="topic-description">
+                                    Why are my potato plants not growing
+                                    well even after irrigation?
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="status unread">
+                                    Unread
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="updated">
+                                    1 day ago
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    onclick="replyTo('Manoj P.')"
+                                >
+                                    💬 Reply
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             SURESH
+                        ================================================= -->
+
+                        <tr
+                            data-status="progress"
+                            data-name="Suresh R."
+                            data-topic="Brinjal Pests"
+                        >
+
+                            <td>
+
+                                <div class="farmer">
+
+
+                                    <div class="farmer-avatar">
+                                        S
+                                    </div>
+
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Suresh R.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Jaffna, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-title">
+                                    Brinjal Pests
+                                </div>
+
+                                <div class="topic-description">
+                                    How to control fruit and shoot borer
+                                    in brinjal plants?
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="status progress">
+                                    In Progress
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="updated">
+                                    2 days ago
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    onclick="viewConsultation('Suresh R.')"
+                                >
+                                    ◉ View
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             GANESAN
+                        ================================================= -->
+
+                        <tr
+                            data-status="unread"
+                            data-name="Ganesan T."
+                            data-topic="Chili Leaf Curl"
+                        >
+
+                            <td>
+
+                                <div class="farmer">
+
+
+                                    <div
+                                        class="farmer-avatar"
+                                        style="
+                                            background:#ffe3e3;
+                                            color:#ef3030;
+                                        "
+                                    >
+                                        G
+                                    </div>
+
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Ganesan T.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Mullaitivu, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-title">
+                                    Chili Leaf Curl
+                                </div>
+
+                                <div class="topic-description">
+                                    My chili leaves are curling.
+                                    What should I do to prevent it?
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="status unread">
+                                    Unread
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="updated">
+                                    4 days ago
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    onclick="replyTo('Ganesan T.')"
+                                >
+                                    💬 Reply
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             RAVI
+                        ================================================= -->
+
+                        <tr
+                            data-status="progress"
+                            data-name="Ravi K."
+                            data-topic="Cucumber Yellowing"
+                        >
+
+                            <td>
+
+                                <div class="farmer">
+
+
+                                    <div
+                                        class="farmer-avatar"
+                                        style="
+                                            background:#eee4ff;
+                                            color:#7432c8;
+                                        "
+                                    >
+                                        R
+                                    </div>
+
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Ravi K.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Trincomalee, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-title">
+                                    Cucumber Yellowing
+                                </div>
+
+                                <div class="topic-description">
+                                    Yellow spots on cucumber leaves are
+                                    increasing. Please advise.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="status progress">
+                                    In Progress
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="updated">
+                                    5 days ago
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    onclick="viewConsultation('Ravi K.')"
+                                >
+                                    ◉ View
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             THARUSHI
+                        ================================================= -->
+
+                        <tr
+                            data-status="unread"
+                            data-name="Tharushi P."
+                            data-topic="Soil Fertility"
+                        >
+
+                            <td>
+
+                                <div class="farmer">
+
+
+                                    <div
+                                        class="farmer-avatar"
+                                        style="
+                                            background:#fff0df;
+                                            color:#e18a00;
+                                        "
+                                    >
+                                        T
+                                    </div>
+
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Tharushi P.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Hambantota, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-title">
+                                    Soil Fertility
+                                </div>
+
+                                <div class="topic-description">
+                                    How to improve soil fertility naturally
+                                    for long term?
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="status unread">
+                                    Unread
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="updated">
+                                    6 days ago
+                                </span>
+
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    class="action-button"
+                                    onclick="replyTo('Tharushi P.')"
+                                >
+                                    💬 Reply
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             EMPTY STATE
+                        ================================================= -->
+
+                        <tr
+                            id="emptyRow"
+                            style="display:none;"
+                        >
+
+                            <td
+                                colspan="5"
+                                class="empty-row"
+                            >
+
+                                <div class="empty-icon">
+                                    💬
+                                </div>
+
+                                <div class="empty-title">
+                                    No consultations found
+                                </div>
+
+                                <div class="empty-text">
+                                    Try changing your search or filter.
+                                </div>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TABLE FOOTER
+            ================================================= -->
+
+            <div class="table-footer">
+
+
+                <div
+                    class="showing"
+                    id="showingText"
+                >
+                    Showing 1 to 7 of 18 consultations
+                </div>
+
+
+                <div class="pagination">
+
+
+                    <button
+                        class="page-button"
+                        disabled
+                    >
+                        ‹
+                    </button>
+
+
+                    <button
+                        class="page-button active"
+                    >
+                        1
+                    </button>
+
+
+                    <button
+                        class="page-button"
+                        onclick="goToPage(2)"
+                    >
+                        2
+                    </button>
+
+
+                    <button
+                        class="page-button"
+                        onclick="goToPage(3)"
+                    >
+                        3
+                    </button>
+
+
+                    <button
+                        class="page-button"
+                        onclick="goToPage(2)"
+                    >
+                        ›
+                    </button>
+
+
+                </div>
+
+
+                <select
+                    class="per-page"
+                    onchange="changePerPage(this.value)"
+                >
+
+                    <option>
+                        10 per page
+                    </option>
+
+                    <option>
+                        20 per page
+                    </option>
+
+                    <option>
+                        50 per page
+                    </option>
+
+                </select>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+
+    <span>
+        🌱 © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+
+</footer>
+
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+let user = null;
+
+try {
+
+    user = JSON.parse(sessionStorage.getItem("user"));
+
+} catch (error) {
+
+    user = null;
+
+}
+
+
+
+const roleNames = {
+    farmer: "Farmer",
+    buyer: "Buyer",
+    expert: "Agricultural Expert",
+    equipment_provider: "Equipment Provider"
+};
+
+const roleIcons = {
+    farmer: "🌱",
+    buyer: "🛒",
+    expert: "👨‍🌾",
+    equipment_provider: "🚜"
+};
+
+function normalizeRole(role) {
+
+    if (!role) {
+        return "";
+    }
+
+    const value =
+        String(role).toLowerCase().trim().replace(/-/g, "_");
+
+    if (value === "farmer") return "farmer";
+    if (value === "buyer" || value === "buyer/user") return "buyer";
+
+    if (
+        value === "expert" ||
+        value === "agricultural_expert" ||
+        value === "agricultural expert" ||
+        value === "agriculture_expert" ||
+        value === "agriculture expert" ||
+        value === "agri_expert" ||
+        value === "agri expert"
+    ) {
+        return "expert";
+    }
+
+    if (
+        value === "equipment_provider" ||
+        value === "equipment provider" ||
+        value === "equipmentprovider" ||
+        value === "provider"
+    ) {
+        return "equipment_provider";
+    }
+
+    return "";
+
+}
+
+function getRegisteredRolesForSwitcher() {
+
+    if (!user) {
+        return [];
+    }
+
+    let roles = [];
+
+    if (Array.isArray(user.roles)) {
+        roles = [...user.roles];
+    }
+
+    if (roles.length === 0 && Array.isArray(user.registered_roles)) {
+        roles = [...user.registered_roles];
+    }
+
+    if (roles.length === 0 && Array.isArray(user.registeredRoles)) {
+        roles = [...user.registeredRoles];
+    }
+
+    if (roles.length === 0) {
+
+        try {
+
+            const storedRoles =
+                JSON.parse(sessionStorage.getItem("registeredRoles") || "null");
+
+            if (Array.isArray(storedRoles)) {
+                roles = [...storedRoles];
+            }
+
+        } catch (error) {
+
+            roles = [];
+
+        }
+
+    }
+
+    if (roles.length === 0 && user.role) {
+
+        roles =
+            Array.isArray(user.role) ? [...user.role] : [user.role];
+
+    }
+
+    roles =
+        roles.map(normalizeRole).filter(role => !!role && !!roleNames[role]);
+
+    return [...new Set(roles)];
+
+}
+
+function getAccountRoles() {
+    return [...new Set(getRegisteredRolesForSwitcher())];
+}
+
+let currentRole = "expert";
+
+function loadRoles() {
+
+    const roleOptions =
+        document.getElementById("roleOptions");
+
+    if (!roleOptions) {
+        return;
+    }
+
+    roleOptions.innerHTML = "";
+
+    getAccountRoles().forEach(function(role) {
+
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+        button.className = "dropdown-role";
+
+        if (role === currentRole) {
+            button.classList.add("current");
+        }
+
+        button.innerHTML = `
+            <span>${roleIcons[role] || "👤"}</span>
+            <span>${roleNames[role] || role}</span>
+            <span class="role-check">${role === currentRole ? "✓" : ""}</span>
+        `;
+
+        button.addEventListener("click", function(event) {
+            event.stopPropagation();
+            switchRole(role);
+        });
+
+        roleOptions.appendChild(button);
+
+    });
+
+    moveCurrentRoleToFront(roleOptions);
+
+
+}
+
+function switchRole(role) {
+
+    const normalizedRole =
+        normalizeRole(role);
+
+    if (!normalizedRole) {
+        return;
+    }
+
+    if (!getAccountRoles().includes(normalizedRole)) {
+        return;
+    }
+
+    currentRole = normalizedRole;
+
+    sessionStorage.setItem("selectedRole", currentRole);
+    sessionStorage.setItem("currentRole", currentRole);
+
+    if (currentRole === "farmer") {
+        window.location.href = "farmer-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "buyer") {
+        window.location.href = "buyer-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "expert") {
+        window.location.href = "expert-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "equipment_provider") {
+        window.location.href = "rental-dashboard.html";
+    }
+
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const profileEl =
+        document.getElementById("profile");
+
+    if (profileEl) {
+
+        profileEl.addEventListener("click", function(event) {
+            event.stopPropagation();
+            profileEl.classList.toggle("open");
+        });
+
+        document.addEventListener("click", function() {
+            profileEl.classList.remove("open");
+        });
+
+    }
+
+    loadRoles();
+
+});
+
+
+
+function displayUser() {
+
+    if (!user) {
+        return;
+    }
+
+    const firstName =
+        user.first_name || user.firstName || "";
+
+    const lastName =
+        user.last_name || user.lastName || "";
+
+    const fullName =
+        `${firstName} ${lastName}`.trim() || "Agricultural Expert";
+
+    const initials =
+        ((firstName.charAt(0) || "") + (lastName.charAt(0) || "")).toUpperCase() || "AE";
+
+    const nameEl = document.getElementById("profileName");
+    if (nameEl) nameEl.textContent = fullName;
+
+    const avatarEl = document.getElementById("profileAvatar");
+    if (avatarEl) avatarEl.textContent = initials;
+
+}
+
+displayUser();
+
+
+
+/* =========================================================
+   CURRENT FILTER
+========================================================= */
+
+let currentFilter = "all";
+
+
+/* =========================================================
+   LOAD REAL CONSULTATIONS (replaces the static demo rows)
+========================================================= */
+
+function getCurrentUserId() {
+
+    try {
+
+        const user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+        return user && user.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+function updateNotificationCount() {
+
+    const userId =
+        getCurrentUserId();
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const headerCount = document.getElementById("headerNotificationCount");
+
+            if (headerCount) headerCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+updateNotificationCount();
+
+
+function escapeHtmlConsultation(value) {
+
+    const div = document.createElement("div");
+    div.textContent = value == null ? "" : String(value);
+    return div.innerHTML;
+
+}
+
+
+function formatConsultationRelativeTime(isoString) {
+
+    const date = new Date(isoString);
+
+    if (isNaN(date)) {
+        return "";
+    }
+
+    const diffMinutes =
+        Math.floor((Date.now() - date.getTime()) / 60000);
+
+    if (diffMinutes < 1) {
+        return "Just now";
+    }
+
+    if (diffMinutes < 60) {
+        return `${diffMinutes} minute${diffMinutes === 1 ? "" : "s"} ago`;
+    }
+
+    const diffHours = Math.floor(diffMinutes / 60);
+
+    if (diffHours < 24) {
+        return `${diffHours} hour${diffHours === 1 ? "" : "s"} ago`;
+    }
+
+    const diffDays = Math.floor(diffHours / 24);
+
+    return diffDays === 1 ? "Yesterday" : `${diffDays} days ago`;
+
+}
+
+
+function buildConsultationRowHtml(row) {
+
+    const name =
+        `${row.first_name || ""} ${row.last_name || ""}`.trim() || "Farmer";
+
+    const initial =
+        name.charAt(0).toUpperCase() || "F";
+
+    const status =
+        row.other_completed_at
+            ? "completed"
+            : (row.unread_count > 0 ? "unread" : "progress");
+
+    const topic =
+        row.last_message_text || "General consultation";
+
+    return `
+        <tr
+            data-status="${status}"
+            data-name="${escapeHtmlConsultation(name)}"
+            data-topic="${escapeHtmlConsultation(topic)}"
+        >
+            <td>
+                <div class="farmer">
+                    <div class="farmer-avatar">
+                        ${escapeHtmlConsultation(initial)}
+                    </div>
+                    <div>
+                        <div class="farmer-name" style="display:flex;align-items:center;gap:8px;">
+                            ${escapeHtmlConsultation(name)}
+                            ${
+                                row.unread_count > 0
+                                    ? `<span style="
+                                         display:inline-flex;
+                                         align-items:center;
+                                         justify-content:center;
+                                         min-width:20px;
+                                         height:20px;
+                                         padding:0 6px;
+                                         border-radius:50%;
+                                         background:#e0433c;
+                                         color:#fff;
+                                         font-size:11px;
+                                         font-weight:bold;
+                                       ">${row.unread_count}</span>`
+                                    : ""
+                            }
+                        </div>
+                        <div class="farmer-location">
+                            &nbsp;
+                        </div>
+                    </div>
+                </div>
+            </td>
+            <td>
+                <div class="topic-title">
+                    Consultation
+                </div>
+                <div class="topic-description">
+                    ${escapeHtmlConsultation(topic)}
+                </div>
+            </td>
+            <td>
+                ${
+                    status === "completed"
+                        ? `<button
+                             type="button"
+                             class="status completed"
+                             style="border:none;cursor:pointer;font:inherit;"
+                             onclick="completeConsultationFromList(${row.id}, this)"
+                           >
+                             ✓ Completed
+                           </button>`
+                        : `<span class="status ${status}">
+                             ${status === "unread" ? "Unread" : "In Progress"}
+                           </span>`
+                }
+            </td>
+            <td>
+                <span class="updated">
+                    ${formatConsultationRelativeTime(row.last_message_at || row.created_at)}
+                </span>
+            </td>
+            <td>
+                <button
+                    class="action-button"
+                    onclick="openConsultationChat(${row.id}, '${escapeHtmlConsultation(name).replace(/'/g, "\\'")}')"
+                >
+                    💬 Reply
+                </button>
+            </td>
+        </tr>
+    `;
+
+}
+
+
+function updateConsultationTabCounts(conversations) {
+
+    const total = conversations.length;
+    const unread = conversations.filter(c => c.unread_count > 0).length;
+    const completed = conversations.filter(c => c.other_completed_at).length;
+    const inProgress = total - unread - completed;
+
+    const tabs = document.querySelectorAll(".tab");
+
+    if (tabs[0]) tabs[0].textContent = `All (${total})`;
+    if (tabs[1]) tabs[1].textContent = `Unread (${unread})`;
+    if (tabs[2]) tabs[2].textContent = `In Progress (${inProgress})`;
+
+}
+
+
+async function loadConsultations() {
+
+    const userId = getCurrentUserId();
+
+    const tbody = document.getElementById("consultationBody");
+
+    // Remove the static demo rows; #emptyRow stays untouched.
+    tbody.querySelectorAll("tr[data-status]").forEach(row => row.remove());
+
+    if (!userId) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`);
+
+        const data =
+            await response.json();
+
+        if (data && data.success && Array.isArray(data.conversations)) {
+
+            const emptyRow = document.getElementById("emptyRow");
+
+            /*
+             * Conversations completed by BOTH sides have moved on
+             * to the History page - don't show them in the active
+             * consultations table.
+             */
+            const activeConversations =
+                data.conversations.filter(c => !c.completed_at);
+
+            emptyRow.insertAdjacentHTML(
+                "beforebegin",
+                activeConversations.map(buildConsultationRowHtml).join("")
+            );
+
+            updateConsultationTabCounts(activeConversations);
+
+        }
+
+    } catch (error) {
+
+        console.error("Unable to load consultations:", error);
+
+    }
+
+    applyFilters();
+
+}
+
+
+function showConsultConfirm(onConfirm) {
+
+    const modal = document.getElementById("consultConfirmModal");
+    modal.style.display = "flex";
+
+    const okBtn = document.getElementById("consultConfirmOk");
+    const cancelBtn = document.getElementById("consultConfirmCancel");
+
+    const newOkBtn = okBtn.cloneNode(true);
+    okBtn.parentNode.replaceChild(newOkBtn, okBtn);
+
+    newOkBtn.onclick = () => {
+        modal.style.display = "none";
+        onConfirm();
+    };
+
+    cancelBtn.onclick = () => {
+        modal.style.display = "none";
+    };
+
+}
+
+
+async function completeConsultationFromList(conversationId, buttonEl) {
+
+    showConsultConfirm(async () => {
+        await runCompleteConsultation(conversationId, buttonEl);
+    });
+
+}
+
+
+async function runCompleteConsultation(conversationId, buttonEl) {
+
+    const userId = getCurrentUserId();
+
+    if (!userId) {
+        return;
+    }
+
+    if (buttonEl) {
+        buttonEl.disabled = true;
+    }
+
+    try {
+
+        const response = await fetch(
+            `/api/messages/conversations/${conversationId}/complete`,
+            {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: userId })
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            alert(data.message || "Unable to complete this consultation.");
+            if (buttonEl) buttonEl.disabled = false;
+            return;
+        }
+
+        const row = buttonEl ? buttonEl.closest("tr[data-status]") : null;
+
+        if (row) {
+            row.remove();
+        }
+
+        // Recompute tab counts from what's still visible.
+        const remainingRows = document.querySelectorAll("#consultationBody tr[data-status]");
+        updateConsultationTabCounts(
+            Array.from(remainingRows).map(r => ({
+                unread_count: r.querySelector(".status.unread") ? 1 : 0,
+                other_completed_at: null
+            }))
+        );
+
+    } catch (error) {
+
+        console.error("Unable to complete consultation:", error);
+        alert("Unable to complete this consultation right now.");
+        if (buttonEl) buttonEl.disabled = false;
+
+    }
+
+}
+
+
+function openConsultationChat(conversationId, farmerName) {
+
+    window.location.href =
+        "expert-consultation-chat.html?conversationId=" +
+        encodeURIComponent(conversationId) +
+        "&farmer=" +
+        encodeURIComponent(farmerName);
+
+}
+
+
+/* =========================================================
+   FILTER CONSULTATIONS
+========================================================= */
+
+function filterConsultations(filter, button) {
+
+    currentFilter = filter;
+
+
+    document
+        .querySelectorAll(".tab")
+        .forEach(tab => {
+
+            tab.classList.remove("active");
+
+        });
+
+
+    button.classList.add("active");
+
+
+    applyFilters();
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function searchConsultations() {
+
+    applyFilters();
+
+}
+
+
+/* =========================================================
+   APPLY FILTERS
+========================================================= */
+
+function applyFilters() {
+
+    const search =
+        document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const rows =
+        document.querySelectorAll(
+            "#consultationBody tr[data-status]"
+        );
+
+
+    let visibleCount = 0;
+
+
+    rows.forEach(row => {
+
+
+        const status =
+            row.dataset.status;
+
+
+        const name =
+            row.dataset.name.toLowerCase();
+
+
+        const topic =
+            row.dataset.topic.toLowerCase();
+
+
+        let matchesFilter = true;
+
+        let matchesSearch = true;
+
+
+        /* FILTER */
+
+        if (
+            currentFilter !== "all" &&
+            status !== currentFilter
+        ) {
+
+            matchesFilter = false;
+
+        }
+
+
+        /* SEARCH */
+
+        if (
+            search &&
+            !name.includes(search) &&
+            !topic.includes(search)
+        ) {
+
+            matchesSearch = false;
+
+        }
+
+
+        /* SHOW / HIDE */
+
+        if (
+            matchesFilter &&
+            matchesSearch
+        ) {
+
+            row.style.display = "";
+
+            visibleCount++;
+
+        }
+        else {
+
+            row.style.display = "none";
+
+        }
+
+
+    });
+
+
+    const emptyRow =
+        document.getElementById(
+            "emptyRow"
+        );
+
+
+    if (visibleCount === 0) {
+
+        emptyRow.style.display =
+            "table-row";
+
+    }
+    else {
+
+        emptyRow.style.display =
+            "none";
+
+    }
+
+
+    updateShowingText(
+        visibleCount
+    );
+
+}
+
+
+/* =========================================================
+   SHOWING TEXT
+========================================================= */
+
+function updateShowingText(count) {
+
+    const text =
+        document.getElementById(
+            "showingText"
+        );
+
+
+    if (count === 0) {
+
+        text.textContent =
+            "No consultations found";
+
+        return;
+
+    }
+
+
+    if (currentFilter === "all") {
+
+        text.textContent =
+            "Showing 1 to " +
+            count +
+            " of 18 consultations";
+
+    }
+    else {
+
+        text.textContent =
+            "Showing 1 to " +
+            count +
+            " consultations";
+
+    }
+
+}
+
+
+/* =========================================================
+   REPLY
+========================================================= */
+
+function replyTo(name) {
+
+    window.location.href =
+        "expert-consultation-chat.html?farmer=" +
+        encodeURIComponent(name);
+
+}
+
+
+/* =========================================================
+   VIEW CONSULTATION
+========================================================= */
+
+function viewConsultation(name) {
+
+    window.location.href =
+        "expert-consultation-chat.html?farmer=" +
+        encodeURIComponent(name);
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function goToNotifications() {
+
+    window.location.href =
+        "expert-notifications.html";
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function openProfile() {
+
+    window.location.href =
+        "expert-profile.html";
+
+}
+
+
+/* =========================================================
+   FILTER BUTTON
+========================================================= */
+
+function showFilterMessage() {
+
+    alert(
+        "Additional consultation filters will be available here."
+    );
+
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+function goToPage(page) {
+
+    alert(
+        "Page " +
+        page +
+        " selected."
+    );
+
+}
+
+
+/* =========================================================
+   PER PAGE
+========================================================= */
+
+function changePerPage(value) {
+
+    alert(
+        "Showing " +
+        value
+    );
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout() {
+
+    const confirmed =
+        await customConfirm("Are you sure you want to logout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+    localStorage.removeItem(
+        "expertLoggedIn"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+loadConsultations();
+
+
+
+function updateConsultationBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(c => c.unread_count > 0).length;
+
+            const badgeEl =
+                document.getElementById("consultationBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load consultation badge count:", error);
+        });
+
+}
+
+updateConsultationBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+    <!-- CONFIRMATION MODAL -->
+    <div
+        id="consultConfirmModal"
+        style="
+            position:fixed;
+            inset:0;
+            background:rgba(20,32,51,.45);
+            display:none;
+            align-items:center;
+            justify-content:center;
+            padding:24px;
+            z-index:1600;
+        "
+    >
+        <div
+            style="
+                width:min(400px,100%);
+                background:#fff;
+                border-radius:14px;
+                box-shadow:0 18px 50px rgba(0,0,0,.20);
+            "
+        >
+            <div style="padding:20px 24px;border-bottom:1px solid #edf0ee;">
+                <h3 style="font-size:19px;color:#172033;">Mark as Completed?</h3>
+            </div>
+            <div style="padding:22px 24px;">
+                <p style="font-size:13px;color:#536274;line-height:1.6;">
+                    This consultation will move to your History page.
+                </p>
+                <div style="display:flex;gap:10px;margin-top:22px;justify-content:flex-end;">
+                    <button
+                        type="button"
+                        id="consultConfirmCancel"
+                        style="padding:10px 18px;border:1px solid #dfe5e1;background:#fff;border-radius:8px;cursor:pointer;font-size:13px;"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        type="button"
+                        id="consultConfirmOk"
+                        style="padding:10px 18px;border:none;background:#17833c;color:#fff;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;"
+                    >
+                        Mark as Completed
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>

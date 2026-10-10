@@ -1,0 +1,2789 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AgriConnect - Login</title>
+
+
+    <style>
+
+        /* =================================================
+           GENERAL
+        ================================================= */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.20),
+                    rgba(255, 255, 255, 0.20)
+                ),
+                url("assets/agri-background.png");
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 30px;
+
+        }
+
+
+        /* =================================================
+           BACK BUTTON
+        ================================================= */
+
+        .back-button {
+
+            position: fixed;
+
+            top: 22px;
+
+            left: 30px;
+
+            padding: 9px 18px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background:
+                rgba(90, 90, 90, 0.75);
+
+            color: white;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s;
+
+            z-index: 10;
+
+        }
+
+
+        .back-button:hover {
+
+            background:
+                rgba(60, 60, 60, 0.90);
+
+        }
+
+
+        /* =================================================
+           LOGIN CONTAINER
+        ================================================= */
+
+        .login-container {
+
+            width: 100%;
+
+            max-width: 540px;
+
+            background:
+                rgba(255, 255, 255, 0.90);
+
+            backdrop-filter: blur(8px);
+
+            border-radius: 20px;
+
+            padding: 35px 50px;
+
+            box-shadow:
+                0 10px 35px
+                rgba(0, 0, 0, 0.20);
+
+        }
+
+
+        /* =================================================
+           LOGO
+        ================================================= */
+
+        .logo-container {
+
+            text-align: center;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .logo {
+
+            width: 170px;
+
+            max-width: 70%;
+
+            height: auto;
+
+            display: inline-block;
+
+        }
+
+
+        /* =================================================
+           HEADING
+        ================================================= */
+
+        h1 {
+
+            text-align: center;
+
+            color: #1b5e20;
+
+            font-size: 28px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #666;
+
+            font-size: 14px;
+
+            margin-bottom: 28px;
+
+        }
+
+
+        /* =================================================
+           SELECTED ROLE
+        ================================================= */
+
+        .selected-role {
+
+            text-align: center;
+
+            margin-bottom: 22px;
+
+            padding: 9px 12px;
+
+            background:
+                rgba(46, 125, 50, 0.10);
+
+            border-radius: 8px;
+
+            color: #2e7d32;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =================================================
+           FORM
+        ================================================= */
+
+        .form-group {
+
+            margin-bottom: 18px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+            color: #333;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+        }
+
+
+        input {
+
+            width: 100%;
+
+            padding: 13px 14px;
+
+            border:
+                1px solid #ccc;
+
+            border-radius: 8px;
+
+            font-size: 15px;
+
+            outline: none;
+
+            transition:
+                border-color 0.2s,
+                box-shadow 0.2s;
+
+        }
+
+
+        input:focus {
+
+            border-color: #2e7d32;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(46, 125, 50, 0.12);
+
+        }
+
+
+        /* =================================================
+           PASSWORD FIELD
+        ================================================= */
+
+        .password-wrapper {
+
+            position: relative;
+
+        }
+
+
+        .password-wrapper input {
+
+            padding-right: 55px;
+
+        }
+
+
+        .toggle-password {
+
+            position: absolute;
+
+            right: 12px;
+
+            top: 50%;
+
+            transform:
+                translateY(-50%);
+
+            border: none;
+
+            background: transparent;
+
+            color: #2e7d32;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            padding: 5px;
+
+        }
+
+
+        /* =================================================
+           LOGIN BUTTON
+        ================================================= */
+
+        .login-button {
+
+            width: 100%;
+
+            padding: 13px;
+
+            margin-top: 8px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #2e7d32;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition:
+                background 0.2s,
+                transform 0.1s;
+
+        }
+
+
+        .login-button:hover {
+
+            background: #256628;
+
+        }
+
+
+        .login-button:active {
+
+            transform:
+                scale(0.99);
+
+        }
+
+
+        .login-button:disabled {
+
+            background: #9e9e9e;
+
+            cursor: not-allowed;
+
+        }
+
+
+        /* =================================================
+           MESSAGE
+        ================================================= */
+
+        #message {
+
+            margin-top: 16px;
+
+            text-align: center;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            min-height: 20px;
+
+            line-height: 20px;
+
+        }
+
+
+        /* =================================================
+           REGISTER LINK
+        ================================================= */
+
+        .register-link {
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            font-size: 14px;
+
+            color: #555;
+
+        }
+
+
+        .register-link a {
+
+            color: #2e7d32;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+        }
+
+
+        .register-link a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =================================================
+           ADMIN INFORMATION
+        ================================================= */
+
+        .admin-info {
+
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 10px 12px;
+
+            background:
+                rgba(46, 125, 50, 0.08);
+
+            border:
+                1px solid
+                rgba(46, 125, 50, 0.15);
+
+            border-radius: 8px;
+
+            text-align: center;
+
+            font-size: 12px;
+
+            color: #2e7d32;
+
+        }
+
+
+        /* =================================================
+           RESPONSIVE DESIGN
+        ================================================= */
+
+        @media (max-width: 600px) {
+
+            body {
+
+                padding: 15px;
+
+            }
+
+
+            .back-button {
+
+                top: 15px;
+
+                left: 15px;
+
+            }
+
+
+            .login-container {
+
+                padding:
+                    30px 25px;
+
+            }
+
+
+            .logo {
+
+                width: 150px;
+
+            }
+
+
+            h1 {
+
+                font-size: 25px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =================================================
+         BACK BUTTON
+    ================================================= -->
+
+    <button
+        type="button"
+        class="back-button"
+        onclick="goBack()"
+    >
+        ← Back
+    </button>
+
+
+
+    <!-- =================================================
+         LOGIN CARD
+    ================================================= -->
+
+    <div class="login-container">
+
+
+        <!-- =================================================
+             LOGO
+        ================================================= -->
+
+        <div class="logo-container">
+
+            <img
+                src="assets/agriconnect-logo.png"
+                alt="AgriConnect Logo"
+                class="logo"
+            >
+
+        </div>
+
+
+
+        <!-- =================================================
+             HEADING
+        ================================================= -->
+
+        <h1>
+            Welcome to AgriConnect
+        </h1>
+
+
+        <p class="subtitle">
+            Login to continue to your account
+        </p>
+
+
+
+        <!-- =================================================
+             SELECTED ROLE
+        ================================================= -->
+
+        <div
+            id="selectedRole"
+            class="selected-role"
+        >
+            User Login
+        </div>
+
+
+
+        <!-- =================================================
+             ADMIN INFORMATION
+        ================================================= -->
+
+        <div
+            id="adminInfo"
+            class="admin-info"
+        >
+            Administrator login detected
+        </div>
+
+
+
+        <!-- =================================================
+             LOGIN FORM
+        ================================================= -->
+
+        <form id="loginForm">
+
+
+            <!-- =================================================
+                 EMAIL / PHONE
+            ================================================= -->
+
+            <div class="form-group">
+
+                <label for="identifier">
+                    Email or Phone Number
+                </label>
+
+                <input
+                    type="text"
+                    id="identifier"
+                    name="identifier"
+                    placeholder="Enter email or phone number"
+                    autocomplete="username"
+                    required
+                >
+
+            </div>
+
+
+
+            <!-- =================================================
+                 PASSWORD
+            ================================================= -->
+
+            <div class="form-group">
+
+                <label for="password">
+                    Password
+                </label>
+
+                <div class="password-wrapper">
+
+                    <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        autocomplete="current-password"
+                        required
+                    >
+
+
+                    <button
+                        type="button"
+                        class="toggle-password"
+                        id="togglePassword"
+                    >
+                        Show
+                    </button>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 LOGIN BUTTON
+            ================================================= -->
+
+            <button
+                type="submit"
+                class="login-button"
+                id="loginButton"
+            >
+                Login
+            </button>
+
+
+        </form>
+
+
+
+        <!-- =================================================
+             MESSAGE
+        ================================================= -->
+
+        <div id="message"></div>
+
+
+
+        <!-- =================================================
+             REGISTER
+        ================================================= -->
+
+        <div class="register-link">
+
+            Don't have an account?
+
+            <a href="register.html">
+                Create an account
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =================================================
+         JAVASCRIPT
+    ================================================= -->
+
+    <script>
+
+
+        /* =================================================
+           GET ELEMENTS
+        ================================================= */
+
+        const loginForm =
+            document.getElementById(
+                "loginForm"
+            );
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        const loginButton =
+            document.getElementById(
+                "loginButton"
+            );
+
+
+        const passwordInput =
+            document.getElementById(
+                "password"
+            );
+
+
+        const togglePassword =
+            document.getElementById(
+                "togglePassword"
+            );
+
+
+        const selectedRoleElement =
+            document.getElementById(
+                "selectedRole"
+            );
+
+
+        const adminInfo =
+            document.getElementById(
+                "adminInfo"
+            );
+
+
+        const identifierInput =
+            document.getElementById(
+                "identifier"
+            );
+
+
+
+        /* =================================================
+           GET ROLE FROM URL
+        ================================================= */
+
+        const urlParams =
+            new URLSearchParams(
+                window.location.search
+            );
+
+
+        const role =
+            normalizeRole(
+                urlParams.get("role")
+            );
+
+
+
+        /* =================================================
+           ROLE NAMES
+        ================================================= */
+
+        const roleNames = {
+
+            farmer:
+                "Logging in as Farmer",
+
+            buyer:
+                "Logging in as Buyer",
+
+            expert:
+                "Logging in as Agricultural Expert",
+
+            equipment_provider:
+                "Logging in as Equipment Provider",
+
+            admin:
+                "Logging in as Administrator"
+
+        };
+
+
+        const roleDisplayNames = {
+
+            farmer:
+                "Farmer",
+
+            buyer:
+                "Buyer",
+
+            expert:
+                "Agricultural Expert",
+
+            equipment_provider:
+                "Equipment Provider",
+
+            admin:
+                "Administrator"
+
+        };
+
+
+        const roleIcons = {
+
+            farmer:
+                "🌱",
+
+            buyer:
+                "🛒",
+
+            expert:
+                "👨‍🌾",
+
+            equipment_provider:
+                "🚜",
+
+            admin:
+                "👤"
+
+        };
+
+
+
+        /* =================================================
+           ADMIN DEFAULT CREDENTIALS
+        ================================================= */
+
+        const ADMIN_EMAIL =
+            "admin@agriconnect.com";
+
+
+
+        /* =================================================
+           DISPLAY ROLE
+        ================================================= */
+
+        if (
+            role &&
+            roleNames[role]
+        ) {
+
+            selectedRoleElement.textContent =
+                roleNames[role];
+
+        }
+
+        else {
+
+            selectedRoleElement.textContent =
+                "User Login";
+
+        }
+
+
+
+        /* =================================================
+           ADMIN DISPLAY
+        ================================================= */
+
+        if (
+            role === "admin"
+        ) {
+
+            adminInfo.style.display =
+                "block";
+
+            identifierInput.placeholder =
+                "Enter admin email";
+
+        }
+
+
+
+        /* =================================================
+           NORMALIZE ROLE
+        ================================================= */
+
+        function normalizeRole(
+            value
+        ) {
+
+            if (
+                value === null ||
+                value === undefined
+            ) {
+
+                return "";
+
+            }
+
+
+            const normalized =
+                String(value)
+                    .trim()
+                    .toLowerCase()
+                    .replace(
+                        /-/g,
+                        "_"
+                    );
+
+
+            if (
+                normalized ===
+                "farmer"
+            ) {
+
+                return "farmer";
+
+            }
+
+
+            if (
+                normalized ===
+                "buyer"
+            ) {
+
+                return "buyer";
+
+            }
+
+
+            if (
+                normalized ===
+                    "expert" ||
+                normalized ===
+                    "agricultural_expert" ||
+                normalized ===
+                    "agricultural expert" ||
+                normalized ===
+                    "agri_expert" ||
+                normalized ===
+                    "agri expert"
+            ) {
+
+                return "expert";
+
+            }
+
+
+            if (
+                normalized ===
+                    "equipment_provider" ||
+                normalized ===
+                    "equipment provider" ||
+                normalized ===
+                    "provider"
+            ) {
+
+                return "equipment_provider";
+
+            }
+
+
+            if (
+                normalized ===
+                "admin"
+            ) {
+
+                return "admin";
+
+            }
+
+
+            return "";
+
+        }
+
+
+
+        /* =================================================
+           NORMALIZE ROLE LIST
+        ================================================= */
+
+        function normalizeRoleList(
+            roles
+        ) {
+
+            if (
+                !Array.isArray(roles)
+            ) {
+
+                return [];
+
+            }
+
+
+            return [
+                ...new Set(
+                    roles
+                        .map(
+                            normalizeRole
+                        )
+                        .filter(
+                            function(value) {
+                                return (
+                                    value &&
+                                    value !== "admin"
+                                );
+                            }
+                        )
+                )
+            ];
+
+        }
+
+
+
+        /* =================================================
+           GET REGISTRATIONS
+        ================================================= */
+
+        function getRegistrations() {
+
+            try {
+
+                const saved =
+                    localStorage.getItem(
+                        "agriConnectRegistrations"
+                    );
+
+
+                const registrations =
+                    saved
+                        ? JSON.parse(saved)
+                        : [];
+
+
+                return Array.isArray(
+                    registrations
+                )
+                    ? registrations
+                    : [];
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Could not read registrations:",
+                    error
+                );
+
+
+                return [];
+
+            }
+
+        }
+
+
+
+        /* =================================================
+           GET REGISTRATION ROLE
+        ================================================= */
+
+        function getRegistrationRole(
+            registration
+        ) {
+
+            if (
+                !registration
+            ) {
+
+                return "";
+
+            }
+
+
+            const type =
+                normalizeRole(
+                    registration.type
+                );
+
+
+            if (type) {
+
+                return type;
+
+            }
+
+
+            const possibleRoles = [
+
+                registration.role,
+
+                registration.registered_role,
+
+                registration.registeredRole,
+
+                registration.account_role,
+
+                registration.accountRole
+
+            ];
+
+
+            for (
+                const possibleRole
+                of possibleRoles
+            ) {
+
+                const normalized =
+                    normalizeRole(
+                        possibleRole
+                    );
+
+
+                if (normalized) {
+
+                    return normalized;
+
+                }
+
+            }
+
+
+            return "";
+
+        }
+
+
+
+        /* =================================================
+           FIND LOCAL REGISTRATION
+
+           This searches by the actual login identifier.
+           It is intentionally not limited to Expert /
+           Equipment Provider so separate Farmer and Buyer
+           accounts cannot overwrite each other.
+        ================================================= */
+
+        function findRegistration(
+            identifier
+        ) {
+
+            const registrations =
+                getRegistrations();
+
+
+            const normalizedIdentifier =
+                String(
+                    identifier || ""
+                )
+                    .trim()
+                    .toLowerCase();
+
+
+            const normalizedPhone =
+                String(
+                    identifier || ""
+                )
+                    .replace(
+                        /\s+/g,
+                        ""
+                    );
+
+
+            return (
+                registrations.find(
+                    function(registration) {
+
+                        const email =
+                            String(
+                                registration.email ||
+                                ""
+                            )
+                                .trim()
+                                .toLowerCase();
+
+
+                        const phone =
+                            String(
+                                registration.phone ||
+                                ""
+                            )
+                                .replace(
+                                    /\s+/g,
+                                    ""
+                                );
+
+
+                        return (
+                            (
+                                email &&
+                                email ===
+                                    normalizedIdentifier
+                            )
+                            ||
+                            (
+                                phone &&
+                                phone ===
+                                    normalizedPhone
+                            )
+                        );
+
+                    }
+                )
+                || null
+            );
+
+        }
+
+
+
+        /* =================================================
+           BUILD ACCOUNT ROLES
+
+           Priority:
+           1. Backend user.roles
+           2. Local registration roles
+           3. Backend/user registered role
+           4. Safe fallback based on the selected login
+
+           Important:
+           - A Farmer account can have Farmer + Buyer.
+           - A Buyer-only account remains Buyer only.
+           - We never add Buyer to an account that is
+             explicitly Buyer-only.
+        ================================================= */
+
+        function buildAccountRoles(
+            registration,
+            backendUser,
+            selectedLoginRole
+        ) {
+
+            let roles =
+                [];
+
+
+            /*
+             * First use roles returned by the backend.
+             */
+
+            if (
+                backendUser &&
+                Array.isArray(
+                    backendUser.roles
+                )
+            ) {
+
+                roles =
+                    normalizeRoleList(
+                        backendUser.roles
+                    );
+
+            }
+
+
+            /*
+             * Add role information from
+             * the local registration when available.
+             */
+
+            const localRole =
+                getRegistrationRole(
+                    registration
+                );
+
+
+            if (
+                localRole &&
+                !roles.includes(
+                    localRole
+                )
+            ) {
+
+                roles.push(
+                    localRole
+                );
+
+            }
+
+
+            /*
+             * Check any registered-role field
+             * returned by the backend.
+             */
+
+            const backendRegisteredRole =
+                normalizeRole(
+                    backendUser?.registered_role ||
+                    backendUser?.registeredRole ||
+                    backendUser?.registration_role ||
+                    backendUser?.registrationRole ||
+                    backendUser?.account_role ||
+                    backendUser?.accountRole
+                );
+
+
+            if (
+                backendRegisteredRole &&
+                !roles.includes(
+                    backendRegisteredRole
+                )
+            ) {
+
+                roles.push(
+                    backendRegisteredRole
+                );
+
+            }
+
+
+            /*
+             * If there is no role list at all,
+             * use the role selected on the login page.
+             */
+
+            if (
+                roles.length === 0 &&
+                selectedLoginRole
+            ) {
+
+                roles.push(
+                    selectedLoginRole
+                );
+
+            }
+
+
+            /*
+             * Farmer / Expert / Equipment Provider
+             * accounts also have Buyer access in the
+             * AgriConnect role-switching design.
+             *
+             * Buyer-only accounts remain Buyer only.
+             */
+
+            const hasPrimaryNonBuyerRole =
+                roles.some(
+                    function(accountRole) {
+
+                        return (
+                            accountRole ===
+                                "farmer" ||
+                            accountRole ===
+                                "expert" ||
+                            accountRole ===
+                                "equipment_provider"
+                        );
+
+                    }
+                );
+
+
+            const isBuyerOnly =
+                roles.length === 1 &&
+                roles[0] === "buyer";
+
+
+            if (
+                hasPrimaryNonBuyerRole &&
+                !isBuyerOnly &&
+                !roles.includes(
+                    "buyer"
+                )
+            ) {
+
+                roles.push(
+                    "buyer"
+                );
+
+            }
+
+
+            /*
+             * If the selected login is Farmer,
+             * preserve the established Farmer + Buyer
+             * behavior even if the backend did not return
+             * a roles array.
+             */
+
+            if (
+                selectedLoginRole ===
+                    "farmer" &&
+                !roles.includes(
+                    "farmer"
+                )
+            ) {
+
+                roles.push(
+                    "farmer"
+                );
+
+            }
+
+
+            if (
+                selectedLoginRole ===
+                    "farmer" &&
+                !roles.includes(
+                    "buyer"
+                )
+            ) {
+
+                roles.push(
+                    "buyer"
+                );
+
+            }
+
+
+            /*
+             * A Buyer login with an explicitly Buyer
+             * registration must remain Buyer only.
+             */
+
+            if (
+                localRole ===
+                "buyer"
+            ) {
+
+                roles =
+                    ["buyer"];
+
+            }
+
+
+            /*
+             * Remove duplicates and invalid roles.
+             */
+
+            roles =
+                normalizeRoleList(
+                    roles
+                );
+
+
+            /*
+             * Final safe fallback.
+             */
+
+            if (
+                roles.length === 0
+            ) {
+
+                roles =
+                    selectedLoginRole
+                        ? [selectedLoginRole]
+                        : ["buyer"];
+
+            }
+
+
+            return roles;
+
+        }
+
+
+
+        /* =================================================
+           GET DISPLAY NAME
+        ================================================= */
+
+        function getFirstName(
+            registration,
+            backendUser
+        ) {
+
+            return (
+                registration?.first_name ||
+                registration?.firstName ||
+                backendUser?.first_name ||
+                backendUser?.firstName ||
+                ""
+            );
+
+        }
+
+
+        function getLastName(
+            registration,
+            backendUser
+        ) {
+
+            return (
+                registration?.last_name ||
+                registration?.lastName ||
+                backendUser?.last_name ||
+                backendUser?.lastName ||
+                ""
+            );
+
+        }
+
+
+        function getFullName(
+            registration,
+            backendUser
+        ) {
+
+            const firstName =
+                getFirstName(
+                    registration,
+                    backendUser
+                );
+
+
+            const lastName =
+                getLastName(
+                    registration,
+                    backendUser
+                );
+
+
+            const combined =
+                `${firstName} ${lastName}`
+                    .trim();
+
+
+            if (
+                combined
+            ) {
+
+                return combined;
+
+            }
+
+
+            return (
+                registration?.name ||
+                backendUser?.name ||
+                backendUser?.username ||
+                ""
+            );
+
+        }
+
+
+
+        /* =================================================
+           SAVE LOGIN USER
+
+           THIS IS THE MAIN FIX.
+
+           The old version stored firstName/lastName
+           but Farmer/Buyer dashboards expect
+           first_name/last_name.
+
+           It also did not preserve user.roles.
+
+           The new version stores both compatible
+           name formats and the complete role list.
+        ================================================= */
+
+        function saveLoggedInUser(
+            registration,
+            backendUser,
+            token,
+            selectedLoginRole
+        ) {
+
+            const accountRoles =
+                buildAccountRoles(
+                    registration,
+                    backendUser,
+                    selectedLoginRole
+                );
+
+
+            const firstName =
+                getFirstName(
+                    registration,
+                    backendUser
+                );
+
+
+            const lastName =
+                getLastName(
+                    registration,
+                    backendUser
+                );
+
+
+            const fullName =
+                getFullName(
+                    registration,
+                    backendUser
+                );
+
+
+            /*
+             * IMPORTANT:
+             * The ID required by the backend is the actual
+             * users.id returned by /api/auth/login.
+             *
+             * Do NOT use registration.id first. The local
+             * registration record can have a different ID
+             * from the database users.id. Using it causes
+             * Equipment Provider pages to fail when they
+             * search equipment_provider_profiles.user_id.
+             */
+            /*
+             * IMPORTANT:
+             *
+             * The rental-provider backend identifies the
+             * logged-in account through users.id.
+             *
+             * Therefore the ID returned by /api/auth/login
+             * must always have priority over anything stored
+             * in the local registration object.
+             *
+             * Never use registration.id here because it can
+             * be a frontend/local registration ID and may not
+             * match equipment_provider_profiles.user_id.
+             */
+            const userId =
+                backendUser?.id ??
+                backendUser?.userId ??
+                backendUser?.user_id ??
+                registration?.user_id ??
+                registration?.userId ??
+                "";
+
+            /*
+             * Keep the ID as a real value, not an accidental
+             * empty/undefined value.
+             */
+            const canonicalUserId =
+                String(userId).trim();
+
+
+            const email =
+                registration?.email ||
+                backendUser?.email ||
+                "";
+
+
+            const phone =
+                registration?.phone ||
+                backendUser?.phone ||
+                "";
+
+
+            const district =
+                registration?.district ||
+                backendUser?.district ||
+                "";
+
+
+            const accountRegisteredRole =
+                getRegistrationRole(
+                    registration
+                )
+                ||
+                normalizeRole(
+                    backendUser?.registered_role ||
+                    backendUser?.registeredRole ||
+                    backendUser?.registration_role ||
+                    backendUser?.registrationRole
+                )
+                ||
+                (
+                    accountRoles.length === 1
+                        ? accountRoles[0]
+                        : selectedLoginRole
+                );
+
+
+            const user = {
+
+                ...(backendUser || {}),
+
+                id:
+                    canonicalUserId,
+
+                userId:
+                    canonicalUserId,
+
+                user_id:
+                    canonicalUserId,
+
+                name:
+                    fullName,
+
+                username:
+                    backendUser?.username ||
+                    fullName,
+
+                first_name:
+                    firstName,
+
+                last_name:
+                    lastName,
+
+                firstName:
+                    firstName,
+
+                lastName:
+                    lastName,
+
+                email:
+                    email,
+
+                phone:
+                    phone,
+
+                district:
+                    district,
+
+                role:
+                    selectedLoginRole,
+
+                currentRole:
+                    selectedLoginRole,
+
+                selectedRole:
+                    selectedLoginRole,
+
+                registered_role:
+                    accountRegisteredRole,
+
+                registeredRole:
+                    accountRegisteredRole,
+
+                roles:
+                    accountRoles,
+
+                status:
+                    registration?.status ||
+                    backendUser?.status ||
+                    backendUser?.approvalStatus ||
+                    "approved"
+
+            };
+
+
+            /*
+             * Store ONE canonical logged-in user.
+             */
+
+            sessionStorage.setItem(
+                "user",
+                JSON.stringify(
+                    user
+                )
+            );
+
+
+            /*
+             * Keep the existing role key used by
+             * the Farmer Dashboard.
+             */
+
+            sessionStorage.setItem(
+                "selectedRole",
+                selectedLoginRole
+            );
+
+
+            /*
+             * Also keep currentRole synchronized
+             * for pages that still use it.
+             *
+             * This does not represent registered roles;
+             * it represents only the currently active
+             * dashboard.
+             */
+
+            sessionStorage.setItem(
+                "currentRole",
+                selectedLoginRole
+            );
+
+
+            /*
+             * registeredRoles is now a copy of the
+             * CURRENT ACCOUNT'S roles only.
+             *
+             * This prevents one user's roles from being
+             * reused for another logged-in account.
+             */
+
+            sessionStorage.setItem(
+                "registeredRoles",
+                JSON.stringify(
+                    accountRoles
+                )
+            );
+
+
+            /*
+             * Keep the older key synchronized for
+             * pages that still reference it.
+             */
+
+            sessionStorage.setItem(
+                "loggedInUser",
+                JSON.stringify(
+                    user
+                )
+            );
+
+
+            if (
+                token
+            ) {
+
+                sessionStorage.setItem(
+                    "token",
+                    token
+                );
+
+            }
+
+
+            return user;
+
+        }
+
+
+
+        /* =================================================
+           REDIRECT TO DASHBOARD
+        ================================================= */
+
+        function redirectToDashboard(
+            selectedLoginRole
+        ) {
+
+            if (
+                selectedLoginRole ===
+                "farmer"
+            ) {
+
+                window.location.href =
+                    "farmer-dashboard.html";
+
+                return;
+
+            }
+
+
+            if (
+                selectedLoginRole ===
+                "buyer"
+            ) {
+
+                window.location.href =
+                    "buyer-dashboard.html";
+
+                return;
+
+            }
+
+
+            if (
+                selectedLoginRole ===
+                "equipment_provider"
+            ) {
+
+                window.location.href =
+                    "rental-dashboard.html";
+
+                return;
+
+            }
+
+
+            if (
+                selectedLoginRole ===
+                "expert"
+            ) {
+
+                window.location.href =
+                    "expert-dashboard.html";
+
+                return;
+
+            }
+
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+
+        /* =================================================
+           ADMIN LOGIN
+        ================================================= */
+
+        async function loginAdmin(
+            identifier,
+            password
+        ) {
+
+            /*
+             * The administrator password is verified by the
+             * server (POST /api/auth/admin-login), so it is
+             * never stored in this page.
+             * Returns true (success), false (wrong credentials)
+             * or null (error already shown to the user).
+             */
+
+            let isValid = false;
+
+            try {
+
+                const adminResponse =
+                    await fetch(
+                        "/api/auth/admin-login",
+                        {
+                            method:
+                                "POST",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify({
+                                    email:
+                                        identifier.trim(),
+                                    password:
+                                        password
+                                })
+                        }
+                    );
+
+                const adminResult =
+                    await adminResponse.json();
+
+                if (
+                    adminResponse.status === 429
+                ) {
+
+                    message.textContent =
+                        adminResult.message;
+
+                    message.style.color =
+                        "red";
+
+                    return null;
+
+                }
+
+                isValid =
+                    adminResponse.ok &&
+                    adminResult.success;
+
+            }
+
+            catch (adminError) {
+
+                message.textContent =
+                    "Cannot reach the server. Please try again.";
+
+                message.style.color =
+                    "red";
+
+                return null;
+
+            }
+
+
+            if (isValid) {
+
+
+                const adminUser = {
+
+                    id:
+                        "admin-001",
+
+                    name:
+                        "AgriConnect Administrator",
+
+                    first_name:
+                        "AgriConnect",
+
+                    last_name:
+                        "Administrator",
+
+                    firstName:
+                        "AgriConnect",
+
+                    lastName:
+                        "Administrator",
+
+                    email:
+                        ADMIN_EMAIL,
+
+                    role:
+                        "admin",
+
+                    currentRole:
+                        "admin",
+
+                    selectedRole:
+                        "admin",
+
+                    registered_role:
+                        "admin",
+
+                    registeredRole:
+                        "admin",
+
+                    roles:
+                        ["admin"],
+
+                    status:
+                        "approved"
+
+                };
+
+
+                sessionStorage.setItem(
+                    "user",
+                    JSON.stringify(
+                        adminUser
+                    )
+                );
+
+
+                sessionStorage.setItem(
+                    "loggedInUser",
+                    JSON.stringify(
+                        adminUser
+                    )
+                );
+
+
+                sessionStorage.setItem(
+                    "selectedRole",
+                    "admin"
+                );
+
+
+                sessionStorage.setItem(
+                    "currentRole",
+                    "admin"
+                );
+
+
+                sessionStorage.setItem(
+                    "registeredRoles",
+                    JSON.stringify(
+                        ["admin"]
+                    )
+                );
+
+
+                sessionStorage.setItem(
+                    "token",
+                    "admin-demo-token"
+                );
+
+
+                message.textContent =
+                    "Admin login successful!";
+
+
+                message.style.color =
+                    "green";
+
+
+                loginButton.disabled =
+                    true;
+
+
+                loginButton.textContent =
+                    "Opening Admin Dashboard...";
+
+
+                setTimeout(
+                    () => {
+
+                        window.location.href =
+                            "admin-dashboard.html";
+
+                    },
+                    500
+                );
+
+
+                return true;
+
+            }
+
+
+            return false;
+
+        }
+
+
+
+        /* =================================================
+           SHOW / HIDE PASSWORD
+        ================================================= */
+
+        togglePassword.addEventListener(
+            "click",
+            () => {
+
+                if (
+                    passwordInput.type ===
+                    "password"
+                ) {
+
+                    passwordInput.type =
+                        "text";
+
+                    togglePassword.textContent =
+                        "Hide";
+
+                }
+
+                else {
+
+                    passwordInput.type =
+                        "password";
+
+                    togglePassword.textContent =
+                        "Show";
+
+                }
+
+            }
+        );
+
+
+
+        /* =================================================
+           LOGIN FORM
+        ================================================= */
+
+        loginForm.addEventListener(
+            "submit",
+            async (event) => {
+
+                event.preventDefault();
+
+
+                const identifier =
+                    identifierInput
+                        .value
+                        .trim();
+
+
+                const password =
+                    passwordInput
+                        .value;
+
+
+
+                /* =================================================
+                   ADMIN
+                ================================================= */
+
+                if (
+                    role === "admin"
+                ) {
+
+                    const adminSuccess =
+                        await loginAdmin(
+                            identifier,
+                            password
+                        );
+
+
+                    if (
+                        adminSuccess === false
+                    ) {
+
+                        message.textContent =
+                            "Invalid administrator email or password.";
+
+                        message.style.color =
+                            "red";
+
+                    }
+
+
+                    return;
+
+                }
+
+
+
+                /* =================================================
+                   VALIDATE ROLE
+                ================================================= */
+
+                if (
+                    !role ||
+                    !roleNames[role]
+                ) {
+
+                    message.textContent =
+                        "Please select a valid user role before logging in.";
+
+                    message.style.color =
+                        "red";
+
+                    return;
+
+                }
+
+
+
+                /* =================================================
+                   FIND LOCAL REGISTRATION
+
+                   This is used especially for
+                   Expert / Provider approval, but it
+                   also lets the login session use the
+                   correct account name for Farmer / Buyer.
+                ================================================= */
+
+                const localRegistration =
+                    findRegistration(
+                        identifier
+                    );
+
+
+
+                /* =================================================
+                   CHECK LOCAL APPROVAL STATUS
+                ================================================= */
+
+                if (
+                    localRegistration
+                ) {
+
+                    const registrationRole =
+                        getRegistrationRole(
+                            localRegistration
+                        );
+
+
+                    /*
+                     * Do not allow a registration for a
+                     * different role to be used for this
+                     * login selection.
+                     */
+
+                    if (
+                        registrationRole &&
+                        registrationRole !==
+                            role
+                    ) {
+
+                        /*
+                         * For a user who is explicitly
+                         * logging in as another role,
+                         * the backend remains the authority.
+                         *
+                         * We do not reject here because a
+                         * Farmer account can also have Buyer
+                         * access.
+                         */
+
+                    }
+
+
+                    /* ---------------------------------------------
+                       PENDING
+                    --------------------------------------------- */
+
+                    if (
+                        localRegistration.status ===
+                        "Pending"
+                    ) {
+
+                        if (
+                            role === "expert" ||
+                            role ===
+                                "equipment_provider"
+                        ) {
+
+                            message.innerHTML =
+                                `Your ${
+                                    role === "expert"
+                                        ? "Agricultural Expert"
+                                        : "Equipment Provider"
+                                } account is pending.<br>
+                                Please wait for administrator approval.`;
+
+                            message.style.color =
+                                "red";
+
+                            return;
+
+                        }
+
+                    }
+
+
+
+                    /* ---------------------------------------------
+                       REJECTED
+                    --------------------------------------------- */
+
+                    if (
+                        localRegistration.status ===
+                        "Rejected"
+                    ) {
+
+                        if (
+                            role === "expert" ||
+                            role ===
+                                "equipment_provider"
+                        ) {
+
+                            const reason =
+                                localRegistration
+                                    .rejectionReason ||
+                                "No reason was provided.";
+
+
+                            message.innerHTML =
+                                `Your ${
+                                    role === "expert"
+                                        ? "Agricultural Expert"
+                                        : "Equipment Provider"
+                                } registration was rejected.<br>
+                                <span style="font-size:12px;">
+                                    Reason: ${
+                                        escapeHTML(
+                                            reason
+                                        )
+                                    }
+                                </span>`;
+
+                            message.style.color =
+                                "red";
+
+                            return;
+
+                        }
+
+                    }
+
+                }
+
+
+
+                /* =================================================
+                   LOGIN BUTTON
+                ================================================= */
+
+                message.textContent =
+                    "";
+
+                loginButton.disabled =
+                    true;
+
+                loginButton.textContent =
+                    "Logging in...";
+
+
+
+                try {
+
+
+                    /* =================================================
+                       CALL BACKEND
+                    ================================================= */
+
+                    const response =
+                        await fetch(
+                            "/api/auth/login",
+                            {
+
+                                method:
+                                    "POST",
+
+                                headers: {
+
+                                    "Content-Type":
+                                        "application/json"
+
+                                },
+
+                                body:
+                                    JSON.stringify({
+
+                                        identifier:
+                                            identifier,
+
+                                        password:
+                                            password,
+
+                                        role:
+                                            role
+
+                                    })
+
+                            }
+                        );
+
+
+
+                    let result =
+                        {};
+
+
+                    try {
+
+                        result =
+                            await response.json();
+
+                    }
+
+                    catch (
+                        jsonError
+                    ) {
+
+                        result =
+                            {};
+
+                    }
+
+
+
+                    /* =================================================
+                       BACKEND LOGIN SUCCESS
+                    ================================================= */
+
+                    if (
+                        response.ok
+                    ) {
+
+                        /*
+                         * A successful backend login must contain
+                         * the real database users.id. Without it,
+                         * rental-provider pages cannot resolve
+                         * equipment_provider_profiles.user_id.
+                         */
+                        const backendUserId =
+                            result.user?.id ??
+                            result.user?.userId ??
+                            result.user?.user_id ??
+                            "";
+
+                        if (
+                            !String(
+                                backendUserId
+                            ).trim()
+                        ) {
+
+                            console.error(
+                                "Login succeeded but the backend did not return users.id.",
+                                result
+                            );
+
+                            message.textContent =
+                                "Login succeeded, but the user ID was not returned. Please check the login response.";
+
+                            message.style.color =
+                                "red";
+
+                            loginButton.disabled =
+                                false;
+
+                            loginButton.textContent =
+                                "Login";
+
+                            return;
+
+                        }
+
+
+                        saveLoggedInUser(
+                            localRegistration,
+                            result.user,
+                            result.token,
+                            role
+                        );
+
+
+                        message.textContent =
+                            "Login successful!";
+
+
+                        message.style.color =
+                            "green";
+
+
+                        loginButton.disabled =
+                            true;
+
+
+                        loginButton.textContent =
+                            "Opening Dashboard...";
+
+
+                        setTimeout(
+                            () => {
+
+                                redirectToDashboard(
+                                    role
+                                );
+
+                            },
+                            500
+                        );
+
+
+                        return;
+
+                    }
+
+
+
+                    /* =================================================
+                       BACKEND LOGIN FAILED
+
+                       If Admin has already approved an
+                       Expert / Provider locally, retain
+                       the existing prototype behavior.
+                    ================================================= */
+
+                    if (
+                        localRegistration &&
+                        localRegistration.status ===
+                        "Approved"
+                    ) {
+
+                        const backendMessage =
+                            (
+                                result.message ||
+                                ""
+                            )
+                                .toLowerCase();
+
+
+                        const backendStatus =
+                            (
+                                result.user?.status ||
+                                result.user?.approvalStatus ||
+                                ""
+                            )
+                                .toLowerCase();
+
+
+                        const isApprovalIssue =
+                            backendMessage.includes(
+                                "pending"
+                            )
+                            ||
+                            backendMessage.includes(
+                                "approval"
+                            )
+                            ||
+                            backendStatus ===
+                                "pending"
+                            ||
+                            backendStatus ===
+                                "rejected";
+
+
+                        if (
+                            isApprovalIssue
+                        ) {
+
+                            saveLoggedInUser(
+                                localRegistration,
+                                result.user,
+                                result.token,
+                                role
+                            );
+
+
+                            message.textContent =
+                                "Login successful!";
+
+
+                            message.style.color =
+                                "green";
+
+
+                            loginButton.disabled =
+                                true;
+
+
+                            loginButton.textContent =
+                                "Opening Dashboard...";
+
+
+                            setTimeout(
+                                () => {
+
+                                    redirectToDashboard(
+                                        role
+                                    );
+
+                                },
+                                500
+                            );
+
+
+                            return;
+
+                        }
+
+                    }
+
+
+
+                    /* =================================================
+                       NORMAL LOGIN ERROR
+                    ================================================= */
+
+                    message.textContent =
+                        result.message ||
+                        "Invalid email/phone number or password.";
+
+                    message.style.color =
+                        "red";
+
+
+                }
+
+                catch (
+                    error
+                ) {
+
+                    console.error(
+                        "Login error:",
+                        error
+                    );
+
+
+                    /*
+                     * If an approved Expert or Provider
+                     * registration exists, continue with
+                     * the locally approved account.
+                     */
+
+                    if (
+                        localRegistration &&
+                        localRegistration.status ===
+                        "Approved" &&
+                        role !==
+                        "equipment_provider"
+                    ) {
+
+                        saveLoggedInUser(
+                            localRegistration,
+                            null,
+                            null,
+                            role
+                        );
+
+
+                        message.textContent =
+                            "Login successful!";
+
+
+                        message.style.color =
+                            "green";
+
+
+                        loginButton.disabled =
+                            true;
+
+
+                        loginButton.textContent =
+                            "Opening Dashboard...";
+
+
+                        setTimeout(
+                            () => {
+
+                                redirectToDashboard(
+                                    role
+                                );
+
+                            },
+                            500
+                        );
+
+
+                        return;
+
+                    }
+
+
+
+                    if (
+                        role ===
+                        "equipment_provider"
+                    ) {
+
+                        message.textContent =
+                            "Unable to connect to the server. Please log in again when the server is running so your database user ID can be loaded.";
+
+                    }
+
+                    else {
+
+                        message.textContent =
+                            "Unable to connect to the server.";
+
+                    }
+
+                    message.style.color =
+                        "red";
+
+                }
+
+
+
+                /* =================================================
+                   ENABLE LOGIN BUTTON
+                ================================================= */
+
+                loginButton.disabled =
+                    false;
+
+                loginButton.textContent =
+                    "Login";
+
+            }
+        );
+
+
+
+        /* =================================================
+           ESCAPE HTML
+        ================================================= */
+
+        function escapeHTML(
+            value
+        ) {
+
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+
+            div.textContent =
+                value || "";
+
+
+            return div.innerHTML;
+
+        }
+
+
+
+        /* =================================================
+           BACK BUTTON
+        ================================================= */
+
+        function goBack() {
+
+            /*
+             * Return to the role selection page
+             * for normal users.
+             */
+
+            window.location.href =
+                "select-role.html";
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

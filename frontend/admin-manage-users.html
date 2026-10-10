@@ -1,0 +1,4089 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriConnect - Manage Users</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    background:#f5f7fb;
+    color:#182033;
+    min-height:100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar{
+    min-width: 255px;
+
+    position:fixed;
+    left:0;
+    top:0;
+    bottom:0;
+    width:255px;
+    background:linear-gradient(180deg,#281064 0%,#170a45 100%);
+    color:white;
+    z-index:1000;
+    overflow-y:auto;
+}
+
+.sidebar-logo{
+    height:86px;
+    display:flex;
+    align-items:center;
+    padding:0 20px;
+    border-bottom:1px solid rgba(255,255,255,0.10);
+}
+
+.sidebar-logo img{
+    width:160px;
+    height:auto;
+    max-height:62px;
+    object-fit:contain;
+    display:block;
+}
+
+/* ================= NAVIGATION ================= */
+
+.sidebar-content{
+    padding:13px 10px;
+}
+
+.nav-section-title{
+    font-size:11px;
+    font-weight:bold;
+    color:rgba(255,255,255,0.75);
+    padding:14px 12px 10px;
+    text-transform:uppercase;
+}
+
+.nav-item{
+    width:100%;
+    min-height:45px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:11px 12px;
+    margin-bottom:4px;
+    border-radius:8px;
+    color:white;
+    text-decoration:none;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.nav-item:hover{
+    background:rgba(255,255,255,0.08);
+}
+
+.nav-item.active{
+    background:linear-gradient(90deg,#7131c8,#5520a7);
+}
+
+.nav-icon{
+    width:22px;
+    min-width:22px;
+    text-align:center;
+    font-size:18px;
+}
+
+.nav-label{
+    flex:1;
+}
+
+.nav-arrow{
+    font-size:12px;
+}
+
+/* ================= SUBMENU ================= */
+
+.submenu{
+    display:block;
+    padding-left:35px;
+    margin-bottom:5px;
+}
+
+.submenu a{
+    display:block;
+    color:rgba(255,255,255,0.9);
+    text-decoration:none;
+    font-size:14px;
+    padding:10px;
+    border-radius:6px;
+}
+
+.submenu a:hover{
+    background:rgba(255,255,255,0.08);
+}
+
+.submenu a.active-sub{
+    background:#6424b7;
+    color:white;
+}
+
+/* ================= SIDEBAR BOTTOM ================= */
+
+.sidebar-bottom{
+    padding:8px 10px 15px;
+}
+
+.sidebar-divider{
+    height:1px;
+    background:rgba(255,255,255,0.13);
+    margin:5px 12px 12px;
+}
+
+/* ================= MAIN ================= */
+
+.main{
+    margin-left:255px;
+    width:calc(100% - 255px);
+    min-height:100vh;
+    padding-bottom:50px;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    height:78px;
+    background:white;
+    border-bottom:1px solid #e5e8ee;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    padding:0 28px;
+}
+
+.header-right{
+    display:flex;
+    align-items:center;
+    gap:22px;
+}
+
+/* ================= NOTIFICATION ================= */
+
+.notification{
+    position:relative;
+    width:40px;
+    height:40px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:23px;
+    cursor:pointer;
+}
+
+.notification-badge{
+    position:absolute;
+    top:-1px;
+    right:-3px;
+    min-width:18px;
+    height:18px;
+    padding:0 4px;
+    border-radius:50px;
+    background:#ff3b30;
+    color:white;
+    font-size:10px;
+    font-weight:bold;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* ================= PROFILE ================= */
+
+.profile{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    cursor:pointer;
+    position:relative;
+}
+
+.profile-avatar{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    border:2px solid #6429c1;
+    background:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#6429c1;
+    font-size:17px;
+    font-weight:bold;
+}
+
+.profile-info{
+    line-height:17px;
+}
+
+.profile-name{
+    font-size:13px;
+    font-weight:bold;
+}
+
+.profile-role{
+    font-size:10px;
+    color:#6429c1;
+}
+
+.profile-arrow{
+    font-size:11px;
+    margin-left:5px;
+}
+
+.profile-dropdown{
+    position:absolute;
+    right:0;
+    top:53px;
+    width:190px;
+    background:white;
+    border:1px solid #e2e5ea;
+    border-radius:9px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.14);
+    padding:7px;
+    display:none;
+    z-index:2000;
+}
+
+.profile.open .profile-dropdown{
+    display:block;
+}
+
+.profile-dropdown a{
+    display:block;
+    text-decoration:none;
+    color:#333;
+    font-size:12px;
+    padding:10px;
+    border-radius:6px;
+}
+
+.profile-dropdown a:hover{
+    background:#f5f1fb;
+}
+
+/* ================= CONTENT ================= */
+
+.content{
+    padding:23px 18px 22px;
+}
+
+.page-heading{
+    margin-bottom:19px;
+}
+
+.page-heading h1{
+    font-size:29px;
+    color:#151b27;
+    margin-bottom:6px;
+}
+
+.page-heading p{
+    font-size:13px;
+    color:#596575;
+}
+
+/* ================= SUMMARY CARDS ================= */
+
+.summary-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:12px;
+    margin-bottom:16px;
+}
+
+.summary-card{
+    background:white;
+    border:1px solid #e5e9ef;
+    border-radius:9px;
+    min-height:101px;
+    padding:14px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    box-shadow:0 2px 6px rgba(0,0,0,0.025);
+}
+
+.summary-icon{
+    width:50px;
+    height:50px;
+    min-width:50px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:24px;
+}
+
+.summary-icon.green{
+    background:#e2f6e8;
+}
+
+.summary-icon.blue{
+    background:#e4edff;
+}
+
+.summary-icon.orange{
+    background:#fff0d9;
+}
+
+.summary-icon.red{
+    background:#ffe3e3;
+}
+
+.summary-title{
+    font-size:12px;
+    font-weight:bold;
+    color:#59616e;
+    margin-bottom:4px;
+}
+
+.summary-value{
+    font-size:23px;
+    font-weight:bold;
+    color:#161c28;
+    margin-bottom:4px;
+}
+
+.summary-sub{
+    font-size:10px;
+    color:#6c7480;
+}
+
+/* ================= FILTER CARD ================= */
+
+.filter-card{
+    background:white;
+    border:1px solid #e5e9ef;
+    border-radius:9px;
+    padding:12px 13px;
+    display:flex;
+    gap:9px;
+    align-items:center;
+    margin-bottom:13px;
+}
+
+.search-box{
+    flex:1;
+    position:relative;
+}
+
+.search-box span{
+    position:absolute;
+    left:12px;
+    top:50%;
+    transform:translateY(-50%);
+    font-size:17px;
+    color:#77808d;
+}
+
+.search-box input{
+    width:100%;
+    height:41px;
+    border:1px solid #dfe4ea;
+    border-radius:7px;
+    outline:none;
+    padding:0 13px 0 38px;
+    font-size:12px;
+}
+
+.search-box input:focus{
+    border-color:#6e29bd;
+}
+
+.filter-select{
+    height:41px;
+    min-width:145px;
+    border:1px solid #dfe4ea;
+    border-radius:7px;
+    background:white;
+    padding:0 11px;
+    font-size:12px;
+    outline:none;
+    color:#444;
+}
+
+.filter-button{
+    height:41px;
+    border:1px solid #7025c5;
+    border-radius:7px;
+    background:white;
+    padding:0 15px;
+    font-size:12px;
+    cursor:pointer;
+    color:#7025c5;
+    font-weight:bold;
+}
+
+.filter-button:hover{
+    background:#f7f1ff;
+}
+
+/* ================= USERS TABLE ================= */
+
+.users-card{
+    background:white;
+    border:1px solid #e5e9ef;
+    border-radius:9px;
+    overflow:hidden;
+}
+
+.table-title{
+    padding:15px;
+    border-bottom:1px solid #edf0f3;
+    font-size:15px;
+    font-weight:bold;
+    color:#202633;
+}
+
+.table-wrapper{
+    width:100%;
+    overflow-x:auto;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    min-width:1000px;
+}
+
+th{
+    text-align:left;
+    padding:11px 12px;
+    background:#fafbfc;
+    border-bottom:1px solid #edf0f3;
+    font-size:12px;
+    color:#454d59;
+    white-space:nowrap;
+}
+
+td{
+    padding:12px;
+    border-bottom:1px solid #eef1f4;
+    font-size:12px;
+    color:#353c48;
+    vertical-align:middle;
+}
+
+tr:last-child td{
+    border-bottom:none;
+}
+
+/* ================= USER CELL ================= */
+
+.user-cell{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+.user-avatar{
+    width:36px;
+    height:36px;
+    min-width:36px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:11px;
+    font-weight:bold;
+}
+
+.avatar-farmer{
+    background:#dff5e4;
+    color:#21833b;
+}
+
+.avatar-buyer{
+    background:#e3efff;
+    color:#2767c7;
+}
+
+.avatar-expert{
+    background:#eee3ff;
+    color:#6c24c0;
+}
+
+.avatar-provider{
+    background:#ffe7d8;
+    color:#d95700;
+}
+
+.user-name{
+    font-size:12px;
+    font-weight:bold;
+    color:#242b36;
+    margin-bottom:3px;
+}
+
+.user-id{
+    font-size:10px;
+    color:#727b88;
+}
+
+/* ================= CONTACT ================= */
+
+.contact-main{
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:3px;
+}
+
+.contact-secondary{
+    font-size:10px;
+    color:#727b88;
+}
+
+/* ================= LOCATION ================= */
+
+.location-main{
+    font-size:12px;
+    font-weight:bold;
+    margin-bottom:3px;
+}
+
+.location-secondary{
+    font-size:10px;
+    color:#727b88;
+}
+
+/* ================= STATUS ================= */
+
+.status{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    padding:5px 8px;
+    border-radius:5px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status.active{
+    background:#e1f5e7;
+    color:#19833c;
+}
+
+.status.inactive{
+    background:#fff0d9;
+    color:#c97900;
+}
+
+.status.removed{
+    background:#ffe3e3;
+    color:#d72b2b;
+}
+
+/* ================= ACTION BUTTONS ================= */
+
+.actions{
+    display:flex;
+    gap:6px;
+}
+
+.action-button{
+    width:31px;
+    height:31px;
+    border:1px solid #dfe3e8;
+    background:white;
+    border-radius:6px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:14px;
+}
+
+.action-button:hover{
+    background:#f5f6f8;
+}
+
+.action-button.activate{
+    color:#15923d;
+    border-color:#ccebd5;
+}
+
+.action-button.deactivate{
+    color:#ee8500;
+    border-color:#ffe0b2;
+}
+
+.action-button.remove{
+    color:#e93232;
+    border-color:#ffd0d0;
+}
+
+/* ================= EMPTY STATE ================= */
+
+.empty-state{
+    padding:65px 20px;
+    text-align:center;
+}
+
+.empty-icon{
+    font-size:42px;
+    margin-bottom:12px;
+}
+
+.empty-title{
+    font-size:15px;
+    font-weight:bold;
+    margin-bottom:7px;
+    color:#353c48;
+}
+
+.empty-text{
+    font-size:10px;
+    color:#7b8490;
+}
+
+/* ================= PAGINATION ================= */
+
+.pagination{
+    min-height:53px;
+    padding:0 15px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-top:1px solid #edf0f3;
+}
+
+.pagination-text{
+    font-size:10px;
+    color:#707987;
+}
+
+.page-buttons{
+    display:flex;
+    gap:5px;
+}
+
+.page-button{
+    width:31px;
+    height:31px;
+    border:1px solid #dfe3e8;
+    background:white;
+    border-radius:6px;
+    font-size:10px;
+    cursor:pointer;
+}
+
+.page-button.active{
+    background:#7025c5;
+    border-color:#7025c5;
+    color:white;
+}
+
+/* ================= MODAL ================= */
+
+.modal-overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(13,10,25,0.52);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:3000;
+    padding:20px;
+}
+
+.modal-overlay.show{
+    display:flex;
+}
+
+.modal{
+    width:100%;
+    max-width:600px;
+    max-height:90vh;
+    overflow-y:auto;
+    background:white;
+    border-radius:12px;
+    box-shadow:0 20px 50px rgba(0,0,0,0.25);
+}
+
+.modal-header{
+    padding:17px 20px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    border-bottom:1px solid #edf0f3;
+}
+
+.modal-title{
+    font-size:17px;
+    font-weight:bold;
+}
+
+.close-button{
+    width:30px;
+    height:30px;
+    border:none;
+    border-radius:50%;
+    background:#f1f2f4;
+    cursor:pointer;
+    font-size:17px;
+}
+
+.modal-body{
+    padding:20px;
+}
+
+.modal-profile{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding-bottom:17px;
+    margin-bottom:18px;
+    border-bottom:1px solid #edf0f3;
+}
+
+.large-avatar{
+    width:62px;
+    height:62px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:19px;
+    font-weight:bold;
+}
+
+.modal-name{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:5px;
+}
+
+.modal-role{
+    font-size:10px;
+    color:#717a87;
+}
+
+.details-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:11px;
+}
+
+.detail-box{
+    padding:12px;
+    background:#f8f9fb;
+    border-radius:7px;
+}
+
+.detail-label{
+    display:block;
+    font-size:10px;
+    color:#7b8490;
+    text-transform:uppercase;
+    font-weight:bold;
+    margin-bottom:6px;
+}
+
+.detail-value{
+    font-size:12px;
+    font-weight:bold;
+    color:#272e3a;
+    word-break:break-word;
+}
+
+.modal-footer{
+    padding:13px 20px;
+    border-top:1px solid #edf0f3;
+    display:flex;
+    justify-content:flex-end;
+}
+
+.modal-button{
+    padding:10px 17px;
+    border-radius:6px;
+    font-size:10px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.modal-close{
+    background:white;
+    border:1px solid #d9dde3;
+    color:#4e5662;
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    position:fixed;
+    left:255px;
+    right:0;
+    bottom:0;
+    height:42px;
+    background:#004d2a;
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:13px;
+    font-size:10px;
+    z-index:800;
+}
+
+.footer a{
+    color:white;
+    text-decoration:none;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1250px){
+
+    .summary-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .filter-card{
+        flex-wrap:wrap;
+    }
+
+    .search-box{
+        min-width:300px;
+    }
+}
+
+@media(max-width:900px){
+
+    .sidebar{
+        transform:translateX(-100%);
+        transition:transform 0.25s;
+    }
+
+    .sidebar.open{
+        transform:translateX(0);
+    }
+
+    .main{
+        margin-left:0;
+        width:100%;
+    }
+
+    .footer{
+        left:0;
+    }
+}
+
+@media(max-width:650px){
+
+    .summary-grid{
+        grid-template-columns:1fr;
+    }
+
+    .details-grid{
+        grid-template-columns:1fr;
+    }
+
+    .content{
+        padding:18px 12px 25px;
+    }
+
+    .page-heading h1{
+        font-size:25px;
+    }
+
+    .profile-info{
+        display:none;
+    }
+}
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= SIDEBAR ================= -->
+
+<aside class="sidebar" id="sidebar">
+
+    <div class="sidebar-logo">
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+    </div>
+
+    <div class="sidebar-content">
+
+        <!-- DASHBOARD -->
+        <a
+            href="admin-dashboard.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">▦</span>
+            <span class="nav-label">Dashboard</span>
+        </a>
+
+        <div class="nav-section-title">
+            MANAGEMENT
+        </div>
+
+        <!-- MANAGE USERS -->
+        <div
+            class="nav-item active"
+            id="manageUsersButton"
+        >
+            <span class="nav-icon">♙</span>
+            <span class="nav-label">Manage Users</span>
+            <span
+                class="nav-arrow"
+                id="manageUsersArrow"
+            >▲</span>
+        </div>
+
+        <!-- SUBMENU -->
+        <div
+            class="submenu"
+            id="userSubmenu"
+        >
+
+            <a
+                href="admin-manage-users.html?type=farmer"
+                data-user-type="farmer"
+            >
+                Farmers
+            </a>
+
+            <a
+                href="admin-manage-users.html?type=buyer"
+                data-user-type="buyer"
+            >
+                Buyers
+            </a>
+
+            <a
+                href="admin-manage-users.html?type=expert"
+                data-user-type="expert"
+            >
+                Agri Experts
+            </a>
+
+            <a
+                href="admin-manage-users.html?type=provider"
+                data-user-type="provider"
+            >
+                Equipment Providers
+            </a>
+
+        </div>
+
+        <!-- INSPECT REGISTRATION -->
+        <a
+            href="admin-registrations.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">▤</span>
+            <span class="nav-label">
+                Inspect Registration
+            </span>
+        </a>
+
+        <!-- REPORTED CONFLICTS -->
+        <a
+            href="admin-conflicts.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">⚿</span>
+            <span class="nav-label">
+                Reported Conflicts
+            </span>
+        </a>
+
+        <!-- NOTIFICATIONS - BEFORE HISTORY -->
+        <a
+            href="admin-notifications.html"
+            class="nav-item"
+            title="Notifications"
+        >
+            <span class="nav-icon">🔔</span>
+            <span class="nav-label">
+                Notifications
+            </span>
+        </a>
+
+        <!-- HISTORY -->
+        <a
+            href="admin-history.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">◷</span>
+            <span class="nav-label">
+                History
+            </span>
+        </a>
+
+    </div>
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+        <a
+            href="admin-help-support.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">?</span>
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+        </a>
+
+        <a
+            href="admin-settings.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">⚙</span>
+            <span class="nav-label">
+                Settings
+            </span>
+        </a>
+
+        <a
+            href="#"
+            class="nav-item"
+            id="logoutButton"
+        >
+            <span class="nav-icon">↪</span>
+            <span class="nav-label">
+                Logout
+            </span>
+        </a>
+
+    </div>
+
+</aside>
+
+<!-- ================= MAIN ================= -->
+
+<main class="main">
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="header-right">
+
+            <div
+                class="notification"
+                onclick="openNotifications()"
+                title="Notifications"
+            >
+                🔔
+
+                <span
+                    class="notification-badge"
+                    id="notificationBadge"
+                    style="display:none;"
+                >
+                    0
+                </span>
+            </div>
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+                <div class="profile-avatar">
+                    AI
+                </div>
+
+                <div class="profile-info">
+
+                    <div class="profile-name">
+                        Admin
+                    </div>
+
+                    <div class="profile-role">
+                        Super Admin
+                    </div>
+
+                </div>
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+                <div class="profile-dropdown">
+
+                    <a href="#">
+                        👤 My Profile
+                    </a>
+
+                    <a href="#">
+                        ⚙ Settings
+                    </a>
+
+                    <a
+                        href="#"
+                        onclick="logout();return false;"
+                    >
+                        ↪ Logout
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- ================= CONTENT ================= -->
+
+    <section class="content">
+
+        <!-- PAGE HEADING -->
+
+        <div class="page-heading">
+
+            <h1 id="pageTitle">
+                Farmers
+            </h1>
+
+            <p id="pageDescription">
+                View and manage farmers registered on the platform.
+            </p>
+
+        </div>
+
+        <!-- ================= SUMMARY ================= -->
+
+        <div class="summary-grid">
+
+            <div class="summary-card">
+
+                <div class="summary-icon green">
+                    👨‍🌾
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        Total Users
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="totalUsers"
+                    >
+                        0
+                    </div>
+
+                    <div class="summary-sub">
+                        All Time
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="summary-card">
+
+                <div class="summary-icon green">
+                    ✓
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        Active Users
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="activeUsers"
+                    >
+                        0
+                    </div>
+
+                    <div class="summary-sub">
+                        Currently active
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="summary-card">
+
+                <div class="summary-icon orange">
+                    ⏸
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        Inactive Users
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="inactiveUsers"
+                    >
+                        0
+                    </div>
+
+                    <div class="summary-sub">
+                        Temporarily inactive
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="summary-card">
+
+                <div class="summary-icon red">
+                    ✕
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        Removed Users
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="removedUsers"
+                    >
+                        0
+                    </div>
+
+                    <div class="summary-sub">
+                        Removed accounts
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- ================= FILTERS ================= -->
+
+        <div class="filter-card">
+
+            <div class="search-box">
+
+                <span>🔍</span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by name, phone or email..."
+                >
+
+            </div>
+
+            <select
+                class="filter-select"
+                id="statusFilter"
+            >
+                <option value="all">
+                    All Status
+                </option>
+
+                <option value="Active">
+                    Active
+                </option>
+
+                <option value="Inactive">
+                    Inactive
+                </option>
+
+                <option value="Removed">
+                    Removed
+                </option>
+            </select>
+
+            <select
+                class="filter-select"
+                id="districtFilter"
+            >
+                <option value="all">
+                    All Districts
+                </option>
+            </select>
+
+            <select
+                class="filter-select"
+                id="dateFilter"
+            >
+                <option value="newest">
+                    Newest Joined
+                </option>
+
+                <option value="oldest">
+                    Oldest Joined
+                </option>
+            </select>
+
+        </div>
+
+        <!-- ================= USERS TABLE ================= -->
+
+        <div class="users-card">
+
+            <div
+                class="table-title"
+                id="tableTitle"
+            >
+                All Farmers
+            </div>
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>USER</th>
+
+                            <th>
+                                CONTACT DETAILS
+                            </th>
+
+                            <th>
+                                LOCATION
+                            </th>
+
+                            <th>
+                                JOINED DATE
+                            </th>
+
+                            <th>
+                                STATUS
+                            </th>
+
+                            <th>
+                                SCORE
+                            </th>
+
+                            <th>
+                                LAST ACTIVE
+                            </th>
+
+                            <th>
+                                ACTION
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody id="usersTable"></tbody>
+
+                </table>
+
+            </div>
+
+            <div class="pagination">
+
+                <span
+                    class="pagination-text"
+                    id="paginationText"
+                >
+                    Showing 0 of 0 users
+                </span>
+
+                <div class="page-buttons">
+
+                    <button
+                        class="page-button"
+                        disabled
+                    >
+                        ‹
+                    </button>
+
+                    <button
+                        class="page-button active"
+                    >
+                        1
+                    </button>
+
+                    <button
+                        class="page-button"
+                        disabled
+                    >
+                        ›
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- ================= VIEW USER MODAL ================= -->
+
+<div
+    class="modal-overlay"
+    id="viewModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div class="modal-title">
+                User Details
+            </div>
+
+            <button
+                class="close-button"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <div class="modal-profile">
+
+                <div
+                    class="large-avatar"
+                    id="modalAvatar"
+                >
+                    U
+                </div>
+
+                <div>
+
+                    <div
+                        class="modal-name"
+                        id="modalName"
+                    >
+                        User
+                    </div>
+
+                    <div
+                        class="modal-role"
+                        id="modalRole"
+                    >
+                        User
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="details-grid">
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Email
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalEmail"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Phone
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalPhone"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        District
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalDistrict"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Status
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalStatus"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Joined Date
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalJoined"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Last Active
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalLastActive"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Standing Score
+                        <span style="font-weight:400;text-transform:none;color:#9aa3ad;">(click to edit)</span>
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalScoreDisplay"
+                        style="cursor:pointer;text-decoration:underline dotted;"
+                        onclick="beginEditModalScore()"
+                        title="Click to edit this user's score"
+                    >
+                        —
+                    </span>
+
+                    <div
+                        id="modalScoreEditRow"
+                        style="display:none;align-items:center;gap:6px;margin-top:6px;flex-wrap:wrap;"
+                    >
+
+                        <input
+                            type="number"
+                            id="modalScoreInput"
+                            min="0"
+                            max="100"
+                            style="width:70px;padding:6px 8px;border:1px solid #d7e9dc;border-radius:7px;font-size:13px;font-family:inherit;"
+                        >
+
+                        <input
+                            type="text"
+                            id="modalScoreReasonInput"
+                            placeholder="Reason (optional)"
+                            style="flex:1;min-width:140px;padding:6px 8px;border:1px solid #d7e9dc;border-radius:7px;font-size:12.5px;font-family:inherit;"
+                        >
+
+                        <button
+                            type="button"
+                            title="Save"
+                            style="background:#17833c;color:#fff;border:0;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:13px;"
+                            onclick="saveModalScore()"
+                        >
+                            ✓
+                        </button>
+
+                        <button
+                            type="button"
+                            title="Cancel"
+                            style="background:#f1f1f1;color:#555;border:0;border-radius:6px;width:28px;height:28px;cursor:pointer;font-size:13px;"
+                            onclick="cancelEditModalScore()"
+                        >
+                            ✕
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div class="detail-box" id="modalInactiveSinceBox" style="display:none;">
+
+                    <span class="detail-label">
+                        Inactive For
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalInactiveSince"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="detail-box" id="modalSpecializationBox">
+
+                    <span class="detail-label">
+                        Specialization
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalSpecialization"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+                <div class="detail-box" id="modalBusinessBox">
+
+                    <span class="detail-label">
+                        Organization
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalBusiness"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOCUMENTS -->
+
+            <div
+                id="modalDocumentsSection"
+                style="margin-top:18px;padding-top:16px;border-top:1px solid #e6ebe8;"
+            >
+
+                <span class="detail-label">
+                    Submitted Documents
+                </span>
+
+                <div
+                    id="modalDocumentsGrid"
+                    style="display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;"
+                >
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="modal-footer">
+
+            <button
+                class="modal-button modal-close"
+                onclick="closeModal()"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- ================= WARN / MESSAGE USER MODAL ================= -->
+
+<div
+    class="modal-overlay"
+    id="warnUserModal"
+>
+
+    <div class="modal">
+
+        <div class="modal-header">
+
+            <div class="modal-title">
+                Send Warning / Message
+            </div>
+
+            <button
+                class="close-button"
+                onclick="closeWarnUserModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+        <div class="modal-body">
+
+            <p style="font-size:12px;color:#6b7683;margin-bottom:16px;">
+                This will be sent directly to
+                <strong id="warnUserName">this user</strong>
+                as a notification. Use this after reviewing a complaint
+                to formally warn them about their conduct.
+            </p>
+
+            <div class="form-group" style="margin-bottom:14px;">
+
+                <label for="warnUserSubject"
+                    class="form-label"
+                    style="display:block;font-size:12px;font-weight:600;margin-bottom:6px;"
+                >
+                    Subject
+                </label>
+
+                <input
+                    type="text"
+                    id="warnUserSubject"
+                    class="form-control"
+                    style="width:100%;padding:10px 12px;border:1px solid #dde3e0;border-radius:8px;font-size:13px;"
+                    placeholder="e.g. Warning: Inappropriate conduct"
+                >
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="warnUserMessage"
+                    class="form-label"
+                    style="display:block;font-size:12px;font-weight:600;margin-bottom:6px;"
+                >
+                    Message
+                </label>
+
+                <textarea
+                    id="warnUserMessage"
+                    rows="5"
+                    style="width:100%;padding:10px 12px;border:1px solid #dde3e0;border-radius:8px;font-size:13px;resize:vertical;"
+                    placeholder="Explain the issue and what's expected going forward..."
+                ></textarea>
+
+            </div>
+
+        </div>
+
+        <div class="modal-footer">
+
+            <button
+                class="secondary-button"
+                onclick="closeWarnUserModal()"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="primary-button"
+                onclick="submitWarnUser()"
+            >
+                Send Message
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <span>
+        🌱 © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>|</span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+<script>
+
+/* =====================================================
+   USER TYPE
+===================================================== */
+
+const urlParams =
+    new URLSearchParams(
+        window.location.search
+    );
+
+let userType =
+    urlParams.get("type") || "farmer";
+
+
+/* =====================================================
+   PAGE INFORMATION
+===================================================== */
+
+const pageInformation = {
+
+    farmer:{
+        title:"Farmers",
+        description:
+            "View and manage farmers registered on the platform.",
+        tableTitle:"All Farmers"
+    },
+
+    buyer:{
+        title:"Buyers",
+        description:
+            "View and manage buyers registered on the platform.",
+        tableTitle:"All Buyers"
+    },
+
+    expert:{
+        title:"Agricultural Experts",
+        description:
+            "View and manage Agricultural Experts registered on the platform.",
+        tableTitle:"All Agricultural Experts"
+    },
+
+    provider:{
+        title:"Equipment Providers",
+        description:
+            "View and manage Equipment Providers registered on the platform.",
+        tableTitle:"All Equipment Providers"
+    }
+
+};
+
+if(!pageInformation[userType]){
+    userType="farmer";
+}
+
+
+/* =====================================================
+   UPDATE PAGE
+===================================================== */
+
+document.getElementById("pageTitle").textContent =
+    pageInformation[userType].title;
+
+document.getElementById("pageDescription").textContent =
+    pageInformation[userType].description;
+
+document.getElementById("tableTitle").textContent =
+    pageInformation[userType].tableTitle;
+
+document.title =
+    "AgriConnect - " +
+    pageInformation[userType].title;
+
+
+/* =====================================================
+   ACTIVE SUBMENU
+===================================================== */
+
+document
+    .querySelectorAll("[data-user-type]")
+    .forEach(link=>{
+
+        if(
+            link.dataset.userType ===
+            userType
+        ){
+            link.classList.add("active-sub");
+        }
+
+    });
+
+
+/* =====================================================
+   MAP URL userType -> BACKEND role VALUE
+===================================================== */
+
+function backendRoleFor(type){
+
+    if(type==="provider"){
+        return "equipment_provider";
+    }
+
+    return type;
+
+}
+
+
+/* =====================================================
+   LIVE USERS (from the backend)
+===================================================== */
+
+let __liveUsers = [];
+
+
+function mapUserRow(row){
+
+    let userStatus = "Active";
+
+    if(row.removed_at){
+        userStatus = "Removed";
+    } else if(!row.is_active){
+        userStatus = "Inactive";
+    }
+
+    return {
+
+        id: row.id,
+        name: `${row.first_name || ""} ${row.last_name || ""}`.trim() || "Unknown User",
+        email: row.email,
+        phone: row.phone,
+        district: row.district || "",
+        userStatus: userStatus,
+        submittedAt: row.created_at,
+        removedReason: row.removed_reason || "",
+        specialization: row.specialization || "",
+        businessName: row.organization || "",
+        proofDocument: row.proof_document || "",
+        nicFront: row.nic_front || "",
+        nicBack: row.nic_back || "",
+        score: row.score == null ? 100 : row.score,
+        deactivatedAt: row.deactivated_at || null
+
+    };
+
+}
+
+
+async function refreshUsers(){
+
+    try{
+
+        const response =
+            await fetch(`/api/admin/users?role=${backendRoleFor(userType)}`);
+
+        const data =
+            await response.json();
+
+        if(data && data.success && Array.isArray(data.users)){
+
+            __liveUsers = data.users.map(mapUserRow);
+
+        } else {
+
+            __liveUsers = [];
+
+        }
+
+    } catch(error){
+
+        console.error("Unable to load users:", error);
+
+        __liveUsers = [];
+
+    }
+
+}
+
+
+/* =====================================================
+   GET USERS
+===================================================== */
+
+function getUsers(){
+
+    return __liveUsers;
+
+}
+
+
+/* =====================================================
+   DISPLAY STATUS
+===================================================== */
+
+function getDisplayStatus(user){
+
+    if(user.userStatus){
+        return user.userStatus;
+    }
+
+    if(user.status==="Removed"){
+        return "Removed";
+    }
+
+    if(user.status==="Inactive"){
+        return "Inactive";
+    }
+
+    return "Active";
+}
+
+
+/* =====================================================
+   INITIALS
+===================================================== */
+
+function getInitials(name){
+
+    if(!name){
+        return "U";
+    }
+
+    const parts =
+        name.trim().split(/\s+/);
+
+    if(parts.length===1){
+
+        return parts[0]
+            .substring(0,2)
+            .toUpperCase();
+
+    }
+
+    return(
+        parts[0][0] +
+        parts[parts.length-1][0]
+    ).toUpperCase();
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value){
+
+    if(
+        value===null ||
+        value===undefined
+    ){
+        return "";
+    }
+
+    const div =
+        document.createElement("div");
+
+    div.textContent =
+        String(value);
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function formatDate(value){
+
+    if(!value){
+        return "—";
+    }
+
+    const date =
+        new Date(value);
+
+    if(isNaN(date.getTime())){
+        return value;
+    }
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day:"2-digit",
+            month:"short",
+            year:"numeric"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   JOINED DATE
+===================================================== */
+
+function getJoinedDate(user){
+
+    return(
+        user.joinedDate ||
+        user.submittedDate ||
+        formatDate(user.submittedAt)
+    );
+
+}
+
+
+/* =====================================================
+   LAST ACTIVE
+===================================================== */
+
+function getLastActive(user){
+
+    if(user.lastActive){
+        return user.lastActive;
+    }
+
+    return "Recently";
+
+}
+
+
+/* =====================================================
+   INACTIVE DURATION
+
+   How long a user has been inactive, counted from the
+   moment an admin switched them to Inactive - not from
+   their last login.
+===================================================== */
+
+function getInactiveDuration(user){
+
+    if(!user.deactivatedAt){
+        return "";
+    }
+
+    const since = new Date(user.deactivatedAt);
+
+    if(isNaN(since)){
+        return "";
+    }
+
+    const diffMs = Date.now() - since.getTime();
+
+    const minutes = Math.floor(diffMs / 60000);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+
+    if(days >= 1){
+        return `${days} day${days === 1 ? "" : "s"}, ${hours % 24} hr${(hours % 24) === 1 ? "" : "s"}`;
+    }
+
+    if(hours >= 1){
+        return `${hours} hour${hours === 1 ? "" : "s"}, ${minutes % 60} min`;
+    }
+
+    if(minutes >= 1){
+        return `${minutes} minute${minutes === 1 ? "" : "s"}`;
+    }
+
+    return "Just now";
+
+}
+
+
+/* =====================================================
+   ROLE NAME
+===================================================== */
+
+function getRoleName(){
+
+    if(userType==="farmer"){
+        return "Farmer";
+    }
+
+    if(userType==="buyer"){
+        return "Buyer";
+    }
+
+    if(userType==="expert"){
+        return "Agricultural Expert";
+    }
+
+    return "Equipment Provider";
+
+}
+
+
+/* =====================================================
+   AVATAR
+===================================================== */
+
+function getAvatarClass(){
+
+    return "avatar-" + userType;
+
+}
+
+
+/* =====================================================
+   DISTRICTS
+===================================================== */
+
+function renderDistricts(users){
+
+    const select =
+        document.getElementById(
+            "districtFilter"
+        );
+
+    const current =
+        select.value;
+
+    const allSriLankanDistricts = [
+        "Ampara", "Anuradhapura", "Badulla", "Batticaloa", "Colombo",
+        "Galle", "Gampaha", "Hambantota", "Jaffna", "Kalutara",
+        "Kandy", "Kegalle", "Kilinochchi", "Kurunegala", "Mannar",
+        "Matale", "Matara", "Monaragala", "Mullaitivu", "Nuwara Eliya",
+        "Polonnaruwa", "Puttalam", "Ratnapura", "Trincomalee", "Vavuniya"
+    ];
+
+    select.innerHTML=`
+        <option value="all">
+            All Districts
+        </option>
+    `;
+
+    allSriLankanDistricts.forEach(district=>{
+
+        const option =
+            document.createElement(
+                "option"
+            );
+
+        option.value=district;
+        option.textContent=district;
+
+        select.appendChild(option);
+
+    });
+
+    if(allSriLankanDistricts.includes(current)){
+        select.value=current;
+    }
+
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+function updateSummary(users){
+
+    const total=users.length;
+
+    const active=
+        users.filter(
+            user=>
+                getDisplayStatus(user)==="Active"
+        ).length;
+
+    const inactive=
+        users.filter(
+            user=>
+                getDisplayStatus(user)==="Inactive"
+        ).length;
+
+    const removed=
+        users.filter(
+            user=>
+                getDisplayStatus(user)==="Removed"
+        ).length;
+
+    document.getElementById("totalUsers")
+        .textContent=total;
+
+    document.getElementById("activeUsers")
+        .textContent=active;
+
+    document.getElementById("inactiveUsers")
+        .textContent=inactive;
+
+    document.getElementById("removedUsers")
+        .textContent=removed;
+
+}
+
+
+/* =====================================================
+   RENDER USERS
+===================================================== */
+
+function renderUsers(){
+
+    const originalUsers =
+        getUsers();
+
+    updateSummary(originalUsers);
+    renderDistricts(originalUsers);
+
+    let users=[...originalUsers];
+
+    /* SEARCH */
+
+    const search=
+        document
+            .getElementById("searchInput")
+            .value
+            .toLowerCase()
+            .trim();
+
+    if(search){
+
+        users=users.filter(user=>{
+
+            const name=
+                (user.name||"").toLowerCase();
+
+            const email=
+                (user.email||"").toLowerCase();
+
+            const phone=
+                (user.phone||"").toLowerCase();
+
+            return(
+                name.includes(search) ||
+                email.includes(search) ||
+                phone.includes(search)
+            );
+
+        });
+
+    }
+
+
+    /* STATUS */
+
+    const status=
+        document
+            .getElementById("statusFilter")
+            .value;
+
+    if(status!=="all"){
+
+        users=users.filter(
+            user=>
+                getDisplayStatus(user)===status
+        );
+
+    }
+
+
+    /* DISTRICT */
+
+    const district=
+        document
+            .getElementById("districtFilter")
+            .value;
+
+    if(district!=="all"){
+
+        users=users.filter(
+            user=>
+                user.district===district
+        );
+
+    }
+
+
+    /* SORT */
+
+    const sort=
+        document
+            .getElementById("dateFilter")
+            .value;
+
+    users.sort((a,b)=>{
+
+        const dateA=
+            new Date(
+                a.submittedAt ||
+                a.joinedAt ||
+                0
+            );
+
+        const dateB=
+            new Date(
+                b.submittedAt ||
+                b.joinedAt ||
+                0
+            );
+
+        return sort==="oldest"
+            ? dateA-dateB
+            : dateB-dateA;
+
+    });
+
+
+    /* TABLE */
+
+    const table=
+        document.getElementById(
+            "usersTable"
+        );
+
+    table.innerHTML="";
+
+
+    if(users.length===0){
+
+        table.innerHTML=`
+
+            <tr>
+
+                <td colspan="7">
+
+                    <div class="empty-state">
+
+                        <div class="empty-icon">
+                            👤
+                        </div>
+
+                        <div class="empty-title">
+                            No Users Found
+                        </div>
+
+                        <div class="empty-text">
+                            No ${escapeHTML(
+                                pageInformation[userType]
+                                    .title
+                                    .toLowerCase()
+                            )}
+                            are available for this view.
+                        </div>
+
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+        document.getElementById(
+            "paginationText"
+        ).textContent=
+            "Showing 0 of 0 users";
+
+        return;
+
+    }
+
+
+    users.forEach(user=>{
+
+        const row=
+            document.createElement("tr");
+
+        const displayStatus=
+            getDisplayStatus(user);
+
+        const initials=
+            getInitials(user.name);
+
+        const statusClass=
+            displayStatus.toLowerCase();
+
+        let statusIcon="●";
+
+        if(displayStatus==="Inactive"){
+            statusIcon="⏸";
+        }
+
+
+        row.innerHTML=`
+
+            <td>
+
+                <div class="user-cell">
+
+                    <div
+                        class="user-avatar ${getAvatarClass()}"
+                    >
+                        ${initials}
+                    </div>
+
+                    <div>
+
+                        <div class="user-name">
+                            ${escapeHTML(
+                                user.name ||
+                                "Unknown User"
+                            )}
+                        </div>
+
+                        <div class="user-id">
+                            ${escapeHTML(
+                                user.id ||
+                                "USER-001"
+                            )}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </td>
+
+            <td>
+
+                <div class="contact-main">
+                    ${escapeHTML(
+                        user.phone ||
+                        "Phone not provided"
+                    )}
+                </div>
+
+                <div class="contact-secondary">
+                    ${escapeHTML(
+                        user.email ||
+                        "Email not provided"
+                    )}
+                </div>
+
+            </td>
+
+            <td>
+
+                <div class="location-main">
+                    ${escapeHTML(
+                        user.district ||
+                        "Not provided"
+                    )}
+                </div>
+
+                <div class="location-secondary">
+
+                    ${
+                        user.district
+                        ? escapeHTML(
+                            user.district +
+                            " District"
+                        )
+                        : ""
+                    }
+
+                </div>
+
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    getJoinedDate(user)
+                )}
+            </td>
+
+            <td>
+
+                <span
+                    class="status ${statusClass}"
+                >
+
+                    ${statusIcon}
+
+                    ${escapeHTML(
+                        displayStatus
+                    )}
+
+                </span>
+
+            </td>
+
+            <td>
+
+                <span
+                    class="score-badge-display"
+                    data-user-id="${escapeHTML(String(user.id))}"
+                    onclick="beginEditTableScore(this)"
+                    style="
+                        display:inline-flex;
+                        align-items:center;
+                        gap:4px;
+                        font-weight:700;
+                        font-size:12.5px;
+                        cursor:pointer;
+                        text-decoration:underline dotted;
+                        color:${
+                            user.score < 50
+                                ? '#c0392b'
+                                : user.score < 80
+                                    ? '#b76b00'
+                                    : '#17833c'
+                        };
+                    "
+                    title="Click to edit this user's score"
+                >
+                    ${user.score}/100
+                </span>
+
+                <span
+                    class="score-badge-edit"
+                    data-user-id="${escapeHTML(String(user.id))}"
+                    style="display:none;align-items:center;gap:4px;"
+                >
+                    <input
+                        type="number"
+                        class="score-badge-input"
+                        min="0"
+                        max="100"
+                        value="${user.score}"
+                        style="width:52px;padding:3px 5px;border:1px solid #d7e9dc;border-radius:5px;font-size:12px;font-family:inherit;"
+                    >
+                    <button
+                        type="button"
+                        title="Save"
+                        onclick="saveTableScore(this)"
+                        style="background:#17833c;color:#fff;border:0;border-radius:5px;width:22px;height:22px;cursor:pointer;font-size:11px;line-height:1;"
+                    >✓</button>
+                    <button
+                        type="button"
+                        title="Cancel"
+                        onclick="cancelEditTableScore(this)"
+                        style="background:#f1f1f1;color:#555;border:0;border-radius:5px;width:22px;height:22px;cursor:pointer;font-size:11px;line-height:1;"
+                    >✕</button>
+                </span>
+
+            </td>
+
+            <td>
+                ${escapeHTML(
+                    getLastActive(user)
+                )}
+            </td>
+
+            <td>
+
+                <div class="actions">
+
+                    <button
+                        class="action-button"
+                        title="View User"
+                        onclick="viewUser('${escapeHTML(
+                            user.id
+                        )}')"
+                    >
+                        ◉
+                    </button>
+
+                    ${
+                        displayStatus!=="Removed"
+                        ?
+                        `
+                        <button
+                            class="action-button"
+                            title="Send Warning / Message"
+                            onclick="openWarnUserModal(
+                                '${escapeHTML(user.id)}'
+                            )"
+                        >
+                            ✉
+                        </button>
+                        `
+                        :
+                        ""
+                    }
+
+                    ${
+                        displayStatus==="Active"
+                        ?
+                        `
+                        <button
+                            class="action-button deactivate"
+                            title="Deactivate User"
+                            onclick="changeUserStatus(
+                                '${escapeHTML(user.id)}',
+                                'Inactive'
+                            )"
+                        >
+                            ⏸
+                        </button>
+                        `
+                        :
+                        displayStatus==="Inactive"
+                        ?
+                        `
+                        <button
+                            class="action-button activate"
+                            title="Activate User"
+                            onclick="changeUserStatus(
+                                '${escapeHTML(user.id)}',
+                                'Active'
+                            )"
+                        >
+                            ▶
+                        </button>
+                        `
+                        :
+                        ""
+                    }
+
+                    ${
+                        displayStatus!=="Removed"
+                        ?
+                        `
+                        <button
+                            class="action-button remove"
+                            title="Remove User"
+                            onclick="removeUser(
+                                '${escapeHTML(user.id)}'
+                            )"
+                        >
+                            🗑
+                        </button>
+                        `
+                        :
+                        ""
+                    }
+
+                </div>
+
+            </td>
+
+        `;
+
+        table.appendChild(row);
+
+    });
+
+
+    document.getElementById(
+        "paginationText"
+    ).textContent=
+        `Showing 1 to ${users.length} of ${originalUsers.length} ${pageInformation[userType].title.toLowerCase()}`;
+
+}
+
+
+/* =====================================================
+   FIND USER
+===================================================== */
+
+function findUser(id){
+
+    return __liveUsers.find(
+        user=>String(user.id)===String(id)
+    );
+
+}
+
+
+/* =====================================================
+   VIEW USER
+===================================================== */
+
+function viewUser(id){
+
+    const user=findUser(id);
+
+    if(!user){
+
+        customAlert(
+            "User information could not be found."
+        );
+
+        return;
+
+    }
+
+    document.getElementById("modalName")
+        .textContent=
+        user.name ||
+        "Unknown User";
+
+    document.getElementById("modalRole")
+        .textContent=
+        user.role ||
+        getRoleName();
+
+    document.getElementById("modalEmail")
+        .textContent=
+        user.email ||
+        "Not provided";
+
+    document.getElementById("modalPhone")
+        .textContent=
+        user.phone ||
+        "Not provided";
+
+    document.getElementById("modalDistrict")
+        .textContent=
+        user.district ||
+        "Not provided";
+
+    document.getElementById("modalStatus")
+        .textContent=
+        getDisplayStatus(user);
+
+    document.getElementById("modalJoined")
+        .textContent=
+        getJoinedDate(user);
+
+    document.getElementById("modalLastActive")
+        .textContent=
+        getLastActive(user);
+
+    document.getElementById("modalScoreDisplay")
+        .textContent=
+        `${user.score} / 100`;
+
+    // reset the score field back to display (non-edit) mode
+    // each time a user's details are opened
+    document.getElementById("modalScoreDisplay").style.display = "";
+    document.getElementById("modalScoreEditRow").style.display = "none";
+
+    const inactiveSinceBox =
+        document.getElementById("modalInactiveSinceBox");
+
+    const inactiveDuration =
+        getInactiveDuration(user);
+
+    if(user.userStatus === "Inactive" && inactiveDuration){
+
+        inactiveSinceBox.style.display = "";
+
+        document.getElementById("modalInactiveSince")
+            .textContent =
+            inactiveDuration;
+
+    } else {
+
+        inactiveSinceBox.style.display = "none";
+
+    }
+
+    // remember which user the score buttons act on
+    window.__currentModalUserId = user.id;
+
+    const specBox =
+        document.getElementById("modalSpecializationBox");
+
+    const orgBox =
+        document.getElementById("modalBusinessBox");
+
+    if (userType === "expert") {
+
+        specBox.style.display = "";
+        document.getElementById("modalSpecialization").textContent =
+            user.specialization || "Not provided";
+
+        orgBox.style.display = "none";
+
+    } else if (userType === "provider") {
+
+        orgBox.style.display = "";
+        document.getElementById("modalBusiness").textContent =
+            user.businessName || "Not provided";
+
+        specBox.style.display = "none";
+
+    } else {
+
+        // Farmers and buyers have neither field.
+        specBox.style.display = "none";
+        orgBox.style.display = "none";
+
+    }
+
+
+    // ---- Submitted documents (NIC + role-specific proof) ----
+
+    const docsGrid =
+        document.getElementById("modalDocumentsGrid");
+
+    const docs = [];
+
+    if (user.nicFront) {
+        docs.push({ label: "NIC Front", file: user.nicFront });
+    }
+
+    if (user.nicBack) {
+        docs.push({ label: "NIC Back", file: user.nicBack });
+    }
+
+    if (userType === "expert" && user.proofDocument) {
+        docs.push({ label: "Certification Document", file: user.proofDocument });
+    }
+
+    if (userType === "provider" && user.proofDocument) {
+        docs.push({ label: "Business Proof Document", file: user.proofDocument });
+    }
+
+    if (docs.length === 0) {
+
+        docsGrid.innerHTML =
+            `<p style="color:#8a94a6;font-size:12px;">No documents on file.</p>`;
+
+    } else {
+
+        docsGrid.innerHTML =
+            docs.map(doc => {
+
+                const url = `/uploads/${doc.file}`;
+
+                const isImage = /\.(png|jpe?g|gif|webp)$/i.test(doc.file);
+
+                return `
+                    <a
+                        href="${url}"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style="width:140px;text-decoration:none;color:inherit;"
+                    >
+                        ${
+                            isImage
+                                ? `<img src="${url}" alt="${doc.label}" style="width:140px;height:100px;object-fit:cover;border-radius:8px;border:1px solid #e6ebe8;display:block;">`
+                                : `<div style="width:140px;height:100px;border-radius:8px;border:1px solid #e6ebe8;background:#f4f7f5;display:flex;align-items:center;justify-content:center;font-size:28px;">📄</div>`
+                        }
+                        <div style="font-size:11px;color:#536274;margin-top:6px;text-align:center;">
+                            ${doc.label}
+                        </div>
+                    </a>
+                `;
+
+            }).join("");
+
+    }
+
+
+    const avatar=
+        document.getElementById(
+            "modalAvatar"
+        );
+
+    avatar.textContent=
+        getInitials(user.name);
+
+    avatar.className=
+        "large-avatar " +
+        getAvatarClass();
+
+    document.getElementById(
+        "viewModal"
+    ).classList.add("show");
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal(){
+
+    document.getElementById(
+        "viewModal"
+    ).classList.remove("show");
+
+}
+
+
+/* =====================================================
+   WARN / MESSAGE USER
+===================================================== */
+
+function openWarnUserModal(id){
+
+    const user=
+        findUser(id);
+
+    if(!user){
+
+        customAlert(
+            "User could not be found."
+        );
+
+        return;
+
+    }
+
+    document.getElementById(
+        "warnUserModal"
+    ).dataset.userId = id;
+
+    document.getElementById(
+        "warnUserName"
+    ).textContent = user.name;
+
+    document.getElementById(
+        "warnUserSubject"
+    ).value = "";
+
+    document.getElementById(
+        "warnUserMessage"
+    ).value = "";
+
+    document.getElementById(
+        "warnUserModal"
+    ).classList.add("show");
+
+}
+
+
+function closeWarnUserModal(){
+
+    document.getElementById(
+        "warnUserModal"
+    ).classList.remove("show");
+
+}
+
+
+async function submitWarnUser(){
+
+    const modal=
+        document.getElementById("warnUserModal");
+
+    const id=
+        modal.dataset.userId;
+
+    const user=
+        findUser(id);
+
+    if(!user){
+        return;
+    }
+
+    const subject=
+        document.getElementById("warnUserSubject").value.trim();
+
+    const message=
+        document.getElementById("warnUserMessage").value.trim();
+
+    if(!subject || !message){
+
+        customAlert(
+            "Please enter both a subject and a message."
+        );
+
+        return;
+
+    }
+
+    let adminId = null;
+
+    try {
+        const raw = sessionStorage.getItem("user");
+        const parsed = raw ? JSON.parse(raw) : null;
+        adminId = parsed && parsed.id;
+    } catch (error) {
+        adminId = null;
+    }
+
+    try{
+
+        const response=
+            await fetch(
+                `/api/admin/users/${id}/warn`,
+                {
+                    method:"POST",
+                    headers:{"Content-Type":"application/json"},
+                    body:JSON.stringify({
+                        subject: subject,
+                        message: message,
+                        sent_by: adminId
+                    })
+                }
+            );
+
+        const data=
+            await response.json();
+
+        if(!response.ok || !data.success){
+
+            customAlert(
+                data.message || "Failed to send message."
+            );
+
+            return;
+
+        }
+
+        closeWarnUserModal();
+
+        customAlert(
+            data.message || `Message sent to ${user.name}.`
+        );
+
+    }catch(error){
+
+        console.error("Failed to send warning:", error);
+
+        customAlert(
+            "Failed to send message. Please try again."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CHANGE USER STATUS
+===================================================== */
+
+async function changeUserStatus(
+    id,
+    newStatus
+){
+
+    const user=
+        findUser(id);
+
+    if(!user){
+
+        customAlert(
+            "User could not be found."
+        );
+
+        return;
+
+    }
+
+    const action=
+        newStatus==="Active"
+            ? "activate"
+            : "deactivate";
+
+    const confirmed=
+        await customConfirm(
+            `Are you sure you want to ${action} ${user.name}?`
+        );
+
+    if(!confirmed){
+        return;
+    }
+
+    try{
+
+        const response=
+            await fetch(
+                `/api/admin/users/${id}/status`,
+                {
+                    method:"PUT",
+                    headers:{"Content-Type":"application/json"},
+                    body:JSON.stringify({
+                        is_active: newStatus==="Active"
+                    })
+                }
+            );
+
+        const data=
+            await response.json();
+
+        if(!data || !data.success){
+
+            customAlert(
+                data && data.message
+                    ? data.message
+                    : "Failed to update user status."
+            );
+
+            return;
+
+        }
+
+    } catch(error){
+
+        console.error("Failed to update user status:", error);
+
+        customAlert(
+            "Failed to update user status."
+        );
+
+        return;
+
+    }
+
+    await refreshUsers();
+
+    renderUsers();
+
+}
+
+
+/* =====================================================
+   EDIT USER SCORE (inline, directly on the value - modal)
+===================================================== */
+
+function beginEditModalScore(){
+
+    const id = window.__currentModalUserId;
+    const user = findUser(id);
+
+    if(!user){
+        customAlert("User could not be found.");
+        return;
+    }
+
+    document.getElementById("modalScoreDisplay").style.display = "none";
+    document.getElementById("modalScoreEditRow").style.display = "flex";
+
+    const input = document.getElementById("modalScoreInput");
+    input.value = user.score;
+    input.focus();
+    input.select();
+
+}
+
+
+function cancelEditModalScore(){
+
+    document.getElementById("modalScoreEditRow").style.display = "none";
+    document.getElementById("modalScoreDisplay").style.display = "";
+    document.getElementById("modalScoreReasonInput").value = "";
+
+}
+
+
+async function saveModalScore(){
+
+    const id =
+        window.__currentModalUserId;
+
+    const user =
+        findUser(id);
+
+    if(!user){
+
+        customAlert(
+            "User could not be found."
+        );
+
+        return;
+
+    }
+
+    const newScore =
+        Number(
+            document.getElementById("modalScoreInput").value
+        );
+
+    if(!Number.isFinite(newScore) || newScore < 0 || newScore > 100){
+
+        customAlert(
+            "Enter a score between 0 and 100."
+        );
+
+        return;
+
+    }
+
+    const delta = newScore - user.score;
+
+    if(delta === 0){
+        cancelEditModalScore();
+        return;
+    }
+
+    const reasonInput =
+        document.getElementById("modalScoreReasonInput");
+
+    const reason =
+        (reasonInput.value || "").trim();
+
+    try{
+
+        const response =
+            await fetch(
+                `/api/admin/users/${id}/score`,
+                {
+                    method: "PUT",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ delta, reason })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if(!data || !data.success){
+
+            customAlert(
+                data && data.message
+                    ? data.message
+                    : "Failed to update score."
+            );
+
+            return;
+
+        }
+
+        user.score = data.score;
+
+        document.getElementById("modalScoreDisplay")
+            .textContent =
+            `${data.score} / 100`;
+
+        reasonInput.value = "";
+
+        cancelEditModalScore();
+
+        await refreshUsers();
+
+        renderUsers();
+
+        customAlert(
+            `Score updated to ${data.score} / 100.`,
+            "Score Updated"
+        );
+
+    } catch(error){
+
+        console.error("Failed to update score:", error);
+
+        customAlert(
+            "Failed to update score."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   EDIT USER SCORE (inline, directly in the table)
+===================================================== */
+
+function beginEditTableScore(displayEl){
+
+    const wrapper = displayEl.parentElement;
+
+    const editEl =
+        wrapper.querySelector(".score-badge-edit");
+
+    displayEl.style.display = "none";
+    editEl.style.display = "inline-flex";
+
+    const input = editEl.querySelector(".score-badge-input");
+    input.focus();
+    input.select();
+
+}
+
+
+function cancelEditTableScore(btn){
+
+    const editEl = btn.closest(".score-badge-edit");
+    const wrapper = editEl.parentElement;
+    const displayEl = wrapper.querySelector(".score-badge-display");
+
+    editEl.style.display = "none";
+    displayEl.style.display = "inline-flex";
+
+}
+
+
+async function saveTableScore(btn){
+
+    const editEl = btn.closest(".score-badge-edit");
+    const id = editEl.dataset.userId;
+
+    const user = findUser(id);
+
+    if(!user){
+        customAlert("User could not be found.");
+        return;
+    }
+
+    const input = editEl.querySelector(".score-badge-input");
+    const newScore = Number(input.value);
+
+    if(!Number.isFinite(newScore) || newScore < 0 || newScore > 100){
+
+        customAlert(
+            "Enter a score between 0 and 100."
+        );
+
+        return;
+
+    }
+
+    const delta = newScore - user.score;
+
+    if(delta === 0){
+        cancelEditTableScore(btn);
+        return;
+    }
+
+    try{
+
+        const response =
+            await fetch(
+                `/api/admin/users/${id}/score`,
+                {
+                    method: "PUT",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({ delta })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        if(!data || !data.success){
+
+            customAlert(
+                data && data.message
+                    ? data.message
+                    : "Failed to update score."
+            );
+
+            return;
+
+        }
+
+        user.score = data.score;
+
+        await refreshUsers();
+
+        renderUsers();
+
+    } catch(error){
+
+        console.error("Failed to update score:", error);
+
+        customAlert(
+            "Failed to update score."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   REMOVE USER
+===================================================== */
+
+async function removeUser(id){
+
+    const user=
+        findUser(id);
+
+    if(!user){
+
+        customAlert(
+            "User could not be found."
+        );
+
+        return;
+
+    }
+
+    const confirmed=
+        await customConfirm(
+            `Are you sure you want to remove ${user.name}?`
+        );
+
+    if(!confirmed){
+        return;
+    }
+
+    const reason=
+        prompt(
+            "Reason for removal (optional):",
+            ""
+        );
+
+    try{
+
+        const response=
+            await fetch(
+                `/api/admin/users/${id}`,
+                {
+                    method:"DELETE",
+                    headers:{"Content-Type":"application/json"},
+                    body:JSON.stringify({
+                        reason: reason || null
+                    })
+                }
+            );
+
+        const data=
+            await response.json();
+
+        if(!data || !data.success){
+
+            customAlert(
+                data && data.message
+                    ? data.message
+                    : "Failed to remove user."
+            );
+
+            return;
+
+        }
+
+    } catch(error){
+
+        console.error("Failed to remove user:", error);
+
+        customAlert(
+            "Failed to remove user."
+        );
+
+        return;
+
+    }
+
+    await refreshUsers();
+
+    renderUsers();
+
+    customAlert(
+        `${user.name} has been removed.`
+    );
+
+}
+
+
+/* =====================================================
+   SAVE REGISTRATIONS
+===================================================== */
+
+function saveRegistrations(
+    registrations
+){
+
+    localStorage.setItem(
+        "agriConnectRegistrations",
+        JSON.stringify(
+            registrations
+        )
+    );
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+document
+    .getElementById("searchInput")
+    .addEventListener(
+        "input",
+        renderUsers
+    );
+
+
+/* =====================================================
+   STATUS FILTER
+===================================================== */
+
+document
+    .getElementById("statusFilter")
+    .addEventListener(
+        "change",
+        renderUsers
+    );
+
+
+/* =====================================================
+   DISTRICT FILTER
+===================================================== */
+
+document
+    .getElementById("districtFilter")
+    .addEventListener(
+        "change",
+        renderUsers
+    );
+
+
+/* =====================================================
+   DATE FILTER
+===================================================== */
+
+document
+    .getElementById("dateFilter")
+    .addEventListener(
+        "change",
+        renderUsers
+    );
+
+
+/* =====================================================
+   RESET FILTERS
+===================================================== */
+
+function resetFilters(){
+
+    document.getElementById(
+        "searchInput"
+    ).value="";
+
+    document.getElementById(
+        "statusFilter"
+    ).value="all";
+
+    document.getElementById(
+        "districtFilter"
+    ).value="all";
+
+    document.getElementById(
+        "dateFilter"
+    ).value="newest";
+
+    renderUsers();
+
+}
+
+
+/* =====================================================
+   MANAGE USERS DROPDOWN
+===================================================== */
+
+const manageUsersButton=
+    document.getElementById(
+        "manageUsersButton"
+    );
+
+const manageUsersArrow=
+    document.getElementById(
+        "manageUsersArrow"
+    );
+
+const userSubmenu=
+    document.getElementById(
+        "userSubmenu"
+    );
+
+manageUsersButton.addEventListener(
+    "click",
+    function(){
+
+        if(
+            userSubmenu.style.display==="none"
+        ){
+
+            userSubmenu.style.display="block";
+            manageUsersArrow.textContent="▲";
+
+        }else{
+
+            userSubmenu.style.display="none";
+            manageUsersArrow.textContent="▼";
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   PROFILE DROPDOWN
+===================================================== */
+
+const profile=
+    document.getElementById(
+        "profile"
+    );
+
+profile.addEventListener(
+    "click",
+    event=>{
+
+        event.stopPropagation();
+
+        profile.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+document.addEventListener(
+    "click",
+    ()=>{
+        profile.classList.remove(
+            "open"
+        );
+    }
+);
+
+
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
+
+function openNotifications(){
+
+    window.location.href=
+        "admin-notifications.html";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout(){
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+    localStorage.removeItem(
+        "adminLoggedIn"
+    );
+
+    window.location.href=
+        "index.html";
+
+}
+
+document
+    .getElementById("logoutButton")
+    .addEventListener(
+        "click",
+        async event=>{
+
+            event.preventDefault();
+
+            if(
+                await customConfirm(
+                    "Are you sure you want to logout?"
+                )
+            ){
+
+                logout();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   CLOSE MODAL OUTSIDE CLICK
+===================================================== */
+
+document
+    .getElementById("viewModal")
+    .addEventListener(
+        "click",
+        event=>{
+
+            if(
+                event.target.id==="viewModal"
+            ){
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+refreshUsers().then(function(){
+
+    renderUsers();
+
+});
+
+
+function updateHeaderNotificationBadge() {
+
+    let userId = null;
+
+    try {
+        const raw = sessionStorage.getItem("user");
+        const parsed = raw ? JSON.parse(raw) : null;
+        userId = parsed && parsed.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) return;
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const badge = document.getElementById("notificationBadge");
+            if (!badge) return;
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = "flex";
+            } else {
+                badge.style.display = "none";
+            }
+
+        })
+        .catch(error => console.error("Unable to load notification count:", error));
+
+}
+
+updateHeaderNotificationBadge();
+
+</script>
+
+
+<!-- =========================================================
+     CUSTOM CONFIRM / ALERT DIALOG
+     Replaces the native browser confirm()/alert() popups with
+     a styled in-app dialog consistent with the rest of the UI.
+========================================================= -->
+
+<div
+    id="customDialogOverlay"
+    style="display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;"
+>
+
+    <div
+        style="background:#fff;border-radius:16px;padding:26px 28px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);"
+    >
+
+        <div
+            id="customDialogIcon"
+            style="width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin-bottom:16px;"
+        >
+            !
+        </div>
+
+        <div
+            id="customDialogTitle"
+            style="font-size:16px;font-weight:700;color:#172033;margin-bottom:8px;"
+        >
+        </div>
+
+        <div
+            id="customDialogMessage"
+            style="font-size:13px;color:#536274;line-height:1.55;margin-bottom:22px;white-space:pre-line;"
+        >
+        </div>
+
+        <div
+            id="customDialogButtons"
+            style="display:flex;gap:10px;justify-content:flex-end;"
+        >
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   CUSTOM CONFIRM / ALERT (replaces window.confirm / window.alert)
+========================================================= */
+
+function customConfirm(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Please Confirm";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "?";
+        icon.style.background = "#fff0e5";
+        icon.style.color = "#e86600";
+
+        buttons.innerHTML = "";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.type = "button";
+        cancelBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:1px solid #dde3e0;background:#fff;color:#536274;font-weight:600;cursor:pointer;font-size:13px;";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish(result) {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") finish(false);
+            if (e.key === "Enter") finish(true);
+        }
+
+        cancelBtn.onclick = () => finish(false);
+        okBtn.onclick = () => finish(true);
+
+        buttons.appendChild(cancelBtn);
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+function customAlert(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Notice";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "i";
+        icon.style.background = "#eaf1ff";
+        icon.style.color = "#2469e9";
+
+        buttons.innerHTML = "";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 22px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish() {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve();
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape" || e.key === "Enter") finish();
+        }
+
+        okBtn.onclick = finish;
+
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+</body>
+</html>

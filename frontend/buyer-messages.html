@@ -1,0 +1,3981 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Messages</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7f9;
+    color: #10233f;
+}
+
+button,
+input,
+textarea {
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+
+    width: 255px;
+    min-width: 255px;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    background: linear-gradient(
+        180deg,
+        #0643ad 0%,
+        #07368f 100%
+    );
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.sidebar-logo {
+
+    height: 86px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.18);
+}
+
+.sidebar-logo img {
+    max-height: 62px;
+
+
+    width: 160px;
+
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+
+/* =========================================================
+   SIDEBAR NAV
+========================================================= */
+
+.sidebar-nav {
+
+    padding:
+        18px 13px;
+
+    flex: 1;
+}
+
+.nav-item {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding:
+        10px 15px;
+
+    margin-bottom: 6px;
+
+    border-radius: 10px;
+
+    color: white;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+.nav-item:hover {
+
+    background:
+        rgba(255,255,255,0.10);
+}
+
+.nav-item.active {
+
+    background:
+        #07566b;
+
+    box-shadow:
+        inset 4px 0 0 white;
+}
+
+.nav-icon {
+
+    width: 25px;
+
+    min-width: 25px;
+
+    text-align: center;
+
+    font-size: 20px;
+}
+
+.nav-text {
+
+    flex: 1;
+}
+
+.notification-count {
+
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #f32929;
+
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+
+    padding:
+        5px 13px 15px;
+}
+
+.sidebar-divider {
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.22);
+
+    margin:
+        6px 10px 15px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top-header {
+
+    height: 78px;
+
+    background: white;
+
+    padding:
+        0 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    border-bottom:
+        1px solid #e2e6ea;
+}
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.notification-bell {
+
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+.notification-number {
+
+    position: absolute;
+
+    top: -3px;
+    right: -3px;
+
+    min-width: 19px;
+    height: 19px;
+
+    padding:
+        0 4px;
+
+    border-radius: 50%;
+
+    background:
+        #f12626;
+
+    color: white;
+
+    font-size: 9px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-area {
+
+    position: relative;
+}
+
+.profile-button {
+
+    border: none;
+
+    background: transparent;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+}
+
+.profile-avatar {
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #07832f;
+
+    color:
+        #07832f;
+
+    background:
+        white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.profile-name {
+
+    display: block;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color:
+        #101828;
+
+    text-align: left;
+}
+
+.profile-role {
+
+    display: block;
+
+    color:
+        #07823d;
+
+    font-size: 12px;
+
+    margin-top: 2px;
+
+    text-align: left;
+}
+
+.profile-arrow {
+
+    color:
+        #63758a;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+.profile-dropdown {
+
+    display: none;
+
+    position: absolute;
+
+    right: 0;
+    top: 55px;
+
+    width: 275px;
+
+    background: white;
+
+    border:
+        1px solid #dce4e0;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.15);
+
+    overflow: hidden;
+
+    z-index: 5000;
+}
+
+.profile-dropdown.show {
+
+    display: block;
+}
+
+.dropdown-user {
+
+    padding:
+        17px 20px;
+
+    border-bottom:
+        1px solid #e5eae7;
+}
+
+.dropdown-user-name {
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    color:
+        #172840;
+}
+
+.dropdown-user-role {
+
+    color:
+        #07823d;
+
+    font-size: 13px;
+
+    margin-top: 3px;
+}
+
+.switch-title {
+
+    padding:
+        15px 20px 7px;
+
+    color:
+        #718096;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.role-option {
+
+    margin:
+        0 10px 5px;
+
+    padding:
+        11px 13px;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    cursor: pointer;
+
+    color:
+        #334155;
+
+    font-size: 13px;
+}
+
+.role-option:hover {
+
+    background:
+        #f2f6f4;
+}
+
+.role-option.selected {
+
+    background:
+        #e3f5e8;
+
+    color:
+        #07823d;
+
+    font-weight: bold;
+}
+
+.role-icon {
+
+    width: 23px;
+
+    text-align: center;
+
+    font-size: 17px;
+}
+
+.role-check {
+
+    margin-left: auto;
+
+    color:
+        #07823d;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+
+    flex: 1;
+
+    padding:
+        38px 38px 30px;
+
+    background:
+        #f5f7f9;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.page-title {
+
+    font-size: 34px;
+
+    font-weight: bold;
+
+    color:
+        #101c31;
+
+    margin-bottom: 7px;
+}
+
+.page-title span {
+
+    color:
+        #07823d;
+}
+
+.title-underline {
+
+    width: 44px;
+
+    height: 3px;
+
+    background:
+        #07823d;
+
+    margin-top: 9px;
+}
+
+.page-subtitle {
+
+    font-size: 14px;
+
+    color:
+        #63758a;
+
+    margin-top: 13px;
+
+    margin-bottom: 24px;
+}
+
+
+/* =========================================================
+   MESSAGES CONTAINER
+========================================================= */
+
+.messages-container {
+
+    flex: 1;
+
+    min-height: 520px;
+
+    background:
+        white;
+
+    border:
+        1px solid #dfe5e9;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.04);
+
+    display: grid;
+
+    grid-template-columns:
+        315px 1fr;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   FARMER LIST
+========================================================= */
+
+.farmer-list {
+
+    border-right:
+        1px solid #e1e6ea;
+
+    background:
+        #ffffff;
+
+    overflow-y: auto;
+}
+
+.list-header {
+
+    height: 70px;
+
+    padding:
+        20px;
+
+    border-bottom:
+        1px solid #e5e9ec;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.list-header h3 {
+
+    font-size: 17px;
+
+    color:
+        #13243b;
+}
+
+.farmer-count {
+
+    background:
+        #e5f5ea;
+
+    color:
+        #07823d;
+
+    padding:
+        4px 9px;
+
+    border-radius: 15px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   FARMER ITEM
+========================================================= */
+
+.farmer-item {
+
+    padding:
+        15px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    border-bottom:
+        1px solid #eef1f3;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+.farmer-item:hover {
+
+    background:
+        #f7faf8;
+}
+
+.farmer-item.active {
+
+    background:
+        #e8f6ec;
+
+    box-shadow:
+        inset 4px 0 0 #07823d;
+}
+
+.farmer-avatar {
+
+    width: 46px;
+    height: 46px;
+
+    min-width: 46px;
+
+    border-radius: 50%;
+
+    background:
+        #e4f4e8;
+
+    color:
+        #07823d;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 16px;
+
+    font-weight: bold;
+}
+
+.farmer-details {
+
+    min-width: 0;
+
+    flex: 1;
+}
+
+.farmer-name {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color:
+        #172840;
+
+    margin-bottom: 5px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.last-message {
+
+    font-size: 11px;
+
+    color:
+        #718096;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.message-time {
+
+    font-size: 9px;
+
+    color:
+        #8a97a7;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   CONVERSATION
+========================================================= */
+
+.conversation {
+
+    display: flex;
+
+    flex-direction: column;
+
+    min-width: 0;
+}
+
+
+/* =========================================================
+   CONVERSATION HEADER
+========================================================= */
+
+.conversation-header {
+
+    min-height: 78px;
+
+    padding:
+        13px 20px;
+
+    border-bottom:
+        1px solid #e2e7ea;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+}
+
+.conversation-avatar {
+
+    width: 46px;
+    height: 46px;
+
+    border-radius: 50%;
+
+    background:
+        #e4f4e8;
+
+    color:
+        #07823d;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+
+    font-size: 17px;
+}
+
+.conversation-info {
+
+    flex: 1;
+}
+
+.conversation-name {
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color:
+        #172840;
+}
+
+.conversation-status {
+
+    font-size: 10px;
+
+    color:
+        #07823d;
+
+    margin-top: 4px;
+}
+
+
+/* =========================================================
+   ORDER REFERENCE
+========================================================= */
+
+.order-reference {
+
+    margin:
+        12px 20px 5px;
+
+    padding:
+        10px 13px;
+
+    background:
+        #f4faf6;
+
+    border:
+        1px solid #dcefe1;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+
+    color:
+        #476052;
+}
+
+.order-reference strong {
+
+    color:
+        #07823d;
+}
+
+
+/* =========================================================
+   CHAT AREA
+========================================================= */
+
+.chat-messages {
+
+    flex: 1;
+
+    padding:
+        18px 20px;
+
+    overflow-y: auto;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 13px;
+
+    min-height: 320px;
+
+    background:
+        #fbfcfc;
+}
+
+
+/* =========================================================
+   CHAT BUBBLES
+========================================================= */
+
+.chat-message {
+
+    max-width: 70%;
+
+    padding:
+        10px 13px;
+
+    border-radius: 10px;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    word-break: break-word;
+}
+
+.chat-message.farmer {
+
+    align-self: flex-start;
+
+    background:
+        white;
+
+    border:
+        1px solid #e1e6e9;
+
+    color:
+        #25364c;
+
+    border-bottom-left-radius: 3px;
+}
+
+.chat-message.buyer {
+
+    align-self: flex-end;
+
+    background:
+        #07833b;
+
+    color:
+        white;
+
+    border-bottom-right-radius: 3px;
+}
+
+.chat-time {
+
+    display: block;
+
+    font-size: 8px;
+
+    margin-top: 5px;
+
+    opacity: 0.65;
+}
+
+
+/* =========================================================
+   EMPTY CHAT
+========================================================= */
+
+.empty-conversation {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding:
+        30px;
+}
+
+.empty-conversation-icon {
+
+    width: 65px;
+    height: 65px;
+
+    border-radius: 50%;
+
+    background:
+        #eaf6ed;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+
+    margin-bottom: 15px;
+}
+
+.empty-conversation h3 {
+
+    font-size: 18px;
+
+    color:
+        #172840;
+
+    margin-bottom: 7px;
+}
+
+.empty-conversation p {
+
+    font-size: 12px;
+
+    color:
+        #718096;
+
+    max-width: 320px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   MESSAGE INPUT
+========================================================= */
+
+.message-input-area {
+
+    min-height: 72px;
+
+    padding:
+        12px 15px;
+
+    border-top:
+        1px solid #e2e7ea;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    background:
+        white;
+}
+
+.message-input {
+
+    flex: 1;
+
+    min-height: 43px;
+
+    max-height: 100px;
+
+    border:
+        1px solid #d3dbe1;
+
+    border-radius: 8px;
+
+    padding:
+        11px 13px;
+
+    resize: none;
+
+    outline: none;
+
+    font-size: 12px;
+
+    color:
+        #25364c;
+}
+
+.message-input:focus {
+
+    border-color:
+        #07833b;
+
+    box-shadow:
+        0 0 0 2px rgba(7,131,59,0.08);
+}
+
+.send-button {
+
+    width: 45px;
+    height: 43px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background:
+        #07833b;
+
+    color: white;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    transition:
+        0.2s ease;
+}
+
+.send-button:hover {
+
+    background:
+        #056c30;
+
+    transform:
+        translateY(-1px);
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    left: 255px;
+
+
+    min-height: 56px;
+
+    background:
+        #00552d;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 14px;
+
+    font-size: 10px;
+}
+
+.footer a {
+
+    color: white;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    background:
+        #172b43;
+
+    color: white;
+
+    padding:
+        13px 19px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.2);
+
+    opacity: 0;
+
+    transform:
+        translateY(15px);
+
+    pointer-events: none;
+
+    transition:
+        0.25s ease;
+
+    z-index: 10000;
+}
+
+.toast.show {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .sidebar {
+
+        width: 270px;
+        min-width: 270px;
+    }
+
+    .main {
+
+        margin-left: 270px;
+
+        width:
+            calc(100% - 270px);
+    }
+
+    .messages-container {
+
+        grid-template-columns:
+            275px 1fr;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .sidebar {
+
+        width: 230px;
+        min-width: 230px;
+    }
+
+    .main {
+
+        margin-left: 230px;
+
+        width:
+            calc(100% - 230px);
+    }
+
+    .content {
+
+        padding:
+            30px 20px;
+    }
+
+    .messages-container {
+
+        grid-template-columns:
+            235px 1fr;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .sidebar {
+
+        width: 210px;
+        min-width: 210px;
+    }
+
+    .main {
+
+        margin-left: 210px;
+
+        width:
+            calc(100% - 210px);
+    }
+
+    .messages-container {
+
+        grid-template-columns:
+            1fr;
+    }
+
+    .farmer-list {
+
+        display: none;
+    }
+
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+
+        <a
+            href="buyer-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-text">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-search-crops.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔍
+            </span>
+
+            <span class="nav-text">
+                Search for Crops
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-orders.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🛒
+            </span>
+
+            <span class="nav-text">
+                My Orders
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-messages.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-text">
+                Messages
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-text">
+                Notifications
+            </span>
+
+            <span
+                class="notification-count"
+                id="notificationCount"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-text">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-text">
+                History
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="buyer-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-text">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-text">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="login.html"
+            class="nav-item"
+            onclick="logout(event)"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-text">
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+<header class="top-header">
+
+
+    <div class="header-right">
+
+
+        <div
+            class="notification-bell"
+            onclick="openNotifications()"
+        >
+
+            🔔
+
+            <span
+                class="notification-number"
+                id="headerNotificationCount"
+            >
+                0
+            </span>
+
+        </div>
+
+
+        <div class="profile-area">
+
+
+            <button
+                class="profile-button"
+                id="profileButton"
+                type="button"
+            >
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    KI
+                </div>
+
+
+                <div>
+
+                    <span
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Kilshan
+                    </span>
+
+                    <span
+                        class="profile-role"
+                    >
+                        Buyer
+                    </span>
+
+                </div>
+
+
+                <span
+                    class="profile-arrow"
+                    id="profileArrow"
+                >
+                    ▼
+                </span>
+
+            </button>
+
+
+            <div
+                class="profile-dropdown"
+                id="profileDropdown"
+            >
+
+                <div class="dropdown-user">
+
+                    <div
+                        class="dropdown-user-name"
+                        id="dropdownUserName"
+                    >
+                        Kilshan
+                    </div>
+
+                    <div
+                        class="dropdown-user-role"
+                    >
+                        Buyer
+                    </div>
+
+                </div>
+
+
+                <div class="switch-title">
+                    SWITCH ROLE
+                </div>
+
+
+                <div
+                    id="rolesContainer"
+                ></div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</header>
+
+
+
+<!-- =========================================================
+     CONTENT
+========================================================= -->
+
+<section class="content">
+
+
+    <div class="page-title">
+
+        Messages
+        <span>with Farmers</span>
+
+        <div class="title-underline"></div>
+
+    </div>
+
+
+    <div class="page-subtitle">
+
+        Communicate directly with farmers about your accepted orders.
+
+    </div>
+
+
+    <div class="messages-container">
+
+
+        <!-- =================================================
+             FARMER LIST
+        ================================================== -->
+
+        <div class="farmer-list">
+
+
+            <div class="list-header">
+
+                <h3>
+                    Farmers
+                </h3>
+
+                <span
+                    class="farmer-count"
+                    id="farmerCount"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div
+                id="farmerList"
+            ></div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             CONVERSATION
+        ================================================== -->
+
+        <div
+            class="conversation"
+            id="conversation"
+        >
+
+            <div class="empty-conversation">
+
+                <div
+                    class="empty-conversation-icon"
+                >
+                    💬
+                </div>
+
+                <h3>
+                    Select a Farmer
+                </h3>
+
+                <p>
+                    Select a farmer from the list
+                    to start or continue a conversation.
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <span>
+        🌿
+    </span>
+
+    <span>
+        © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+</main>
+
+</div>
+
+
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+
+<script>
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let selectedFarmer = null;
+
+let farmers = [];
+
+
+/* =========================================================
+   BUILD FARMER LIST (from real accepted/completed orders)
+========================================================= */
+
+function conversationOrderLabel(contextId) {
+
+    return contextId
+        ? `Order #${contextId}`
+        : "Order";
+
+}
+
+
+async function buildFarmerList() {
+
+    const buyerId =
+        user && user.id;
+
+
+    if (!buyerId) {
+
+        farmers = [];
+
+        renderFarmerList();
+
+        return;
+
+    }
+
+
+    const conversationsByFarmer = new Map();
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/messages/conversations?user_id=${buyerId}&context_type=order`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (data && data.success && Array.isArray(data.conversations)) {
+
+            data.conversations.forEach(row => {
+
+                /*
+                 * A buyer can have MULTIPLE separate conversation
+                 * threads with the same farmer (one per order).
+                 * The API already sorts these with the most
+                 * recently active conversation first, so keep
+                 * only the first (best) one per farmer instead
+                 * of letting a later, empty thread overwrite it.
+                 */
+
+                const farmerId =
+                    Number(row.other_user_id);
+
+                if (!conversationsByFarmer.has(farmerId)) {
+
+                    conversationsByFarmer.set(
+                        farmerId,
+                        row
+                    );
+
+                }
+
+            });
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unable to load conversations:",
+            error
+        );
+
+    }
+
+
+    /*
+     * Orders are the source of truth for which farmers
+     * should show up here - a buyer should see every farmer
+     * they've ordered from, even before a conversation has
+     * actually been started with them.
+     */
+
+    try {
+
+        const ordersResponse =
+            await fetch(
+                `/api/orders/buyer/${buyerId}`
+            );
+
+
+        const ordersData =
+            await ordersResponse.json();
+
+
+        if (ordersData && ordersData.success && Array.isArray(ordersData.orders)) {
+
+            const byFarmer = new Map();
+
+            ordersData.orders.forEach(order => {
+
+                const farmerId =
+                    Number(order.farmer_id);
+
+                if (!byFarmer.has(farmerId)) {
+
+                    byFarmer.set(farmerId, {
+
+                        farmer:
+                            `${order.farmer_first_name || ""} ${order.farmer_last_name || ""}`.trim() || "Farmer",
+
+                        userId:
+                            farmerId,
+
+                        orders: []
+
+                    });
+
+                }
+
+                byFarmer.get(farmerId).orders.push({
+
+                    product:
+                        order.specific_name || order.crop_name || conversationOrderLabel(order.order_id),
+
+                    quantity:
+                        order.quantity,
+
+                    status:
+                        order.status
+
+                });
+
+            });
+
+            farmers =
+                Array.from(byFarmer.values()).map(entry => {
+
+                    const conversation =
+                        conversationsByFarmer.get(entry.userId);
+
+                    return {
+
+                        farmer: entry.farmer,
+                        userId: entry.userId,
+                        orders: entry.orders,
+
+                        conversationId:
+                            conversation ? conversation.id : null,
+
+                        lastMessage:
+                            conversation && conversation.last_message_text
+                                ? conversation.last_message_text
+                                : "No messages yet."
+
+                    };
+
+                });
+
+        }
+
+        else {
+
+            farmers = [];
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unable to load orders:",
+            error
+        );
+
+        farmers = [];
+
+    }
+
+
+    renderFarmerList();
+
+}
+
+
+
+
+/* =========================================================
+   RENDER FARMERS
+========================================================= */
+
+function renderFarmerList() {
+
+    const list =
+        document.getElementById(
+            "farmerList"
+        );
+
+
+    const count =
+        document.getElementById(
+            "farmerCount"
+        );
+
+
+    list.innerHTML = "";
+
+
+    count.textContent =
+        farmers.length;
+
+
+    if (
+        farmers.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div
+                style="
+                    padding:35px 20px;
+                    text-align:center;
+                    color:#67758a;
+                    font-size:11px;
+                    line-height:1.6;
+                "
+            >
+
+                <div
+                    style="
+                        font-size:26px;
+                        margin-bottom:10px;
+                    "
+                >
+                    🧑‍🌾
+                </div>
+
+                No farmers available.
+
+                <br><br>
+
+                Farmers will appear here
+                after one of your orders
+                is accepted.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    farmers.forEach(
+        farmer => {
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "farmer-item";
+
+
+            if (
+                selectedFarmer ===
+                farmer.farmer
+            ) {
+
+                item.classList.add(
+                    "active"
+                );
+
+            }
+
+
+            const initials =
+                getInitials(
+                    farmer.farmer
+                );
+
+
+            const messages =
+                getStoredMessages(
+                    farmer.farmer
+                );
+
+
+            let preview =
+                farmer.lastMessage;
+
+
+            if (
+                messages.length > 0
+            ) {
+
+                preview =
+                    messages[
+                        messages.length - 1
+                    ].text;
+
+            }
+
+
+            item.innerHTML = `
+
+                <div
+                    class="farmer-avatar"
+                >
+                    ${escapeHtml(
+                        initials
+                    )}
+                </div>
+
+
+                <div
+                    class="farmer-details"
+                >
+
+                    <div
+                        class="farmer-name"
+                    >
+                        ${escapeHtml(
+                            farmer.farmer
+                        )}
+                    </div>
+
+
+                    <div
+                        class="last-message"
+                    >
+                        ${escapeHtml(
+                            preview
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="message-time"
+                >
+                    ${farmer.orders.length}
+                    order${farmer.orders.length === 1 ? "" : "s"}
+                </div>
+
+            `;
+
+
+            item.addEventListener(
+                "click",
+                function() {
+
+                    openConversation(
+                        farmer.farmer
+                    );
+
+                }
+            );
+
+
+            list.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   MESSAGE STORAGE
+========================================================= */
+
+function getMessageKey(
+    farmerName
+) {
+
+    return (
+        "buyerMessages_" +
+        String(
+            farmerName
+        )
+        .replace(
+            /\s+/g,
+            "_"
+        )
+        .replace(
+            /[^a-zA-Z0-9_-]/g,
+            ""
+        )
+    );
+
+}
+
+
+function getStoredMessages(
+    farmerName
+) {
+
+    try {
+
+        const messages =
+            JSON.parse(
+                localStorage.getItem(
+                    getMessageKey(
+                        farmerName
+                    )
+                ) || "[]"
+            );
+
+
+        return Array.isArray(
+            messages
+        )
+            ? messages
+            : [];
+
+    }
+
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   OPEN CONVERSATION
+========================================================= */
+
+function openConversation(
+    farmerName
+) {
+
+    selectedFarmer =
+        farmerName;
+
+
+    renderFarmerList();
+
+
+    const farmer =
+        farmers.find(
+            item =>
+                item.farmer ===
+                farmerName
+        );
+
+
+    if (!farmer) {
+
+        return;
+
+    }
+
+
+    const conversation =
+        document.getElementById(
+            "conversation"
+        );
+
+
+    const initials =
+        getInitials(
+            farmerName
+        );
+
+
+    const latestOrder =
+        farmer.orders[
+            farmer.orders.length - 1
+        ];
+
+
+    conversation.innerHTML = `
+
+        <div
+            class="conversation-header"
+        >
+
+            <div
+                class="conversation-avatar"
+            >
+                ${escapeHtml(
+                    initials
+                )}
+            </div>
+
+
+            <div
+                class="conversation-info"
+            >
+
+                <div
+                    class="conversation-name"
+                >
+                    ${escapeHtml(
+                        farmerName
+                    )}
+                </div>
+
+
+                <div
+                    class="conversation-status"
+                >
+                    ● Farmer
+                </div>
+
+            </div>
+
+        </div>
+
+
+        ${
+            latestOrder
+
+            ? `
+
+                <div
+                    class="order-reference"
+                >
+
+                    Order:
+                    <strong>
+                        ${escapeHtml(
+                            latestOrder.product ||
+                            "Crop"
+                        )}
+                    </strong>
+
+                    &nbsp; • &nbsp;
+
+                    ${Number(
+                        latestOrder.quantity ||
+                        0
+                    )}kg
+
+                    &nbsp; • &nbsp;
+
+                    Status:
+                    <strong>
+                        ${escapeHtml(
+                            latestOrder.status ||
+                            "Confirmed"
+                        )}
+                    </strong>
+
+                </div>
+
+            `
+
+            : ""
+
+        }
+
+
+        <div
+            class="chat-messages"
+            id="chatMessages"
+        ></div>
+
+
+        <div
+            class="message-input-area"
+        >
+
+            <textarea
+                class="message-input"
+                id="messageInput"
+                placeholder="Type your message..."
+                rows="1"
+            ></textarea>
+
+
+            <button
+                class="send-button"
+                type="button"
+                onclick="sendMessage()"
+            >
+                ➤
+            </button>
+
+        </div>
+
+    `;
+
+
+    loadConversation(
+        farmerName
+    );
+
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    input.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key === "Enter" &&
+                !event.shiftKey
+            ) {
+
+                event.preventDefault();
+
+                sendMessage();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   LOAD CONVERSATION
+========================================================= */
+
+async function loadConversation(
+    farmerName
+) {
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    const farmer =
+        farmers.find(
+            item =>
+                item.farmer ===
+                farmerName
+        );
+
+
+    const buyerId =
+        user && user.id;
+
+
+    if (!farmer || !buyerId) {
+
+        container.innerHTML = "";
+
+        return;
+
+    }
+
+
+    /*
+     * No conversation started yet - create it now that the
+     * buyer is actually opening this farmer's thread.
+     */
+
+    if (!farmer.conversationId) {
+
+        try {
+
+            const startResponse =
+                await fetch(
+                    "/api/messages/conversations/start",
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            user_id: buyerId,
+                            other_user_id: farmer.userId,
+                            context_type: "order"
+                        })
+                    }
+                );
+
+            const startData =
+                await startResponse.json();
+
+            if (startResponse.ok && startData.success) {
+
+                farmer.conversationId =
+                    startData.conversation.id;
+
+            }
+
+        } catch (error) {
+
+            console.error("Unable to start conversation:", error);
+
+        }
+
+    }
+
+
+    if (!farmer.conversationId) {
+
+        container.innerHTML = "";
+
+        return;
+
+    }
+
+
+    let messages = [];
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/messages/conversations/${farmer.conversationId}/messages?user_id=${buyerId}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            data &&
+            data.success &&
+            Array.isArray(data.messages)
+        ) {
+
+            messages =
+                data.messages.map(
+                    row => ({
+
+                        sender:
+                            Number(row.sender_id) === Number(buyerId)
+                                ? "buyer"
+                                : "farmer",
+
+                        text:
+                            row.message_text,
+
+                        time:
+                            new Date(row.created_at).toLocaleTimeString(
+                                [],
+                                { hour: "numeric", minute: "2-digit" }
+                            )
+
+                    })
+                );
+
+        }
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unable to load messages:",
+            error
+        );
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    messages.forEach(
+        message => {
+
+            addMessageToChat(
+
+                message.sender,
+
+                message.text,
+
+                message.time
+
+            );
+
+        }
+    );
+
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+/* =========================================================
+   ADD CHAT MESSAGE
+========================================================= */
+
+function addMessageToChat(
+    sender,
+    text,
+    time
+) {
+
+    const container =
+        document.getElementById(
+            "chatMessages"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    const message =
+        document.createElement(
+            "div"
+        );
+
+
+    message.className =
+        "chat-message " +
+        (
+            sender === "buyer"
+                ? "buyer"
+                : "farmer"
+        );
+
+
+    message.innerHTML = `
+
+        ${escapeHtml(
+            text
+        )}
+
+        <span
+            class="chat-time"
+        >
+            ${escapeHtml(
+                time || ""
+            )}
+        </span>
+
+    `;
+
+
+    container.appendChild(
+        message
+    );
+
+
+    container.scrollTop =
+        container.scrollHeight;
+
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+async function sendMessage() {
+
+    if (
+        !selectedFarmer
+    ) {
+
+        return;
+
+    }
+
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    if (!input) {
+
+        return;
+
+    }
+
+
+    const text =
+        input.value.trim();
+
+
+    if (!text) {
+
+        return;
+
+    }
+
+
+    const farmer =
+        farmers.find(
+            item =>
+                item.farmer ===
+                selectedFarmer
+        );
+
+
+    const buyerId =
+        user && user.id;
+
+
+    if (
+        !farmer ||
+        !farmer.conversationId ||
+        !buyerId
+    ) {
+
+        console.error(
+            "Cannot send message: conversation not found for",
+            selectedFarmer
+        );
+
+        return;
+
+    }
+
+
+    input.value = "";
+
+
+    let time =
+        getCurrentTime();
+
+
+    try {
+
+        const response =
+            await fetch(
+
+                `/api/messages/conversations/${farmer.conversationId}/messages`,
+
+                {
+                    method:
+                        "POST",
+
+                    headers: {
+                        "Content-Type":
+                            "application/json"
+                    },
+
+                    body:
+                        JSON.stringify({
+                            sender_id:
+                                buyerId,
+
+                            message_text:
+                                text
+                        })
+                }
+
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!data || !data.success) {
+
+            console.error(
+                "Failed to send message:",
+                data
+            );
+
+            return;
+
+        }
+
+
+        time =
+            new Date(data.message.created_at).toLocaleTimeString(
+                [],
+                { hour: "numeric", minute: "2-digit" }
+            );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Failed to send message:",
+            error
+        );
+
+        return;
+
+    }
+
+
+    addMessageToChat(
+
+        "buyer",
+
+        text,
+
+        time
+
+    );
+
+
+    /*
+     * Update the preview in the
+     * farmer list.
+     */
+
+    farmer.lastMessage =
+        text;
+
+
+    renderFarmerList();
+
+
+    /*
+     * Keep the currently selected
+     * farmer highlighted.
+     */
+
+    setTimeout(
+        function() {
+
+            document
+                .querySelectorAll(
+                    ".farmer-item"
+                )
+                .forEach(
+                    item => {
+
+                        const name =
+                            item.querySelector(
+                                ".farmer-name"
+                            );
+
+
+                        if (
+                            name &&
+                            name.textContent ===
+                            selectedFarmer
+                        ) {
+
+                            item.classList.add(
+                                "active"
+                            );
+
+                        }
+
+                    }
+                );
+
+        },
+        0
+    );
+
+}
+
+
+/* =========================================================
+   CURRENT TIME
+========================================================= */
+
+function getCurrentTime() {
+
+    return new Date()
+        .toLocaleTimeString(
+            [],
+            {
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit"
+            }
+        );
+
+}
+
+
+/* =========================================================
+   INITIALS
+========================================================= */
+
+function getInitials(
+    name
+) {
+
+    const parts =
+        String(
+            name
+        )
+        .trim()
+        .split(
+            /\s+/
+        );
+
+
+    if (
+        parts.length === 1
+    ) {
+
+        return parts[0]
+            .substring(
+                0,
+                2
+            )
+            .toUpperCase();
+
+    }
+
+
+    return (
+
+        parts[0][0] +
+        parts[1][0]
+
+    ).toUpperCase();
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function getNotifications() {
+
+    try {
+
+        const notifications =
+            JSON.parse(
+                localStorage.getItem(
+                    "agriconnectNotifications"
+                ) || "[]"
+            );
+
+
+        return Array.isArray(
+            notifications
+        )
+            ? notifications
+            : [];
+
+    }
+
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function updateNotificationCount() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const sidebarCount = document.getElementById("notificationCount");
+            const headerCount = document.getElementById("headerNotificationCount");
+            const badgeCount = document.getElementById("notificationBadge");
+
+            if (sidebarCount) sidebarCount.textContent = unread;
+            if (headerCount) headerCount.textContent = unread;
+            if (badgeCount) badgeCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+let user = null;
+
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem(
+                "user"
+            ) || "null"
+        );
+
+}
+
+catch (error) {
+
+    user = null;
+
+}
+
+
+if (!user) {
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem(
+                    "loggedInUser"
+                ) || "null"
+            );
+
+    }
+
+    catch (error) {
+
+        user = null;
+
+    }
+
+}
+
+
+const userName =
+    user?.name ||
+    user?.username ||
+    "Kilshan";
+
+
+/* =========================================================
+   ROLES
+========================================================= */
+
+function getRegisteredRoles() {
+
+    let roles = [];
+
+
+    if (
+        user &&
+        Array.isArray(
+            user.roles
+        )
+    ) {
+
+        roles =
+            [...user.roles];
+
+    }
+
+
+    if (
+        roles.length === 0
+    ) {
+
+        try {
+
+            const saved =
+                JSON.parse(
+                    sessionStorage.getItem(
+                        "registeredRoles"
+                    ) || "null"
+                );
+
+
+            if (
+                Array.isArray(saved)
+            ) {
+
+                roles =
+                    [...saved];
+
+            }
+
+        }
+
+        catch (error) {
+
+            roles = [];
+
+        }
+
+    }
+
+
+    roles =
+        roles
+            .map(
+                role =>
+                    String(
+                        role
+                    ).trim()
+            )
+            .filter(
+                Boolean
+            );
+
+
+    roles =
+        [...new Set(roles)];
+
+
+    if (
+        roles.length === 0
+    ) {
+
+        roles.push(
+            "Buyer"
+        );
+
+    }
+
+
+    if (
+        !roles.some(
+            role =>
+                role.toLowerCase() ===
+                "buyer"
+        )
+    ) {
+
+        roles.push(
+            "Buyer"
+        );
+
+    }
+
+
+    return roles;
+
+}
+
+
+const registeredRoles =
+    getRegisteredRoles();
+
+
+/* =========================================================
+   ROLE ICON
+========================================================= */
+
+function getRoleIcon(
+    role
+) {
+
+    const r =
+        role.toLowerCase();
+
+
+    if (
+        r === "buyer"
+    ) {
+
+        return "🛒";
+
+    }
+
+
+    if (
+        r === "farmer"
+    ) {
+
+        return "🧑‍🌾";
+
+    }
+
+
+    if (
+        r.includes("expert")
+    ) {
+
+        return "🧑‍🔬";
+
+    }
+
+
+    if (
+        r.includes("equipment")
+    ) {
+
+        return "🚜";
+
+    }
+
+
+    return "👤";
+
+}
+
+
+/* =========================================================
+   SWITCH ROLE
+========================================================= */
+
+function switchRole(
+    role
+) {
+
+    const normalized =
+        String(
+            role
+        ).toLowerCase();
+
+
+    if (
+        normalized ===
+        "buyer"
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            "Buyer"
+        );
+
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+
+        return;
+
+    }
+
+
+    if (
+        normalized ===
+        "farmer"
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            "Farmer"
+        );
+
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+
+        return;
+
+    }
+
+
+    if (
+        normalized.includes(
+            "expert"
+        )
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            role
+        );
+
+
+        window.location.href =
+            "expert-dashboard.html";
+
+
+        return;
+
+    }
+
+
+    if (
+        normalized.includes(
+            "equipment"
+        )
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            role
+        );
+
+
+        window.location.href =
+            "rental-dashboard.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function updateProfile() {
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        userName;
+
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        userName;
+
+
+    document.getElementById(
+        "profileAvatar"
+    ).textContent =
+        getInitials(
+            userName
+        );
+
+}
+
+
+/* =========================================================
+   RENDER ROLES
+========================================================= */
+
+function renderRoles() {
+
+    const container =
+        document.getElementById(
+            "rolesContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    registeredRoles.forEach(
+        role => {
+
+            const option =
+                document.createElement(
+                    "div"
+                );
+
+
+            option.className =
+                "role-option";
+
+
+            const selected =
+                role.toLowerCase() ===
+                "buyer";
+
+
+            if (selected) {
+
+                option.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            option.innerHTML = `
+
+                <span
+                    class="role-icon"
+                >
+                    ${getRoleIcon(role)}
+                </span>
+
+                <span>
+                    ${escapeHtml(
+                        role
+                    )}
+                </span>
+
+                <span
+                    class="role-check"
+                    style="
+                        display:
+                        ${
+                            selected
+                                ? "block"
+                                : "none"
+                        };
+                    "
+                >
+                    ✓
+                </span>
+
+            `;
+
+
+            option.addEventListener(
+                "click",
+                function() {
+
+                    switchRole(
+                        role
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+document
+    .getElementById(
+        "profileButton"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            const dropdown =
+                document.getElementById(
+                    "profileDropdown"
+                );
+
+
+            const arrow =
+                document.getElementById(
+                    "profileArrow"
+                );
+
+
+            dropdown.classList.toggle(
+                "show"
+            );
+
+
+            arrow.textContent =
+                dropdown.classList.contains(
+                    "show"
+                )
+                    ? "▲"
+                    : "▼";
+
+        }
+    );
+
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const area =
+            document.querySelector(
+                ".profile-area"
+            );
+
+
+        if (
+            area &&
+            !area.contains(
+                event.target
+            )
+        ) {
+
+            document
+                .getElementById(
+                    "profileDropdown"
+                )
+                .classList.remove(
+                    "show"
+                );
+
+
+            document.getElementById(
+                "profileArrow"
+            ).textContent =
+                "▼";
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   OPEN NOTIFICATIONS
+========================================================= */
+
+function openNotifications() {
+
+    window.location.href =
+        "buyer-notifications.html";
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(event) {
+
+    event.preventDefault();
+
+
+    const confirmed =
+        await customConfirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    sessionStorage.removeItem(
+        "currentRole"
+    );
+
+
+    sessionStorage.removeItem(
+        "loggedInUser"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value == null
+            ? ""
+            : String(value);
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function() {
+
+        /*
+         * Make sure this page is
+         * always treated as Buyer.
+         */
+
+        sessionStorage.setItem(
+            "currentRole",
+            "Buyer"
+        );
+
+
+        updateProfile();
+
+
+        renderRoles();
+
+
+        updateNotificationCount();
+
+
+        await buildFarmerList();
+
+
+        /*
+         * Automatically open the farmer
+         * selected from Buyer Orders.
+         */
+
+        let selectedConversation =
+            null;
+
+
+        try {
+
+            selectedConversation =
+                JSON.parse(
+                    localStorage.getItem(
+                        "selectedBuyerConversation"
+                    ) || "null"
+                );
+
+        }
+
+        catch (error) {
+
+            selectedConversation =
+                null;
+
+        }
+
+
+        if (
+            selectedConversation &&
+            selectedConversation.farmer
+        ) {
+
+            openConversation(
+                selectedConversation.farmer
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    function() {
+
+        buildFarmerList();
+
+        updateNotificationCount();
+
+    }
+);
+
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (
+            !document.hidden
+        ) {
+
+            buildFarmerList();
+
+            updateNotificationCount();
+
+        }
+
+    }
+);
+
+</script>
+
+
+<!-- =========================================================
+     CUSTOM CONFIRM / ALERT DIALOG
+     Replaces the native browser confirm()/alert() popups with
+     a styled in-app dialog consistent with the rest of the UI.
+========================================================= -->
+
+<div
+    id="customDialogOverlay"
+    style="display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;"
+>
+
+    <div
+        style="background:#fff;border-radius:16px;padding:26px 28px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);"
+    >
+
+        <div
+            id="customDialogIcon"
+            style="width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin-bottom:16px;"
+        >
+            !
+        </div>
+
+        <div
+            id="customDialogTitle"
+            style="font-size:16px;font-weight:700;color:#172033;margin-bottom:8px;"
+        >
+        </div>
+
+        <div
+            id="customDialogMessage"
+            style="font-size:13px;color:#536274;line-height:1.55;margin-bottom:22px;white-space:pre-line;"
+        >
+        </div>
+
+        <div
+            id="customDialogButtons"
+            style="display:flex;gap:10px;justify-content:flex-end;"
+        >
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   CUSTOM CONFIRM / ALERT (replaces window.confirm / window.alert)
+========================================================= */
+
+function customConfirm(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Please Confirm";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "?";
+        icon.style.background = "#fff0e5";
+        icon.style.color = "#e86600";
+
+        buttons.innerHTML = "";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.type = "button";
+        cancelBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:1px solid #dde3e0;background:#fff;color:#536274;font-weight:600;cursor:pointer;font-size:13px;";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish(result) {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") finish(false);
+            if (e.key === "Enter") finish(true);
+        }
+
+        cancelBtn.onclick = () => finish(false);
+        okBtn.onclick = () => finish(true);
+
+        buttons.appendChild(cancelBtn);
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+function customAlert(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Notice";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "i";
+        icon.style.background = "#eaf1ff";
+        icon.style.color = "#2469e9";
+
+        buttons.innerHTML = "";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 22px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish() {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve();
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape" || e.key === "Enter") finish();
+        }
+
+        okBtn.onclick = finish;
+
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+</body>
+
+</html>

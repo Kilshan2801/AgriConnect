@@ -1,0 +1,4317 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Expert History</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* =========================================================
+   BODY
+========================================================= */
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7f5;
+    color: #172033;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   MATCHED TO expert-dashboard.html
+========================================================= */
+
+.sidebar {
+    min-width: 255px;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #00543f 0%,
+            #003f32 100%
+        );
+
+    color: white;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* Sidebar scrollbar */
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.20);
+    border-radius: 5px;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGO
+========================================================= */
+
+.sidebar-logo {
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.10);
+
+    flex-shrink: 0;
+}
+
+.sidebar-logo img {
+    width: 160px;
+
+    height: auto;
+
+    max-height: 62px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================================================
+   SIDEBAR CONTENT
+========================================================= */
+
+.sidebar-nav {
+    padding: 13px 10px;
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   NAV ITEM
+========================================================= */
+
+.nav-item {
+    width: 100%;
+
+    min-height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+
+.nav-item:hover {
+    background:
+        rgba(255,255,255,0.08);
+}
+
+
+.nav-item.active {
+    background:
+        linear-gradient(
+            90deg,
+            #19945f,
+            #087a4d
+        );
+}
+
+
+/* =========================================================
+   NAV ICON
+========================================================= */
+
+.nav-icon {
+    width: 22px;
+
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+
+.nav-text {
+    flex: 1;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+    padding: 8px 10px 14px;
+
+    flex-shrink: 0;
+}
+
+
+.sidebar-divider {
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.13);
+
+    margin:
+        5px 12px 10px;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.main-content {
+    margin-left: 255px;
+
+    min-height: 100vh;
+
+    width:
+        calc(100% - 255px);
+
+    padding-bottom: 48px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e3e8e4;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    padding: 0 34px;
+
+    position: relative;
+
+    z-index: 2000;
+}
+
+
+/* =========================================================
+   HEADER RIGHT
+========================================================= */
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.header-notification {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 23px;
+}
+
+
+.header-badge {
+    position: absolute;
+
+    top: -3px;
+    right: -2px;
+
+    min-width: 20px;
+    height: 20px;
+
+    padding: 0 5px;
+
+    border-radius: 50%;
+
+    background: #25b94b;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+
+.profile-picture {
+    font-size: 17px;
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        1px solid #cce2d2;
+
+    background: #e9f4ec;
+}
+
+
+.profile-info {
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    min-width: 75px;
+}
+
+
+.profile-name {
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #172033;
+
+    line-height: 20px;
+}
+
+
+.profile-role {
+    font-size: 13px;
+
+    color: #17833c;
+
+    line-height: 18px;
+}
+
+
+.profile-arrow {
+    font-size: 12px;
+
+    color: #667085;
+
+    margin-left: 2px;
+
+    transition: transform 0.2s;
+}
+
+
+.profile.open .profile-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+.profile-dropdown {
+    position: absolute;
+
+    top:
+        calc(100% + 14px);
+
+    right: 0;
+
+    width: 280px;
+
+    background: white;
+
+    border:
+        1px solid #e1e7e3;
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 10px 28px
+        rgba(0,0,0,0.14);
+
+    padding: 10px;
+
+    display: none;
+
+    z-index: 9999;
+}
+
+
+.profile.open .profile-dropdown {
+    display: block;
+}
+
+
+/* =========================================================
+   DROPDOWN USER
+========================================================= */
+
+.dropdown-user {
+    padding:
+        10px 14px 12px;
+
+    border-bottom:
+        1px solid #e8ece9;
+
+    margin-bottom: 6px;
+}
+
+
+.dropdown-user-name {
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color: #172033;
+}
+
+
+.dropdown-user-role {
+    margin-top: 3px;
+
+    font-size: 13px;
+
+    color: #17833c;
+}
+
+
+/* =========================================================
+   DROPDOWN TITLE
+========================================================= */
+
+.dropdown-title {
+    padding:
+        8px 14px 9px;
+
+    color: #687385;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.4px;
+
+    text-transform: uppercase;
+}
+
+
+#roleOptions {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+
+.dropdown-role {
+    width: 100%;
+
+    min-height: 49px;
+
+    border: none;
+
+    background: white;
+
+    border-radius: 8px;
+
+    padding: 0 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    color: #344054;
+
+    font-family: inherit;
+
+    font-size: 15px;
+}
+
+
+.dropdown-role:hover {
+    background: #f3f8f4;
+}
+
+
+.dropdown-role.current {
+    background: #e5f5e9;
+
+    color: #087f3f;
+
+    font-weight: bold;
+}
+
+
+.dropdown-role-icon {
+    width: 25px;
+
+    min-width: 25px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+
+.dropdown-role-name {
+    flex: 1;
+}
+
+
+.role-check {
+    width: 20px;
+
+    min-width: 20px;
+
+    text-align: center;
+
+    font-size: 20px;
+
+    color: #087f3f;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+    padding:
+        32px 34px 70px;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.page-title {
+    margin-bottom: 24px;
+}
+
+
+.page-title h2 {
+    font-size: 32px;
+
+    line-height: 38px;
+
+    margin-bottom: 7px;
+
+    color: #172033;
+}
+
+
+.page-title p {
+    color: #64748b;
+
+    font-size: 16px;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 16px;
+
+    margin-bottom: 20px;
+}
+
+
+.summary-card {
+    background: white;
+
+    border:
+        1px solid #dfe6e1;
+
+    border-radius: 13px;
+
+    min-height: 105px;
+
+    padding: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    box-shadow:
+        0 3px 10px
+        rgba(0,0,0,0.035);
+}
+
+
+.summary-icon {
+    width: 48px;
+    height: 48px;
+
+    min-width: 48px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+}
+
+
+.summary-icon.green {
+    background: #e4f5e9;
+}
+
+
+.summary-icon.blue {
+    background: #e8f1ff;
+}
+
+
+.summary-icon.purple {
+    background: #f0e6ff;
+}
+
+
+.summary-info {
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+.summary-label {
+    font-size: 13px;
+
+    color: #667085;
+
+    margin-bottom: 4px;
+}
+
+
+.summary-value {
+    font-size: 27px;
+
+    font-weight: bold;
+
+    color: #172033;
+}
+
+
+.summary-sub {
+    font-size: 11px;
+
+    color: #17833c;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   FILTER CARD
+========================================================= */
+
+.filter-card {
+    background: white;
+
+    border:
+        1px solid #dfe6e1;
+
+    border-radius: 13px;
+
+    padding: 15px;
+
+    margin-bottom: 20px;
+
+    box-shadow:
+        0 3px 10px
+        rgba(0,0,0,0.035);
+}
+
+
+.filter-row {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        190px
+        190px
+        auto;
+
+    gap: 10px;
+
+    align-items: center;
+}
+
+
+/* =========================================================
+   SEARCH BOX
+========================================================= */
+
+.search-box {
+    height: 46px;
+
+    border:
+        1px solid #d5ddd8;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    padding: 0 13px;
+}
+
+
+.search-icon {
+    font-size: 18px;
+}
+
+
+.search-box input {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    color: #172033;
+}
+
+
+.search-box input::placeholder {
+    color: #8791a0;
+}
+
+
+/* =========================================================
+   FILTER SELECT
+========================================================= */
+
+.filter-select {
+    height: 46px;
+
+    border:
+        1px solid #d5ddd8;
+
+    border-radius: 9px;
+
+    padding: 0 12px;
+
+    background: white;
+
+    color: #344054;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    outline: none;
+}
+
+
+/* =========================================================
+   FILTER BUTTON
+========================================================= */
+
+.filter-button {
+    height: 46px;
+
+    padding: 0 17px;
+
+    border:
+        1px solid #159447;
+
+    background: #159447;
+
+    color: white;
+
+    border-radius: 9px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.filter-button:hover {
+    background: #087f3f;
+}
+
+
+/* =========================================================
+   HISTORY CARD
+========================================================= */
+
+.history-card {
+    background: white;
+
+    border:
+        1px solid #dfe6e1;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 3px 10px
+        rgba(0,0,0,0.035);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   HISTORY HEADER
+========================================================= */
+
+.history-header {
+    padding:
+        20px 22px;
+
+    border-bottom:
+        1px solid #e7ece9;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+
+.history-header-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+.history-icon {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 9px;
+
+    background: #e5f5e9;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+}
+
+
+.history-header h3 {
+    font-size: 18px;
+
+    color: #172033;
+}
+
+
+.history-count {
+    padding:
+        4px 9px;
+
+    border-radius: 12px;
+
+    background: #e5f5e9;
+
+    color: #087f3f;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+
+thead th {
+    background: #f6f8f7;
+
+    color: #344054;
+
+    font-size: 12px;
+
+    text-align: left;
+
+    padding:
+        13px 16px;
+
+    white-space: nowrap;
+}
+
+
+tbody td {
+    padding:
+        15px 16px;
+
+    border-top:
+        1px solid #e9eeeb;
+
+    font-size: 13px;
+
+    color: #344054;
+
+    vertical-align: middle;
+}
+
+
+tbody tr:hover {
+    background: #fbfdfb;
+}
+
+
+/* =========================================================
+   FARMER
+========================================================= */
+
+.farmer-cell {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.farmer-avatar {
+    width: 37px;
+    height: 37px;
+
+    min-width: 37px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #087f3f;
+
+    background: #e4f5e9;
+}
+
+
+.farmer-name {
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #172033;
+}
+
+
+.farmer-location {
+    font-size: 11px;
+
+    color: #6b7683;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   TOPIC
+========================================================= */
+
+.topic-name {
+    font-weight: bold;
+
+    color: #172033;
+
+    margin-bottom: 3px;
+}
+
+
+.topic-description {
+    color: #6b7683;
+
+    font-size: 11px;
+
+    max-width: 260px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   COMPLETED BADGE
+========================================================= */
+
+.completed-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding:
+        5px 9px;
+
+    border-radius: 7px;
+
+    background: #dcf6e4;
+
+    color: #087f3f;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   ACTION BUTTON
+========================================================= */
+
+.view-button {
+    min-width: 95px;
+
+    height: 36px;
+
+    border:
+        1px solid #7acb94;
+
+    border-radius: 8px;
+
+    background: white;
+
+    color: #087f3f;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.view-button:hover {
+    background: #edf8f0;
+}
+
+
+/* =========================================================
+   EMPTY
+========================================================= */
+
+.empty-table {
+    padding:
+        50px 25px !important;
+
+    text-align: center;
+
+    color: #6b7683;
+}
+
+
+.empty-icon {
+    font-size: 34px;
+
+    margin-bottom: 8px;
+}
+
+
+.empty-title {
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color: #344054;
+
+    margin-bottom: 5px;
+}
+
+
+.empty-text {
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    position: fixed;
+
+    left: 255px;
+
+    right: 0;
+
+    bottom: 0;
+
+    height: 48px;
+
+    background: #00563f;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    font-size: 12px;
+
+    z-index: 900;
+}
+
+
+.footer a {
+    color: white;
+
+    text-decoration: none;
+}
+
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+.mobile-menu {
+    display: none;
+
+    width: 38px;
+    height: 38px;
+
+    border:
+        1px solid #d5ddd8;
+
+    background: white;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .filter-row {
+        grid-template-columns:
+            1fr 1fr;
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s ease;
+    }
+
+
+    .sidebar.open {
+        transform:
+            translateX(0);
+    }
+
+
+    .main-content {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+
+    .footer {
+        left: 0;
+    }
+
+
+    .mobile-menu {
+        display: block;
+    }
+
+
+    .header {
+        height: 95px;
+
+        padding:
+            15px 18px;
+
+        justify-content:
+            space-between;
+    }
+
+
+    .content {
+        padding:
+            22px 18px 70px;
+    }
+
+
+    .summary-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .filter-row {
+        grid-template-columns:
+            1fr;
+    }
+
+
+    .profile-info {
+        display: none;
+    }
+
+
+    .profile-arrow {
+        display: none;
+    }
+
+
+    .page-title h2 {
+        font-size: 27px;
+    }
+
+
+    .page-title p {
+        font-size: 13px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .header-right {
+        gap: 8px;
+    }
+
+
+    .profile-picture {
+        width: 44px;
+        height: 44px;
+    }
+
+
+    .history-header {
+        padding: 16px;
+    }
+
+
+    .history-header h3 {
+        font-size: 16px;
+    }
+
+
+    tbody td,
+    thead th {
+        padding: 12px;
+    }
+
+}
+
+
+.consultation-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="sidebar-nav">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="expert-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-text">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- CONSULTATIONS -->
+
+        <a
+            href="expert-consultations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-text">
+                Consultations
+            </span>
+
+            <span class="consultation-badge" id="consultationBadge" style="display:none;">0</span>
+
+        </a>
+
+
+        <!-- RESOURCES -->
+
+        <a
+            href="expert-resources.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                📖
+            </span>
+
+            <span class="nav-text">
+                Resources
+            </span>
+
+        </a>
+
+
+        <!-- REPORT ISSUES -->
+
+        <a
+            href="expert-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-text">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="expert-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-text">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="expert-history.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-text">
+                History
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <!-- HELP -->
+
+        <a
+            href="expert-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-text">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <!-- SETTINGS -->
+
+        <a
+            href="expert-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-text">
+                Settings
+            </span>
+
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <a
+            href="#"
+            class="nav-item"
+            id="logoutButton"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-text">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="main-content">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:14px;
+            "
+        >
+
+            <button
+                class="mobile-menu"
+                id="mobileMenu"
+                type="button"
+            >
+                ☰
+            </button>
+
+        </div>
+
+
+        <div class="header-right">
+
+
+            <!-- NOTIFICATION -->
+
+            <div
+                class="header-notification"
+                id="notificationButton"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="header-badge"
+                    id="notificationCount"
+                >
+                    3
+                </span>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+
+                <img
+                    src="https://ui-avatars.com/api/?name=Agricultural%20Expert&background=e9f4ec&color=17833c"
+                    alt="Profile"
+                    class="profile-picture"
+                    id="profilePicture"
+                >
+
+
+                <div class="profile-info">
+
+                    <div
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Agricultural Expert
+                    </div>
+
+                    <div
+                        class="profile-role"
+                        id="profileRole"
+                    >
+                        Agricultural Expert
+                    </div>
+
+                </div>
+
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+                <!-- PROFILE DROPDOWN -->
+
+                <div
+                    class="profile-dropdown"
+                    id="profileDropdown"
+                >
+
+
+                    <div class="dropdown-user">
+
+                        <div
+                            class="dropdown-user-name"
+                            id="dropdownUserName"
+                        >
+                            Agricultural Expert
+                        </div>
+
+                        <div
+                            class="dropdown-user-role"
+                            id="dropdownUserRole"
+                        >
+                            Agricultural Expert
+                        </div>
+
+                    </div>
+
+
+                    <div class="dropdown-title">
+                        Switch Role
+                    </div>
+
+
+                    <div id="roleOptions"></div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =========================================================
+         CONTENT
+    ========================================================= -->
+
+    <section class="content">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="page-title">
+
+            <h2>
+                History
+            </h2>
+
+            <p>
+                View your completed consultations and previous expert activities.
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             SUMMARY
+        ===================================================== -->
+
+        <div class="summary-grid">
+
+
+            <!-- COMPLETED -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon green">
+                    ✓
+                </div>
+
+                <div class="summary-info">
+
+                    <div class="summary-label">
+                        Completed Consultations
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="completedCount"
+                    >
+                        10
+                    </div>
+
+                    <div class="summary-sub">
+                        Total completed
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- THIS MONTH -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon blue">
+                    💬
+                </div>
+
+                <div class="summary-info">
+
+                    <div class="summary-label">
+                        This Month
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="monthCount"
+                    >
+                        6
+                    </div>
+
+                    <div class="summary-sub">
+                        Completed this month
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- AVERAGE -->
+
+            <div class="summary-card">
+
+                <div class="summary-icon purple">
+                    ⏱
+                </div>
+
+                <div class="summary-info">
+
+                    <div class="summary-label">
+                        Average Duration
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="averageDuration"
+                    >
+                        18m
+                    </div>
+
+                    <div class="summary-sub">
+                        Per consultation
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             FILTERS
+        ===================================================== -->
+
+        <div class="filter-card">
+
+
+            <div class="filter-row">
+
+
+                <!-- SEARCH -->
+
+                <div class="search-box">
+
+                    <span class="search-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search by farmer name or topic..."
+                    >
+
+                </div>
+
+
+                <!-- TOPIC -->
+
+                <select
+                    class="filter-select"
+                    id="topicFilter"
+                >
+
+                    <option value="">
+                        All Topics
+                    </option>
+
+                    <option value="disease">
+                        Crop Diseases
+                    </option>
+
+                    <option value="fertilizer">
+                        Soil &amp; Fertilizer
+                    </option>
+
+                    <option value="pest">
+                        Pest Control
+                    </option>
+
+                    <option value="irrigation">
+                        Irrigation
+                    </option>
+
+                    <option value="organic">
+                        Organic Farming
+                    </option>
+
+                    <option value="growth">
+                        Crop Growth
+                    </option>
+
+                </select>
+
+
+                <!-- DATE -->
+
+                <select
+                    class="filter-select"
+                    id="dateFilter"
+                >
+
+                    <option value="">
+                        All Dates
+                    </option>
+
+                    <option value="month">
+                        This Month
+                    </option>
+
+                    <option value="3months">
+                        Last 3 Months
+                    </option>
+
+                    <option value="year">
+                        This Year
+                    </option>
+
+                </select>
+
+
+                <!-- CLEAR -->
+
+                <button
+                    type="button"
+                    class="filter-button"
+                    id="clearFilter"
+                >
+                    Clear Filters
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =====================================================
+             HISTORY TABLE
+        ===================================================== -->
+
+        <div class="history-card">
+
+
+            <div class="history-header">
+
+
+                <div class="history-header-left">
+
+                    <div class="history-icon">
+                        ✓
+                    </div>
+
+                    <h3>
+                        Completed Consultations
+                    </h3>
+
+                    <span
+                        class="history-count"
+                        id="historyCount"
+                    >
+                        10
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Consultation ID
+                            </th>
+
+                            <th>
+                                Farmer
+                            </th>
+
+                            <th>
+                                Topic
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Completed Date
+                            </th>
+
+                            <th>
+                                Duration
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="historyTableBody">
+
+
+                        <!-- =================================================
+                             CONSULTATION 0018
+                        ================================================= -->
+
+                        <tr
+                            data-topic="disease"
+                            data-date="2026-05-15"
+                        >
+
+                            <td>
+                                CON-2026-0018
+                            </td>
+
+
+                            <td>
+
+                                <div class="farmer-cell">
+
+                                    <div class="farmer-avatar">
+                                        K
+                                    </div>
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Kumar A.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Jaffna, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-name">
+                                    Tomato Disease
+                                </div>
+
+                                <div class="topic-description">
+                                    Tomato leaves turning yellow and curling.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="completed-badge">
+                                    ✓ Completed
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                15 May 2026<br>
+                                <small>10:30 AM</small>
+                            </td>
+
+
+                            <td>
+                                22 min
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="view-button"
+                                    onclick="viewConsultation('CON-2026-0018')"
+                                >
+                                    View Details
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             CONSULTATION 0017
+                        ================================================= -->
+
+                        <tr
+                            data-topic="fertilizer"
+                            data-date="2026-05-14"
+                        >
+
+                            <td>
+                                CON-2026-0017
+                            </td>
+
+
+                            <td>
+
+                                <div class="farmer-cell">
+
+                                    <div class="farmer-avatar">
+                                        B
+                                    </div>
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Bharath S.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Kilinochchi, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-name">
+                                    Paddy Cultivation
+                                </div>
+
+                                <div class="topic-description">
+                                    Fertilizer recommendation for paddy.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="completed-badge">
+                                    ✓ Completed
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                14 May 2026<br>
+                                <small>12:45 PM</small>
+                            </td>
+
+
+                            <td>
+                                18 min
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="view-button"
+                                    onclick="viewConsultation('CON-2026-0017')"
+                                >
+                                    View Details
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             CONSULTATION 0016
+                        ================================================= -->
+
+                        <tr
+                            data-topic="growth"
+                            data-date="2026-05-13"
+                        >
+
+                            <td>
+                                CON-2026-0016
+                            </td>
+
+
+                            <td>
+
+                                <div class="farmer-cell">
+
+                                    <div class="farmer-avatar">
+                                        M
+                                    </div>
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Manoj P.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Vavuniya, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-name">
+                                    Potato Growth
+                                </div>
+
+                                <div class="topic-description">
+                                    Potato plants not growing properly.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="completed-badge">
+                                    ✓ Completed
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                13 May 2026<br>
+                                <small>09:30 AM</small>
+                            </td>
+
+
+                            <td>
+                                16 min
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="view-button"
+                                    onclick="viewConsultation('CON-2026-0016')"
+                                >
+                                    View Details
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             CONSULTATION 0015
+                        ================================================= -->
+
+                        <tr
+                            data-topic="pest"
+                            data-date="2026-05-12"
+                        >
+
+                            <td>
+                                CON-2026-0015
+                            </td>
+
+
+                            <td>
+
+                                <div class="farmer-cell">
+
+                                    <div class="farmer-avatar">
+                                        S
+                                    </div>
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Suresh R.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Jaffna, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-name">
+                                    Brinjal Pests
+                                </div>
+
+                                <div class="topic-description">
+                                    Fruit and shoot borer management.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="completed-badge">
+                                    ✓ Completed
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                12 May 2026<br>
+                                <small>03:20 PM</small>
+                            </td>
+
+
+                            <td>
+                                20 min
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="view-button"
+                                    onclick="viewConsultation('CON-2026-0015')"
+                                >
+                                    View Details
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             CONSULTATION 0014
+                        ================================================= -->
+
+                        <tr
+                            data-topic="organic"
+                            data-date="2026-05-10"
+                        >
+
+                            <td>
+                                CON-2026-0014
+                            </td>
+
+
+                            <td>
+
+                                <div class="farmer-cell">
+
+                                    <div class="farmer-avatar">
+                                        D
+                                    </div>
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Dhivya L.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Mannar, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-name">
+                                    Organic Farming
+                                </div>
+
+                                <div class="topic-description">
+                                    Suggestions for starting organic farming.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="completed-badge">
+                                    ✓ Completed
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                10 May 2026<br>
+                                <small>11:15 AM</small>
+                            </td>
+
+
+                            <td>
+                                24 min
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="view-button"
+                                    onclick="viewConsultation('CON-2026-0014')"
+                                >
+                                    View Details
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             CONSULTATION 0013
+                        ================================================= -->
+
+                        <tr
+                            data-topic="disease"
+                            data-date="2026-05-08"
+                        >
+
+                            <td>
+                                CON-2026-0013
+                            </td>
+
+
+                            <td>
+
+                                <div class="farmer-cell">
+
+                                    <div class="farmer-avatar">
+                                        G
+                                    </div>
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Ganesan T.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Mullaitivu, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-name">
+                                    Chili Leaf Curl
+                                </div>
+
+                                <div class="topic-description">
+                                    Advice for controlling leaf curl.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="completed-badge">
+                                    ✓ Completed
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                08 May 2026<br>
+                                <small>02:10 PM</small>
+                            </td>
+
+
+                            <td>
+                                17 min
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="view-button"
+                                    onclick="viewConsultation('CON-2026-0013')"
+                                >
+                                    View Details
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             CONSULTATION 0012
+                        ================================================= -->
+
+                        <tr
+                            data-topic="irrigation"
+                            data-date="2026-05-06"
+                        >
+
+                            <td>
+                                CON-2026-0012
+                            </td>
+
+
+                            <td>
+
+                                <div class="farmer-cell">
+
+                                    <div class="farmer-avatar">
+                                        R
+                                    </div>
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Ravi K.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Trincomalee, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-name">
+                                    Crop Irrigation
+                                </div>
+
+                                <div class="topic-description">
+                                    Improving irrigation for vegetable crops.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="completed-badge">
+                                    ✓ Completed
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                06 May 2026<br>
+                                <small>04:00 PM</small>
+                            </td>
+
+
+                            <td>
+                                19 min
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="view-button"
+                                    onclick="viewConsultation('CON-2026-0012')"
+                                >
+                                    View Details
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             CONSULTATION 0011
+                        ================================================= -->
+
+                        <tr
+                            data-topic="fertilizer"
+                            data-date="2026-05-04"
+                        >
+
+                            <td>
+                                CON-2026-0011
+                            </td>
+
+
+                            <td>
+
+                                <div class="farmer-cell">
+
+                                    <div class="farmer-avatar">
+                                        T
+                                    </div>
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Tharushi P.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Colombo, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-name">
+                                    Soil Fertility
+                                </div>
+
+                                <div class="topic-description">
+                                    Improving soil fertility naturally.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="completed-badge">
+                                    ✓ Completed
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                04 May 2026<br>
+                                <small>10:45 AM</small>
+                            </td>
+
+
+                            <td>
+                                15 min
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="view-button"
+                                    onclick="viewConsultation('CON-2026-0011')"
+                                >
+                                    View Details
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             CONSULTATION 0010
+                        ================================================= -->
+
+                        <tr
+                            data-topic="pest"
+                            data-date="2026-05-02"
+                        >
+
+                            <td>
+                                CON-2026-0010
+                            </td>
+
+
+                            <td>
+
+                                <div class="farmer-cell">
+
+                                    <div class="farmer-avatar">
+                                        A
+                                    </div>
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Ananda S.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Batticaloa, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-name">
+                                    Pest Control
+                                </div>
+
+                                <div class="topic-description">
+                                    Managing pests in vegetable crops.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="completed-badge">
+                                    ✓ Completed
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                02 May 2026<br>
+                                <small>01:30 PM</small>
+                            </td>
+
+
+                            <td>
+                                21 min
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="view-button"
+                                    onclick="viewConsultation('CON-2026-0010')"
+                                >
+                                    View Details
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+
+                        <!-- =================================================
+                             CONSULTATION 0009
+                        ================================================= -->
+
+                        <tr
+                            data-topic="organic"
+                            data-date="2026-04-29"
+                        >
+
+                            <td>
+                                CON-2026-0009
+                            </td>
+
+
+                            <td>
+
+                                <div class="farmer-cell">
+
+                                    <div class="farmer-avatar">
+                                        P
+                                    </div>
+
+                                    <div>
+
+                                        <div class="farmer-name">
+                                            Priya M.
+                                        </div>
+
+                                        <div class="farmer-location">
+                                            Kilinochchi, Sri Lanka
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <div class="topic-name">
+                                    Sustainable Farming
+                                </div>
+
+                                <div class="topic-description">
+                                    Sustainable farming practices.
+                                </div>
+
+                            </td>
+
+
+                            <td>
+
+                                <span class="completed-badge">
+                                    ✓ Completed
+                                </span>
+
+                            </td>
+
+
+                            <td>
+                                29 Apr 2026<br>
+                                <small>11:20 AM</small>
+                            </td>
+
+
+                            <td>
+                                18 min
+                            </td>
+
+
+                            <td>
+
+                                <button
+                                    type="button"
+                                    class="view-button"
+                                    onclick="viewConsultation('CON-2026-0009')"
+                                >
+                                    View Details
+                                </button>
+
+                            </td>
+
+                        </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+
+            <!-- EMPTY STATE -->
+
+            <div
+                id="emptyState"
+                class="empty-table"
+                style="display:none;"
+            >
+
+                <div class="empty-icon">
+                    🔎
+                </div>
+
+                <div class="empty-title">
+                    No consultations found
+                </div>
+
+                <div class="empty-text">
+                    Try changing your search or filter options.
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <span>
+        © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+let user = null;
+
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem("user")
+        );
+
+}
+
+catch (error) {
+
+    user = null;
+
+}
+
+
+/* =========================================================
+   ROLE INFORMATION
+========================================================= */
+
+const roleNames = {
+
+    farmer:
+        "Farmer",
+
+    buyer:
+        "Buyer",
+
+    expert:
+        "Agricultural Expert",
+
+    equipment_provider:
+        "Equipment Provider"
+
+};
+
+
+const roleIcons = {
+
+    farmer:
+        "👨‍🌾",
+
+    buyer:
+        "🛒",
+
+    expert:
+        "🌱",
+
+    equipment_provider:
+        "🚜"
+
+};
+
+
+/* =========================================================
+   NORMALIZE ROLE
+========================================================= */
+
+function normalizeRole(role) {
+
+    if (!role) {
+        return "";
+    }
+
+
+    const value =
+        String(role)
+            .toLowerCase()
+            .trim();
+
+
+    if (value === "farmer") {
+        return "farmer";
+    }
+
+
+    if (value === "buyer") {
+        return "buyer";
+    }
+
+
+    if (
+        value === "expert" ||
+        value === "agricultural expert" ||
+        value === "agri expert"
+    ) {
+
+        return "expert";
+
+    }
+
+
+    if (
+        value === "equipment_provider" ||
+        value === "equipment provider" ||
+        value === "equipment-provider"
+    ) {
+
+        return "equipment_provider";
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================================================
+   GET REGISTERED ROLE
+========================================================= */
+
+function getRegisteredRole() {
+
+    if (!user) {
+        return "";
+    }
+
+
+    const possibleRoles = [
+
+        user.registered_role,
+
+        user.registeredRole,
+
+        user.registration_role,
+
+        user.registrationRole,
+
+        user.account_role,
+
+        user.accountRole,
+
+        user.user_role,
+
+        user.userRole,
+
+        user.role
+
+    ];
+
+
+    for (
+        const role of possibleRoles
+    ) {
+
+        const normalized =
+            normalizeRole(role);
+
+
+        if (
+            normalized &&
+            roleNames[normalized]
+        ) {
+
+            return normalized;
+
+        }
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================================================
+   GET ACCOUNT ROLES
+========================================================= */
+
+function getAccountRoles() {
+
+    const registeredRole =
+        getRegisteredRole();
+
+
+    if (registeredRole) {
+
+        if (
+            registeredRole === "buyer"
+        ) {
+
+            return [
+                "buyer"
+            ];
+
+        }
+
+
+        return [
+            registeredRole,
+            "buyer"
+        ];
+
+    }
+
+
+    if (
+        user &&
+        Array.isArray(user.roles)
+    ) {
+
+        const roles =
+            user.roles
+                .map(normalizeRole)
+                .filter(
+                    role =>
+                        !!roleNames[role]
+                );
+
+
+        const uniqueRoles =
+            [
+                ...new Set(roles)
+            ];
+
+
+        if (
+            uniqueRoles.length > 0
+        ) {
+
+            const hasNonBuyerRole =
+                uniqueRoles.some(
+                    role =>
+                        role !== "buyer"
+                );
+
+
+            if (
+                hasNonBuyerRole &&
+                !uniqueRoles.includes("buyer")
+            ) {
+
+                uniqueRoles.push(
+                    "buyer"
+                );
+
+            }
+
+
+            return uniqueRoles;
+
+        }
+
+    }
+
+
+    return [
+        "expert",
+        "buyer"
+    ];
+
+}
+
+
+/* =========================================================
+   CURRENT ROLE
+========================================================= */
+
+let currentRole =
+    normalizeRole(
+        sessionStorage.getItem(
+            "selectedRole"
+        )
+    );
+
+
+const availableRoles =
+    getAccountRoles();
+
+
+if (
+    !currentRole ||
+    !availableRoles.includes(
+        currentRole
+    )
+) {
+
+    currentRole =
+        "expert";
+
+    sessionStorage.setItem(
+        "selectedRole",
+        "expert"
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY USER
+========================================================= */
+
+function displayUser() {
+
+    let fullName =
+        "Agricultural Expert";
+
+
+    if (user) {
+
+        const firstName =
+            user.first_name ||
+            user.firstName ||
+            "";
+
+
+        const lastName =
+            user.last_name ||
+            user.lastName ||
+            "";
+
+
+        fullName =
+            `${firstName} ${lastName}`.trim();
+
+
+        if (!fullName) {
+
+            fullName =
+                user.name ||
+                user.full_name ||
+                user.fullName ||
+                "Agricultural Expert";
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        fullName;
+
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        fullName;
+
+
+    document.getElementById(
+        "profileRole"
+    ).textContent =
+        roleNames[currentRole] ||
+        "Agricultural Expert";
+
+
+    document.getElementById(
+        "dropdownUserRole"
+    ).textContent =
+        roleNames[currentRole] ||
+        "Agricultural Expert";
+
+
+    document.getElementById(
+        "profilePicture"
+    ).src =
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=e9f4ec&color=17833c`;
+
+}
+
+
+/* =========================================================
+   LOAD ROLES
+========================================================= */
+
+function loadRoles() {
+
+    const roleOptions =
+        document.getElementById(
+            "roleOptions"
+        );
+
+
+    roleOptions.innerHTML =
+        "";
+
+
+    getAccountRoles().forEach(
+        function(role) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "dropdown-role";
+
+
+            if (
+                role === currentRole
+            ) {
+
+                button.classList.add(
+                    "current"
+                );
+
+            }
+
+
+            button.innerHTML = `
+
+                <span
+                    class="dropdown-role-icon"
+                >
+                    ${roleIcons[role] || "👤"}
+                </span>
+
+                <span
+                    class="dropdown-role-name"
+                >
+                    ${roleNames[role] || role}
+                </span>
+
+                <span
+                    class="role-check"
+                >
+                    ${
+                        role === currentRole
+                            ? "✓"
+                            : ""
+                    }
+                </span>
+
+            `;
+
+
+            button.addEventListener(
+                "click",
+                function(event) {
+
+                    event.stopPropagation();
+
+                    switchRole(role);
+
+                }
+            );
+
+
+            roleOptions.appendChild(
+                button
+            );
+
+        }
+    );
+
+    moveCurrentRoleToFront(roleOptions);
+
+
+}
+
+
+/* =========================================================
+   SWITCH ROLE
+========================================================= */
+
+function switchRole(role) {
+
+    if (
+        !getAccountRoles().includes(role)
+    ) {
+
+        return;
+
+    }
+
+
+    sessionStorage.setItem(
+        "selectedRole",
+        role
+    );
+
+
+    if (
+        role === "buyer"
+    ) {
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+    }
+
+    else if (
+        role === "farmer"
+    ) {
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+    }
+
+    else if (
+        role === "expert"
+    ) {
+
+        window.location.href =
+            "expert-dashboard.html";
+
+    }
+
+    else if (
+        role === "equipment_provider"
+    ) {
+
+        window.location.href =
+            "rental-dashboard.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+const profile =
+    document.getElementById(
+        "profile"
+    );
+
+
+profile.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        profile.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    function() {
+
+        profile.classList.remove(
+            "open"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   NOTIFICATION BUTTON
+========================================================= */
+
+document
+    .getElementById(
+        "notificationButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            window.location.href =
+                "expert-notifications.html";
+
+        }
+    );
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+document
+    .getElementById(
+        "mobileMenu"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            document
+                .getElementById(
+                    "sidebar"
+                )
+                .classList.toggle(
+                    "open"
+                );
+
+        }
+    );
+
+
+/* =========================================================
+   SEARCH + FILTER
+========================================================= */
+
+const searchInput =
+    document.getElementById(
+        "searchInput"
+    );
+
+
+const topicFilter =
+    document.getElementById(
+        "topicFilter"
+    );
+
+
+const dateFilter =
+    document.getElementById(
+        "dateFilter"
+    );
+
+
+const rows =
+    [];
+
+
+function getCurrentUserId() {
+
+    try {
+
+        const parsedUser =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+        return parsedUser && parsedUser.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+function updateNotificationCount() {
+
+    const userId =
+        getCurrentUserId();
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const badgeEl = document.getElementById("notificationCount");
+
+            if (badgeEl) badgeEl.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+updateNotificationCount();
+
+
+function escapeHtmlHistory(value) {
+
+    const div = document.createElement("div");
+    div.textContent = value == null ? "" : String(value);
+    return div.innerHTML;
+
+}
+
+
+function buildConsultationRowHtml(row) {
+
+    const name =
+        `${row.first_name || ""} ${row.last_name || ""}`.trim() || "Farmer";
+
+    const initial =
+        name.charAt(0).toUpperCase() || "F";
+
+    const consultationId =
+        "CON-" + row.id;
+
+    const completedDate =
+        new Date(row.completed_at);
+
+    const dateDisplay =
+        !isNaN(completedDate)
+            ? completedDate.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" })
+            : "";
+
+    const timeDisplay =
+        !isNaN(completedDate)
+            ? completedDate.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+            : "";
+
+    let duration = "—";
+
+    if (row.first_message_at && row.last_message_at) {
+
+        const minutes =
+            Math.max(
+                1,
+                Math.round(
+                    (new Date(row.last_message_at) - new Date(row.first_message_at)) / 60000
+                )
+            );
+
+        duration = minutes + " min";
+
+    }
+
+    return `
+        <tr
+            data-topic=""
+            data-date="${escapeHtmlHistory(String(row.completed_at).slice(0, 10))}"
+        >
+            <td>${escapeHtmlHistory(consultationId)}</td>
+
+            <td>
+                <div class="farmer-cell">
+                    <div class="farmer-avatar">
+                        ${escapeHtmlHistory(initial)}
+                    </div>
+                    <div>
+                        <div class="farmer-name">
+                            ${escapeHtmlHistory(name)}
+                        </div>
+                    </div>
+                </div>
+            </td>
+
+            <td>
+                <div class="topic-name">
+                    Consultation
+                </div>
+                <div class="topic-description">
+                    ${escapeHtmlHistory(row.first_message || "")}
+                </div>
+            </td>
+
+            <td>
+                <span class="completed-badge">
+                    ✓ Completed
+                </span>
+            </td>
+
+            <td>
+                ${escapeHtmlHistory(dateDisplay)}<br>
+                <small>${escapeHtmlHistory(timeDisplay)}</small>
+            </td>
+
+            <td>
+                ${escapeHtmlHistory(duration)}
+            </td>
+
+            <td>
+                <button
+                    type="button"
+                    class="view-button"
+                    onclick="viewConsultation(${row.id}, '${escapeHtmlHistory(name).replace(/'/g, "\\'")}')"
+                >
+                    View Details
+                </button>
+            </td>
+        </tr>
+    `;
+
+}
+
+
+async function loadConsultationHistory() {
+
+    const userId = getCurrentUserId();
+
+    const tbody = document.getElementById("historyTableBody");
+
+    tbody.innerHTML = "";
+
+    if (!userId) {
+        return;
+    }
+
+    try {
+
+        const response =
+            await fetch(`/api/history?user_id=${userId}&role=expert`);
+
+        const data =
+            await response.json();
+
+        if (data && data.success && Array.isArray(data.consultations)) {
+
+            tbody.innerHTML =
+                data.consultations.map(buildConsultationRowHtml).join("");
+
+        }
+
+    } catch (error) {
+
+        console.error("Unable to load consultation history:", error);
+
+    }
+
+}
+
+
+function filterHistory() {
+
+    const search =
+        searchInput.value
+            .toLowerCase()
+            .trim();
+
+
+    const topic =
+        topicFilter.value;
+
+
+    const date =
+        dateFilter.value;
+
+
+    let visible =
+        0;
+
+
+    const currentRows =
+        Array.from(
+            document.querySelectorAll(
+                "#historyTableBody tr"
+            )
+        );
+
+
+    currentRows.forEach(
+        function(row) {
+
+            const rowText =
+                row.textContent
+                    .toLowerCase();
+
+
+            const rowTopic =
+                row.dataset.topic ||
+                "";
+
+
+            const rowDate =
+                new Date(
+                    row.dataset.date
+                );
+
+
+            const now =
+                new Date();
+
+
+            let matchesSearch =
+                !search ||
+                rowText.includes(
+                    search
+                );
+
+
+            let matchesTopic =
+                !topic ||
+                rowTopic === topic;
+
+
+            let matchesDate =
+                true;
+
+
+            if (
+                date === "month"
+            ) {
+
+                matchesDate =
+                    rowDate.getMonth() ===
+                        now.getMonth() &&
+                    rowDate.getFullYear() ===
+                        now.getFullYear();
+
+            }
+
+
+            else if (
+                date === "3months"
+            ) {
+
+                const threeMonthsAgo =
+                    new Date(
+                        now
+                    );
+
+
+                threeMonthsAgo.setMonth(
+                    now.getMonth() - 3
+                );
+
+
+                matchesDate =
+                    rowDate >=
+                    threeMonthsAgo;
+
+            }
+
+
+            else if (
+                date === "year"
+            ) {
+
+                matchesDate =
+                    rowDate.getFullYear() ===
+                    now.getFullYear();
+
+            }
+
+
+            if (
+                matchesSearch &&
+                matchesTopic &&
+                matchesDate
+            ) {
+
+                row.style.display =
+                    "";
+
+                visible++;
+
+            }
+
+            else {
+
+                row.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    document.getElementById(
+        "historyCount"
+    ).textContent =
+        visible;
+
+
+    document.getElementById(
+        "emptyState"
+    ).style.display =
+        visible === 0
+            ? "block"
+            : "none";
+
+
+    document.getElementById(
+        "historyTableBody"
+    ).style.display =
+        visible === 0
+            ? "none"
+            : "table-row-group";
+
+}
+
+
+/* =========================================================
+   SEARCH EVENTS
+========================================================= */
+
+searchInput.addEventListener(
+    "input",
+    filterHistory
+);
+
+
+topicFilter.addEventListener(
+    "change",
+    filterHistory
+);
+
+
+dateFilter.addEventListener(
+    "change",
+    filterHistory
+);
+
+
+/* =========================================================
+   CLEAR FILTERS
+========================================================= */
+
+document
+    .getElementById(
+        "clearFilter"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            searchInput.value =
+                "";
+
+            topicFilter.value =
+                "";
+
+            dateFilter.value =
+                "";
+
+            filterHistory();
+
+        }
+    );
+
+
+/* =========================================================
+   VIEW CONSULTATION
+========================================================= */
+
+function viewConsultation(id, farmerName) {
+
+    if (!id) {
+
+        alert(
+            "Consultation details are unavailable."
+        );
+
+        return;
+
+    }
+
+
+    window.location.href =
+        "expert-consultation-chat.html?conversationId=" +
+        encodeURIComponent(id) +
+        "&farmer=" +
+        encodeURIComponent(farmerName || "");
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+document
+    .getElementById(
+        "logoutButton"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to logout?"
+                );
+
+
+            if (!confirmed) {
+
+                return;
+
+            }
+
+
+            sessionStorage.removeItem(
+                "token"
+            );
+
+
+            sessionStorage.removeItem(
+                "user"
+            );
+
+
+            sessionStorage.removeItem(
+                "selectedRole"
+            );
+
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+displayUser();
+
+loadRoles();
+
+loadConsultationHistory().then(function() {
+
+    filterHistory();
+
+});
+
+
+
+function updateConsultationBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(c => c.unread_count > 0).length;
+
+            const badgeEl =
+                document.getElementById("consultationBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load consultation badge count:", error);
+        });
+
+}
+
+updateConsultationBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+
+</body>
+
+</html>

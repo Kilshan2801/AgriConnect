@@ -1,0 +1,4112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Notifications</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f4f7f5;
+
+    color: #172033;
+
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.dashboard {
+
+    min-height: 100vh;
+
+    display: flex;
+
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+
+    width: 255px;
+
+    min-width: 255px;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #f06a00 0%,
+            #d95700 100%
+        );
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+    z-index: 1000;
+
+    overflow: hidden;
+
+}
+
+
+/* =====================================================
+   SIDEBAR LOGO
+===================================================== */
+
+.sidebar-logo {
+    height: 86px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.sidebar-logo img {
+    width: 160px;
+    height: auto;
+    max-height: 62px;
+    object-fit: contain;
+    display: block;
+}
+
+
+/* =====================================================
+   SIDEBAR NAVIGATION
+===================================================== */
+
+.sidebar-nav {
+
+    flex: 1;
+
+    min-height: 0;
+
+    overflow-y: auto;
+
+    overflow-x: hidden;
+
+    padding:
+        13px 10px;
+
+}
+
+
+/* Custom scrollbar */
+
+.sidebar-nav::-webkit-scrollbar {
+
+    width: 5px;
+
+}
+
+.sidebar-nav::-webkit-scrollbar-thumb {
+
+    background:
+        rgba(255,255,255,0.35);
+
+    border-radius: 10px;
+
+}
+
+
+/* =====================================================
+   NAV ITEM
+===================================================== */
+
+.nav-item {
+
+    width: 100%;
+
+    min-height:45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap:12px;
+
+    padding:11px 12px;
+
+    margin-bottom:4px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size:15px;
+
+    font-weight: 600;
+
+    transition:
+        background 0.2s ease,
+        transform 0.15s ease;
+
+    flex-shrink: 0;
+
+}
+
+.nav-item:hover {
+
+    background:
+        rgba(255,255,255,0.13);
+
+}
+
+.nav-item.active {
+
+    background:
+        rgba(120,45,0,0.55);
+
+    box-shadow:
+        inset 3px 0 0 white;
+
+}
+
+
+/* =====================================================
+   NAV ICON
+===================================================== */
+
+.nav-icon {
+
+    width:22px;
+
+    min-width:22px;
+
+    text-align: center;
+
+    font-size:18px;
+
+}
+
+.nav-text {
+
+    flex: 1;
+
+    white-space: nowrap;
+
+}
+
+
+/* =====================================================
+   NOTIFICATION BADGE
+===================================================== */
+
+.nav-badge {
+
+    min-width: 22px;
+
+    height: 22px;
+
+    padding:
+        0 6px;
+
+    border-radius: 50%;
+
+    background:
+        #e52e3d;
+
+    color: white;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+/* =====================================================
+   SIDEBAR BOTTOM
+===================================================== */
+
+.sidebar-bottom {
+
+    flex-shrink: 0;
+
+    padding:
+        0 10px 14px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #d95700 0%,
+            #d95700 100%
+        );
+
+}
+
+
+/* =====================================================
+   SIDEBAR DIVIDER
+===================================================== */
+
+.sidebar-divider {
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.22);
+
+    margin:
+        5px 12px 10px;
+
+}
+
+
+/* =====================================================
+   MAIN CONTENT
+===================================================== */
+
+.main-content {
+
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 55px;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e2e7e4;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        0 35px;
+
+}
+
+
+/* =====================================================
+   HEADER LEFT
+===================================================== */
+
+.header-left {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+}
+
+.welcome-section h1 {
+
+    font-size: 29px;
+
+    font-weight: 600;
+
+    color: #111827;
+
+}
+
+.welcome-section p {
+
+    margin-top: 5px;
+
+    color: #64748b;
+
+    font-size: 13px;
+
+}
+
+
+/* =====================================================
+   HEADER RIGHT
+===================================================== */
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+
+/* =====================================================
+   HEADER NOTIFICATION
+===================================================== */
+
+.header-notification {
+
+    position: relative;
+
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+}
+
+
+/* =====================================================
+   HEADER BADGE
+===================================================== */
+
+.header-badge {
+
+    position: absolute;
+
+    top: 0;
+
+    right: -2px;
+
+    min-width: 20px;
+
+    height: 20px;
+
+    padding:
+        0 5px;
+
+    border-radius: 50%;
+
+    background:
+        #e52e3d;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+
+    user-select: none;
+
+}
+
+.profile-picture {
+    font-size: 17px;
+
+
+    width: 43px;
+
+    height: 43px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        2px solid #d95700;
+
+}
+
+.profile-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+.profile-name {
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    color: #111827;
+
+}
+
+.profile-role {
+
+    font-size: 12px;
+
+    color: #d95700;
+
+}
+
+.profile-arrow {
+
+    font-size: 12px;
+
+    color: #64748b;
+
+    margin-left: 5px;
+
+}
+
+
+/* =====================================================
+   PROFILE DROPDOWN
+===================================================== */
+
+.profile-dropdown {
+
+    position: absolute;
+
+    right: 0;
+
+    top: 58px;
+
+    width: 280px;
+
+    background: white;
+
+    border:
+        1px solid #dfe6e1;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.16);
+
+    padding:
+        15px;
+
+    display: none;
+
+    z-index: 2000;
+
+}
+
+.profile.open .profile-dropdown {
+
+    display: block;
+
+}
+
+
+/* =====================================================
+   DROPDOWN USER
+===================================================== */
+
+.dropdown-user {
+
+    padding-bottom: 12px;
+
+    border-bottom:
+        1px solid #e6ebe8;
+
+}
+
+.dropdown-user-name {
+
+    font-size: 16px;
+
+    font-weight: 700;
+
+    color: #172033;
+
+}
+
+.dropdown-user-role {
+
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    color: #d95700;
+
+}
+
+
+/* =====================================================
+   DROPDOWN TITLE
+===================================================== */
+
+.dropdown-title {
+
+    margin-top: 13px;
+
+    margin-bottom: 8px;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    color: #7b8794;
+
+    text-transform: uppercase;
+
+}
+
+
+/* =====================================================
+   ROLE OPTIONS
+===================================================== */
+
+#roleOptions {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 5px;
+
+}
+
+.dropdown-role {
+
+    width: 100%;
+
+    border: none;
+
+    background: white;
+
+    border-radius: 9px;
+
+    padding:
+        10px 11px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    font-family: inherit;
+
+    font-size: 13px;
+
+    color: #475569;
+
+    cursor: pointer;
+
+    text-align: left;
+
+}
+
+.dropdown-role:hover {
+
+    background:
+        #fff2e8;
+
+}
+
+.dropdown-role.current {
+
+    background:
+        #fff0e5;
+
+    color:
+        #d95700;
+
+    font-weight: 700;
+
+}
+
+.role-check {
+
+    margin-left: auto;
+
+    color: #d95700;
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+.mobile-menu {
+
+    display: none;
+
+    width: 38px;
+
+    height: 38px;
+
+    border:
+        1px solid #d7dfda;
+
+    background: white;
+
+    border-radius: 7px;
+
+    font-size: 18px;
+
+    cursor: pointer;
+
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+
+    padding:
+        30px 35px 70px;
+
+}
+
+
+/* =====================================================
+   PAGE TITLE
+===================================================== */
+
+.page-title {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 22px;
+
+}
+
+.page-title h2 {
+
+    font-size: 32px;
+
+    color: #111827;
+
+}
+
+.page-title h2 span {
+
+    color:
+        #e65f00;
+
+}
+
+.page-title p {
+
+    margin-top: 6px;
+
+    color: #64748b;
+
+    font-size: 14px;
+
+}
+
+
+/* =====================================================
+   MARK ALL
+===================================================== */
+
+.mark-all-button {
+
+    border: none;
+
+    background: transparent;
+
+    color:
+        #e65f00;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+}
+
+.mark-all-button:hover {
+
+    text-decoration: underline;
+
+}
+
+
+/* =====================================================
+   SUMMARY CARDS
+===================================================== */
+
+.summary-cards {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 18px;
+
+    margin-bottom: 24px;
+
+}
+
+.summary-card {
+
+    background: white;
+
+    border:
+        1px solid #dfe6e1;
+
+    border-radius: 14px;
+
+    padding:
+        20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    min-height: 105px;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.035);
+
+}
+
+.summary-icon {
+
+    width: 52px;
+
+    height: 52px;
+
+    min-width: 52px;
+
+    border-radius: 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 24px;
+
+}
+
+.summary-icon.messages {
+
+    background:
+        #e8f7ef;
+
+}
+
+.summary-icon.issues {
+
+    background:
+        #fff0e5;
+
+}
+
+.summary-icon.system {
+
+    background:
+        #f0e8ff;
+
+}
+
+.summary-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 3px;
+
+}
+
+.summary-title {
+
+    font-size: 13px;
+
+    color: #67758a;
+
+}
+
+.summary-number {
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    color: #172033;
+
+}
+
+.summary-status {
+
+    font-size: 11px;
+
+    color: #138440;
+
+    font-weight: 700;
+
+}
+
+
+/* =====================================================
+   NOTIFICATION CARD
+===================================================== */
+
+.notifications-card {
+
+    background: white;
+
+    border:
+        1px solid #dfe6e1;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.035);
+
+}
+
+
+/* =====================================================
+   FILTER BAR
+===================================================== */
+
+.filter-bar {
+
+    min-height: 72px;
+
+    padding:
+        14px 20px;
+
+    border-bottom:
+        1px solid #e6ebe8;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+}
+
+
+/* =====================================================
+   FILTER TABS
+===================================================== */
+
+.filter-tabs {
+
+    display: flex;
+
+    gap: 7px;
+
+    flex-wrap: wrap;
+
+}
+
+.filter-tab {
+
+    height: 38px;
+
+    padding:
+        0 14px;
+
+    border:
+        1px solid #d9e0dc;
+
+    background: white;
+
+    border-radius: 20px;
+
+    color: #5f6b66;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s;
+
+}
+
+.filter-tab:hover {
+
+    background:
+        #fff5ee;
+
+    border-color:
+        #f1a071;
+
+}
+
+.filter-tab.active {
+
+    background:
+        #e85b00;
+
+    color: white;
+
+    border-color:
+        #e85b00;
+
+}
+
+.filter-tab-count {
+
+    margin-left: 5px;
+
+    font-weight: bold;
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+.notification-search {
+
+    width: 230px;
+
+    height: 40px;
+
+    border:
+        1px solid #d9e0dc;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding:
+        0 11px;
+
+}
+
+.notification-search span {
+
+    font-size: 16px;
+
+}
+
+.notification-search input {
+
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 12px;
+
+}
+
+
+/* =====================================================
+   NOTIFICATION LIST
+===================================================== */
+
+.notification-list {
+
+    width: 100%;
+
+}
+
+
+/* =====================================================
+   NOTIFICATION ITEM
+===================================================== */
+
+.notification-item {
+
+    min-height: 105px;
+
+    padding:
+        18px 22px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    border-bottom:
+        1px solid #e9eeeb;
+
+    transition:
+        background 0.2s;
+
+}
+
+.notification-item:hover {
+
+    background:
+        #fffaf6;
+
+}
+
+.notification-item.unread {
+
+    background:
+        #fffaf4;
+
+}
+
+
+/* =====================================================
+   NOTIFICATION ICON
+===================================================== */
+
+.notification-icon {
+
+    width: 46px;
+
+    height: 46px;
+
+    min-width: 46px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 21px;
+
+}
+
+.notification-icon.message {
+
+    background:
+        #e7f7ef;
+
+}
+
+.notification-icon.issue {
+
+    background:
+        #fff0e5;
+
+}
+
+.notification-icon.system {
+
+    background:
+        #f0e8ff;
+
+}
+
+
+/* =====================================================
+   NOTIFICATION CONTENT
+===================================================== */
+
+.notification-content {
+
+    flex: 1;
+
+    min-width: 0;
+
+}
+
+.notification-title-row {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+}
+
+.notification-title {
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    color: #172033;
+
+}
+
+.notification-time {
+
+    font-size: 10px;
+
+    color: #87929d;
+
+    white-space: nowrap;
+
+}
+
+.notification-message {
+
+    margin-top: 5px;
+
+    color: #687789;
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+}
+
+.notification-tag {
+
+    display: inline-block;
+
+    margin-top: 8px;
+
+    padding:
+        4px 8px;
+
+    border-radius: 7px;
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+}
+
+.notification-tag.message {
+
+    background:
+        #e8f7ef;
+
+    color:
+        #168442;
+
+}
+
+.notification-tag.issue {
+
+    background:
+        #fff0e5;
+
+    color:
+        #e65f00;
+
+}
+
+.notification-tag.system {
+
+    background:
+        #f0e8ff;
+
+    color:
+        #7446c8;
+
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.notification-actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+}
+
+.notification-action {
+
+    width: 31px;
+
+    height: 31px;
+
+    border:
+        1px solid #dce3df;
+
+    background: white;
+
+    border-radius: 7px;
+
+    cursor: pointer;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 13px;
+
+}
+
+.notification-action:hover {
+
+    background:
+        #fff2e8;
+
+    border-color:
+        #efa36e;
+
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-state {
+
+    padding:
+        65px 20px;
+
+    text-align: center;
+
+    color: #7b8794;
+
+}
+
+.empty-icon {
+
+    font-size: 38px;
+
+    margin-bottom: 10px;
+
+}
+
+.empty-state h3 {
+
+    color: #374151;
+
+    margin-bottom: 5px;
+
+    font-size: 17px;
+
+}
+
+.empty-state p {
+
+    font-size: 12px;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+
+    position: fixed;
+
+    left: 255px;
+
+    right: 0;
+
+    bottom: 0;
+
+    height: 45px;
+
+    background:
+        #075b2e;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 11px;
+
+    font-size: 10px;
+
+    z-index: 900;
+
+}
+
+.footer a {
+
+    color: white;
+
+    text-decoration: none;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1000px) {
+
+    .summary-cards {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+}
+
+@media (max-width: 800px) {
+
+    .sidebar {
+
+        left: -255px;
+
+        transition:
+            left 0.25s ease;
+
+    }
+
+    .sidebar.open {
+
+        left: 0;
+
+    }
+
+    .main-content {
+
+        margin-left: 0;
+
+        width: 100%;
+
+    }
+
+    .footer {
+
+        left: 0;
+
+    }
+
+    .mobile-menu {
+
+        display: block;
+
+    }
+
+    .header {
+
+        height: 85px;
+
+        padding:
+            0 15px;
+
+    }
+
+    .welcome-section h1 {
+
+        font-size: 22px;
+
+    }
+
+    .welcome-section p {
+
+        display: none;
+
+    }
+
+    .profile-info,
+    .profile-arrow {
+
+        display: none;
+
+    }
+
+    .content {
+
+        padding:
+            22px 15px 65px;
+
+    }
+
+    .page-title {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+    }
+
+    .summary-cards {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .filter-bar {
+
+        flex-direction: column;
+
+        align-items: stretch;
+
+    }
+
+    .notification-search {
+
+        width: 100%;
+
+    }
+
+}
+
+@media (max-width: 500px) {
+
+    .filter-tabs {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+
+    }
+
+    .filter-tab {
+
+        width: 100%;
+
+    }
+
+    .notification-item {
+
+        flex-wrap: wrap;
+
+    }
+
+    .notification-actions {
+
+        width: 100%;
+
+        justify-content: flex-end;
+
+    }
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@media print {
+
+    .sidebar,
+    .header,
+    .footer,
+    .filter-bar {
+
+        display: none !important;
+
+    }
+
+    .main-content {
+
+        margin: 0;
+
+        width: 100%;
+
+    }
+
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <!-- =================================================
+         NAVIGATION
+    ================================================= -->
+
+    <nav class="sidebar-nav">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="rental-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-text">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- MY EQUIPMENTS -->
+
+        <a
+            href="rental-equipment.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🚜
+            </span>
+
+            <span class="nav-text">
+                My Equipments
+            </span>
+
+        </a>
+
+
+        <!-- RENTAL ORDERS -->
+
+        <a
+            href="rental-orders.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                📋
+            </span>
+
+            <span class="nav-text">
+                Rental Orders
+            </span>
+
+        </a>
+
+
+        <!-- MESSAGES -->
+
+        <a
+            href="rental-messages.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-text">
+                Messages
+            </span>
+                <span
+                    id="sidebarMessagesBadge"
+                    style="display:none;margin-left:auto;background:#e0433c;color:#fff;font-size:11px;font-weight:bold;min-width:20px;height:20px;border-radius:50%;align-items:center;justify-content:center;"
+                >
+                    0
+                </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS ACTIVE -->
+
+        <a
+            href="rental-notifications.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-text">
+                Notifications
+            </span>
+
+            <span
+                class="nav-badge"
+                id="sidebarBadge"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <!-- REPORT ISSUES -->
+
+        <a
+            href="rental-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-text">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="rental-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-text">
+                History
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+    <!-- =================================================
+         BOTTOM
+    ================================================= -->
+
+    <div class="sidebar-bottom">
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <!-- HELP -->
+
+        <a
+            href="rental-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-text">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <!-- SETTINGS -->
+
+        <a
+            href="rental-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-text">
+                Settings
+            </span>
+
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <a
+            href="index.html"
+            class="nav-item"
+            id="logoutButton"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-text">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- =================================================
+         HEADER
+    ================================================= -->
+
+    <header class="header">
+
+
+        <div class="header-left">
+
+
+            <button
+                class="mobile-menu"
+                id="mobileMenu"
+                type="button"
+            >
+                ☰
+            </button>
+
+
+            <div class="welcome-section">
+
+                <h1>
+                    Welcome back, <span id="userName">User</span>!
+                </h1>
+
+                <p>
+                    Stay updated on rentals and issues.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             HEADER RIGHT
+        ================================================= -->
+
+        <div class="header-right">
+
+
+            <!-- NOTIFICATION -->
+
+            <div
+                class="header-notification"
+                id="notificationButton"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="header-badge"
+                    id="headerBadge"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+
+                <img
+                    class="profile-picture"
+                    id="profilePicture"
+                    src="https://ui-avatars.com/api/?name=Equipment%20Provider&background=fff0e5&color=c94700"
+                    alt="Profile"
+                >
+
+
+                <div class="profile-info">
+
+                    <div
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Equipment Provider
+                    </div>
+
+                    <div
+                        class="profile-role"
+                        id="profileRole"
+                    >
+                        Equipment Provider
+                    </div>
+
+                </div>
+
+
+                <span
+                    class="profile-arrow"
+                    id="profileArrow"
+                >
+                    ▼
+                </span>
+
+
+                <!-- PROFILE DROPDOWN -->
+
+                <div
+                    class="profile-dropdown"
+                    id="profileDropdown"
+                >
+
+
+                    <div class="dropdown-user">
+
+                        <div
+                            class="dropdown-user-name"
+                            id="dropdownUserName"
+                        >
+                            Equipment Provider
+                        </div>
+
+                        <div
+                            class="dropdown-user-role"
+                            id="dropdownUserRole"
+                        >
+                            Equipment Provider
+                        </div>
+
+                    </div>
+
+
+                    <div class="dropdown-title">
+                        Current Role
+                    </div>
+
+
+                    <div id="roleOptions"></div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================= -->
+
+    <section class="content">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="page-title">
+
+
+            <div>
+
+                <h2>
+                    Notifications
+                    <span>Center</span>
+                </h2>
+
+                <p>
+                    Rental messages, issue updates and AgriConnect system notifications.
+                </p>
+
+            </div>
+
+
+            <button
+                class="mark-all-button"
+                id="markAllButton"
+                type="button"
+            >
+
+                ✓ Mark All as Read
+
+            </button>
+
+
+        </div>
+
+
+
+
+
+
+        <!-- =================================================
+             NOTIFICATIONS CARD
+        ================================================= -->
+
+        <div class="notifications-card">
+
+
+            <!-- FILTER BAR -->
+
+            <div class="filter-bar">
+
+
+                <div class="filter-tabs">
+
+
+                    <button
+                        class="filter-tab active"
+                        data-filter="all"
+                        type="button"
+                    >
+
+                        All
+
+                        <span
+                            class="filter-tab-count"
+                            id="allTabCount"
+                        >
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="filter-tab"
+                        data-filter="message"
+                        type="button"
+                    >
+
+                        🚜 Rentals
+
+                        <span
+                            class="filter-tab-count"
+                            id="messageTabCount"
+                        >
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="filter-tab"
+                        data-filter="issue"
+                        type="button"
+                    >
+
+                        ⚠️ Issues
+
+                        <span
+                            class="filter-tab-count"
+                            id="issueTabCount"
+                        >
+                            0
+                        </span>
+
+                    </button>
+
+
+                    <button
+                        class="filter-tab"
+                        data-filter="system"
+                        type="button"
+                    >
+
+                        🔔 System
+
+                        <span
+                            class="filter-tab-count"
+                            id="systemTabCount"
+                        >
+                            0
+                        </span>
+
+                    </button>
+
+
+                </div>
+
+
+
+                <!-- SEARCH -->
+
+                <div class="notification-search">
+
+                    <span>
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        id="notificationSearch"
+                        placeholder="Search notifications..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 NOTIFICATION LIST
+            ================================================= -->
+
+            <div
+                class="notification-list"
+                id="notificationList"
+            ></div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <!-- =================================================
+         FOOTER
+    ================================================= -->
+
+    <footer class="footer">
+
+        <span>
+            © 2026 AgriConnect. All Rights Reserved
+        </span>
+
+        <span>|</span>
+
+        <a href="#">
+            Privacy Policy
+        </a>
+
+        <span>|</span>
+
+        <a href="#">
+            Terms of Service
+        </a>
+
+    </footer>
+
+
+</main>
+
+
+</div>
+
+
+
+<script>
+
+/* =====================================================
+   USER
+===================================================== */
+
+let user = null;
+
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem(
+                "user"
+            ) || "null"
+        );
+
+}
+catch (error) {
+
+    user = null;
+
+}
+
+
+if (!user) {
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem(
+                    "loggedInUser"
+                ) || "null"
+            );
+
+    }
+    catch (error) {
+
+        user = null;
+
+    }
+
+}
+
+
+if (!user) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =====================================================
+   USER NAME
+===================================================== */
+
+function getUserName() {
+
+    if (!user) {
+        return "Equipment Provider";
+    }
+
+
+    const firstName =
+        user.first_name ||
+        user.firstName ||
+        "";
+
+    const lastName =
+        user.last_name ||
+        user.lastName ||
+        "";
+
+    const fullName =
+        `${firstName} ${lastName}`.trim();
+
+
+    return (
+        fullName ||
+        user.name ||
+        user.username ||
+        "Equipment Provider"
+    );
+
+}
+
+
+const userName =
+    getUserName();
+
+
+/* =====================================================
+   ROLE NORMALIZATION
+===================================================== */
+
+function normalizeRole(role) {
+
+    const value =
+        String(role || "")
+            .trim()
+            .toLowerCase();
+
+
+    if (value === "buyer") {
+
+        return "buyer";
+
+    }
+
+
+    if (value === "farmer") {
+
+        return "farmer";
+
+    }
+
+
+    if (
+        value === "expert" ||
+        value === "agricultural expert" ||
+        value === "agriculture expert" ||
+        value === "agri expert"
+    ) {
+
+        return "expert";
+
+    }
+
+
+    if (
+        value === "equipment provider" ||
+        value === "equipment_provider" ||
+        value === "equipment-provider" ||
+        value === "equipmentprovider" ||
+        value === "provider"
+    ) {
+
+        return "equipment_provider";
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =====================================================
+   REGISTERED ROLES
+===================================================== */
+
+function getRegisteredRoles() {
+
+    let roles = [];
+
+
+    if (
+        user &&
+        Array.isArray(user.roles)
+    ) {
+
+        roles =
+            [...user.roles];
+
+    }
+
+
+    if (
+        roles.length === 0 &&
+        user &&
+        Array.isArray(user.registeredRoles)
+    ) {
+
+        roles =
+            [...user.registeredRoles];
+
+    }
+
+
+    if (
+        roles.length === 0 &&
+        user &&
+        user.role
+    ) {
+
+        roles =
+            Array.isArray(user.role)
+                ? [...user.role]
+                : [user.role];
+
+    }
+
+
+    roles =
+        roles
+            .map(normalizeRole)
+            .filter(Boolean);
+
+
+    roles =
+        [...new Set(roles)];
+
+
+    /*
+       AgriConnect rule:
+
+       Equipment Provider account
+       automatically has Buyer.
+
+       But Farmer must NOT be added
+       unless it actually belongs to
+       this account.
+    */
+
+    const hasNonBuyer =
+        roles.some(
+            role =>
+                role !== "buyer"
+        );
+
+
+    if (
+        hasNonBuyer &&
+        !roles.includes("buyer")
+    ) {
+
+        roles.push("buyer");
+
+    }
+
+
+    return [
+        ...new Set(roles)
+    ];
+
+}
+
+
+const registeredRoles =
+    getRegisteredRoles();
+
+
+/* =====================================================
+   CURRENT ROLE
+===================================================== */
+
+const currentRole =
+    "equipment_provider";
+
+
+sessionStorage.setItem(
+    "currentRole",
+    currentRole
+);
+
+sessionStorage.setItem(
+    "selectedRole",
+    currentRole
+);
+
+
+/* =====================================================
+   ROLE NAMES
+===================================================== */
+
+const roleNames = {
+
+    buyer:
+        "Buyer",
+
+    farmer:
+        "Farmer",
+
+    expert:
+        "Agricultural Expert",
+
+    equipment_provider:
+        "Equipment Provider"
+
+};
+
+
+/* =====================================================
+   ROLE ICONS
+===================================================== */
+
+const roleIcons = {
+
+    buyer:
+        "🛒",
+
+    farmer:
+        "🧑‍🌾",
+
+    expert:
+        "🧑‍🔬",
+
+    equipment_provider:
+        "🚜"
+
+};
+
+
+/* =====================================================
+   INITIALS
+===================================================== */
+
+function getInitials(name) {
+
+    const words =
+        String(name)
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+
+    if (
+        words.length === 0
+    ) {
+
+        return "EP";
+
+    }
+
+
+    if (
+        words.length === 1
+    ) {
+
+        return words[0]
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+
+    return (
+        words[0][0] +
+        words[words.length - 1][0]
+    ).toUpperCase();
+
+}
+
+
+/* =====================================================
+   DISPLAY USER
+===================================================== */
+
+function displayUser() {
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        userName;
+
+
+    const welcomeNameEl =
+        document.getElementById(
+            "userName"
+        );
+
+    if (welcomeNameEl) {
+
+        welcomeNameEl.textContent =
+            userName;
+
+    }
+
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        userName;
+
+
+    document.getElementById(
+        "profilePicture"
+    ).src =
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(userName)}&background=fff0e5&color=c94700`;
+
+
+}
+
+
+/* =====================================================
+   RENDER ROLES
+===================================================== */
+
+function renderRoles() {
+
+    const container =
+        document.getElementById(
+            "roleOptions"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    /*
+       If no role information exists,
+       do not invent Farmer.
+
+       This page itself is Equipment Provider,
+       so Equipment Provider is the safe
+       current role.
+    */
+
+    let roles =
+        [...registeredRoles];
+
+
+    if (
+        roles.length === 0
+    ) {
+
+        roles = [
+            "equipment_provider"
+        ];
+
+    }
+
+
+    /*
+       Ensure current Equipment Provider
+       is shown because this page belongs
+       to that role.
+    */
+
+    if (
+        !roles.includes(
+            "equipment_provider"
+        )
+    ) {
+
+        roles.unshift(
+            "equipment_provider"
+        );
+
+    }
+
+
+    roles =
+        [...new Set(roles)];
+
+
+    roles.forEach(
+        function(role) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "dropdown-role";
+
+
+            if (
+                role === currentRole
+            ) {
+
+                button.classList.add(
+                    "current"
+                );
+
+            }
+
+
+            button.innerHTML = `
+
+                <span>
+                    ${roleIcons[role] || "👤"}
+                </span>
+
+                <span>
+                    ${roleNames[role] || role}
+                </span>
+
+                ${
+                    role === currentRole
+                    ?
+                    '<span class="role-check">✓</span>'
+                    :
+                    ''
+                }
+
+            `;
+
+
+            button.addEventListener(
+                "click",
+                function(event) {
+
+                    event.stopPropagation();
+
+                    switchRole(role);
+
+                }
+            );
+
+
+            container.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   SWITCH ROLE
+===================================================== */
+
+function switchRole(role) {
+
+    if (
+        !registeredRoles.includes(role) &&
+        role !== "equipment_provider"
+    ) {
+
+        return;
+
+    }
+
+
+    sessionStorage.setItem(
+        "selectedRole",
+        role
+    );
+
+
+    sessionStorage.setItem(
+        "currentRole",
+        role
+    );
+
+
+    if (
+        role === "buyer"
+    ) {
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+    }
+
+    else if (
+        role === "farmer"
+    ) {
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+    }
+
+    else if (
+        role === "expert"
+    ) {
+
+        window.location.href =
+            "expert-dashboard.html";
+
+    }
+
+    else if (
+        role === "equipment_provider"
+    ) {
+
+        window.location.href =
+            "rental-dashboard.html";
+
+    }
+
+}
+
+
+/* =====================================================
+   PROFILE DROPDOWN
+===================================================== */
+
+document
+    .getElementById(
+        "profile"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+            this.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+
+document.addEventListener(
+    "click",
+    function() {
+
+        document
+            .getElementById(
+                "profile"
+            )
+            .classList.remove(
+                "open"
+            );
+
+    }
+);
+
+
+/* =====================================================
+   NOTIFICATIONS STORAGE
+===================================================== */
+
+let notifications = [];
+
+
+function getCurrentUserId() {
+
+    try {
+
+        const user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+        return user && user.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+function mapRentalNotificationType(type) {
+
+    // This page's tabs are: message / issue / system.
+    // "rental" events (new request / status change) and
+    // real chat "message" events both read naturally as
+    // a "RENTAL MESSAGE" here (see getNotificationTag()).
+    if (type === "rental" || type === "message") {
+        return "message";
+    }
+
+    if (type === "report") {
+        return "issue";
+    }
+
+    if (type === "admin_warning") {
+        return "admin_warning";
+    }
+
+    // "account", "registration" and anything unrecognized.
+    return "system";
+
+}
+
+
+function loadNotifications() {
+
+    const userId = getCurrentUserId();
+
+    if (!userId) {
+
+        notifications = [];
+        return Promise.resolve();
+
+    }
+
+    return fetch(`/api/notifications?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            if (data && data.success && Array.isArray(data.notifications)) {
+
+                notifications =
+                    data.notifications.map(row => ({
+                        id: "srv-" + row.id,
+                        backendId: row.id,
+                        type: mapRentalNotificationType(row.type),
+                        title: row.title,
+                        message: row.message,
+                        date: row.created_at,
+                        createdAt: row.created_at,
+                        read: !!row.is_read
+                    }));
+
+            } else {
+
+                notifications = [];
+
+            }
+
+        })
+        .catch(error => {
+
+            console.error("Unable to load notifications:", error);
+            notifications = [];
+
+        });
+
+}
+
+
+/* =====================================================
+   SAVE NOTIFICATIONS
+===================================================== */
+
+function saveNotifications() {
+
+    localStorage.setItem(
+        "agriconnectNotifications",
+        JSON.stringify(
+            notifications
+        )
+    );
+
+}
+
+
+/* =====================================================
+   FILTER STATE
+===================================================== */
+
+let currentFilter =
+    "all";
+
+
+let currentSearch =
+    "";
+
+
+/* =====================================================
+   FILTER NOTIFICATIONS
+===================================================== */
+
+function getFilteredNotifications() {
+
+    return notifications.filter(
+        function(notification) {
+
+            const type =
+                String(
+                    notification.type || "system"
+                )
+                .toLowerCase();
+
+
+            if (
+                currentFilter !== "all" &&
+                type !== currentFilter
+            ) {
+
+                return false;
+
+            }
+
+
+            if (
+                currentSearch
+            ) {
+
+                const text =
+                    `${notification.title || ""} ${notification.message || ""}`
+                        .toLowerCase();
+
+
+                if (
+                    !text.includes(
+                        currentSearch
+                    )
+                ) {
+
+                    return false;
+
+                }
+
+            }
+
+
+            return true;
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value == null
+            ? ""
+            : String(value);
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   NOTIFICATION ICON
+===================================================== */
+
+function getNotificationIcon(type) {
+
+    if (
+        type === "message"
+    ) {
+
+        return "💬";
+
+    }
+
+
+    if (
+        type === "issue"
+    ) {
+
+        return "⚠️";
+
+    }
+
+
+    if (
+        type === "admin_warning"
+    ) {
+
+        return "🛡️";
+
+    }
+
+
+    return "🔔";
+
+}
+
+
+/* =====================================================
+   NOTIFICATION TAG
+===================================================== */
+
+function getNotificationTag(type) {
+
+    if (
+        type === "message"
+    ) {
+
+        return "RENTAL MESSAGE";
+
+    }
+
+
+    if (
+        type === "issue"
+    ) {
+
+        return "ISSUE UPDATE";
+
+    }
+
+
+    if (
+        type === "admin_warning"
+    ) {
+
+        return "ADMIN MESSAGE";
+
+    }
+
+
+    return "SYSTEM";
+
+}
+
+
+/* =====================================================
+   UPDATE COUNTS
+===================================================== */
+
+function updateCounts() {
+
+    const unread =
+        notifications.filter(
+            notification =>
+                !notification.read
+        );
+
+
+    const messageCount =
+        notifications.filter(
+            notification =>
+                notification.type === "message"
+        ).length;
+
+
+    const issueCount =
+        notifications.filter(
+            notification =>
+                notification.type === "issue"
+        ).length;
+
+
+    const systemCount =
+        notifications.filter(
+            notification =>
+                notification.type === "system"
+        ).length;
+
+
+    document.getElementById(
+        "allTabCount"
+    ).textContent =
+        notifications.length;
+
+
+    document.getElementById(
+        "messageTabCount"
+    ).textContent =
+        messageCount;
+
+
+    document.getElementById(
+        "issueTabCount"
+    ).textContent =
+        issueCount;
+
+
+    document.getElementById(
+        "systemTabCount"
+    ).textContent =
+        systemCount;
+
+
+    document.getElementById(
+        "sidebarBadge"
+    ).textContent =
+        unread.length;
+
+
+    document.getElementById(
+        "headerBadge"
+    ).textContent =
+        unread.length;
+
+
+    /*
+       Hide zero badges.
+    */
+
+    document.getElementById(
+        "sidebarBadge"
+    ).style.display =
+        unread.length > 0
+            ? "flex"
+            : "none";
+
+
+    document.getElementById(
+        "headerBadge"
+    ).style.display =
+        unread.length > 0
+            ? "flex"
+            : "none";
+
+}
+
+
+/* =====================================================
+   RENDER NOTIFICATIONS
+===================================================== */
+
+function renderNotifications() {
+
+    const list =
+        document.getElementById(
+            "notificationList"
+        );
+
+
+    list.innerHTML =
+        "";
+
+
+    const filtered =
+        getFilteredNotifications();
+
+
+    if (
+        filtered.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🔔
+                </div>
+
+                <h3>
+                    No Notifications
+                </h3>
+
+                <p>
+                    There are no notifications matching your current filter.
+                </p>
+
+            </div>
+
+        `;
+
+
+        updateCounts();
+
+        return;
+
+    }
+
+
+    filtered.forEach(
+        function(notification) {
+
+            const type =
+                notification.type || "system";
+
+
+            const item =
+                document.createElement(
+                    "div"
+                );
+
+
+            item.className =
+                "notification-item";
+
+
+            if (
+                !notification.read
+            ) {
+
+                item.classList.add(
+                    "unread"
+                );
+
+            }
+
+
+            item.innerHTML = `
+
+                <div
+                    class="notification-icon ${escapeHtml(type)}"
+                >
+                    ${getNotificationIcon(type)}
+                </div>
+
+
+                <div class="notification-content">
+
+                    <div class="notification-title-row">
+
+                        <div class="notification-title">
+                            ${escapeHtml(
+                                notification.title ||
+                                "Notification"
+                            )}
+                        </div>
+
+                        <div class="notification-time">
+                            ${escapeHtml(
+                                notification.time ||
+                                formatNotificationTime(
+                                    notification.date ||
+                                    notification.createdAt
+                                )
+                            )}
+                        </div>
+
+                    </div>
+
+
+                    <div class="notification-message">
+                        ${escapeHtml(
+                            notification.message ||
+                            ""
+                        )}
+                    </div>
+
+
+                    <div
+                        class="notification-tag ${escapeHtml(type)}"
+                    >
+                        ${getNotificationTag(type)}
+                    </div>
+
+                </div>
+
+
+                <div class="notification-actions">
+
+                    ${
+                        !notification.read
+                        ?
+                        `
+                        <button
+                            class="notification-action"
+                            title="Mark as read"
+                            onclick="markAsRead('${escapeHtml(
+                                String(notification.id)
+                            )}')"
+                            type="button"
+                        >
+                            ✓
+                        </button>
+                        `
+                        :
+                        ""
+                    }
+
+
+                    <button
+                        class="notification-action"
+                        title="Delete"
+                        onclick="deleteNotification('${escapeHtml(
+                            String(notification.id)
+                        )}')"
+                        type="button"
+                    >
+                        🗑
+                    </button>
+
+                </div>
+
+            `;
+
+
+            item.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target.closest(
+                            ".notification-action"
+                        )
+                    ) {
+                        return;
+                    }
+
+                    if (
+                        type === "admin_warning"
+                    ) {
+
+                        document.getElementById(
+                            "adminMessageSubject"
+                        ).textContent =
+                            notification.title || "Message from Admin";
+
+                        document.getElementById(
+                            "adminMessageBody"
+                        ).textContent =
+                            notification.message || "";
+
+                        document.getElementById(
+                            "adminMessageDate"
+                        ).textContent =
+                            notification.time ||
+                            formatNotificationTime(
+                                notification.date ||
+                                notification.createdAt
+                            ) ||
+                            "";
+
+                        document.getElementById(
+                            "adminMessageOverlay"
+                        ).style.display = "flex";
+
+                        if (
+                            typeof markAsRead === "function" &&
+                            !notification.read
+                        ) {
+
+                            markAsRead(
+                                String(notification.id)
+                            );
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+            list.appendChild(
+                item
+            );
+
+        }
+    );
+
+
+    updateCounts();
+
+}
+
+
+/* =====================================================
+   FORMAT NOTIFICATION TIME
+===================================================== */
+
+function formatNotificationTime(value) {
+
+    if (!value) {
+
+        return "";
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(value);
+
+    }
+
+
+    const now =
+        new Date();
+
+
+    const diff =
+        now.getTime() -
+        date.getTime();
+
+
+    const minutes =
+        Math.floor(
+            diff /
+            60000
+        );
+
+
+    if (
+        minutes < 1
+    ) {
+
+        return "Just now";
+
+    }
+
+
+    if (
+        minutes < 60
+    ) {
+
+        return `${minutes} min ago`;
+
+    }
+
+
+    const hours =
+        Math.floor(
+            minutes / 60
+        );
+
+
+    if (
+        hours < 24
+    ) {
+
+        return `${hours} hour${hours > 1 ? "s" : ""} ago`;
+
+    }
+
+
+    const days =
+        Math.floor(
+            hours / 24
+        );
+
+
+    if (
+        days < 7
+    ) {
+
+        return `${days} day${days > 1 ? "s" : ""} ago`;
+
+    }
+
+
+    return date.toLocaleDateString();
+
+}
+
+
+/* =====================================================
+   MARK AS READ
+===================================================== */
+
+function markAsRead(id) {
+
+    const notification =
+        notifications.find(
+            item =>
+                String(item.id) ===
+                String(id)
+        );
+
+
+    if (!notification) {
+
+        return;
+
+    }
+
+
+    notification.read =
+        true;
+
+
+    saveNotifications();
+
+    renderNotifications();
+
+
+    if (notification.backendId) {
+
+        const userId = getCurrentUserId();
+
+        if (userId) {
+
+            fetch(`/api/notifications/${notification.backendId}/read`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ user_id: userId })
+            }).catch(error => console.error("Failed to sync read status:", error));
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   DELETE
+===================================================== */
+
+function deleteNotification(id) {
+
+    const target =
+        notifications.find(
+            notification =>
+                String(notification.id) === String(id)
+        );
+
+    notifications =
+        notifications.filter(
+            notification =>
+                String(notification.id) !==
+                String(id)
+        );
+
+
+    saveNotifications();
+
+    renderNotifications();
+
+
+    if (target && target.backendId) {
+
+        const userId = getCurrentUserId();
+
+        if (userId) {
+
+            fetch(`/api/notifications/${target.backendId}?user_id=${userId}`, {
+                method: "DELETE"
+            }).catch(error => console.error("Failed to sync delete:", error));
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   MARK ALL AS READ
+===================================================== */
+
+document
+    .getElementById(
+        "markAllButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            notifications.forEach(
+                function(notification) {
+
+                    notification.read =
+                        true;
+
+                }
+            );
+
+
+            saveNotifications();
+
+            renderNotifications();
+
+
+            const userId = getCurrentUserId();
+
+            if (userId) {
+
+                fetch(`/api/notifications/read-all`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: userId })
+                }).catch(error => console.error("Failed to sync mark-all-read:", error));
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   FILTER BUTTONS
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".filter-tab"
+    )
+    .forEach(
+        function(button) {
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    document
+                        .querySelectorAll(
+                            ".filter-tab"
+                        )
+                        .forEach(
+                            function(tab) {
+
+                                tab.classList.remove(
+                                    "active"
+                                );
+
+                            }
+                        );
+
+
+                    this.classList.add(
+                        "active"
+                    );
+
+
+                    currentFilter =
+                        this.dataset.filter;
+
+
+                    renderNotifications();
+
+                }
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+document
+    .getElementById(
+        "notificationSearch"
+    )
+    .addEventListener(
+        "input",
+        function() {
+
+            currentSearch =
+                this.value
+                    .trim()
+                    .toLowerCase();
+
+
+            renderNotifications();
+
+        }
+    );
+
+
+/* =====================================================
+   HEADER NOTIFICATION
+===================================================== */
+
+document
+    .getElementById(
+        "notificationButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            renderNotifications();
+
+        }
+    );
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+document
+    .getElementById(
+        "mobileMenu"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            document
+                .getElementById(
+                    "sidebar"
+                )
+                .classList.toggle(
+                    "open"
+                );
+
+        }
+    );
+
+
+/* =====================================================
+   CLOSE MOBILE SIDEBAR
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const sidebar =
+            document.getElementById(
+                "sidebar"
+            );
+
+
+        const menu =
+            document.getElementById(
+                "mobileMenu"
+            );
+
+
+        if (
+            window.innerWidth <= 800 &&
+            !sidebar.contains(
+                event.target
+            ) &&
+            event.target !== menu
+        ) {
+
+            sidebar.classList.remove(
+                "open"
+            );
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+    .getElementById(
+        "logoutButton"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+
+            if (
+                !confirm(
+                    "Are you sure you want to logout?"
+                )
+            ) {
+
+                return;
+
+            }
+
+
+            sessionStorage.removeItem(
+                "token"
+            );
+
+            sessionStorage.removeItem(
+                "user"
+            );
+
+            sessionStorage.removeItem(
+                "loggedInUser"
+            );
+
+            sessionStorage.removeItem(
+                "selectedRole"
+            );
+
+            sessionStorage.removeItem(
+                "currentRole"
+            );
+
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+displayUser();
+
+renderRoles();
+
+loadNotifications().then(function() {
+
+    renderNotifications();
+
+    updateCounts();
+
+
+    /*
+     * Opening this page counts as having seen the
+     * notifications - clear the unread badge everywhere
+     * without requiring the user to click each item.
+     */
+
+    const markAllButton =
+        document.getElementById("markAllButton");
+
+    if (markAllButton) {
+
+        markAllButton.click();
+
+    }
+
+});
+
+
+
+/* =========================================================
+   SIDEBAR MESSAGES BADGE (unread conversation count)
+========================================================= */
+
+function updateSidebarMessagesBadgeGlobal() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) return;
+
+    fetch(`/api/messages/conversations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const badge = document.getElementById("sidebarMessagesBadge");
+
+            if (!badge) return;
+
+            const unreadCount = (Array.isArray(data.conversations) ? data.conversations : [])
+                .filter(c => c.unread_count > 0).length;
+
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.style.display = "flex";
+            } else {
+                badge.style.display = "none";
+            }
+
+        })
+        .catch(error => console.error("Unable to load sidebar messages badge:", error));
+
+}
+
+updateSidebarMessagesBadgeGlobal();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+
+
+<!-- ================= ADMIN MESSAGE MODAL ================= -->
+
+<div
+    id="adminMessageOverlay"
+    style="display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;"
+>
+
+    <div
+        style="background:#fff;border-radius:16px;padding:26px 28px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);"
+    >
+
+        <div
+            style="width:46px;height:46px;border-radius:50%;background:#fdeceb;color:#c0392b;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;"
+        >
+            🛡️
+        </div>
+
+        <div
+            id="adminMessageSubject"
+            style="font-size:17px;font-weight:700;color:#172033;margin-bottom:6px;"
+        >
+        </div>
+
+        <div
+            id="adminMessageDate"
+            style="font-size:12px;color:#8a94a6;margin-bottom:16px;"
+        >
+        </div>
+
+        <div
+            id="adminMessageBody"
+            style="font-size:13px;color:#3f4a58;line-height:1.6;white-space:pre-line;background:#f7f8fa;border-radius:10px;padding:14px 16px;margin-bottom:22px;"
+        >
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;">
+
+            <button
+                type="button"
+                onclick="document.getElementById('adminMessageOverlay').style.display='none';"
+                style="padding:10px 22px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

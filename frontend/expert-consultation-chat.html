@@ -1,0 +1,2741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Consultation Chat</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7f8;
+    color: #17202a;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ADMIN DASHBOARD REFERENCE:
+   WIDTH = 255px
+========================================================= */
+
+.sidebar {
+    min-width: 255px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #00543f 0%,
+            #003f32 100%
+        );
+
+    color: white;
+
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGO
+========================================================= */
+
+.sidebar-logo {
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.10);
+
+    flex-shrink: 0;
+}
+
+.sidebar-logo img {
+    width: 160px;
+
+    height: auto;
+
+    max-height: 62px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================================================
+   SIDEBAR CONTENT
+========================================================= */
+
+.sidebar-content {
+    padding: 13px 10px;
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav-item {
+    width: 100%;
+
+    min-height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    background:
+        rgba(255,255,255,0.08);
+}
+
+.nav-item.active {
+    background:
+        linear-gradient(
+            90deg,
+            #19945f,
+            #087a4d
+        );
+}
+
+.nav-icon {
+    width: 22px;
+
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+    padding: 8px 10px 14px;
+
+    flex-shrink: 0;
+}
+
+.sidebar-divider {
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.13);
+
+    margin:
+        5px 12px 10px;
+}
+
+
+/* =========================================================
+   MAIN
+   ADMIN DASHBOARD REFERENCE
+========================================================= */
+
+.main {
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 42px;
+}
+
+
+/* =========================================================
+   HEADER
+   HEIGHT = 78px
+========================================================= */
+
+.header {
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e8ee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    padding: 0 28px;
+}
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.notification {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    color: #003f32;
+
+    transition: 0.2s;
+}
+
+.notification:hover {
+    transform: scale(1.06);
+}
+
+.notification-badge {
+    position: absolute;
+
+    top: -1px;
+    right: -3px;
+
+    min-width: 18px;
+
+    height: 18px;
+
+    padding: 0 4px;
+
+    border-radius: 50px;
+
+    background: #ef3c35;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #006b4f;
+
+    background: #eaf7f1;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #006b4f;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.profile-info {
+    line-height: 17px;
+}
+
+.profile-name {
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #182033;
+}
+
+.profile-role {
+    font-size: 10px;
+
+    color: #087a4d;
+
+    margin-top: 2px;
+}
+
+.profile-arrow {
+    font-size: 11px;
+
+    margin-left: 2px;
+}
+
+
+/* =========================================================
+   CONTENT
+   ADMIN DASHBOARD:
+   23px 18px 22px
+========================================================= */
+
+.content {
+    padding:
+        23px 18px 22px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    margin-bottom: 18px;
+}
+
+.page-header h1 {
+    font-size: 29px;
+
+    line-height: 34px;
+
+    color: #121826;
+
+    font-weight: 700;
+
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    font-size: 13px;
+
+    color: #555f70;
+
+    line-height: 18px;
+}
+
+
+/* =========================================================
+   TOOLBAR
+========================================================= */
+
+.toolbar {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    min-height: 59px;
+
+    padding:
+        10px 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    margin-bottom: 11px;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+
+/* =========================================================
+   FILTER TABS
+========================================================= */
+
+.tabs {
+    display: flex;
+
+    align-items: center;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 6px;
+
+    overflow: hidden;
+}
+
+.tab {
+    min-width: 90px;
+
+    height: 38px;
+
+    padding:
+        0 15px;
+
+    border: none;
+
+    background: white;
+
+    color: #26333a;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    border-right:
+        1px solid #e0e5e3;
+
+    transition: 0.2s;
+}
+
+.tab:last-child {
+    border-right: none;
+}
+
+.tab:hover {
+    background: #eef8f3;
+}
+
+.tab.active {
+    background: #00543f;
+
+    color: white;
+}
+
+
+/* =========================================================
+   TOOLS RIGHT
+========================================================= */
+
+.tools-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-left: auto;
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+.search-box {
+    width: 215px;
+
+    height: 38px;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 6px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding:
+        0 10px;
+
+    background: white;
+}
+
+.search-icon {
+    font-size: 17px;
+
+    margin-right: 8px;
+
+    color: #344c55;
+}
+
+.search-box input {
+    width: 100%;
+
+    border: none;
+
+    outline: none;
+
+    font-size: 11px;
+
+    color: #27343b;
+}
+
+.search-box input::placeholder {
+    color: #75828a;
+}
+
+
+/* =========================================================
+   FILTER BUTTON
+========================================================= */
+
+.filter-button {
+    height: 38px;
+
+    padding:
+        0 14px;
+
+    border:
+        1px solid #dfe4ea;
+
+    background: white;
+
+    border-radius: 6px;
+
+    color: #27383f;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.filter-button:hover {
+    border-color: #087a4d;
+
+    color: #087a4d;
+}
+
+
+/* =========================================================
+   CONSULTATION CARD
+========================================================= */
+
+.consultation-card {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.table-wrapper {
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+thead {
+    background: #fbfcfc;
+}
+
+
+/* =========================================================
+   TABLE HEAD
+   ADMIN TABLE REFERENCE:
+   12px
+========================================================= */
+
+th {
+    height: 45px;
+
+    padding:
+        0 10px;
+
+    text-align: left;
+
+    border-bottom:
+        1px solid #edf0f3;
+
+    color: #323945;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE DATA
+========================================================= */
+
+td {
+    padding:
+        9px 10px;
+
+    border-bottom:
+        1px solid #f0f2f5;
+
+    vertical-align: middle;
+
+    color: #343b47;
+
+    font-size: 12px;
+}
+
+tbody tr {
+    min-height: 70px;
+
+    transition: 0.15s;
+}
+
+tbody tr:hover {
+    background: #fbfdfc;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   COLUMN WIDTHS
+========================================================= */
+
+th:nth-child(1),
+td:nth-child(1) {
+    width: 21%;
+}
+
+th:nth-child(2),
+td:nth-child(2) {
+    width: 29%;
+}
+
+th:nth-child(3),
+td:nth-child(3) {
+    width: 16%;
+}
+
+th:nth-child(4),
+td:nth-child(4) {
+    width: 15%;
+}
+
+th:nth-child(5),
+td:nth-child(5) {
+    width: 19%;
+}
+
+
+/* =========================================================
+   FARMER
+========================================================= */
+
+.farmer {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+}
+
+.farmer-avatar {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #e2f6e8;
+
+    color: #087c43;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.farmer-name {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #202633;
+
+    margin-bottom: 3px;
+}
+
+.farmer-location {
+    font-size: 11px;
+
+    color: #707887;
+}
+
+
+/* =========================================================
+   TOPIC
+========================================================= */
+
+.topic-title {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #202633;
+
+    margin-bottom: 3px;
+}
+
+.topic-description {
+    font-size: 11px;
+
+    color: #667080;
+
+    line-height: 13px;
+
+    max-width: 270px;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status {
+    display: inline-block;
+
+    padding:
+        5px 7px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.status.unread {
+    background: #fff0d6;
+
+    color: #d87600;
+}
+
+.status.progress {
+    background: #e1edff;
+
+    color: #2469e9;
+}
+
+
+/* =========================================================
+   UPDATED
+========================================================= */
+
+.updated {
+    font-size: 11px;
+
+    color: #687180;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   ACTION BUTTON
+========================================================= */
+
+.action-button {
+    border:
+        1px solid #72c6a2;
+
+    color: #087b48;
+
+    background: white;
+
+    border-radius: 5px;
+
+    padding:
+        6px 10px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+    white-space: nowrap;
+}
+
+.action-button:hover {
+    background: #edf9f3;
+
+    border-color: #087b48;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-row {
+    text-align: center;
+
+    padding:
+        55px 20px;
+}
+
+.empty-icon {
+    font-size: 35px;
+
+    margin-bottom: 10px;
+}
+
+.empty-title {
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #202633;
+
+    margin-bottom: 5px;
+}
+
+.empty-text {
+    font-size: 11px;
+
+    color: #6c7980;
+}
+
+
+/* =========================================================
+   TABLE FOOTER
+========================================================= */
+
+.table-footer {
+    min-height: 55px;
+
+    padding:
+        0 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 12px;
+
+    border-top:
+        1px solid #edf0f3;
+}
+
+.showing {
+    font-size: 10px;
+
+    color: #667080;
+
+    font-weight: bold;
+}
+
+.pagination {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+.page-button {
+    width: 32px;
+
+    height: 32px;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 5px;
+
+    background: white;
+
+    font-size: 11px;
+
+    color: #343b47;
+
+    cursor: pointer;
+}
+
+.page-button:hover {
+    border-color: #087a4d;
+
+    color: #087a4d;
+}
+
+.page-button.active {
+    background: #00543f;
+
+    border-color: #00543f;
+
+    color: white;
+}
+
+.page-button:disabled {
+    opacity: 0.45;
+
+    cursor: not-allowed;
+}
+
+.per-page {
+    height: 32px;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 5px;
+
+    background: white;
+
+    padding:
+        0 9px;
+
+    font-size: 10px;
+
+    color: #343b47;
+}
+
+
+/* =========================================================
+   FOOTER
+   ADMIN DASHBOARD REFERENCE:
+   LEFT = 255px
+   HEIGHT = 42px
+========================================================= */
+
+.footer {
+    position: fixed;
+
+    left: 255px;
+    right: 0;
+    bottom: 0;
+
+    height: 42px;
+
+    background: #004d2a;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    font-size: 10px;
+
+    z-index: 900;
+}
+
+.footer a {
+    color: white;
+
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1250px) {
+
+    .toolbar {
+        flex-wrap: wrap;
+    }
+
+    .tools-right {
+        margin-left: auto;
+    }
+
+}
+
+
+@media (max-width: 950px) {
+
+    .toolbar {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .tools-right {
+        width: 100%;
+
+        margin-left: 0;
+
+        justify-content: flex-end;
+    }
+
+    .search-box {
+        flex: 1;
+
+        width: auto;
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s ease;
+    }
+
+    .sidebar.open {
+        transform:
+            translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    .footer {
+        left: 0;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .content {
+        padding:
+            18px 12px 30px;
+    }
+
+    .tabs {
+        width: 100%;
+    }
+
+    .tab {
+        flex: 1;
+
+        min-width: 0;
+
+        padding:
+            0 8px;
+    }
+
+    .tools-right {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .search-box,
+    .filter-button {
+        width: 100%;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        min-width: 850px;
+    }
+
+    .table-footer {
+        flex-wrap: wrap;
+
+        padding:
+            10px 12px;
+    }
+
+    .header {
+        padding:
+            0 15px;
+    }
+
+    .profile-info,
+    .profile-arrow {
+        display: none;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .tabs {
+        flex-direction: column;
+
+        border: none;
+
+        gap: 5px;
+    }
+
+    .tab {
+        width: 100%;
+
+        border:
+            1px solid #dfe4ea !important;
+
+        border-radius: 6px;
+    }
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background:
+        rgba(255,255,255,0.20);
+
+    border-radius: 5px;
+}
+
+
+/* =====================================================
+   PROFILE DROPDOWN (role switcher)
+   ===================================================== */
+
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 58px;
+    right: 0;
+    width: 225px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 300;
+}
+
+.profile.open .profile-dropdown {
+    display: block;
+}
+
+.dropdown-title {
+    padding: 8px 10px 6px;
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.dropdown-role {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 7px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.dropdown-role:hover {
+    background: #f1f7f3;
+}
+
+.dropdown-role.current {
+    background: #e9f6ed;
+    color: #13883f;
+    font-weight: bold;
+}
+
+.role-check {
+    margin-left: auto;
+    font-size: 14px;
+}
+
+.profile {
+    position: relative;
+}
+
+
+.consultation-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="expert-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- CONSULTATIONS -->
+
+        <a
+            href="expert-consultations.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-label">
+                Consultations
+            </span>
+
+            <span class="consultation-badge" id="consultationBadge" style="display:none;">0</span>
+
+        </a>
+
+
+        <!-- RESOURCES -->
+
+        <a
+            href="expert-resources.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                📖
+            </span>
+
+            <span class="nav-label">
+                Resources
+            </span>
+
+        </a>
+
+
+        <!-- REPORT ISSUES -->
+
+        <a
+            href="expert-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-label">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="expert-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="expert-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <!-- HELP -->
+
+        <a
+            href="expert-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <!-- SETTINGS -->
+
+        <a
+            href="expert-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="logout(); return false;"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <header class="header">
+
+
+        <div class="header-right">
+
+
+            <div
+                class="notification"
+                onclick="goToNotifications()"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="notification-badge"
+                    id="headerNotificationCount"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+                <div class="profile-avatar" id="profileAvatar">
+                    DN
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div class="profile-name" id="profileName">
+                        Dr. Nimal
+                    </div>
+
+                    <div class="profile-role" id="profileRole">
+                        Agricultural Expert
+                    </div>
+
+                </div>
+
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+                <!-- PROFILE DROPDOWN -->
+
+                <div class="profile-dropdown">
+
+                    <div class="dropdown-title">
+                        Switch Role
+                    </div>
+
+                    <div id="roleOptions"></div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <section class="content">
+
+
+        <div class="page-header">
+
+            <a
+                href="expert-consultations.html"
+                style="text-decoration:none; color:#2f855a; font-size:13px; font-weight:600;"
+            >
+                ← Back to Consultations
+            </a>
+
+            <h1 id="chatTitle" style="margin-top:8px;">
+                Consultation
+            </h1>
+
+            <p id="chatSubtitle">
+                Loading conversation...
+            </p>
+
+        </div>
+
+
+        <div
+            class="consultation-card"
+            style="display:flex; flex-direction:column; height:60vh; padding:0; overflow:hidden;"
+        >
+
+            <div
+                id="chatMessages"
+                style="flex:1; overflow-y:auto; padding:20px; display:flex; flex-direction:column; gap:12px; background:#f5f7f8;"
+            ></div>
+
+            <!-- ATTACHMENT PREVIEW -->
+
+            <div
+                id="attachmentPreview"
+                style="display:none; align-items:center; gap:10px; padding:10px 16px; background:#f1f7f3; border-top:1px solid #e2e8f0;"
+            >
+                <img
+                    id="attachmentPreviewImage"
+                    style="width:56px;height:56px;object-fit:cover;border-radius:8px;"
+                >
+                <span
+                    id="attachmentPreviewName"
+                    style="flex:1;font-size:12px;color:#536274;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                ></span>
+                <button
+                    type="button"
+                    id="attachmentPreviewCancel"
+                    style="border:none;background:transparent;font-size:18px;cursor:pointer;color:#536274;"
+                    title="Remove"
+                >
+                    ×
+                </button>
+            </div>
+
+
+            <div
+                style="display:flex; gap:10px; padding:16px; border-top:1px solid #e2e8f0; background:#fff;"
+            >
+
+                <button
+                    type="button"
+                    id="attachButton"
+                    title="Attach file"
+                    style="border:1px solid #cbd5e0; background:#fff; border-radius:8px; width:40px; font-size:16px; cursor:pointer;"
+                >
+                    📎
+                </button>
+
+                <input
+                    type="file"
+                    id="fileInput"
+                    hidden
+                >
+
+                <textarea
+                    id="messageInput"
+                    rows="1"
+                    placeholder="Type your reply..."
+                    style="flex:1; resize:none; padding:10px 12px; border:1px solid #cbd5e0; border-radius:8px; font-family:inherit; font-size:13px;"
+                ></textarea>
+
+                <button
+                    type="button"
+                    class="action-button"
+                    onclick="sendConsultationReply()"
+                >
+                    ➤ Send
+                </button>
+
+            </div>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+<style>
+
+.chat-bubble {
+    max-width: 70%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 13px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.chat-bubble.sent {
+    align-self: flex-end;
+    background: #2f855a;
+    color: #fff;
+    border-bottom-right-radius: 2px;
+}
+
+.chat-bubble.received {
+    align-self: flex-start;
+    background: #fff;
+    color: #17202a;
+    border: 1px solid #e2e8f0;
+    border-bottom-left-radius: 2px;
+}
+
+.chat-bubble .chat-time {
+    display: block;
+    font-size: 10px;
+    opacity: 0.7;
+    margin-top: 4px;
+}
+
+</style>
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+let user = null;
+
+try {
+
+    user = JSON.parse(sessionStorage.getItem("user"));
+
+} catch (error) {
+
+    user = null;
+
+}
+
+
+
+const roleNames = {
+    farmer: "Farmer",
+    buyer: "Buyer",
+    expert: "Agricultural Expert",
+    equipment_provider: "Equipment Provider"
+};
+
+const roleIcons = {
+    farmer: "🌱",
+    buyer: "🛒",
+    expert: "👨‍🌾",
+    equipment_provider: "🚜"
+};
+
+function normalizeRole(role) {
+
+    if (!role) {
+        return "";
+    }
+
+    const value =
+        String(role).toLowerCase().trim().replace(/-/g, "_");
+
+    if (value === "farmer") return "farmer";
+    if (value === "buyer" || value === "buyer/user") return "buyer";
+
+    if (
+        value === "expert" ||
+        value === "agricultural_expert" ||
+        value === "agricultural expert" ||
+        value === "agriculture_expert" ||
+        value === "agriculture expert" ||
+        value === "agri_expert" ||
+        value === "agri expert"
+    ) {
+        return "expert";
+    }
+
+    if (
+        value === "equipment_provider" ||
+        value === "equipment provider" ||
+        value === "equipmentprovider" ||
+        value === "provider"
+    ) {
+        return "equipment_provider";
+    }
+
+    return "";
+
+}
+
+function getRegisteredRolesForSwitcher() {
+
+    if (!user) {
+        return [];
+    }
+
+    let roles = [];
+
+    if (Array.isArray(user.roles)) {
+        roles = [...user.roles];
+    }
+
+    if (roles.length === 0 && Array.isArray(user.registered_roles)) {
+        roles = [...user.registered_roles];
+    }
+
+    if (roles.length === 0 && Array.isArray(user.registeredRoles)) {
+        roles = [...user.registeredRoles];
+    }
+
+    if (roles.length === 0) {
+
+        try {
+
+            const storedRoles =
+                JSON.parse(sessionStorage.getItem("registeredRoles") || "null");
+
+            if (Array.isArray(storedRoles)) {
+                roles = [...storedRoles];
+            }
+
+        } catch (error) {
+
+            roles = [];
+
+        }
+
+    }
+
+    if (roles.length === 0 && user.role) {
+
+        roles =
+            Array.isArray(user.role) ? [...user.role] : [user.role];
+
+    }
+
+    roles =
+        roles.map(normalizeRole).filter(role => !!role && !!roleNames[role]);
+
+    return [...new Set(roles)];
+
+}
+
+function getAccountRoles() {
+    return [...new Set(getRegisteredRolesForSwitcher())];
+}
+
+let currentRole = "expert";
+
+function loadRoles() {
+
+    const roleOptions =
+        document.getElementById("roleOptions");
+
+    if (!roleOptions) {
+        return;
+    }
+
+    roleOptions.innerHTML = "";
+
+    getAccountRoles().forEach(function(role) {
+
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+        button.className = "dropdown-role";
+
+        if (role === currentRole) {
+            button.classList.add("current");
+        }
+
+        button.innerHTML = `
+            <span>${roleIcons[role] || "👤"}</span>
+            <span>${roleNames[role] || role}</span>
+            <span class="role-check">${role === currentRole ? "✓" : ""}</span>
+        `;
+
+        button.addEventListener("click", function(event) {
+            event.stopPropagation();
+            switchRole(role);
+        });
+
+        roleOptions.appendChild(button);
+
+    });
+
+    moveCurrentRoleToFront(roleOptions);
+
+
+}
+
+function switchRole(role) {
+
+    const normalizedRole =
+        normalizeRole(role);
+
+    if (!normalizedRole) {
+        return;
+    }
+
+    if (!getAccountRoles().includes(normalizedRole)) {
+        return;
+    }
+
+    currentRole = normalizedRole;
+
+    sessionStorage.setItem("selectedRole", currentRole);
+    sessionStorage.setItem("currentRole", currentRole);
+
+    if (currentRole === "farmer") {
+        window.location.href = "farmer-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "buyer") {
+        window.location.href = "buyer-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "expert") {
+        window.location.href = "expert-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "equipment_provider") {
+        window.location.href = "rental-dashboard.html";
+    }
+
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const profileEl =
+        document.getElementById("profile");
+
+    if (profileEl) {
+
+        profileEl.addEventListener("click", function(event) {
+            event.stopPropagation();
+            profileEl.classList.toggle("open");
+        });
+
+        document.addEventListener("click", function() {
+            profileEl.classList.remove("open");
+        });
+
+    }
+
+    loadRoles();
+
+});
+
+
+
+function displayUser() {
+
+    if (!user) {
+        return;
+    }
+
+    const firstName =
+        user.first_name || user.firstName || "";
+
+    const lastName =
+        user.last_name || user.lastName || "";
+
+    const fullName =
+        `${firstName} ${lastName}`.trim() || "Agricultural Expert";
+
+    const initials =
+        ((firstName.charAt(0) || "") + (lastName.charAt(0) || "")).toUpperCase() || "AE";
+
+    const nameEl = document.getElementById("profileName");
+    if (nameEl) nameEl.textContent = fullName;
+
+    const avatarEl = document.getElementById("profileAvatar");
+    if (avatarEl) avatarEl.textContent = initials;
+
+}
+
+displayUser();
+
+
+
+/* =========================================================
+   READ QUERY PARAMS
+========================================================= */
+
+const urlParams =
+    new URLSearchParams(window.location.search);
+
+const conversationId =
+    urlParams.get("conversationId");
+
+const farmerNameParam =
+    urlParams.get("farmer") || "Farmer";
+
+
+function getCurrentUserId() {
+
+    try {
+
+        const user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+        return user && user.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+function updateNotificationCount() {
+
+    const userId =
+        getCurrentUserId();
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const headerCount = document.getElementById("headerNotificationCount");
+
+            if (headerCount) headerCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+updateNotificationCount();
+
+
+function escapeHtmlChat(value) {
+
+    const div = document.createElement("div");
+    div.textContent = value == null ? "" : String(value);
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   LOAD MESSAGES
+========================================================= */
+
+async function loadConsultationMessages() {
+
+    document.getElementById("chatTitle").textContent =
+        farmerNameParam;
+
+    const userId = getCurrentUserId();
+
+    if (!conversationId || !userId) {
+
+        document.getElementById("chatSubtitle").textContent =
+            "Unable to load this conversation.";
+
+        return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(`/api/messages/conversations/${conversationId}/messages?user_id=${userId}`);
+
+        const data =
+            await response.json();
+
+        if (!data || !data.success) {
+
+            document.getElementById("chatSubtitle").textContent =
+                "Unable to load this conversation.";
+
+            return;
+
+        }
+
+        document.getElementById("chatSubtitle").textContent =
+            "Consultation with " + farmerNameParam;
+
+        const container =
+            document.getElementById("chatMessages");
+
+        container.innerHTML = "";
+
+        // Figure out who the other participant is, from the messages
+        // themselves, so we can check whether they're online right now.
+        let otherUserId = null;
+
+        for (const row of data.messages) {
+            if (Number(row.sender_id) !== Number(userId)) {
+                otherUserId = row.sender_id;
+                break;
+            }
+            if (Number(row.receiver_id) !== Number(userId)) {
+                otherUserId = row.receiver_id;
+                break;
+            }
+        }
+
+        let otherUserOnline = false;
+
+        if (otherUserId) {
+
+            try {
+
+                const statusResponse = await fetch(`/api/auth/online-status/${otherUserId}`);
+                const statusData = await statusResponse.json();
+
+                otherUserOnline = !!(statusData && statusData.success && statusData.online);
+
+            } catch (statusError) {
+
+                console.error("Unable to check online status:", statusError);
+
+            }
+
+        }
+
+        data.messages.forEach(row => {
+
+            const bubble =
+                document.createElement("div");
+
+            const isSent =
+                Number(row.sender_id) === Number(userId);
+
+            bubble.className =
+                "chat-bubble " +
+                (isSent ? "sent" : "received");
+
+            const time =
+                new Date(row.created_at).toLocaleTimeString(
+                    [], { hour: "numeric", minute: "2-digit" }
+                );
+
+            let tickHtml = "";
+
+            if (isSent) {
+
+                if (row.is_read) {
+                    tickHtml = `<span class="chat-tick" style="color:#4fc3f7;margin-left:5px;">✓✓</span>`;
+                } else if (otherUserOnline) {
+                    tickHtml = `<span class="chat-tick" style="color:#aab5c0;margin-left:5px;">✓✓</span>`;
+                } else {
+                    tickHtml = `<span class="chat-tick" style="color:#aab5c0;margin-left:5px;">✓</span>`;
+                }
+
+            }
+
+            const attachmentHtml =
+                row.attachment
+                    ? (
+                        /\.(png|jpe?g|gif|webp)$/i.test(row.attachment)
+                            ? `<a href="${row.attachment}" target="_blank" rel="noopener noreferrer"><img src="${row.attachment}" alt="Attachment" style="max-width:220px;max-height:220px;border-radius:8px;display:block;margin-bottom:6px;"></a>`
+                            : /\.pdf$/i.test(row.attachment)
+                                ? `<a href="${row.attachment}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;margin-bottom:6px;text-decoration:none;max-width:220px;"><span style="flex-shrink:0;width:34px;height:34px;border-radius:6px;background:#e0433c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;">PDF</span><span style="font-size:12px;color:#172033;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtmlChat(row.attachment.split("/").pop())}</span></a>`
+                                : `<div>📎 <a href="${row.attachment}" target="_blank" rel="noopener noreferrer">${escapeHtmlChat(row.attachment.split("/").pop())}</a></div>`
+                      )
+                    : "";
+
+            bubble.innerHTML =
+                attachmentHtml +
+                escapeHtmlChat(row.message_text || "") +
+                `<span class="chat-time">${time}${tickHtml}</span>`;
+
+            container.appendChild(bubble);
+
+        });
+
+        container.scrollTop = container.scrollHeight;
+
+
+        /*
+         * Fetching messages marks them as read on the server -
+         * refresh the sidebar badge now so it reflects that
+         * immediately, without needing to reload the page.
+         */
+
+        updateConsultationBadge();
+
+    } catch (error) {
+
+        console.error("Unable to load messages:", error);
+
+        document.getElementById("chatSubtitle").textContent =
+            "Unable to load this conversation.";
+
+    }
+
+}
+
+
+/* =========================================================
+   SEND REPLY
+========================================================= */
+
+let pendingAttachment = null;
+
+
+async function sendConsultationReply() {
+
+    const input =
+        document.getElementById("messageInput");
+
+    const text =
+        input.value.trim();
+
+    if (!text && !pendingAttachment) {
+        return;
+    }
+
+    const userId = getCurrentUserId();
+
+    if (!conversationId || !userId) {
+        return;
+    }
+
+    input.value = "";
+
+    const attachmentToSend = pendingAttachment;
+    pendingAttachment = null;
+    document.getElementById("attachmentPreview").style.display = "none";
+    document.getElementById("attachmentPreviewImage").src = "";
+
+    try {
+
+        let response;
+
+        if (attachmentToSend) {
+
+            const formData = new FormData();
+            formData.append("sender_id", userId);
+            if (text) formData.append("message_text", text);
+            formData.append("attachment", attachmentToSend);
+
+            response = await fetch(
+                `/api/messages/conversations/${conversationId}/messages`,
+                { method: "POST", body: formData }
+            );
+
+        } else {
+
+            response = await fetch(
+                `/api/messages/conversations/${conversationId}/messages`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        sender_id: userId,
+                        message_text: text
+                    })
+                }
+            );
+
+        }
+
+        const data =
+            await response.json();
+
+        if (!response.ok || !data || !data.success) {
+
+            console.error("Failed to send reply:", data);
+            if (data && data.message) toast(data.message);
+            return;
+
+        }
+
+        const container =
+            document.getElementById("chatMessages");
+
+        const bubble =
+            document.createElement("div");
+
+        bubble.className = "chat-bubble sent";
+
+        const time =
+            new Date(data.message.created_at).toLocaleTimeString(
+                [], { hour: "numeric", minute: "2-digit" }
+            );
+
+        const attachmentHtml =
+            data.message.attachment
+                ? (
+                    /\.(png|jpe?g|gif|webp)$/i.test(data.message.attachment)
+                        ? `<a href="${data.message.attachment}" target="_blank" rel="noopener noreferrer"><img src="${data.message.attachment}" alt="Attachment" style="max-width:220px;max-height:220px;border-radius:8px;display:block;margin-bottom:6px;"></a>`
+                        : /\.pdf$/i.test(data.message.attachment)
+                            ? `<a href="${data.message.attachment}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e2e8f0;border-radius:8px;padding:10px 12px;margin-bottom:6px;text-decoration:none;max-width:220px;"><span style="flex-shrink:0;width:34px;height:34px;border-radius:6px;background:#e0433c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;">PDF</span><span style="font-size:12px;color:#172033;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtmlChat(data.message.attachment.split("/").pop())}</span></a>`
+                            : `<div>📎 <a href="${data.message.attachment}" target="_blank" rel="noopener noreferrer">${escapeHtmlChat(data.message.attachment.split("/").pop())}</a></div>`
+                  )
+                : "";
+
+        bubble.innerHTML =
+            attachmentHtml +
+            escapeHtmlChat(data.message.message_text || "") +
+            `<span class="chat-time">${time}<span class="chat-tick" style="color:#aab5c0;margin-left:5px;">✓</span></span>`;
+
+        container.appendChild(bubble);
+
+        container.scrollTop = container.scrollHeight;
+
+    } catch (error) {
+
+        console.error("Failed to send reply:", error);
+
+    }
+
+}
+
+
+document
+    .getElementById("attachButton")
+    .addEventListener("click", function() {
+        document.getElementById("fileInput").click();
+    });
+
+
+document
+    .getElementById("fileInput")
+    .addEventListener("change", function() {
+
+        if (!this.files.length) {
+            return;
+        }
+
+        pendingAttachment = this.files[0];
+        this.value = "";
+
+        const previewBox = document.getElementById("attachmentPreview");
+        const previewImage = document.getElementById("attachmentPreviewImage");
+        const previewName = document.getElementById("attachmentPreviewName");
+
+        previewName.textContent = pendingAttachment.name;
+
+        if (/^image\//.test(pendingAttachment.type)) {
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                previewImage.src = event.target.result;
+                previewImage.style.display = "block";
+            };
+
+            reader.readAsDataURL(pendingAttachment);
+
+        } else {
+
+            previewImage.style.display = "none";
+
+        }
+
+        previewBox.style.display = "flex";
+
+    });
+
+
+document
+    .getElementById("attachmentPreviewCancel")
+    .addEventListener("click", function() {
+
+        pendingAttachment = null;
+        document.getElementById("attachmentPreview").style.display = "none";
+        document.getElementById("attachmentPreviewImage").src = "";
+
+    });
+
+
+document
+    .getElementById("messageInput")
+    .addEventListener("keydown", function(event) {
+
+        if (event.key === "Enter" && !event.shiftKey) {
+
+            event.preventDefault();
+
+            sendConsultationReply();
+
+        }
+
+    });
+
+
+function goToNotifications() {
+
+    window.location.href =
+        "expert-notifications.html";
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function openProfile() {
+
+    window.location.href =
+        "expert-profile.html";
+
+}
+
+
+/* =========================================================
+   FILTER BUTTON
+========================================================= */
+
+function showFilterMessage() {
+
+    alert(
+        "Additional consultation filters will be available here."
+    );
+
+}
+
+
+/* =========================================================
+   PAGINATION
+========================================================= */
+
+function goToPage(page) {
+
+    alert(
+        "Page " +
+        page +
+        " selected."
+    );
+
+}
+
+
+/* =========================================================
+   PER PAGE
+========================================================= */
+
+function changePerPage(value) {
+
+    alert(
+        "Showing " +
+        value
+    );
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout() {
+
+    const confirmed =
+        await customConfirm("Are you sure you want to logout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+    localStorage.removeItem(
+        "expertLoggedIn"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+
+loadConsultationMessages();
+
+
+
+function updateConsultationBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(c => c.unread_count > 0).length;
+
+            const badgeEl =
+                document.getElementById("consultationBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load consultation badge count:", error);
+        });
+
+}
+
+updateConsultationBadge();
+
+
+/* =========================================================
+   ONLINE PRESENCE HEARTBEAT
+========================================================= */
+
+function sendHeartbeat() {
+
+    const userId = getCurrentUserId();
+
+    if (!userId) return;
+
+    fetch("/api/auth/heartbeat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: userId })
+    }).catch(error => console.error("Heartbeat failed:", error));
+
+}
+
+sendHeartbeat();
+setInterval(sendHeartbeat, 60000);
+
+
+/* =========================================================
+   LIVE REFRESH (picks up read-receipt and online-status
+   changes without needing a manual page reload)
+========================================================= */
+
+setInterval(loadConsultationMessages, 10000);
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+# Dependencies
+node_modules/
+
+# Secrets / config
+.env
+.env.*
+backend/config/searchConfig.js
+
+# User uploads (NIC photos, profile pictures, crop images) - keep folder only
+**/uploads/*
+!**/uploads/.gitkeep
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS / editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+!.env.example

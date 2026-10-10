@@ -1,0 +1,3053 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AgriConnect - Resources</title>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7f8;
+            color: #17202a;
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+    min-width: 255px;
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 255px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #00543f 0%,
+                    #003f32 100%
+                );
+
+            color: white;
+
+            z-index: 1000;
+
+            display: flex;
+            flex-direction: column;
+
+            overflow-y: auto;
+        }
+
+
+        /* =====================================================
+           SIDEBAR LOGO
+        ===================================================== */
+
+        .sidebar-logo {
+            height: 86px;
+
+            display: flex;
+            align-items: center;
+
+            padding: 0 20px;
+
+            border-bottom:
+                1px solid rgba(255,255,255,0.10);
+
+            flex-shrink: 0;
+        }
+
+        .sidebar-logo img {
+            width: 160px;
+
+            height: auto;
+
+            max-height: 62px;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+
+        /* =====================================================
+           SIDEBAR CONTENT
+        ===================================================== */
+
+        .sidebar-content {
+            flex: 1;
+
+            padding: 13px 10px;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+        ===================================================== */
+
+        .nav-item {
+            width: 100%;
+
+            min-height: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 11px 12px;
+
+            margin-bottom: 4px;
+
+            border-radius: 8px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            transition: 0.2s ease;
+        }
+
+        .nav-item:hover {
+            background:
+                rgba(255,255,255,0.08);
+        }
+
+        .nav-item.active {
+            background:
+                linear-gradient(
+                    90deg,
+                    #19945f,
+                    #087a4d
+                );
+        }
+
+        .nav-icon {
+            width: 22px;
+
+            min-width: 22px;
+
+            text-align: center;
+
+            font-size: 18px;
+        }
+
+        .nav-label {
+            flex: 1;
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+        ===================================================== */
+
+        .sidebar-bottom {
+            padding:
+                8px 10px 14px;
+
+            flex-shrink: 0;
+        }
+
+        .sidebar-divider {
+            height: 1px;
+
+            background:
+                rgba(255,255,255,0.13);
+
+            margin:
+                5px 12px 10px;
+        }
+
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main {
+            margin-left: 255px;
+
+            width:
+                calc(100% - 255px);
+
+            min-height: 100vh;
+
+            padding-bottom: 42px;
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+            height: 78px;
+
+            background: white;
+
+            border-bottom:
+                1px solid #e5e8ee;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            padding: 0 28px;
+        }
+
+        .header-right {
+            display: flex;
+
+            align-items: center;
+
+            gap: 22px;
+        }
+
+
+        /* =====================================================
+           NOTIFICATION
+        ===================================================== */
+
+        .notification {
+            position: relative;
+
+            width: 40px;
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 23px;
+
+            cursor: pointer;
+
+            color: #003f32;
+
+            transition: 0.2s;
+        }
+
+        .notification:hover {
+            transform: scale(1.06);
+        }
+
+        .notification-badge {
+            position: absolute;
+
+            top: -1px;
+            right: -3px;
+
+            min-width: 18px;
+
+            height: 18px;
+
+            padding: 0 4px;
+
+            border-radius: 50px;
+
+            background: #ef3c35;
+
+            color: white;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile {
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            cursor: pointer;
+        }
+
+        .profile-avatar {
+            width: 43px;
+            height: 43px;
+
+            border-radius: 50%;
+
+            border:
+                2px solid #006b4f;
+
+            background: #eaf7f1;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            color: #006b4f;
+
+            font-size: 17px;
+
+            font-weight: bold;
+        }
+
+        .profile-info {
+            line-height: 17px;
+        }
+
+        .profile-name {
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #182033;
+        }
+
+        .profile-role {
+            font-size: 10px;
+
+            color: #087a4d;
+
+            margin-top: 2px;
+        }
+
+        .profile-arrow {
+            font-size: 11px;
+
+            margin-left: 2px;
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+            padding:
+                23px 18px 22px;
+        }
+
+
+        /* =====================================================
+           PAGE HEADER
+        ===================================================== */
+
+        .page-header {
+            margin-bottom: 18px;
+        }
+
+        .page-header h1 {
+            font-size: 29px;
+
+            line-height: 34px;
+
+            color: #121826;
+
+            font-weight: 700;
+
+            margin-bottom: 5px;
+        }
+
+        .page-header p {
+            font-size: 13px;
+
+            color: #555f70;
+
+            line-height: 18px;
+        }
+
+
+        /* =====================================================
+           SEARCH AREA
+        ===================================================== */
+
+        .search-area {
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 18px;
+        }
+
+        .search-box {
+            flex: 1;
+
+            height: 42px;
+
+            background: white;
+
+            border:
+                1px solid #dfe4ea;
+
+            border-radius: 6px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 13px;
+        }
+
+        .search-icon {
+            font-size: 18px;
+
+            color: #52636b;
+
+            margin-right: 9px;
+        }
+
+        .search-box input {
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            font-size: 12px;
+
+            color: #26343b;
+        }
+
+        .search-box input::placeholder {
+            color: #75828a;
+        }
+
+
+        /* =====================================================
+           FILTER SELECT
+        ===================================================== */
+
+        .filter-select {
+            width: 170px;
+
+            height: 42px;
+
+            padding:
+                0 12px;
+
+            border:
+                1px solid #dfe4ea;
+
+            border-radius: 6px;
+
+            background: white;
+
+            color: #27363d;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            outline: none;
+
+            cursor: pointer;
+        }
+
+        .filter-select:focus {
+            border-color: #087a4d;
+        }
+
+
+        /* =====================================================
+           SECTION HEADER
+        ===================================================== */
+
+        .section-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 4px;
+        }
+
+        .section-title-area {
+            display: flex;
+
+            align-items: center;
+
+            gap: 8px;
+        }
+
+        .section-icon {
+            font-size: 20px;
+        }
+
+        .section-title {
+            font-size: 17px;
+
+            font-weight: bold;
+
+            color: #202633;
+        }
+
+        .section-subtitle {
+            font-size: 11px;
+
+            color: #667080;
+
+            margin-bottom: 11px;
+
+            margin-left: 28px;
+
+            line-height: 15px;
+        }
+
+        .view-all {
+            color: #087b48;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            white-space: nowrap;
+        }
+
+        .view-all:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           RECOMMENDED SECTION
+        ===================================================== */
+
+        .recommended-section {
+            margin-bottom: 18px;
+        }
+
+        .recommended-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(6, 1fr);
+
+            gap: 10px;
+        }
+
+
+        /* =====================================================
+           RESOURCE CARD
+        ===================================================== */
+
+        .resource-card {
+            background: white;
+
+            border:
+                1px solid #e1e6eb;
+
+            border-radius: 7px;
+
+            min-height: 198px;
+
+            padding: 9px;
+
+            position: relative;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        .resource-card:hover {
+            transform:
+                translateY(-2px);
+
+            box-shadow:
+                0 5px 14px
+                rgba(0,0,0,0.08);
+        }
+
+
+        /* =====================================================
+           RESOURCE TYPE
+        ===================================================== */
+
+        .resource-type {
+            display: inline-block;
+
+            padding:
+                4px 7px;
+
+            border-radius: 4px;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            margin-bottom: 5px;
+        }
+
+        .type-book {
+            background: #e7f6eb;
+
+            color: #087b48;
+        }
+
+        .type-guide {
+            background: #e7f0ff;
+
+            color: #1a63ce;
+        }
+
+        .type-paper {
+            background: #fff0e8;
+
+            color: #e76522;
+        }
+
+        .type-video {
+            background: #eee7ff;
+
+            color: #7128c7;
+        }
+
+
+        /* =====================================================
+           RESOURCE IMAGE
+        ===================================================== */
+
+        .resource-image {
+            width: 100%;
+
+            height: 88px;
+
+            border-radius: 4px;
+
+            overflow: hidden;
+
+            margin-bottom: 8px;
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            text-align: center;
+        }
+
+        .book-cover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #176d4b,
+                    #75b15c
+                );
+
+            color: white;
+
+            padding: 8px;
+        }
+
+        .rice-cover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #8dbf4a,
+                    #d6df72
+                );
+
+            color: white;
+        }
+
+        .guide-cover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #477f48,
+                    #a5ca70
+                );
+
+            color: white;
+        }
+
+        .paper-cover {
+            background:
+                #f4f4f1;
+
+            color: #253238;
+
+            border:
+                1px solid #e0e0dc;
+        }
+
+        .water-cover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #6d9e4d,
+                    #c0d77d
+                );
+
+            color: white;
+        }
+
+        .video-cover {
+            background:
+                linear-gradient(
+                    135deg,
+                    #4b8b50,
+                    #9dc46a
+                );
+
+            color: white;
+        }
+
+        .cover-text {
+            font-size: 11px;
+
+            font-weight: bold;
+
+            line-height: 13px;
+
+            max-width: 120px;
+        }
+
+        .cover-small {
+            font-size: 11px;
+
+            margin-top: 4px;
+
+            opacity: 0.9;
+        }
+
+
+        /* =====================================================
+           PLAY BUTTON
+        ===================================================== */
+
+        .play-button {
+            width: 39px;
+            height: 39px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(255,255,255,0.95);
+
+            color: #237747;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 17px;
+
+            box-shadow:
+                0 2px 6px
+                rgba(0,0,0,0.15);
+        }
+
+
+        /* =====================================================
+           RESOURCE CARD TEXT
+        ===================================================== */
+
+        .resource-name {
+            font-size: 12px;
+
+            font-weight: bold;
+
+            line-height: 15px;
+
+            color: #202a30;
+
+            min-height: 30px;
+
+            margin-bottom: 6px;
+        }
+
+        .resource-author {
+            font-size: 10px;
+
+            color: #5f6d75;
+
+            line-height: 13px;
+
+            margin-bottom: 8px;
+        }
+
+        .resource-meta {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            font-size: 11px;
+
+            color: #53616a;
+        }
+
+        .meta-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 3px;
+        }
+
+
+        /* =====================================================
+           COMMON RESOURCES
+        ===================================================== */
+
+        .common-section {
+            margin-top: 5px;
+        }
+
+        .common-list {
+            background: white;
+
+            border:
+                1px solid #e1e6eb;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 2px 6px
+                rgba(0,0,0,0.025);
+        }
+
+        .common-item {
+            min-height: 70px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                8px 11px;
+
+            border-bottom:
+                1px solid #edf0f3;
+        }
+
+        .common-item:last-child {
+            border-bottom: none;
+        }
+
+
+        /* =====================================================
+           COMMON ICON
+        ===================================================== */
+
+        .common-icon {
+            width: 44px;
+            height: 44px;
+
+            min-width: 44px;
+
+            border-radius: 8px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+        .icon-green {
+            background: #e5f6ea;
+
+            color: #168448;
+        }
+
+        .icon-blue {
+            background: #e7efff;
+
+            color: #226bd5;
+        }
+
+        .icon-orange {
+            background: #fff0df;
+
+            color: #ed8100;
+        }
+
+        .icon-brown {
+            background: #f4e8df;
+
+            color: #865c40;
+        }
+
+        .icon-purple {
+            background: #eee6ff;
+
+            color: #702ac6;
+        }
+
+
+        /* =====================================================
+           COMMON INFO
+        ===================================================== */
+
+        .common-info {
+            width: 34%;
+
+            min-width: 210px;
+        }
+
+        .common-title {
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #202b31;
+
+            margin-bottom: 4px;
+
+            line-height: 16px;
+        }
+
+        .common-description {
+            font-size: 11px;
+
+            line-height: 14px;
+
+            color: #65737a;
+
+            max-width: 360px;
+        }
+
+
+        /* =====================================================
+           TAGS
+        ===================================================== */
+
+        .tags {
+            flex: 1;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            display: inline-block;
+
+            padding:
+                5px 8px;
+
+            border-radius: 4px;
+
+            background: #e7f5eb;
+
+            color: #207345;
+
+            font-size: 10px;
+
+            font-weight: bold;
+        }
+
+        .tag.blue {
+            background: #e9f1ff;
+
+            color: #2163c4;
+        }
+
+
+        /* =====================================================
+           COMMON META
+        ===================================================== */
+
+        .common-meta {
+            width: 150px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 10px;
+
+            font-size: 11px;
+
+            color: #53616a;
+        }
+
+
+        /* =====================================================
+           DOWNLOAD BUTTON
+        ===================================================== */
+
+        .download-button {
+            width: 34px;
+            height: 34px;
+
+            border:
+                1px solid #dfe4ea;
+
+            border-radius: 7px;
+
+            background: white;
+
+            color: #26363d;
+
+            cursor: pointer;
+
+            font-size: 17px;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            transition: 0.2s;
+        }
+
+        .download-button:hover {
+            border-color: #087a4d;
+
+            color: #087a4d;
+
+            background: #f1faf5;
+        }
+
+
+        /* =====================================================
+           NO RESULTS
+        ===================================================== */
+
+        .no-results {
+            display: none;
+
+            text-align: center;
+
+            padding: 45px 20px;
+
+            background: white;
+
+            border:
+                1px solid #e1e6eb;
+
+            border-radius: 8px;
+
+            margin-top: 10px;
+        }
+
+        .no-results-icon {
+            font-size: 36px;
+
+            margin-bottom: 9px;
+        }
+
+        .no-results h3 {
+            font-size: 16px;
+
+            margin-bottom: 6px;
+
+            color: #202633;
+        }
+
+        .no-results p {
+            font-size: 11px;
+
+            color: #6b777d;
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+            position: fixed;
+
+            left: 255px;
+            right: 0;
+            bottom: 0;
+
+            height: 42px;
+
+            background: #004d32;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            gap: 13px;
+
+            font-size: 10px;
+
+            z-index: 900;
+        }
+
+        .footer a {
+            color: white;
+
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1250px) {
+
+            .recommended-grid {
+                grid-template-columns:
+                    repeat(3, 1fr);
+            }
+
+            .common-info {
+                width: 30%;
+            }
+
+        }
+
+
+        @media (max-width: 950px) {
+
+            .recommended-grid {
+                grid-template-columns:
+                    repeat(2, 1fr);
+            }
+
+            .common-item {
+                flex-wrap: wrap;
+            }
+
+            .common-info {
+                width: auto;
+
+                flex: 1;
+            }
+
+            .tags {
+                width: 100%;
+
+                margin-left: 56px;
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform 0.25s ease;
+            }
+
+            .sidebar.open {
+                transform:
+                    translateX(0);
+            }
+
+            .main {
+                margin-left: 0;
+
+                width: 100%;
+            }
+
+            .footer {
+                left: 0;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .content {
+                padding:
+                    18px 12px 30px;
+            }
+
+            .search-area {
+                flex-direction: column;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+
+            .recommended-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .common-meta {
+                width: 100%;
+            }
+
+            .header {
+                padding:
+                    0 15px;
+            }
+
+            .profile-info,
+            .profile-arrow {
+                display: none;
+            }
+
+            .section-title {
+                font-size: 15px;
+            }
+
+            .common-title {
+                font-size: 12px;
+            }
+
+        }
+
+
+        @media (max-width: 450px) {
+
+            .section-header {
+                align-items: flex-start;
+            }
+
+            .section-title {
+                font-size: 14px;
+            }
+
+            .section-subtitle {
+                margin-left: 0;
+            }
+
+        }
+
+
+        /* =====================================================
+           SCROLLBAR
+        ===================================================== */
+
+        .sidebar::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background:
+                rgba(255,255,255,0.20);
+
+            border-radius: 5px;
+        }
+
+    
+/* =====================================================
+   PROFILE DROPDOWN (role switcher)
+   ===================================================== */
+
+.profile-dropdown {
+    display: none;
+    position: absolute;
+    top: 58px;
+    right: 0;
+    width: 225px;
+    background: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    padding: 8px;
+    z-index: 300;
+}
+
+.profile.open .profile-dropdown {
+    display: block;
+}
+
+.dropdown-title {
+    padding: 8px 10px 6px;
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.dropdown-role {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    border-radius: 7px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.dropdown-role:hover {
+    background: #f1f7f3;
+}
+
+.dropdown-role.current {
+    background: #e9f6ed;
+    color: #13883f;
+    font-weight: bold;
+}
+
+.role-check {
+    margin-left: auto;
+    font-size: 14px;
+}
+
+.profile {
+    position: relative;
+}
+
+
+.consultation-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+
+        <a
+            href="expert-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <a
+            href="expert-consultations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-label">
+                Consultations
+            </span>
+
+            <span class="consultation-badge" id="consultationBadge" style="display:none;">0</span>
+
+        </a>
+
+
+        <a
+            href="expert-resources.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                📖
+            </span>
+
+            <span class="nav-label">
+                Resources
+            </span>
+
+        </a>
+
+
+        <a
+            href="expert-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-label">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <a
+            href="expert-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+            <span
+                style="
+                    background:#159447;
+                    border-radius:50%;
+                    min-width:18px;
+                    height:18px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-size:9px;
+                    font-weight:bold;
+                "
+            >
+                3
+            </span>
+
+        </a>
+
+
+        <a
+            href="expert-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <div class="sidebar-bottom">
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="expert-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="expert-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="logout(); return false;"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <header class="header">
+
+
+        <div class="header-right">
+
+
+            <div
+                class="notification"
+                onclick="goToNotifications()"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="notification-badge"
+                    id="headerNotificationCount"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+                <div class="profile-avatar" id="profileAvatar">
+                    DN
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div class="profile-name" id="profileName">
+                        Dr. Nimal
+                    </div>
+
+                    <div class="profile-role" id="profileRole">
+                        Agricultural Expert
+                    </div>
+
+                </div>
+
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+                <!-- PROFILE DROPDOWN -->
+
+                <div class="profile-dropdown">
+
+                    <div class="dropdown-title">
+                        Switch Role
+                    </div>
+
+                    <div id="roleOptions"></div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT
+    ===================================================== -->
+
+    <section class="content">
+
+
+        <div class="page-header">
+
+
+            <h1>
+                Resources
+            </h1>
+
+
+            <p>
+                Explore useful guides, articles, videos and documents to support your expertise.
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             SEARCH + FILTER
+        ================================================= -->
+
+        <div class="search-area">
+
+
+            <div class="search-box">
+
+
+                <span class="search-icon">
+                    🔍
+                </span>
+
+
+                <input
+                    type="text"
+                    id="resourceSearch"
+                    placeholder="Search resources by title, topic or keyword..."
+                    oninput="searchResources()"
+                >
+
+
+            </div>
+
+
+            <select
+                class="filter-select"
+                id="typeFilter"
+                onchange="filterByType()"
+            >
+
+                <option value="all">
+                    Filter by Type
+                </option>
+
+                <option value="book">
+                    Books
+                </option>
+
+                <option value="guide">
+                    Guides
+                </option>
+
+                <option value="paper">
+                    Research Papers
+                </option>
+
+                <option value="video">
+                    Videos
+                </option>
+
+            </select>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             RECOMMENDED RESOURCES
+        ================================================= -->
+
+        <section
+            class="recommended-section"
+            id="recommendedSection"
+        >
+
+
+            <div class="section-header">
+
+
+                <div class="section-title-area">
+
+                    <span class="section-icon">
+                        ⭐
+                    </span>
+
+                    <span
+                        class="section-title"
+                        id="recommendedTitle"
+                    >
+                        Recommended Resources for You
+                    </span>
+
+                </div>
+
+
+                <a
+                    href="#"
+                    class="view-all"
+                    onclick="showAllRecommended(); return false;"
+                >
+                    View All ❯
+                </a>
+
+
+            </div>
+
+
+            <p
+                class="section-subtitle"
+                id="recommendedSubtitle"
+            >
+                Live results from across the internet, related to your specialization.
+            </p>
+
+
+
+            <div
+                class="recommended-grid"
+                id="recommendedGrid"
+            >
+                <p style="padding:20px;color:#6b7683;">Loading resources...</p>
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             COMMON RESOURCES
+        ================================================= -->
+
+        <section
+            class="common-section"
+            id="commonSection"
+        >
+
+
+            <div class="section-header">
+
+
+                <div class="section-title-area">
+
+                    <span class="section-icon">
+                        🔗
+                    </span>
+
+                    <span class="section-title">
+                        Common Resources (Other Topics)
+                    </span>
+
+                </div>
+
+
+                <a
+                    href="#"
+                    class="view-all"
+                    onclick="showAllCommon(); return false;"
+                >
+                    View All ❯
+                </a>
+
+
+            </div>
+
+
+            <p class="section-subtitle">
+                Explore resources on other important agricultural topics to broaden your knowledge.
+            </p>
+
+
+
+            <div
+                class="common-list"
+                id="commonList"
+            >
+                <p style="padding:20px;color:#6b7683;">Loading resources...</p>
+            </div>
+
+
+        </section>
+
+
+
+        <!-- =================================================
+             NO RESULTS
+        ================================================= -->
+
+        <div
+            class="no-results"
+            id="noResults"
+        >
+
+            <div class="no-results-icon">
+                🔍
+            </div>
+
+            <h3>
+                No Resources Found
+            </h3>
+
+            <p>
+                Try a different keyword or resource type.
+            </p>
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+
+    <span>
+        🌱 © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+
+</footer>
+
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+let user = null;
+
+try {
+
+    user = JSON.parse(sessionStorage.getItem("user"));
+
+} catch (error) {
+
+    user = null;
+
+}
+
+
+
+const roleNames = {
+    farmer: "Farmer",
+    buyer: "Buyer",
+    expert: "Agricultural Expert",
+    equipment_provider: "Equipment Provider"
+};
+
+const roleIcons = {
+    farmer: "🌱",
+    buyer: "🛒",
+    expert: "👨‍🌾",
+    equipment_provider: "🚜"
+};
+
+function normalizeRole(role) {
+
+    if (!role) {
+        return "";
+    }
+
+    const value =
+        String(role).toLowerCase().trim().replace(/-/g, "_");
+
+    if (value === "farmer") return "farmer";
+    if (value === "buyer" || value === "buyer/user") return "buyer";
+
+    if (
+        value === "expert" ||
+        value === "agricultural_expert" ||
+        value === "agricultural expert" ||
+        value === "agriculture_expert" ||
+        value === "agriculture expert" ||
+        value === "agri_expert" ||
+        value === "agri expert"
+    ) {
+        return "expert";
+    }
+
+    if (
+        value === "equipment_provider" ||
+        value === "equipment provider" ||
+        value === "equipmentprovider" ||
+        value === "provider"
+    ) {
+        return "equipment_provider";
+    }
+
+    return "";
+
+}
+
+function getRegisteredRolesForSwitcher() {
+
+    if (!user) {
+        return [];
+    }
+
+    let roles = [];
+
+    if (Array.isArray(user.roles)) {
+        roles = [...user.roles];
+    }
+
+    if (roles.length === 0 && Array.isArray(user.registered_roles)) {
+        roles = [...user.registered_roles];
+    }
+
+    if (roles.length === 0 && Array.isArray(user.registeredRoles)) {
+        roles = [...user.registeredRoles];
+    }
+
+    if (roles.length === 0) {
+
+        try {
+
+            const storedRoles =
+                JSON.parse(sessionStorage.getItem("registeredRoles") || "null");
+
+            if (Array.isArray(storedRoles)) {
+                roles = [...storedRoles];
+            }
+
+        } catch (error) {
+
+            roles = [];
+
+        }
+
+    }
+
+    if (roles.length === 0 && user.role) {
+
+        roles =
+            Array.isArray(user.role) ? [...user.role] : [user.role];
+
+    }
+
+    roles =
+        roles.map(normalizeRole).filter(role => !!role && !!roleNames[role]);
+
+    return [...new Set(roles)];
+
+}
+
+function getAccountRoles() {
+    return [...new Set(getRegisteredRolesForSwitcher())];
+}
+
+let currentRole = "expert";
+
+function loadRoles() {
+
+    const roleOptions =
+        document.getElementById("roleOptions");
+
+    if (!roleOptions) {
+        return;
+    }
+
+    roleOptions.innerHTML = "";
+
+    getAccountRoles().forEach(function(role) {
+
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+        button.className = "dropdown-role";
+
+        if (role === currentRole) {
+            button.classList.add("current");
+        }
+
+        button.innerHTML = `
+            <span>${roleIcons[role] || "👤"}</span>
+            <span>${roleNames[role] || role}</span>
+            <span class="role-check">${role === currentRole ? "✓" : ""}</span>
+        `;
+
+        button.addEventListener("click", function(event) {
+            event.stopPropagation();
+            switchRole(role);
+        });
+
+        roleOptions.appendChild(button);
+
+    });
+
+    moveCurrentRoleToFront(roleOptions);
+
+
+}
+
+function switchRole(role) {
+
+    const normalizedRole =
+        normalizeRole(role);
+
+    if (!normalizedRole) {
+        return;
+    }
+
+    if (!getAccountRoles().includes(normalizedRole)) {
+        return;
+    }
+
+    currentRole = normalizedRole;
+
+    sessionStorage.setItem("selectedRole", currentRole);
+    sessionStorage.setItem("currentRole", currentRole);
+
+    if (currentRole === "farmer") {
+        window.location.href = "farmer-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "buyer") {
+        window.location.href = "buyer-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "expert") {
+        window.location.href = "expert-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "equipment_provider") {
+        window.location.href = "rental-dashboard.html";
+    }
+
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const profileEl =
+        document.getElementById("profile");
+
+    if (profileEl) {
+
+        profileEl.addEventListener("click", function(event) {
+            event.stopPropagation();
+            profileEl.classList.toggle("open");
+        });
+
+        document.addEventListener("click", function() {
+            profileEl.classList.remove("open");
+        });
+
+    }
+
+    loadRoles();
+
+});
+
+
+
+function displayUser() {
+
+    if (!user) {
+        return;
+    }
+
+    const firstName =
+        user.first_name || user.firstName || "";
+
+    const lastName =
+        user.last_name || user.lastName || "";
+
+    const fullName =
+        `${firstName} ${lastName}`.trim() || "Agricultural Expert";
+
+    const initials =
+        ((firstName.charAt(0) || "") + (lastName.charAt(0) || "")).toUpperCase() || "AE";
+
+    const nameEl = document.getElementById("profileName");
+    if (nameEl) nameEl.textContent = fullName;
+
+    const avatarEl = document.getElementById("profileAvatar");
+    if (avatarEl) avatarEl.textContent = initials;
+
+}
+
+/* =========================================================
+   LIVE RESOURCES (real internet search)
+========================================================= */
+
+function escapeHtmlResource(value) {
+
+    const div = document.createElement("div");
+    div.textContent = value == null ? "" : String(value);
+    return div.innerHTML;
+
+}
+
+
+function buildResourceCardHtml(resource) {
+
+    const thumbnailHtml =
+        resource.thumbnail
+            ? `<img src="${escapeHtmlResource(resource.thumbnail)}" alt="" style="width:100%;height:110px;object-fit:cover;border-radius:6px 6px 0 0;">`
+            : `<div style="width:100%;height:80px;display:flex;align-items:center;justify-content:center;background:#eef4f0;border-radius:6px 6px 0 0;font-size:26px;">🔗</div>`;
+
+    return `
+        <a
+            href="${escapeHtmlResource(resource.link)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            style="
+                display:block;
+                text-decoration:none;
+                color:inherit;
+                background:white;
+                border:1px solid #e1e6eb;
+                border-radius:8px;
+                overflow:hidden;
+                transition:box-shadow 0.15s;
+            "
+            onmouseover="this.style.boxShadow='0 4px 14px rgba(0,0,0,0.08)';"
+            onmouseout="this.style.boxShadow='none';"
+        >
+            ${thumbnailHtml}
+
+            <div style="padding:10px 12px;">
+
+                <div style="font-size:13px;font-weight:600;color:#17331f;line-height:1.35;margin-bottom:4px;">
+                    ${escapeHtmlResource(resource.title)}
+                </div>
+
+                <div style="font-size:11px;color:#6b7683;margin-bottom:6px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">
+                    ${escapeHtmlResource(resource.snippet || "")}
+                </div>
+
+                <div style="font-size:10px;color:#17833c;font-weight:600;">
+                    🔗 ${escapeHtmlResource(resource.displayLink || "")}
+                </div>
+
+            </div>
+        </a>
+    `;
+
+}
+
+
+function renderResourcesInto(containerId, resources) {
+
+    const container =
+        document.getElementById(containerId);
+
+    if (!container) {
+        return;
+    }
+
+    if (!resources || resources.length === 0) {
+
+        container.innerHTML = `
+            <p style="padding:20px;color:#6b7683;">
+                No resources found right now. Please try again later.
+            </p>
+        `;
+
+        return;
+
+    }
+
+    container.innerHTML =
+        resources.map(buildResourceCardHtml).join("");
+
+}
+
+
+function renderResourcesNotConfigured(containerId) {
+
+    const container =
+        document.getElementById(containerId);
+
+    if (!container) {
+        return;
+    }
+
+    container.innerHTML = `
+        <div style="padding:20px;color:#6b7683;font-size:13px;line-height:1.6;">
+            🔧 Live resource search hasn't been set up yet.<br>
+            Add a Google Search API key in
+            <code>backend/config/searchConfig.js</code>
+            to enable this.
+        </div>
+    `;
+
+}
+
+
+async function loadRecommendedResources(specialization) {
+
+    document.getElementById("recommendedTitle").textContent =
+        specialization
+            ? `Recommended Resources for You (${specialization})`
+            : "Recommended Resources for You";
+
+    document.getElementById("recommendedSubtitle").textContent =
+        specialization
+            ? `Live results from across the internet, related to ${specialization}.`
+            : "Live results from across the internet.";
+
+    const grid =
+        document.getElementById("recommendedGrid");
+
+    if (grid) {
+        grid.style.gridTemplateColumns = "repeat(3, 1fr)";
+    }
+
+    try {
+
+        const url =
+            specialization
+                ? `/api/resources/search?specialization=${encodeURIComponent(specialization)}`
+                : `/api/resources/search`;
+
+        const response =
+            await fetch(url);
+
+        const data =
+            await response.json();
+
+        if (data.notConfigured) {
+            renderResourcesNotConfigured("recommendedGrid");
+            return;
+        }
+
+        if (!data.success) {
+
+            document.getElementById("recommendedGrid").innerHTML = `
+                <p style="padding:20px;color:#c0392b;">
+                    ${escapeHtmlResource(data.message || "Unable to load resources.")}
+                </p>
+            `;
+
+            return;
+
+        }
+
+        renderResourcesInto("recommendedGrid", data.resources);
+
+    } catch (error) {
+
+        console.error("Load recommended resources error:", error);
+
+        document.getElementById("recommendedGrid").innerHTML = `
+            <p style="padding:20px;color:#c0392b;">
+                Unable to load resources right now.
+            </p>
+        `;
+
+    }
+
+}
+
+
+async function loadTopRatedResources() {
+
+    try {
+
+        const response =
+            await fetch(`/api/resources/search?topRated=true`);
+
+        const data =
+            await response.json();
+
+        if (data.notConfigured) {
+            renderResourcesNotConfigured("commonList");
+            return;
+        }
+
+        if (!data.success) {
+
+            document.getElementById("commonList").innerHTML = `
+                <p style="padding:20px;color:#c0392b;">
+                    ${escapeHtmlResource(data.message || "Unable to load resources.")}
+                </p>
+            `;
+
+            return;
+
+        }
+
+        const grid =
+            document.getElementById("commonList");
+
+        if (grid) {
+            grid.style.display = "grid";
+            grid.style.gridTemplateColumns = "repeat(3, 1fr)";
+            grid.style.gap = "10px";
+            grid.style.padding = "10px";
+        }
+
+        renderResourcesInto("commonList", data.resources);
+
+    } catch (error) {
+
+        console.error("Load top rated resources error:", error);
+
+        document.getElementById("commonList").innerHTML = `
+            <p style="padding:20px;color:#c0392b;">
+                Unable to load resources right now.
+            </p>
+        `;
+
+    }
+
+}
+
+
+async function initResourcesPage() {
+
+    const userId =
+        getCurrentUserId();
+
+    let specialization = null;
+
+    if (userId) {
+
+        try {
+
+            const response =
+                await fetch(`/api/consultations/my-specialization/${userId}`);
+
+            const data =
+                await response.json();
+
+            if (data && data.success) {
+                specialization = data.specialization;
+            }
+
+        } catch (error) {
+
+            console.error("Unable to load specialization:", error);
+
+        }
+
+    }
+
+    await loadRecommendedResources(specialization);
+
+    await loadTopRatedResources();
+
+}
+
+initResourcesPage();
+
+
+displayUser();
+
+
+function getCurrentUserId() {
+
+    try {
+
+        const user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+        return user && user.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+function updateNotificationCount() {
+
+    const userId =
+        getCurrentUserId();
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const headerCount = document.getElementById("headerNotificationCount");
+
+            if (headerCount) headerCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+updateNotificationCount();
+
+
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function searchResources() {
+
+    applyResourceFilters();
+
+}
+
+
+/* =========================================================
+   TYPE FILTER
+========================================================= */
+
+function filterByType() {
+
+    applyResourceFilters();
+
+}
+
+
+/* =========================================================
+   APPLY RESOURCE FILTERS
+========================================================= */
+
+function applyResourceFilters() {
+
+
+    const search =
+        document
+            .getElementById("resourceSearch")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const type =
+        document
+            .getElementById("typeFilter")
+            .value;
+
+
+    const recommended =
+        document.querySelectorAll(
+            "#recommendedGrid .resource-card"
+        );
+
+
+    const common =
+        document.querySelectorAll(
+            "#commonList .common-item"
+        );
+
+
+    let visibleCount = 0;
+
+
+
+    /* =====================================================
+       RECOMMENDED RESOURCES
+    ===================================================== */
+
+    recommended.forEach(item => {
+
+
+        const itemType =
+            item.dataset.type;
+
+
+        const itemSearch =
+            item.dataset.search.toLowerCase();
+
+
+        const typeMatch =
+            type === "all" ||
+            itemType === type;
+
+
+        const searchMatch =
+            !search ||
+            itemSearch.includes(search);
+
+
+        if (
+            typeMatch &&
+            searchMatch
+        ) {
+
+            item.style.display = "";
+
+            visibleCount++;
+
+        }
+        else {
+
+            item.style.display = "none";
+
+        }
+
+    });
+
+
+
+    /* =====================================================
+       COMMON RESOURCES
+    ===================================================== */
+
+    common.forEach(item => {
+
+
+        const itemType =
+            item.dataset.type;
+
+
+        const itemSearch =
+            item.dataset.search.toLowerCase();
+
+
+        const typeMatch =
+            type === "all" ||
+            itemType === type;
+
+
+        const searchMatch =
+            !search ||
+            itemSearch.includes(search);
+
+
+        if (
+            typeMatch &&
+            searchMatch
+        ) {
+
+            item.style.display = "";
+
+            visibleCount++;
+
+        }
+        else {
+
+            item.style.display = "none";
+
+        }
+
+    });
+
+
+
+    /* =====================================================
+       SECTION VISIBILITY
+    ===================================================== */
+
+    let recommendedVisible = false;
+
+
+    recommended.forEach(item => {
+
+        if (
+            item.style.display !== "none"
+        ) {
+
+            recommendedVisible = true;
+
+        }
+
+    });
+
+
+    let commonVisible = false;
+
+
+    common.forEach(item => {
+
+        if (
+            item.style.display !== "none"
+        ) {
+
+            commonVisible = true;
+
+        }
+
+    });
+
+
+    document
+        .getElementById("recommendedSection")
+        .style.display =
+            recommendedVisible
+                ? ""
+                : "none";
+
+
+    document
+        .getElementById("commonSection")
+        .style.display =
+            commonVisible
+                ? ""
+                : "none";
+
+
+    document
+        .getElementById("noResults")
+        .style.display =
+            visibleCount === 0
+                ? "block"
+                : "none";
+
+}
+
+
+/* =========================================================
+   VIEW ALL RECOMMENDED
+========================================================= */
+
+function showAllRecommended() {
+
+
+    document
+        .getElementById("resourceSearch")
+        .value = "";
+
+
+    document
+        .getElementById("typeFilter")
+        .value = "all";
+
+
+    applyResourceFilters();
+
+}
+
+
+/* =========================================================
+   VIEW ALL COMMON
+========================================================= */
+
+function showAllCommon() {
+
+
+    document
+        .getElementById("resourceSearch")
+        .value = "";
+
+
+    document
+        .getElementById("typeFilter")
+        .value = "all";
+
+
+    applyResourceFilters();
+
+
+    document
+        .getElementById("commonSection")
+        .scrollIntoView({
+            behavior: "smooth"
+        });
+
+}
+
+
+/* =========================================================
+   DOWNLOAD
+========================================================= */
+
+function downloadResource(resourceName) {
+
+    alert(
+        "Download requested for:\n\n" +
+        resourceName
+    );
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function goToNotifications() {
+
+    window.location.href =
+        "expert-notifications.html";
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function openProfile() {
+
+    window.location.href =
+        "expert-profile.html";
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout() {
+
+    const confirmed =
+        await customConfirm("Are you sure you want to logout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+
+    localStorage.removeItem(
+        "expertLoggedIn"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+
+function updateConsultationBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(c => c.unread_count > 0).length;
+
+            const badgeEl =
+                document.getElementById("consultationBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load consultation badge count:", error);
+        });
+
+}
+
+updateConsultationBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

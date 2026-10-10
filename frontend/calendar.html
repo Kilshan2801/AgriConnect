@@ -1,0 +1,5744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Calendar</title>
+
+<style>
+
+/* =========================================================
+   RESET
+   ========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7f5;
+    color: #10233f;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   APP
+   ========================================================= */
+
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+.sidebar {
+    width: 255px;
+    min-width: 255px;
+
+    background: linear-gradient(
+        180deg,
+        #087b38 0%,
+        #05652f 100%
+    );
+
+    color: white;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+
+    z-index: 1000;
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.sidebar-logo {
+
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.18);
+
+    flex-shrink: 0;
+    padding: 0 20px;
+}
+
+.sidebar-logo img {
+    max-height: 62px;
+
+
+    width: 160px;
+    height: auto;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================================================
+   SIDEBAR NAV
+   ========================================================= */
+
+.sidebar-nav {
+
+    padding: 16px 13px;
+
+    flex: 1;
+}
+
+
+.nav-item {
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 9px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    transition: 0.2s ease;
+}
+
+
+.nav-item:hover {
+
+    background:
+        rgba(255,255,255,0.12);
+}
+
+
+.nav-item.active {
+
+    background:
+        rgba(0,70,30,0.55);
+
+    box-shadow:
+        inset 3px 0 0 white;
+}
+
+
+.nav-icon {
+
+    width: 24px;
+    min-width: 24px;
+
+    text-align: center;
+
+    font-size: 19px;
+}
+
+
+.nav-text {
+
+    flex: 1;
+}
+
+
+.notification-count {
+
+    min-width: 25px;
+    height: 25px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #25b94b;
+
+    color: white;
+
+    font-size: 12px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+   ========================================================= */
+
+.sidebar-bottom {
+
+    padding: 8px 13px 16px;
+}
+
+.sidebar-divider {
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.20);
+
+    margin:
+        5px 16px 12px;
+}
+
+
+/* =========================================================
+   MAIN
+   ========================================================= */
+
+.main {
+
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.top-header {
+
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e1e7e4;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 45px;
+
+    flex-shrink: 0;
+}
+
+
+.header-title h1 {
+
+    font-size: 30px;
+
+    color: #10233f;
+
+    margin-bottom: 5px;
+}
+
+
+.header-title p {
+
+    color: #526b86;
+
+    font-size: 16px;
+}
+
+
+.header-right {
+
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+   ========================================================= */
+
+.notification-bell {
+
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 28px;
+
+    cursor: pointer;
+}
+
+
+.notification-number {
+
+    position: absolute;
+
+    top: -5px;
+    right: -4px;
+
+    min-width: 23px;
+    height: 23px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #25b94b;
+
+    color: white;
+
+    font-size: 11px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+.profile-area {
+    position: relative;
+}
+
+
+.profile-button {
+
+    border: none;
+    background: transparent;
+
+    display: flex;
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+}
+
+
+.profile-avatar {
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    background: #edf7f0;
+
+    border:
+        1px solid #cce5d4;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: #07823d;
+
+    font-size: 17px;
+    font-weight: bold;
+}
+
+
+.profile-info {
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+
+.profile-name {
+
+    font-size: 17px;
+    font-weight: bold;
+
+    color: #111;
+}
+
+
+.profile-role {
+
+    font-size: 14px;
+
+    color: #07823d;
+
+    margin-top: 2px;
+}
+
+
+.profile-arrow {
+
+    color: #63758b;
+
+    margin-left: 7px;
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+   ========================================================= */
+
+.profile-dropdown {
+
+    display: none;
+
+    position: absolute;
+
+    right: 0;
+    top: 66px;
+
+    width: 265px;
+
+    background: white;
+
+    border:
+        1px solid #dfe7e3;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.15);
+
+    overflow: hidden;
+
+    z-index: 3000;
+}
+
+
+.profile-dropdown.show {
+    display: block;
+}
+
+
+.dropdown-user {
+
+    padding: 18px 20px;
+
+    border-bottom:
+        1px solid #e4e9e7;
+}
+
+
+.dropdown-user-name {
+
+    font-size: 18px;
+    font-weight: bold;
+
+    color: #10233f;
+}
+
+
+.dropdown-user-role {
+
+    font-size: 14px;
+
+    color: #07823d;
+
+    margin-top: 4px;
+}
+
+
+.switch-title {
+
+    padding: 16px 20px 8px;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #67758a;
+}
+
+
+.role-option {
+
+    margin: 0 10px 5px;
+
+    padding: 12px 14px;
+
+    border-radius: 9px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    cursor: pointer;
+
+    color: #23354e;
+}
+
+
+.role-option:hover {
+    background: #f1f6f3;
+}
+
+
+.role-option.selected {
+
+    background: #e5f5ea;
+
+    color: #07823d;
+
+    font-weight: bold;
+}
+
+
+.role-icon {
+
+    width: 25px;
+
+    text-align: center;
+
+    font-size: 19px;
+}
+
+
+.role-check {
+
+    margin-left: auto;
+
+    color: #07823d;
+
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.content {
+
+    flex: 1;
+
+    padding:
+        38px 50px 55px;
+
+    background: #f4f7f5;
+}
+
+
+.page-heading {
+
+    margin-bottom: 27px;
+}
+
+
+.page-heading h2 {
+
+    font-size: 29px;
+
+    color: #10233f;
+
+    margin-bottom: 8px;
+}
+
+
+.page-heading p {
+
+    font-size: 17px;
+
+    color: #58708b;
+}
+
+
+/* =========================================================
+   CALENDAR CARD
+   ========================================================= */
+
+.calendar-card {
+
+    background: white;
+
+    border:
+        1px solid #dce4e0;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   CALENDAR HEADER
+   ========================================================= */
+
+.calendar-header {
+
+    min-height: 105px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 30px;
+
+    border-bottom:
+        1px solid #e1e7e4;
+}
+
+
+.month-title {
+
+    font-size: 30px;
+
+    color: #15243a;
+
+    margin-bottom: 5px;
+}
+
+
+.month-subtitle {
+
+    color: #61758d;
+
+    font-size: 15px;
+}
+
+
+.calendar-controls {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+
+.calendar-btn {
+
+    height: 48px;
+    min-width: 48px;
+
+    border:
+        1px solid #d6dfda;
+
+    background: white;
+
+    border-radius: 9px;
+
+    cursor: pointer;
+
+    color: #17436c;
+
+    font-size: 22px;
+}
+
+
+.calendar-btn:hover {
+
+    background: #f1f7f3;
+}
+
+
+.today-btn {
+
+    padding: 0 20px;
+
+    border: none;
+
+    background: #138b43;
+
+    color: white;
+
+    font-weight: bold;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   LEGEND
+   ========================================================= */
+
+.calendar-legend {
+
+    height: 47px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    padding: 0 30px;
+
+    border-bottom:
+        1px solid #e1e7e4;
+
+    color: #61758d;
+
+    font-size: 14px;
+}
+
+
+.legend-item {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.legend-dot {
+
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    background: #18a64b;
+}
+
+
+.legend-today {
+
+    width: 11px;
+    height: 11px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #149b45;
+
+    background: white;
+}
+
+
+/* =========================================================
+   WEEKDAYS
+   ========================================================= */
+
+.calendar-weekdays {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+
+    background: #f9fbfa;
+}
+
+
+.weekday {
+
+    height: 54px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-right:
+        1px solid #e3e9e6;
+
+    border-bottom:
+        1px solid #e3e9e6;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #5b6e84;
+}
+
+
+.weekday:last-child {
+    border-right: none;
+}
+
+
+/* =========================================================
+   CALENDAR GRID
+   ========================================================= */
+
+.calendar-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, minmax(0, 1fr));
+}
+
+
+/* =========================================================
+   DAY CELL
+   ========================================================= */
+
+.calendar-day {
+
+    min-height: 112px;
+
+    border-right:
+        1px solid #e3e9e6;
+
+    border-bottom:
+        1px solid #e3e9e6;
+
+    padding: 13px;
+
+    cursor: pointer;
+
+    position: relative;
+
+    background: white;
+
+    transition:
+        background 0.15s,
+        box-shadow 0.15s;
+}
+
+
+.calendar-day:hover {
+
+    background: #f5faf7;
+}
+
+
+.calendar-day:nth-child(7n) {
+    border-right: none;
+}
+
+
+.calendar-day.other-month {
+
+    background: #fafbfb;
+}
+
+
+.day-number {
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    color: #162840;
+
+    width: 34px;
+    height: 34px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+.other-month .day-number {
+    color: #b3bdc8;
+}
+
+
+/* =========================================================
+   TODAY
+   ========================================================= */
+
+.calendar-day.today {
+
+    background: #edf9f1;
+}
+
+
+.calendar-day.today .day-number {
+
+    width: 37px;
+    height: 37px;
+
+    border-radius: 50%;
+
+    background: #18a94b;
+
+    color: white;
+}
+
+
+/* =========================================================
+   SELECTED / TARGET DAY
+   ========================================================= */
+
+.calendar-day.target-day {
+
+    box-shadow:
+        inset 0 0 0 3px #159447;
+
+    background: #effaf3;
+}
+
+
+.calendar-day.target-day .day-number {
+
+    color: #07823d;
+}
+
+
+/* =========================================================
+   ACTIVITY
+   ========================================================= */
+
+.activity {
+
+    position: absolute;
+
+    left: 13px;
+    right: 8px;
+
+    bottom: 12px;
+
+    height: 27px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    overflow: hidden;
+
+    color: #087b3f;
+
+    font-size: 11px;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+
+.activity-dot {
+
+    width: 9px;
+    min-width: 9px;
+
+    height: 9px;
+
+    background: #18a94b;
+
+    border-radius: 50%;
+}
+
+
+.activity-text {
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   UPCOMING ACTIVITIES
+   ========================================================= */
+
+.activities-card {
+
+    margin-top: 25px;
+
+    background: white;
+
+    border:
+        1px solid #dce4e0;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+}
+
+
+.activities-header {
+
+    min-height: 70px;
+
+    padding: 0 30px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid #e1e7e4;
+}
+
+
+.activities-header h3 {
+
+    font-size: 24px;
+
+    color: #172a43;
+}
+
+
+.view-all {
+
+    border: none;
+
+    background: transparent;
+
+    color: #07823d;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   ACTIVITY ROW
+   ========================================================= */
+
+.activity-row {
+
+    min-height: 88px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 14px 30px;
+
+    border-bottom:
+        1px solid #edf0ee;
+}
+
+
+.activity-row:last-child {
+    border-bottom: none;
+}
+
+
+.activity-date {
+
+    width: 70px;
+    min-width: 70px;
+
+    height: 62px;
+
+    border-radius: 10px;
+
+    background: #edf8f0;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #07823d;
+}
+
+
+.activity-date strong {
+
+    font-size: 21px;
+
+    line-height: 21px;
+}
+
+
+.activity-date span {
+
+    font-size: 11px;
+
+    margin-top: 3px;
+}
+
+
+.activity-info {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+
+.activity-info-title {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color: #182a42;
+
+    margin-bottom: 6px;
+}
+
+
+.activity-time {
+
+    font-size: 12px;
+
+    color: #67758a;
+}
+
+
+.planned-badge {
+
+    padding: 7px 12px;
+
+    border-radius: 15px;
+
+    background: #e6f5eb;
+
+    color: #138b43;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+.details-btn {
+
+    border: none;
+
+    background: transparent;
+
+    color: #07823d;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+.details-btn:hover {
+
+    text-decoration: underline;
+}
+
+
+.no-activities {
+
+    min-height: 110px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #67758a;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   MODAL OVERLAY
+   ========================================================= */
+
+.modal-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(15,31,48,0.45);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 5000;
+
+    padding: 20px;
+}
+
+
+.modal-overlay.show {
+    display: flex;
+}
+
+
+/* =========================================================
+   MODAL
+   ========================================================= */
+
+.modal {
+
+    width: 480px;
+
+    max-width: 100%;
+
+    background: white;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.25);
+
+    overflow: hidden;
+}
+
+
+.modal-header {
+
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 20px 22px;
+
+    border-bottom:
+        1px solid #e4e9e6;
+}
+
+
+.modal-header h2 {
+
+    font-size: 21px;
+
+    color: #172a43;
+}
+
+
+.close-modal {
+
+    width: 35px;
+    height: 35px;
+
+    border: none;
+
+    background: #f2f5f3;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    font-size: 22px;
+
+    color: #566879;
+}
+
+
+.modal-body {
+
+    padding: 24px;
+}
+
+
+/* =========================================================
+   DETAILS
+   ========================================================= */
+
+.details-date {
+
+    color: #07823d;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    margin-bottom: 17px;
+}
+
+
+.details-message {
+
+    padding: 16px;
+
+    background: #f5f9f6;
+
+    border:
+        1px solid #e1eae4;
+
+    border-radius: 9px;
+
+    color: #26384e;
+
+    font-size: 15px;
+
+    line-height: 1.5;
+
+    margin-bottom: 20px;
+}
+
+
+.detail-item {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 11px 0;
+
+    border-bottom:
+        1px solid #edf0ee;
+
+    font-size: 13px;
+}
+
+
+.detail-item:last-child {
+    border-bottom: none;
+}
+
+
+.detail-label {
+    color: #67758a;
+}
+
+
+.detail-value {
+
+    color: #26384e;
+
+    font-weight: 600;
+
+    text-align: right;
+}
+
+
+.details-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.form-label {
+
+    display: block;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #263a52;
+
+    margin-bottom: 8px;
+}
+
+
+.activity-input {
+
+    width: 100%;
+
+    min-height: 135px;
+
+    resize: vertical;
+
+    border:
+        1px solid #d5dfda;
+
+    border-radius: 9px;
+
+    padding: 13px;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    font-size: 14px;
+
+    color: #172a43;
+
+    outline: none;
+}
+
+
+.activity-input:focus {
+
+    border-color: #168b45;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(22,139,69,0.10);
+}
+
+
+/* =========================================================
+   BUTTONS
+   ========================================================= */
+
+.modal-actions {
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+
+.modal-action {
+
+    min-width: 90px;
+
+    height: 40px;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+.delete-btn {
+
+    margin-right: auto;
+
+    border:
+        1px solid #e2a6a6;
+
+    background: #fff6f6;
+
+    color: #c33d3d;
+}
+
+
+.cancel-btn {
+
+    border:
+        1px solid #d5dfda;
+
+    background: white;
+
+    color: #526579;
+}
+
+
+.save-btn {
+
+    border: none;
+
+    background: #138b43;
+
+    color: white;
+}
+
+
+/* =========================================================
+   FOOTER
+   ========================================================= */
+
+.footer {
+    left: 255px;
+
+
+    min-height: 58px;
+
+    background: #075d2e;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 12px;
+
+    font-size: 13px;
+
+    padding: 10px;
+}
+
+
+.footer a {
+
+    color: white;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+    .sidebar {
+
+        width: 255px;
+        min-width: 255px;
+    }
+
+    .main {
+
+        margin-left: 255px;
+
+        width:
+            calc(100% - 255px);
+    }
+
+    .content {
+
+        padding: 25px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .sidebar {
+
+        width: 210px;
+        min-width: 210px;
+    }
+
+    .main {
+
+        margin-left: 210px;
+
+        width:
+            calc(100% - 210px);
+    }
+
+    .top-header {
+
+        padding: 0 18px;
+    }
+
+    .profile-info {
+
+        display: none;
+    }
+
+    .calendar-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .calendar-controls {
+
+        align-self: flex-end;
+    }
+
+    .calendar-day {
+
+        min-height: 90px;
+
+        padding: 8px;
+    }
+
+    .activity {
+
+        left: 8px;
+
+        bottom: 7px;
+    }
+
+    .activity-row {
+
+        flex-wrap: wrap;
+    }
+
+}
+
+
+.messages-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =========================================================
+     SIDEBAR
+     ========================================================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <nav class="sidebar-nav">
+
+
+        <a
+            href="farmer-dashboard.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">▦</span>
+            <span class="nav-text">Dashboard</span>
+        </a>
+
+
+        <a
+            href="my-crops.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">🌿</span>
+            <span class="nav-text">My Crops</span>
+        </a>
+
+
+        <a
+            href="orders.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">🛒</span>
+            <span class="nav-text">Orders</span>
+        </a>
+
+
+        <a
+            href="equipment-rental.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">🚜</span>
+            <span class="nav-text">Equipment Rental</span>
+        </a>
+
+
+        <a
+            href="consultations.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">👨‍🌾</span>
+            <span class="nav-text">Consultations</span>
+        </a>
+
+
+        <a
+            href="messages.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">💬</span>
+            <span class="nav-text">Messages</span>
+
+                <span class="messages-badge" id="messagesBadge" style="display:none;">0</span>
+        </a>
+
+
+        <a
+            href="report-issues.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">⚠️</span>
+            <span class="nav-text">Report Issues</span>
+        </a>
+
+
+        <a
+            href="calendar.html"
+            class="nav-item active"
+        >
+            <span class="nav-icon">📅</span>
+            <span class="nav-text">Calendar</span>
+        </a>
+
+
+        <a
+            href="notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">🔔</span>
+
+            <span class="nav-text">
+                Notifications
+            </span>
+
+            <span
+                class="notification-count"
+                id="notificationCount"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <a
+            href="history.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">◷</span>
+            <span class="nav-text">History</span>
+        </a>
+
+
+    </nav>
+
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="help-support.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">?</span>
+            <span class="nav-text">Help &amp; Support</span>
+        </a>
+
+
+        <a
+            href="settings.html"
+            class="nav-item"
+        >
+            <span class="nav-icon">⚙</span>
+            <span class="nav-text">Settings</span>
+        </a>
+
+
+        <a
+            href="login.html"
+            class="nav-item"
+            onclick="logout(event)"
+        >
+            <span class="nav-icon">↪</span>
+            <span class="nav-text">Logout</span>
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN
+     ========================================================= -->
+
+<main class="main">
+
+
+<header class="top-header">
+
+
+    <div class="header-title">
+
+        <h1>Welcome back, <span id="userName">User</span>!</h1>
+
+        <p>
+            Keep track of your farming schedule.
+        </p>
+
+    </div>
+
+
+    <div class="header-right">
+
+
+        <div
+            class="notification-bell"
+            onclick="goNotifications()"
+        >
+
+            🔔
+
+            <span
+                class="notification-number"
+                id="headerNotificationCount"
+            >
+                0
+            </span>
+
+        </div>
+
+
+        <div class="profile-area">
+
+
+            <button
+                class="profile-button"
+                id="profileButton"
+                type="button"
+            >
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    KI
+                </div>
+
+
+                <div class="profile-info">
+
+                    <span
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Kilshan
+                    </span>
+
+
+                    <span
+                        class="profile-role"
+                        id="currentRole"
+                    >
+                        Farmer
+                    </span>
+
+                </div>
+
+
+                <span
+                    class="profile-arrow"
+                    id="profileArrow"
+                >
+                    ▼
+                </span>
+
+            </button>
+
+
+            <div
+                class="profile-dropdown"
+                id="profileDropdown"
+            >
+
+                <div class="dropdown-user">
+
+                    <div
+                        class="dropdown-user-name"
+                        id="dropdownUserName"
+                    >
+                        Kilshan
+                    </div>
+
+                    <div
+                        class="dropdown-user-role"
+                        id="dropdownCurrentRole"
+                    >
+                        Farmer
+                    </div>
+
+                </div>
+
+
+                <div class="switch-title">
+                    SWITCH ROLE
+                </div>
+
+
+                <div
+                    id="rolesContainer"
+                ></div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</header>
+
+
+
+<!-- =========================================================
+     CONTENT
+     ========================================================= -->
+
+<section class="content">
+
+
+<div class="page-heading">
+
+    <h2>Calendar</h2>
+
+    <p>
+        Keep track of your farming activities,
+        reminders and important dates.
+    </p>
+
+</div>
+
+
+
+<!-- =========================================================
+     CALENDAR
+     ========================================================= -->
+
+<div class="calendar-card">
+
+
+    <div class="calendar-header">
+
+
+        <div>
+
+            <h3
+                class="month-title"
+                id="monthTitle"
+            >
+                August 2026
+            </h3>
+
+            <p class="month-subtitle">
+                Click a day to add or manage activities
+            </p>
+
+        </div>
+
+
+        <div class="calendar-controls">
+
+
+            <button
+                class="calendar-btn"
+                onclick="previousMonth()"
+                type="button"
+            >
+                ‹
+            </button>
+
+
+            <button
+                class="calendar-btn today-btn"
+                onclick="goToday()"
+                type="button"
+            >
+                Today
+            </button>
+
+
+            <button
+                class="calendar-btn"
+                onclick="nextMonth()"
+                type="button"
+            >
+                ›
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+    <div class="calendar-legend">
+
+
+        <div class="legend-item">
+
+            <span class="legend-dot"></span>
+
+            <span>
+                Planned activity
+            </span>
+
+        </div>
+
+
+        <div class="legend-item">
+
+            <span class="legend-today"></span>
+
+            <span>
+                Today
+            </span>
+
+        </div>
+
+
+    </div>
+
+
+    <div class="calendar-weekdays">
+
+        <div class="weekday">Mon</div>
+        <div class="weekday">Tue</div>
+        <div class="weekday">Wed</div>
+        <div class="weekday">Thu</div>
+        <div class="weekday">Fri</div>
+        <div class="weekday">Sat</div>
+        <div class="weekday">Sun</div>
+
+    </div>
+
+
+    <div
+        class="calendar-grid"
+        id="calendarGrid"
+    ></div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     UPCOMING ACTIVITIES
+     ========================================================= -->
+
+<div class="activities-card">
+
+
+    <div class="activities-header">
+
+        <h3>
+            Upcoming Activities
+        </h3>
+
+
+        <button
+            class="view-all"
+            onclick="showAllActivities()"
+            type="button"
+        >
+            View All →
+        </button>
+
+    </div>
+
+
+    <div
+        id="activitiesList"
+    ></div>
+
+
+</div>
+
+
+</section>
+
+
+
+<footer class="footer">
+
+    <span>
+        © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>|</span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+</main>
+
+</div>
+
+
+
+<!-- =========================================================
+     ACTIVITY DETAILS MODAL
+     ========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="detailsModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Activity Details
+            </h2>
+
+
+            <button
+                class="close-modal"
+                onclick="closeDetailsModal()"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <div
+                class="details-date"
+                id="detailsDate"
+            ></div>
+
+
+            <div
+                class="details-message"
+                id="detailsMessage"
+            ></div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Created
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="createdDate"
+                ></span>
+
+            </div>
+
+
+            <div
+                class="detail-item"
+                id="modifiedRow"
+                style="display:none;"
+            >
+
+                <span class="detail-label">
+                    Last modified
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="modifiedDate"
+                ></span>
+
+            </div>
+
+
+            <div class="detail-item">
+
+                <span class="detail-label">
+                    Time
+                </span>
+
+                <span
+                    class="detail-value"
+                    id="detailsTime"
+                ></span>
+
+            </div>
+
+
+            <div class="details-actions">
+
+
+                <button
+                    class="modal-action cancel-btn"
+                    onclick="closeDetailsModal()"
+                    type="button"
+                >
+                    Close
+                </button>
+
+
+                <button
+                    class="modal-action save-btn"
+                    onclick="openEditModal()"
+                    type="button"
+                >
+                    Edit
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     EDIT / ADD MODAL
+     ========================================================= -->
+
+<div
+    class="modal-overlay"
+    id="editModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h2 id="editModalTitle">
+                Edit Activity
+            </h2>
+
+
+            <button
+                class="close-modal"
+                onclick="closeEditModal()"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <div
+                class="details-date"
+                id="editDate"
+            ></div>
+
+
+            <label
+                class="form-label"
+                for="activityInput"
+            >
+                Activity / Reminder
+            </label>
+
+
+            <textarea
+                class="activity-input"
+                id="activityInput"
+                placeholder="Enter farming activity, reminder or instruction..."
+            ></textarea>
+
+
+            <div class="modal-actions">
+
+
+                <button
+                    class="modal-action delete-btn"
+                    id="deleteButton"
+                    onclick="deleteActivity()"
+                    type="button"
+                >
+                    Delete
+                </button>
+
+
+                <button
+                    class="modal-action cancel-btn"
+                    onclick="closeEditModal()"
+                    type="button"
+                >
+                    Cancel
+                </button>
+
+
+                <button
+                    class="modal-action save-btn"
+                    onclick="saveActivity()"
+                    type="button"
+                >
+                    Save Changes
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+/* =========================================================
+   VARIABLES
+   ========================================================= */
+
+let currentDate = new Date();
+
+let selectedDateKey = null;
+
+let selectedActivityId = null;
+
+let activities = [];
+
+
+/* =========================================================
+   LOAD ACTIVITIES
+   ========================================================= */
+
+function getCurrentUserId() {
+
+    try {
+
+        const parsedUser =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+        return parsedUser && parsedUser.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+async function loadActivities() {
+
+    const userId =
+        getCurrentUserId();
+
+    if (!userId) {
+
+        activities = [];
+        return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(`/api/activities?user_id=${userId}`);
+
+        const data =
+            await response.json();
+
+        if (data && data.success && Array.isArray(data.activities)) {
+
+            activities =
+                data.activities.map(row => ({
+
+                    id: "srv-" + row.id,
+                    backendId: row.id,
+                    date: String(row.activity_date).slice(0, 10),
+                    title: row.title,
+                    time: "09:00",
+                    type: row.activity_type || "farming",
+                    notes: row.description || "",
+                    createdAt: row.created_at,
+                    modifiedAt: null
+
+                }));
+
+        } else {
+
+            activities = [];
+
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Calendar loading error:",
+            error
+        );
+
+        activities = [];
+
+    }
+
+
+    saveActivities();
+
+}
+
+
+/* =========================================================
+   SAVE ACTIVITIES
+   ========================================================= */
+
+function saveActivities() {
+
+    localStorage.setItem(
+        "agriconnectActivities",
+        JSON.stringify(activities)
+    );
+
+}
+
+
+/* =========================================================
+   ID
+   ========================================================= */
+
+function generateActivityId() {
+
+    return (
+        "calendar-" +
+        Date.now() +
+        "-" +
+        Math.random()
+            .toString(36)
+            .substring(2,8)
+    );
+
+}
+
+
+/* =========================================================
+   DATE KEY
+   ========================================================= */
+
+function formatDateKey(
+    year,
+    month,
+    day
+) {
+
+    return (
+
+        year +
+        "-" +
+        String(month + 1)
+            .padStart(2,"0") +
+        "-" +
+        String(day)
+            .padStart(2,"0")
+
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT LONG DATE
+   ========================================================= */
+
+function formatLongDate(
+    dateString
+) {
+
+    const parts =
+        dateString.split("-");
+
+
+    const date =
+        new Date(
+            Number(parts[0]),
+            Number(parts[1]) - 1,
+            Number(parts[2])
+        );
+
+
+    return date.toLocaleDateString(
+        "en-US",
+        {
+            weekday: "long",
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT CREATED / MODIFIED DATE
+   ========================================================= */
+
+function formatDateTime(
+    value
+) {
+
+    if (!value) {
+
+        return "Not available";
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    return date.toLocaleString(
+        "en-US",
+        {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "2-digit"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER CALENDAR
+   ========================================================= */
+
+function renderCalendar() {
+
+    const grid =
+        document.getElementById(
+            "calendarGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    const year =
+        currentDate.getFullYear();
+
+
+    const month =
+        currentDate.getMonth();
+
+
+    const monthName =
+        currentDate.toLocaleDateString(
+            "en-US",
+            {
+                month: "long"
+            }
+        );
+
+
+    document.getElementById(
+        "monthTitle"
+    ).textContent =
+        monthName + " " + year;
+
+
+    /*
+     * Monday = first column.
+     */
+
+    let firstDay =
+        new Date(
+            year,
+            month,
+            1
+        ).getDay();
+
+
+    firstDay =
+        (firstDay + 6) % 7;
+
+
+    const daysInMonth =
+        new Date(
+            year,
+            month + 1,
+            0
+        ).getDate();
+
+
+    const previousMonthDays =
+        new Date(
+            year,
+            month,
+            0
+        ).getDate();
+
+
+    /*
+     * Previous month.
+     */
+
+    for (
+        let i = firstDay - 1;
+        i >= 0;
+        i--
+    ) {
+
+        const day =
+            previousMonthDays - i;
+
+
+        grid.appendChild(
+            createDayCell(
+                year,
+                month - 1,
+                day,
+                true
+            )
+        );
+
+    }
+
+
+    /*
+     * Current month.
+     */
+
+    for (
+        let day = 1;
+        day <= daysInMonth;
+        day++
+    ) {
+
+        grid.appendChild(
+            createDayCell(
+                year,
+                month,
+                day,
+                false
+            )
+        );
+
+    }
+
+
+    /*
+     * Next month.
+     */
+
+    const cellsUsed =
+        firstDay +
+        daysInMonth;
+
+
+    const remaining =
+        (
+            7 -
+            (
+                cellsUsed % 7
+            )
+        ) % 7;
+
+
+    for (
+        let day = 1;
+        day <= remaining;
+        day++
+    ) {
+
+        grid.appendChild(
+            createDayCell(
+                year,
+                month + 1,
+                day,
+                true
+            )
+        );
+
+    }
+
+
+    renderUpcomingActivities();
+
+}
+
+
+/* =========================================================
+   CREATE DAY CELL
+   ========================================================= */
+
+function createDayCell(
+    year,
+    month,
+    day,
+    otherMonth
+) {
+
+    const cell =
+        document.createElement(
+            "div"
+        );
+
+
+    cell.className =
+        "calendar-day";
+
+
+    if (otherMonth) {
+
+        cell.classList.add(
+            "other-month"
+        );
+
+    }
+
+
+    const actualDate =
+        new Date(
+            year,
+            month,
+            day
+        );
+
+
+    const actualYear =
+        actualDate.getFullYear();
+
+
+    const actualMonth =
+        actualDate.getMonth();
+
+
+    const actualDay =
+        actualDate.getDate();
+
+
+    const key =
+        formatDateKey(
+            actualYear,
+            actualMonth,
+            actualDay
+        );
+
+
+    /*
+     * Today.
+     */
+
+    const today =
+        new Date();
+
+
+    const isToday =
+
+        actualYear ===
+            today.getFullYear()
+
+        &&
+
+        actualMonth ===
+            today.getMonth()
+
+        &&
+
+        actualDay ===
+            today.getDate();
+
+
+    if (isToday) {
+
+        cell.classList.add(
+            "today"
+        );
+
+    }
+
+
+    /*
+     * Target date.
+     */
+
+    if (
+        key ===
+        selectedDateKey
+    ) {
+
+        cell.classList.add(
+            "target-day"
+        );
+
+    }
+
+
+    const number =
+        document.createElement(
+            "div"
+        );
+
+
+    number.className =
+        "day-number";
+
+
+    number.textContent =
+        actualDay;
+
+
+    cell.appendChild(
+        number
+    );
+
+
+    /*
+     * Activities.
+     */
+
+    const dayActivities =
+        activities.filter(
+            activity =>
+                activity.date === key
+        );
+
+
+    if (
+        dayActivities.length > 0
+    ) {
+
+        const activity =
+            dayActivities[0];
+
+
+        const activityElement =
+            document.createElement(
+                "div"
+            );
+
+
+        activityElement.className =
+            "activity";
+
+
+        const dot =
+            document.createElement(
+                "span"
+            );
+
+
+        dot.className =
+            "activity-dot";
+
+
+        const text =
+            document.createElement(
+                "span"
+            );
+
+
+        text.className =
+            "activity-text";
+
+
+        text.textContent =
+            activity.title;
+
+
+        activityElement.appendChild(
+            dot
+        );
+
+
+        activityElement.appendChild(
+            text
+        );
+
+
+        cell.appendChild(
+            activityElement
+        );
+
+    }
+
+
+    /*
+     * Clicking cell:
+     *
+     * If activity exists:
+     *     show details.
+     *
+     * Otherwise:
+     *     open add activity editor.
+     */
+
+    cell.addEventListener(
+        "click",
+        function() {
+
+            const activity =
+                activities.find(
+                    item =>
+                        item.date === key
+                );
+
+
+            if (activity) {
+
+                selectedActivityId =
+                    activity.id;
+
+                selectedDateKey =
+                    activity.date;
+
+                showActivityDetails(
+                    activity
+                );
+
+            }
+
+            else {
+
+                selectedDateKey =
+                    key;
+
+                selectedActivityId =
+                    null;
+
+                openEditModal(
+                    null
+                );
+
+            }
+
+        }
+    );
+
+
+    return cell;
+
+}
+
+
+/* =========================================================
+   UPCOMING ACTIVITIES
+   ========================================================= */
+
+function renderUpcomingActivities() {
+
+    const container =
+        document.getElementById(
+            "activitiesList"
+        );
+
+
+    const today =
+        new Date();
+
+
+    today.setHours(
+        0,0,0,0
+    );
+
+
+    const upcoming =
+        [...activities]
+            .filter(activity => {
+
+                const date =
+                    new Date(
+                        activity.date +
+                        "T00:00:00"
+                    );
+
+                return date >= today;
+
+            })
+            .sort((a,b) => {
+
+                const dateA =
+                    new Date(
+                        a.date +
+                        "T" +
+                        (a.time || "00:00")
+                    );
+
+
+                const dateB =
+                    new Date(
+                        b.date +
+                        "T" +
+                        (b.time || "00:00")
+                    );
+
+
+                return dateA - dateB;
+
+            });
+
+
+    if (
+        upcoming.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="no-activities">
+
+                No planned activities yet.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    upcoming.forEach(
+        activity => {
+
+            const date =
+                new Date(
+                    activity.date +
+                    "T00:00:00"
+                );
+
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "activity-row";
+
+
+            row.innerHTML = `
+
+                <div class="activity-date">
+
+                    <strong>
+                        ${date.getDate()}
+                    </strong>
+
+                    <span>
+                        ${date.toLocaleDateString(
+                            "en-US",
+                            {
+                                month: "short"
+                            }
+                        )}
+                    </span>
+
+                </div>
+
+
+                <div class="activity-info">
+
+                    <div class="activity-info-title">
+
+                        ${escapeHtml(
+                            activity.title
+                        )}
+
+                    </div>
+
+                    <div class="activity-time">
+
+                        🕐
+                        ${formatTime(
+                            activity.time
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <span class="planned-badge">
+                    Planned
+                </span>
+
+
+                <button
+                    class="details-btn"
+                    type="button"
+                >
+                    Details →
+                </button>
+
+            `;
+
+
+            const detailsButton =
+                row.querySelector(
+                    ".details-btn"
+                );
+
+
+            detailsButton.addEventListener(
+                "click",
+                function(event) {
+
+                    event.stopPropagation();
+
+                    goToActivity(
+                        activity
+                    );
+
+                }
+            );
+
+
+            /*
+             * Clicking the whole row also
+             * opens details.
+             */
+
+            row.addEventListener(
+                "click",
+                function() {
+
+                    goToActivity(
+                        activity
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   GO TO ACTIVITY
+   ========================================================= */
+
+function goToActivity(
+    activity
+) {
+
+    /*
+     * Set selected date.
+     */
+
+    selectedDateKey =
+        activity.date;
+
+
+    selectedActivityId =
+        activity.id;
+
+
+    /*
+     * Move calendar to activity month.
+     */
+
+    const parts =
+        activity.date.split("-");
+
+
+    currentDate =
+        new Date(
+            Number(parts[0]),
+            Number(parts[1]) - 1,
+            1
+        );
+
+
+    /*
+     * Re-render calendar.
+     */
+
+    renderCalendar();
+
+
+    /*
+     * Scroll to calendar.
+     */
+
+    const calendarCard =
+        document.querySelector(
+            ".calendar-card"
+        );
+
+
+    if (calendarCard) {
+
+        calendarCard.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+
+    }
+
+
+    /*
+     * After render, find exact
+     * date cell and highlight it.
+     */
+
+    setTimeout(
+        function() {
+
+            const cells =
+                document.querySelectorAll(
+                    ".calendar-day"
+                );
+
+
+            cells.forEach(
+                cell => {
+
+                    cell.classList.remove(
+                        "target-day"
+                    );
+
+                }
+            );
+
+
+            cells.forEach(
+                cell => {
+
+                    const number =
+                        cell.querySelector(
+                            ".day-number"
+                        );
+
+
+                    if (!number) {
+                        return;
+                    }
+
+
+                    /*
+                     * Find exact cell by
+                     * comparing generated date.
+                     */
+
+                    const year =
+                        currentDate.getFullYear();
+
+
+                    const month =
+                        currentDate.getMonth();
+
+
+                    const firstDay =
+                        (
+                            new Date(
+                                year,
+                                month,
+                                1
+                            ).getDay()
+                            + 6
+                        ) % 7;
+
+
+                    const dayNumber =
+                        Number(
+                            number.textContent
+                        );
+
+
+                    if (
+                        dayNumber ===
+                        Number(parts[2])
+                    ) {
+
+                        /*
+                         * Only current month
+                         * cell should be selected.
+                         */
+
+                        if (
+                            !cell.classList.contains(
+                                "other-month"
+                            )
+                        ) {
+
+                            cell.classList.add(
+                                "target-day"
+                            );
+
+
+                            cell.scrollIntoView({
+                                behavior:
+                                    "smooth",
+                                block:
+                                    "center"
+                            });
+
+                        }
+
+                    }
+
+                }
+            );
+
+
+            /*
+             * Open details after reaching
+             * calendar.
+             */
+
+            showActivityDetails(
+                activity
+            );
+
+        },
+        400
+    );
+
+}
+
+
+/* =========================================================
+   SHOW ACTIVITY DETAILS
+   ========================================================= */
+
+function showActivityDetails(
+    activity
+) {
+
+    selectedActivityId =
+        activity.id;
+
+
+    selectedDateKey =
+        activity.date;
+
+
+    document.getElementById(
+        "detailsDate"
+    ).textContent =
+        formatLongDate(
+            activity.date
+        );
+
+
+    document.getElementById(
+        "detailsMessage"
+    ).textContent =
+        activity.title;
+
+
+    document.getElementById(
+        "createdDate"
+    ).textContent =
+        formatDateTime(
+            activity.createdAt
+        );
+
+
+    document.getElementById(
+        "detailsTime"
+    ).textContent =
+        formatTime(
+            activity.time
+        );
+
+
+    const modifiedRow =
+        document.getElementById(
+            "modifiedRow"
+        );
+
+
+    if (
+        activity.modifiedAt
+    ) {
+
+        modifiedRow.style.display =
+            "flex";
+
+
+        document.getElementById(
+            "modifiedDate"
+        ).textContent =
+            formatDateTime(
+                activity.modifiedAt
+            );
+
+    }
+
+    else {
+
+        modifiedRow.style.display =
+            "none";
+
+    }
+
+
+    document.getElementById(
+        "detailsModal"
+    ).classList.add(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE DETAILS
+   ========================================================= */
+
+function closeDetailsModal() {
+
+    document.getElementById(
+        "detailsModal"
+    ).classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   OPEN EDIT MODAL
+   ========================================================= */
+
+function openEditModal(
+    activity = null
+) {
+
+    if (!activity) {
+
+        activity =
+            activities.find(
+                item =>
+                    item.id ===
+                    selectedActivityId
+            );
+
+    }
+
+
+    /*
+     * Existing activity.
+     */
+
+    if (activity) {
+
+        selectedActivityId =
+            activity.id;
+
+        selectedDateKey =
+            activity.date;
+
+
+        document.getElementById(
+            "editModalTitle"
+        ).textContent =
+            "Edit Activity";
+
+
+        document.getElementById(
+            "editDate"
+        ).textContent =
+            formatLongDate(
+                activity.date
+            );
+
+
+        document.getElementById(
+            "activityInput"
+        ).value =
+            activity.title;
+
+
+        document.getElementById(
+            "deleteButton"
+        ).style.display =
+            "block";
+
+    }
+
+    else {
+
+        /*
+         * New activity.
+         */
+
+        document.getElementById(
+            "editModalTitle"
+        ).textContent =
+            "Add Activity";
+
+
+        document.getElementById(
+            "editDate"
+        ).textContent =
+            formatLongDate(
+                selectedDateKey
+            );
+
+
+        document.getElementById(
+            "activityInput"
+        ).value =
+            "";
+
+
+        document.getElementById(
+            "deleteButton"
+        ).style.display =
+            "none";
+
+    }
+
+
+    closeDetailsModal();
+
+
+    document.getElementById(
+        "editModal"
+    ).classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        function() {
+
+            document.getElementById(
+                "activityInput"
+            ).focus();
+
+        },
+        100
+    );
+
+}
+
+
+/* =========================================================
+   CLOSE EDIT
+   ========================================================= */
+
+function closeEditModal() {
+
+    document.getElementById(
+        "editModal"
+    ).classList.remove(
+        "show"
+    );
+
+}
+
+
+/* =========================================================
+   SAVE ACTIVITY
+   ========================================================= */
+
+async function saveActivity() {
+
+    const input =
+        document.getElementById(
+            "activityInput"
+        );
+
+
+    const title =
+        input.value.trim();
+
+
+    if (
+        !title
+    ) {
+
+        alert(
+            "Please enter an activity or reminder."
+        );
+
+        return;
+
+    }
+
+
+    const userId =
+        getCurrentUserId();
+
+
+    /*
+     * Existing activity.
+     */
+
+    if (
+        selectedActivityId
+    ) {
+
+        const index =
+            activities.findIndex(
+                activity =>
+                    activity.id ===
+                    selectedActivityId
+            );
+
+
+        if (
+            index !== -1
+        ) {
+
+            activities[index].title =
+                title;
+
+
+            /*
+             * IMPORTANT:
+             *
+             * Created date remains unchanged.
+             *
+             * Modified date is updated.
+             */
+
+            activities[index].modifiedAt =
+                new Date().toISOString();
+
+
+            updateCalendarNotification(
+                activities[index]
+            );
+
+
+            if (userId && activities[index].backendId) {
+
+                try {
+
+                    await fetch(
+
+                        `/api/activities/${activities[index].backendId}`,
+
+                        {
+                            method: "PUT",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                user_id: userId,
+                                title: title
+                            })
+                        }
+
+                    );
+
+                } catch (error) {
+
+                    console.error("Failed to sync activity update:", error);
+
+                }
+
+            }
+
+        }
+
+    }
+
+    else {
+
+        /*
+         * New activity.
+         */
+
+        const activity = {
+
+            id:
+                generateActivityId(),
+
+            date:
+                selectedDateKey,
+
+            title:
+                title,
+
+            time:
+                "09:00",
+
+            type:
+                "farming",
+
+            notes:
+                "",
+
+            createdAt:
+                new Date().toISOString(),
+
+            modifiedAt:
+                null
+
+        };
+
+
+        if (userId) {
+
+            try {
+
+                const response =
+                    await fetch(
+
+                        "/api/activities",
+
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                user_id: userId,
+                                title: title,
+                                activity_date: selectedDateKey,
+                                activity_type: "farming",
+                                description: ""
+                            })
+                        }
+
+                    );
+
+                const data =
+                    await response.json();
+
+                if (data && data.success && data.activity) {
+
+                    activity.backendId =
+                        data.activity.id;
+
+                }
+
+            } catch (error) {
+
+                console.error("Failed to sync new activity:", error);
+
+            }
+
+        }
+
+
+        activities.push(
+            activity
+        );
+
+
+        selectedActivityId =
+            activity.id;
+
+
+        createCalendarNotification(
+            activity
+        );
+
+    }
+
+
+    saveActivities();
+
+
+    renderCalendar();
+
+
+    closeEditModal();
+
+
+    /*
+     * Show updated details.
+     */
+
+    const updated =
+        activities.find(
+            activity =>
+                activity.id ===
+                selectedActivityId
+        );
+
+
+    if (updated) {
+
+        showActivityDetails(
+            updated
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   DELETE ACTIVITY
+   ========================================================= */
+
+async function deleteActivity() {
+
+    const activity =
+        activities.find(
+            item =>
+                item.id ===
+                selectedActivityId
+        );
+
+
+    if (!activity) {
+
+        return;
+
+    }
+
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to delete this activity?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    if (activity.backendId) {
+
+        const userId =
+            getCurrentUserId();
+
+        if (userId) {
+
+            try {
+
+                await fetch(
+                    `/api/activities/${activity.backendId}?user_id=${userId}`,
+                    { method: "DELETE" }
+                );
+
+            } catch (error) {
+
+                console.error("Failed to sync activity delete:", error);
+
+            }
+
+        }
+
+    }
+
+
+    activities =
+        activities.filter(
+            item =>
+                item.id !==
+                selectedActivityId
+        );
+
+
+    saveActivities();
+
+
+    /*
+     * Only delete notification because
+     * the actual calendar activity was
+     * intentionally deleted.
+     */
+
+    removeCalendarNotification(
+        selectedActivityId
+    );
+
+
+    selectedActivityId =
+        null;
+
+
+    selectedDateKey =
+        null;
+
+
+    closeEditModal();
+
+
+    renderCalendar();
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+   ========================================================= */
+
+function getNotifications() {
+
+    try {
+
+        const saved =
+            localStorage.getItem(
+                "agriconnectNotifications"
+            );
+
+
+        if (!saved) {
+
+            return [];
+
+        }
+
+
+        const parsed =
+            JSON.parse(saved);
+
+
+        return Array.isArray(parsed)
+            ? parsed
+            : [];
+
+    }
+
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================================
+   SAVE NOTIFICATIONS
+   ========================================================= */
+
+function saveNotifications(
+    notifications
+) {
+
+    localStorage.setItem(
+        "agriconnectNotifications",
+        JSON.stringify(
+            notifications
+        )
+    );
+
+}
+
+
+/* =========================================================
+   CREATE CALENDAR NOTIFICATION
+   ========================================================= */
+
+function createCalendarNotification(
+    activity
+) {
+
+    const notifications =
+        getNotifications();
+
+
+    const notificationId =
+        "calendar-notification-" +
+        activity.id;
+
+
+    const exists =
+        notifications.some(
+            notification =>
+                String(
+                    notification.id
+                ) ===
+                notificationId
+        );
+
+
+    if (exists) {
+
+        return;
+
+    }
+
+
+    notifications.push({
+
+        id:
+            notificationId,
+
+        category:
+            "calendar",
+
+        type:
+            "calendar",
+
+        title:
+            "Farming Activity Reminder",
+
+        message:
+            activity.title,
+
+        date:
+            activity.date,
+
+        time:
+            activity.time,
+
+        read:
+            false,
+
+        link:
+            "calendar.html",
+
+        calendarEventId:
+            activity.id,
+
+        createdAt:
+            new Date().toISOString()
+
+    });
+
+
+    saveNotifications(
+        notifications
+    );
+
+
+    updateNotificationCount();
+
+}
+
+
+/* =========================================================
+   UPDATE CALENDAR NOTIFICATION
+   ========================================================= */
+
+function updateCalendarNotification(
+    activity
+) {
+
+    const notifications =
+        getNotifications();
+
+
+    const notificationId =
+        "calendar-notification-" +
+        activity.id;
+
+
+    const existing =
+        notifications.find(
+            notification =>
+                String(
+                    notification.id
+                ) ===
+                notificationId
+        );
+
+
+    if (existing) {
+
+        existing.message =
+            activity.title;
+
+        existing.date =
+            activity.date;
+
+        existing.time =
+            activity.time;
+
+        existing.calendarEventId =
+            activity.id;
+
+        /*
+         * IMPORTANT:
+         *
+         * We do NOT change:
+         *
+         * existing.read
+         *
+         * Therefore reading the notification
+         * never deletes the calendar event.
+         */
+
+    }
+
+    else {
+
+        notifications.push({
+
+            id:
+                notificationId,
+
+            category:
+                "calendar",
+
+            type:
+                "calendar",
+
+            title:
+                "Farming Activity Reminder",
+
+            message:
+                activity.title,
+
+            date:
+                activity.date,
+
+            time:
+                activity.time,
+
+            read:
+                false,
+
+            link:
+                "calendar.html",
+
+            calendarEventId:
+                activity.id,
+
+            createdAt:
+                new Date().toISOString()
+
+        });
+
+    }
+
+
+    saveNotifications(
+        notifications
+    );
+
+
+    updateNotificationCount();
+
+}
+
+
+/* =========================================================
+   REMOVE CALENDAR NOTIFICATION
+   ========================================================= */
+
+function removeCalendarNotification(
+    activityId
+) {
+
+    let notifications =
+        getNotifications();
+
+
+    notifications =
+        notifications.filter(
+            notification => {
+
+                return !(
+                    notification.category ===
+                    "calendar"
+
+                    &&
+
+                    String(
+                        notification.calendarEventId
+                    ) ===
+                    String(activityId)
+                );
+
+            }
+        );
+
+
+    saveNotifications(
+        notifications
+    );
+
+
+    updateNotificationCount();
+
+}
+
+
+/* =========================================================
+   NOTIFICATION COUNT
+   ========================================================= */
+
+function updateNotificationCount() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const sidebarCount = document.getElementById("notificationCount");
+            const headerCount = document.getElementById("headerNotificationCount");
+            const badgeCount = document.getElementById("notificationBadge");
+
+            if (sidebarCount) sidebarCount.textContent = unread;
+            if (headerCount) headerCount.textContent = unread;
+            if (badgeCount) badgeCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+
+/* =========================================================
+   FORMAT TIME
+   ========================================================= */
+
+function formatTime(
+    time
+) {
+
+    if (!time) {
+
+        return "Time not set";
+
+    }
+
+
+    const parts =
+        String(time).split(":");
+
+
+    let hour =
+        Number(parts[0]);
+
+
+    const minute =
+        parts[1] || "00";
+
+
+    const ampm =
+        hour >= 12
+            ? "PM"
+            : "AM";
+
+
+    hour =
+        hour % 12 || 12;
+
+
+    return (
+
+        String(hour) +
+        ":" +
+        minute +
+        " " +
+        ampm
+
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+   ========================================================= */
+
+function escapeHtml(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value == null
+            ? ""
+            : String(value);
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   MONTH NAVIGATION
+   ========================================================= */
+
+function previousMonth() {
+
+    currentDate.setMonth(
+        currentDate.getMonth() - 1
+    );
+
+
+    selectedDateKey =
+        null;
+
+
+    renderCalendar();
+
+}
+
+
+function nextMonth() {
+
+    currentDate.setMonth(
+        currentDate.getMonth() + 1
+    );
+
+
+    selectedDateKey =
+        null;
+
+
+    renderCalendar();
+
+}
+
+
+function goToday() {
+
+    currentDate =
+        new Date();
+
+
+    selectedDateKey =
+        null;
+
+
+    renderCalendar();
+
+}
+
+
+/* =========================================================
+   VIEW ALL
+   ========================================================= */
+
+function showAllActivities() {
+
+    if (
+        activities.length === 0
+    ) {
+
+        alert(
+            "There are no planned activities."
+        );
+
+        return;
+
+    }
+
+
+    let message =
+        "Your planned activities:\n\n";
+
+
+    [...activities]
+        .sort(
+            (a,b) =>
+                new Date(a.date) -
+                new Date(b.date)
+        )
+        .forEach(
+            activity => {
+
+                message +=
+                    "• " +
+                    formatLongDate(
+                        activity.date
+                    ) +
+                    " - " +
+                    activity.title +
+                    "\n\n";
+
+            }
+        );
+
+
+    alert(
+        message
+    );
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS PAGE
+   ========================================================= */
+
+function goNotifications() {
+
+    window.location.href =
+        "notifications.html";
+
+}
+
+
+/* =========================================================
+   PROFILE / USER
+   ========================================================= */
+
+let user = null;
+
+
+/*
+ * Use ONLY the currently logged-in account.
+ *
+ * The login page stores the canonical account in
+ * localStorage.user. loggedInUser is retained only as
+ * a compatibility fallback for older sessions.
+ */
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem(
+                "user"
+            ) || "null"
+        );
+
+}
+
+catch (error) {
+
+    user = null;
+
+}
+
+
+if (!user) {
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem(
+                    "loggedInUser"
+                ) || "null"
+            );
+
+    }
+
+    catch (error) {
+
+        user = null;
+
+    }
+
+}
+
+
+/*
+ * This is a protected calendar page.
+ * Do not invent a user's identity when no session exists.
+ */
+
+if (!user) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   DISPLAY NAME
+   ========================================================= */
+
+function getUserName() {
+
+    if (!user) {
+
+        return "User";
+
+    }
+
+
+    const firstName =
+        user.first_name ||
+        user.firstName ||
+        "";
+
+
+    const lastName =
+        user.last_name ||
+        user.lastName ||
+        "";
+
+
+    const fullName =
+        `${firstName} ${lastName}`.trim();
+
+
+    return (
+        fullName ||
+        user.name ||
+        user.username ||
+        "User"
+    );
+
+}
+
+
+const userName =
+    getUserName();
+
+
+/* =========================================================
+   ROLE NORMALIZATION
+   ========================================================= */
+
+function normalizeRole(role) {
+
+    const value =
+        String(role || "")
+            .trim()
+            .toLowerCase();
+
+
+    if (value === "farmer") {
+
+        return "farmer";
+
+    }
+
+
+    if (
+        value === "buyer" ||
+        value === "buyer/user"
+    ) {
+
+        return "buyer";
+
+    }
+
+
+    if (
+        value === "expert" ||
+        value === "agricultural expert" ||
+        value === "agriculture expert" ||
+        value === "agri expert"
+    ) {
+
+        return "expert";
+
+    }
+
+
+    if (
+        value === "equipment provider" ||
+        value === "equipment_provider" ||
+        value === "equipment-provider" ||
+        value === "equipmentprovider" ||
+        value === "provider"
+    ) {
+
+        return "equipment-provider";
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================================================
+   REGISTERED ROLES
+   ========================================================= */
+
+/*
+ * IMPORTANT:
+ *
+ * Roles come from the CURRENT logged-in account only.
+ *
+ * We do NOT read a global registeredRoles value because
+ * that can belong to a previous account and cause one
+ * user's roles to appear for another user.
+ */
+
+function getRegisteredRoles() {
+
+    let roles = [];
+
+
+    if (
+        user &&
+        Array.isArray(user.roles)
+    ) {
+
+        roles =
+            [...user.roles];
+
+    }
+
+
+    /*
+     * Compatibility with sessions that stored the roles
+     * under registeredRoles inside the user object.
+     */
+
+    if (
+        roles.length === 0 &&
+        user &&
+        Array.isArray(user.registeredRoles)
+    ) {
+
+        roles =
+            [...user.registeredRoles];
+
+    }
+
+
+    /*
+     * Compatibility with older sessions that stored
+     * only one role.
+     */
+
+    if (
+        roles.length === 0 &&
+        user &&
+        user.role
+    ) {
+
+        roles =
+            Array.isArray(user.role)
+                ? [...user.role]
+                : [user.role];
+
+    }
+
+
+    roles =
+        roles
+            .map(normalizeRole)
+            .filter(Boolean);
+
+
+    roles =
+        [...new Set(roles)];
+
+
+    /*
+     * AgriConnect role rule:
+     *
+     * Buyer-only account:
+     *     Buyer
+     *
+     * Farmer / Expert / Equipment Provider:
+     *     Registered role + Buyer
+     *
+     * This is applied only to the CURRENT account.
+     */
+
+    const hasBuyer =
+        roles.includes("buyer");
+
+
+    const hasNonBuyer =
+        roles.some(
+            role =>
+                role !== "buyer"
+        );
+
+
+    if (
+        hasNonBuyer &&
+        !hasBuyer
+    ) {
+
+        roles.push(
+            "buyer"
+        );
+
+    }
+
+
+    return [
+        ...new Set(roles)
+    ];
+
+}
+
+
+const registeredRoles =
+    getRegisteredRoles();
+
+
+/* =========================================================
+   CURRENT ROLE
+   ========================================================= */
+
+/*
+ * This calendar belongs to the Farmer area.
+ *
+ * If this account has Farmer registered, Farmer is the
+ * active role on this page regardless of an old role value
+ * left in localStorage by another page.
+ *
+ * This prevents Buyer from being ticked while the user is
+ * actually viewing the Farmer calendar.
+ */
+
+let currentRole =
+    "";
+
+
+if (
+    registeredRoles.includes("farmer")
+) {
+
+    currentRole =
+        "farmer";
+
+}
+
+else if (
+    registeredRoles.length > 0
+) {
+
+    currentRole =
+        registeredRoles[0];
+
+}
+
+else {
+
+    /*
+     * Safe fallback for an old session with no role list.
+     * Do not invent another account's roles.
+     */
+
+    currentRole =
+        "farmer";
+
+}
+
+
+/*
+ * Keep both legacy role keys synchronized.
+ */
+
+sessionStorage.setItem(
+    "currentRole",
+    currentRole
+);
+
+
+sessionStorage.setItem(
+    "selectedRole",
+    currentRole
+);
+
+
+/* =========================================================
+   ROLE ICON
+   ========================================================= */
+
+function getRoleIcon(
+    role
+) {
+
+    const normalized =
+        normalizeRole(role);
+
+
+    if (
+        normalized === "farmer"
+    ) {
+
+        return "🧑‍🌾";
+
+    }
+
+
+    if (
+        normalized === "buyer"
+    ) {
+
+        return "🛒";
+
+    }
+
+
+    if (
+        normalized === "expert"
+    ) {
+
+        return "🧑‍🔬";
+
+    }
+
+
+    if (
+        normalized === "equipment-provider"
+    ) {
+
+        return "🚜";
+
+    }
+
+
+    return "👤";
+
+}
+
+
+/* =========================================================
+   USER DISPLAY
+   ========================================================= */
+
+function updateUserDisplay() {
+
+    const profileName =
+        document.getElementById(
+            "profileName"
+        );
+
+
+    const dropdownUserName =
+        document.getElementById(
+            "dropdownUserName"
+        );
+
+
+    const currentRoleElement =
+        document.getElementById(
+            "currentRole"
+        );
+
+
+    const dropdownCurrentRole =
+        document.getElementById(
+            "dropdownCurrentRole"
+        );
+
+
+    const profileAvatar =
+        document.getElementById(
+            "profileAvatar"
+        );
+
+
+    if (profileName) {
+
+        profileName.textContent =
+            userName;
+
+    }
+
+
+    const welcomeNameEl =
+        document.getElementById(
+            "userName"
+        );
+
+    if (welcomeNameEl) {
+
+        welcomeNameEl.textContent =
+            userName;
+
+    }
+
+
+    if (dropdownUserName) {
+
+        dropdownUserName.textContent =
+            userName;
+
+    }
+
+
+    if (currentRoleElement) {
+
+        currentRoleElement.textContent =
+            getRoleDisplayName(
+                currentRole
+            );
+
+    }
+
+
+    if (dropdownCurrentRole) {
+
+        dropdownCurrentRole.textContent =
+            getRoleDisplayName(
+                currentRole
+            );
+
+    }
+
+
+    if (profileAvatar) {
+
+        profileAvatar.textContent =
+            getInitials(
+                userName
+            );
+
+    }
+
+}
+
+
+/* =========================================================
+   ROLE DISPLAY NAME
+   ========================================================= */
+
+function getRoleDisplayName(
+    role
+) {
+
+    const normalized =
+        normalizeRole(role);
+
+
+    if (
+        normalized === "farmer"
+    ) {
+
+        return "Farmer";
+
+    }
+
+
+    if (
+        normalized === "buyer"
+    ) {
+
+        return "Buyer";
+
+    }
+
+
+    if (
+        normalized === "expert"
+    ) {
+
+        return "Agricultural Expert";
+
+    }
+
+
+    if (
+        normalized === "equipment-provider"
+    ) {
+
+        return "Equipment Provider";
+
+    }
+
+
+    return "User";
+
+}
+
+
+/* =========================================================
+   INITIALS
+   ========================================================= */
+
+function getInitials(
+    name
+) {
+
+    const words =
+        String(name || "")
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean);
+
+
+    if (
+        words.length === 0
+    ) {
+
+        return "US";
+
+    }
+
+
+    if (
+        words.length === 1
+    ) {
+
+        return words[0]
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+
+    return (
+        words[0][0] +
+        words[words.length - 1][0]
+    ).toUpperCase();
+
+}
+
+
+/* =========================================================
+   RENDER ROLES
+   ========================================================= */
+
+function renderRoles() {
+
+    const container =
+        document.getElementById(
+            "rolesContainer"
+        );
+
+
+    if (!container) {
+
+        return;
+
+    }
+
+
+    container.innerHTML =
+        "";
+
+
+    registeredRoles.forEach(
+        function(role) {
+
+            const option =
+                document.createElement(
+                    "div"
+                );
+
+
+            option.className =
+                "role-option";
+
+
+            const selected =
+                role === currentRole;
+
+
+            if (selected) {
+
+                option.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            option.innerHTML = `
+
+                <span class="role-icon">
+                    ${getRoleIcon(role)}
+                </span>
+
+                <span>
+                    ${escapeHtml(
+                        getRoleDisplayName(role)
+                    )}
+                </span>
+
+                <span
+                    class="role-check"
+                    style="
+                        display:
+                        ${
+                            selected
+                                ? "block"
+                                : "none"
+                        };
+                    "
+                >
+                    ✓
+                </span>
+
+            `;
+
+
+            option.addEventListener(
+                "click",
+                function(event) {
+
+                    event.stopPropagation();
+
+
+                    switchRole(
+                        role
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   SWITCH ROLE
+   ========================================================= */
+
+function switchRole(
+    role
+) {
+
+    const normalizedRole =
+        normalizeRole(role);
+
+
+    /*
+     * Only allow a role that belongs to this account.
+     */
+
+    if (
+        !registeredRoles.includes(
+            normalizedRole
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    currentRole =
+        normalizedRole;
+
+
+    sessionStorage.setItem(
+        "currentRole",
+        currentRole
+    );
+
+
+    sessionStorage.setItem(
+        "selectedRole",
+        currentRole
+    );
+
+
+    /*
+     * Redirect according to the selected role.
+     */
+
+    if (
+        currentRole === "farmer"
+    ) {
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+        return;
+
+    }
+
+
+    if (
+        currentRole === "buyer"
+    ) {
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+        return;
+
+    }
+
+
+    if (
+        currentRole === "expert"
+    ) {
+
+        window.location.href =
+            "expert-dashboard.html";
+
+        return;
+
+    }
+
+
+    if (
+        currentRole === "equipment-provider"
+    ) {
+
+        window.location.href =
+            "rental-dashboard.html";
+
+        return;
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+function toggleProfile() {
+
+    const dropdown =
+        document.getElementById(
+            "profileDropdown"
+        );
+
+
+    const arrow =
+        document.getElementById(
+            "profileArrow"
+        );
+
+
+    if (!dropdown) {
+
+        return;
+
+    }
+
+
+    dropdown.classList.toggle(
+        "show"
+    );
+
+
+    if (arrow) {
+
+        arrow.textContent =
+            dropdown.classList.contains(
+                "show"
+            )
+                ? "▲"
+                : "▼";
+
+    }
+
+}
+
+
+function closeProfile() {
+
+    const dropdown =
+        document.getElementById(
+            "profileDropdown"
+        );
+
+
+    const arrow =
+        document.getElementById(
+            "profileArrow"
+        );
+
+
+    if (dropdown) {
+
+        dropdown.classList.remove(
+            "show"
+        );
+
+    }
+
+
+    if (arrow) {
+
+        arrow.textContent =
+            "▼";
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE
+   ========================================================= */
+
+function toggleProfile() {
+
+    const dropdown =
+        document.getElementById(
+            "profileDropdown"
+        );
+
+
+    const arrow =
+        document.getElementById(
+            "profileArrow"
+        );
+
+
+    dropdown.classList.toggle(
+        "show"
+    );
+
+
+    arrow.textContent =
+        dropdown.classList.contains(
+            "show"
+        )
+            ? "▲"
+            : "▼";
+
+}
+
+
+function closeProfile() {
+
+    document.getElementById(
+        "profileDropdown"
+    ).classList.remove(
+        "show"
+    );
+
+
+    document.getElementById(
+        "profileArrow"
+    ).textContent =
+        "▼";
+
+}
+
+
+document.getElementById(
+    "profileButton"
+).addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        toggleProfile();
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const area =
+            document.querySelector(
+                ".profile-area"
+            );
+
+
+        if (
+            area &&
+            !area.contains(
+                event.target
+            )
+        ) {
+
+            closeProfile();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+async function logout(
+    event
+) {
+
+    if (event) {
+
+        event.preventDefault();
+
+    }
+
+
+    const confirmed =
+        await customConfirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    sessionStorage.removeItem(
+        "currentRole"
+    );
+
+
+    sessionStorage.removeItem(
+        "loggedInUser"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   MODAL OUTSIDE CLICK
+   ========================================================= */
+
+document.getElementById(
+    "detailsModal"
+).addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            this
+        ) {
+
+            closeDetailsModal();
+
+        }
+
+    }
+);
+
+
+document.getElementById(
+    "editModal"
+).addEventListener(
+    "click",
+    function(event) {
+
+        if (
+            event.target ===
+            this
+        ) {
+
+            closeEditModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   ESCAPE
+   ========================================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Escape"
+        ) {
+
+            closeProfile();
+
+            closeDetailsModal();
+
+            closeEditModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   INITIALIZE
+   ========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function() {
+
+        await loadActivities();
+
+        updateUserDisplay();
+
+        renderRoles();
+
+        renderCalendar();
+
+        updateNotificationCount();
+
+    }
+);
+
+
+
+function updateMessagesBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(
+                    c => (c.context_type === "order" || c.context_type === "rental" || c.context_type === "consultation")
+                        && c.unread_count > 0
+                ).length;
+
+            const badgeEl =
+                document.getElementById("messagesBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load messages badge count:", error);
+        });
+
+}
+
+updateMessagesBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,3423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Settings</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7f8;
+    color: #17202a;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   SAME MEASUREMENTS AS ADMIN DASHBOARD
+========================================================= */
+
+.sidebar {
+    min-width: 255px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #00543f 0%,
+            #003f32 100%
+        );
+
+    color: white;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGO
+========================================================= */
+
+.sidebar-logo {
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.10);
+
+    flex-shrink: 0;
+}
+
+.sidebar-logo img {
+    width: 160px;
+
+    height: auto;
+
+    max-height: 62px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================================================
+   SIDEBAR CONTENT
+========================================================= */
+
+.sidebar-content {
+    padding: 13px 10px;
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav-item {
+    width: 100%;
+
+    min-height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    background:
+        rgba(255,255,255,0.08);
+}
+
+.nav-item.active {
+    background:
+        linear-gradient(
+            90deg,
+            #19945f,
+            #087a4d
+        );
+}
+
+.nav-icon {
+    width: 22px;
+
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+    padding: 8px 10px 14px;
+
+    flex-shrink: 0;
+}
+
+.sidebar-divider {
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.13);
+
+    margin:
+        5px 12px 10px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 42px;
+}
+
+
+/* =========================================================
+   HEADER
+   SAME MEASUREMENTS AS ADMIN
+========================================================= */
+
+.header {
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e8ee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    padding: 0 28px;
+}
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.notification {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    color: #003f32;
+
+    transition: 0.2s;
+}
+
+.notification:hover {
+    transform: scale(1.06);
+}
+
+.notification-badge {
+    position: absolute;
+
+    top: -1px;
+    right: -3px;
+
+    min-width: 18px;
+
+    height: 18px;
+
+    padding: 0 4px;
+
+    border-radius: 50px;
+
+    background: #ef3c35;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #006b4f;
+
+    background: #eaf7f1;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #006b4f;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.profile-info {
+    line-height: 17px;
+}
+
+.profile-name {
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #182033;
+}
+
+.profile-role {
+    font-size: 10px;
+
+    color: #087a4d;
+
+    margin-top: 2px;
+}
+
+.profile-arrow {
+    font-size: 11px;
+
+    margin-left: 2px;
+}
+
+
+/* =========================================================
+   CONTENT
+   SAME BASE MEASUREMENT AS ADMIN
+========================================================= */
+
+.content {
+    padding:
+        23px 18px 22px;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: space-between;
+
+    margin-bottom: 18px;
+}
+
+.page-header h1 {
+    font-size: 29px;
+
+    line-height: 34px;
+
+    color: #121826;
+
+    font-weight: 700;
+
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    font-size: 13px;
+
+    color: #555f70;
+
+    line-height: 18px;
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+========================================================= */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 16px;
+}
+
+.summary-card {
+    background: white;
+
+    border:
+        1px solid #e7eaf0;
+
+    border-radius: 9px;
+
+    min-height: 100px;
+
+    padding: 14px 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+.summary-icon {
+    width: 48px;
+    height: 48px;
+
+    min-width: 48px;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+}
+
+.summary-icon.green {
+    background: #e2f6e8;
+
+    color: #087f42;
+}
+
+.summary-icon.blue {
+    background: #e1edff;
+
+    color: #1765d3;
+}
+
+.summary-icon.orange {
+    background: #fff0df;
+
+    color: #ed9200;
+}
+
+.summary-title {
+    display: block;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #454d5c;
+
+    margin-bottom: 4px;
+}
+
+.summary-value {
+    display: block;
+
+    font-size: 23px;
+
+    font-weight: bold;
+
+    color: #111827;
+
+    margin-bottom: 4px;
+}
+
+.summary-bottom {
+    display: block;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.summary-bottom.green {
+    color: #16833c;
+}
+
+.summary-bottom.blue {
+    color: #2469e9;
+}
+
+.summary-bottom.orange {
+    color: #e18a00;
+}
+
+
+/* =========================================================
+   DASHBOARD GRID
+========================================================= */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.45fr 1fr;
+
+    gap: 11px;
+
+    align-items: stretch;
+
+    margin-bottom: 11px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+.card-header {
+    height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 14px;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.card-title {
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #202633;
+}
+
+.view-all {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #087b48;
+
+    text-decoration: none;
+}
+
+.view-all:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   RECENT CONSULTATIONS
+========================================================= */
+
+.consultations {
+    padding: 0 14px;
+}
+
+.consultation-item {
+    min-height: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.consultation-item:last-child {
+    border-bottom: none;
+}
+
+.user-avatar {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 50%;
+
+    background: #e2f6e8;
+
+    color: #087f42;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.consultation-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.user-name {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #202633;
+
+    margin-bottom: 3px;
+}
+
+.topic {
+    font-size: 10px;
+
+    color: #30404a;
+
+    font-weight: bold;
+
+    margin-bottom: 3px;
+}
+
+.preview {
+    font-size: 10px;
+
+    color: #667080;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+    max-width: 340px;
+}
+
+.consultation-meta {
+    min-width: 78px;
+
+    text-align: right;
+
+    align-self: center;
+}
+
+.status {
+    display: inline-block;
+
+    padding:
+        5px 7px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+.status.pending {
+    background: #fff0d6;
+
+    color: #d87600;
+}
+
+.status.completed {
+    background: #def5e4;
+
+    color: #16833c;
+}
+
+.time {
+    display: block;
+
+    font-size: 10px;
+
+    color: #687180;
+}
+
+.consultations-footer {
+    padding:
+        8px 0 10px;
+
+    text-align: right;
+}
+
+.consultations-footer a {
+    color: #087b48;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   RIGHT COLUMN
+========================================================= */
+
+.right-column {
+    display: grid;
+
+    grid-template-rows:
+        1fr 1fr;
+
+    gap: 11px;
+}
+
+
+/* =========================================================
+   CONSULTATION OVERVIEW
+========================================================= */
+
+.overview-card {
+    min-height: 275px;
+}
+
+.overview-content {
+    min-height: 225px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 30px;
+
+    padding: 15px;
+}
+
+
+/* =========================================================
+   DONUT CHART
+========================================================= */
+
+.chart-wrapper {
+    position: relative;
+
+    width: 145px;
+    height: 145px;
+
+    min-width: 145px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.donut {
+    width: 145px;
+    height: 145px;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            #159447 0deg 225deg,
+            #2469e9 225deg 360deg
+        );
+
+    position: relative;
+}
+
+.donut::after {
+    content: "";
+
+    position: absolute;
+
+    width: 76px;
+    height: 76px;
+
+    left: 50%;
+    top: 50%;
+
+    transform:
+        translate(-50%, -50%);
+
+    background: white;
+
+    border-radius: 50%;
+}
+
+.chart-center {
+    position: absolute;
+
+    z-index: 2;
+
+    text-align: center;
+}
+
+.chart-total {
+    font-size: 21px;
+
+    font-weight: bold;
+
+    color: #1c242a;
+}
+
+.chart-label {
+    font-size: 10px;
+
+    color: #68757e;
+
+    margin-top: 2px;
+}
+
+
+/* =========================================================
+   LEGEND
+========================================================= */
+
+.legend {
+    min-width: 160px;
+}
+
+.legend-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+
+    min-width: 8px;
+
+    border-radius: 50%;
+}
+
+.legend-dot.completed {
+    background: #159447;
+}
+
+.legend-dot.pending {
+    background: #2469e9;
+}
+
+.legend-name {
+    flex: 1;
+
+    font-size: 11px;
+
+    color: #34404a;
+}
+
+.legend-value {
+    font-size: 11px;
+
+    font-weight: bold;
+
+    color: #20272d;
+}
+
+.legend-total {
+    border-top:
+        1px solid #e5e8ea;
+
+    padding-top: 13px;
+
+    margin-top: 4px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   RESOURCES
+========================================================= */
+
+.resources-card {
+    min-height: 275px;
+}
+
+.resources {
+    padding:
+        4px 14px 8px;
+}
+
+.resource-item {
+    min-height: 72px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.resource-item:last-child {
+    border-bottom: none;
+}
+
+.resource-image {
+    width: 58px;
+    height: 48px;
+
+    min-width: 58px;
+
+    border-radius: 7px;
+
+    overflow: hidden;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+}
+
+.resource-image.pest {
+    background: #e8f4e6;
+}
+
+.resource-image.soil {
+    background: #e8f0ff;
+}
+
+.resource-image.vegetable {
+    background: #fff0df;
+}
+
+.resource-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.resource-title {
+    font-size: 11px;
+
+    font-weight: bold;
+
+    color: #273038;
+
+    margin-bottom: 4px;
+}
+
+.resource-description {
+    font-size: 9px;
+
+    color: #68757d;
+
+    line-height: 13px;
+}
+
+.resource-view {
+    border: none;
+
+    background: #e6f5e9;
+
+    color: #087c43;
+
+    border-radius: 6px;
+
+    padding:
+        7px 9px;
+
+    font-size: 9px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.resource-view:hover {
+    background: #d7eedc;
+}
+
+
+/* =========================================================
+   TOP DISCUSSION TOPICS
+========================================================= */
+
+.topics-card {
+    margin-bottom: 11px;
+}
+
+.topics {
+    padding:
+        12px 14px 14px;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 8px;
+}
+
+.topic-card {
+    min-height: 65px;
+
+    border-radius: 7px;
+
+    padding:
+        9px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.topic-card.green {
+    background: #edf8ee;
+}
+
+.topic-card.blue {
+    background: #edf3ff;
+}
+
+.topic-card.orange {
+    background: #fff5e8;
+}
+
+.topic-card.purple {
+    background: #f4edff;
+}
+
+.topic-card.red {
+    background: #fff0eb;
+}
+
+.topic-icon {
+    width: 33px;
+    height: 33px;
+
+    min-width: 33px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 19px;
+}
+
+.topic-card.green .topic-icon {
+    background: #dff2e1;
+
+    color: #138841;
+}
+
+.topic-card.blue .topic-icon {
+    background: #dfeaff;
+
+    color: #2371e7;
+}
+
+.topic-card.orange .topic-icon {
+    background: #ffebce;
+
+    color: #ec9200;
+}
+
+.topic-card.purple .topic-icon {
+    background: #e9dcff;
+
+    color: #7427c8;
+}
+
+.topic-card.red .topic-icon {
+    background: #ffe0d8;
+
+    color: #ee6827;
+}
+
+.topic-name {
+    font-size: 10px;
+
+    font-weight: bold;
+
+    color: #273039;
+
+    margin-bottom: 4px;
+}
+
+.topic-count {
+    font-size: 9px;
+
+    color: #65727b;
+}
+
+
+/* =========================================================
+   FOOTER
+   SAME MEASUREMENT AS ADMIN
+========================================================= */
+
+.footer {
+    position: fixed;
+
+    left: 255px;
+    right: 0;
+    bottom: 0;
+
+    height: 42px;
+
+    background: #004d2a;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    font-size: 10px;
+
+    z-index: 900;
+}
+
+.footer a {
+    color: white;
+
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1250px) {
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+    .topics {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+
+@media (max-width: 950px) {
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .right-column {
+        grid-template-rows:
+            auto auto;
+    }
+
+    .topics {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s ease;
+    }
+
+    .sidebar.open {
+        transform:
+            translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    .footer {
+        left: 0;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .content {
+        padding:
+            18px 12px 30px;
+    }
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .overview-content {
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    .topics {
+        grid-template-columns:
+            1fr;
+    }
+
+    .header {
+        padding:
+            0 15px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .profile-arrow {
+        display: none;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .summary-grid {
+        grid-template-columns:
+            1fr;
+    }
+
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background:
+        rgba(255,255,255,0.20);
+
+    border-radius: 5px;
+}
+
+/* =====================================================
+   PROFILE DROPDOWN
+   ===================================================== */
+
+.profile-dropdown {
+
+    display: none;
+
+    position: absolute;
+
+    top: 58px;
+
+    right: 0;
+
+    width: 225px;
+
+    background: white;
+
+    border:
+        1px solid #e5e7eb;
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0, 0, 0, 0.15);
+
+    padding: 8px;
+
+    z-index: 300;
+
+}
+
+
+.profile.open .profile-dropdown {
+
+    display: block;
+
+}
+
+
+.dropdown-title {
+
+    padding:
+        8px 10px 6px;
+
+    font-size: 11px;
+
+    color: #888;
+
+    text-transform: uppercase;
+
+    font-weight: bold;
+
+}
+
+
+.dropdown-role {
+
+    width: 100%;
+
+    padding:
+        10px;
+
+    border: none;
+
+    background: transparent;
+
+    border-radius: 7px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    color: #333;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+}
+
+
+.dropdown-role:hover {
+
+    background: #f1f7f3;
+
+}
+
+
+.dropdown-role.current {
+
+    background: #e9f6ed;
+
+    color: #13883f;
+
+    font-weight: bold;
+
+}
+
+
+.role-check {
+
+    margin-left: auto;
+
+    font-size: 14px;
+
+}
+
+
+.profile {
+
+    position: relative;
+
+}
+
+
+.consultation-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+/* =====================================================
+           SETTINGS
+           ===================================================== */
+
+        .settings-intro {
+            margin-bottom: 22px;
+        }
+
+        .settings-intro h2 {
+            font-size: 22px;
+            color: #14532d;
+            margin-bottom: 4px;
+        }
+
+        .settings-intro p {
+            color: #5b6b63;
+            font-size: 14px;
+        }
+
+        .settings-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            align-items: start;
+        }
+
+        @media (max-width: 900px) {
+            .settings-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .settings-card {
+            background: #fff;
+            border: 1px solid #e6ede9;
+            border-radius: 12px;
+            padding: 22px;
+        }
+
+        .settings-card h3 {
+            font-size: 16px;
+            color: #172033;
+            margin-bottom: 4px;
+        }
+
+        .settings-card-desc {
+            font-size: 12.5px;
+            color: #7c8b82;
+            margin-bottom: 18px;
+            line-height: 1.5;
+        }
+
+        .settings-avatar-row {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .settings-avatar-preview {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            background: #e9f4ec;
+            color: #17833c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            flex-shrink: 0;
+            overflow: hidden;
+            border: 2px solid #d7e9dc;
+        }
+
+        .settings-avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .settings-avatar-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .settings-btn-secondary,
+        .settings-btn-primary {
+            font-size: 13px;
+            font-weight: 600;
+            padding: 9px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .settings-btn-secondary {
+            background: #fff;
+            border: 1px solid #d7e9dc;
+            color: #17833c;
+        }
+
+        .settings-btn-primary {
+            background: #17833c;
+            border: 1px solid #17833c;
+            color: #fff;
+            margin-top: 6px;
+        }
+
+        .settings-btn-primary:disabled {
+            background: #b9cdbf;
+            border-color: #b9cdbf;
+            cursor: not-allowed;
+        }
+
+        .settings-hint {
+            font-size: 11px;
+            color: #9aa8a0;
+        }
+
+        .settings-language-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .lang-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #e6ede9;
+            border-radius: 9px;
+            background: #fff;
+            font-family: inherit;
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #1f2937;
+            cursor: pointer;
+        }
+
+        .lang-option.selected {
+            border-color: #17833c;
+            background: #f1f7f3;
+            color: #14532d;
+        }
+
+        .lang-check {
+            visibility: hidden;
+            color: #17833c;
+        }
+
+        .lang-option.selected .lang-check {
+            visibility: visible;
+        }
+
+        .settings-form-row {
+            margin-bottom: 14px;
+        }
+
+        .settings-form-row label {
+            display: block;
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #3f4a58;
+            margin-bottom: 6px;
+        }
+
+        .settings-form-row input {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid #d7e9dc;
+            border-radius: 8px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+        }
+
+        .settings-form-row input:focus {
+            border-color: #17833c;
+        }
+
+        .settings-toggle-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f3f1;
+        }
+
+        .settings-toggle-row:last-child {
+            border-bottom: none;
+        }
+
+        .settings-toggle-row strong {
+            font-size: 13.5px;
+            color: #1f2937;
+        }
+
+        .settings-toggle-row p {
+            font-size: 12px;
+            color: #7c8b82;
+            margin-top: 2px;
+        }
+
+        .settings-switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 22px;
+            flex-shrink: 0;
+        }
+
+        .settings-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .settings-switch-slider {
+            position: absolute;
+            cursor: pointer;
+            inset: 0;
+            background-color: #d7dde0;
+            border-radius: 22px;
+            transition: 0.15s;
+        }
+
+        .settings-switch-slider::before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.15s;
+        }
+
+        .settings-switch input:checked + .settings-switch-slider {
+            background-color: #17833c;
+        }
+
+        .settings-switch input:checked + .settings-switch-slider::before {
+            transform: translateX(18px);
+        }
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="expert-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- CONSULTATIONS -->
+
+        <a
+            href="expert-consultations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-label">
+                Consultations
+            </span>
+
+            <span class="consultation-badge" id="consultationBadge" style="display:none;">0</span>
+
+        </a>
+
+
+        <!-- RESOURCES -->
+
+        <a
+            href="expert-resources.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                📖
+            </span>
+
+            <span class="nav-label">
+                Resources
+            </span>
+
+        </a>
+
+
+        <!-- REPORT ISSUES -->
+
+        <a
+            href="expert-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-label">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="expert-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="expert-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="expert-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="expert-settings.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="logout(); return false;"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="header-right">
+
+
+            <!-- NOTIFICATION -->
+
+            <div
+                class="notification"
+                onclick="goToNotifications()"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="notification-badge"
+                    id="headerNotificationCount"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    DN
+                </div>
+
+                <div class="profile-info">
+
+                    <div
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Dr. Nimal
+                    </div>
+
+                    <div
+                        class="profile-role"
+                        id="profileRole"
+                    >
+                        Agricultural Expert
+                    </div>
+
+                </div>
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+                <!-- PROFILE DROPDOWN -->
+
+                <div class="profile-dropdown">
+
+                    <div class="dropdown-title">
+                        Switch Role
+                    </div>
+
+                    <div id="roleOptions">
+
+                        <!-- Roles generated by JavaScript -->
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </header>
+
+
+
+    <!-- CONTENT -->
+
+    <section class="content">
+
+
+            <!-- =================================================
+                 SETTINGS
+                 ================================================= -->
+
+            <div class="settings-intro">
+                <h2>Settings</h2>
+                <p>Manage your profile, language, and account preferences.</p>
+            </div>
+
+
+            <div class="settings-layout">
+
+
+                <!-- PROFILE PICTURE -->
+
+                <div class="settings-card">
+
+                    <h3>Profile Picture</h3>
+                    <p class="settings-card-desc">
+                        This photo appears across every page while you're
+                        signed in, and stays the same even if you switch
+                        roles.
+                    </p>
+
+                    <div class="settings-avatar-row">
+
+                        <div class="settings-avatar-preview" id="avatarPreview">
+                            <span id="avatarPreviewInitials">FO</span>
+                        </div>
+
+                        <div class="settings-avatar-actions">
+
+                            <input
+                                type="file"
+                                id="avatarFileInput"
+                                accept="image/png,image/jpeg,image/webp"
+                                style="display:none;"
+                            >
+
+                            <button
+                                type="button"
+                                class="settings-btn-secondary"
+                                onclick="document.getElementById('avatarFileInput').click();"
+                            >
+                                Choose Photo
+                            </button>
+
+                            <button
+                                type="button"
+                                class="settings-btn-primary"
+                                id="saveAvatarBtn"
+                                disabled
+                            >
+                                Save Photo
+                            </button>
+
+                            <p class="settings-hint">PNG, JPG or WEBP. Max 5MB.</p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- LANGUAGE -->
+
+                <div class="settings-card">
+
+                    <h3>Language</h3>
+                    <p class="settings-card-desc">
+                        Choose the language you'd like to use across
+                        AgriConnect.
+                    </p>
+
+                    <div class="settings-language-options" id="languageOptions">
+
+                        <button type="button" class="lang-option" data-lang="en">
+                            <span class="lang-name">English</span>
+                            <span class="lang-check">✓</span>
+                        </button>
+
+                        <button type="button" class="lang-option" data-lang="ta">
+                            <span class="lang-name">தமிழ் (Tamil)</span>
+                            <span class="lang-check">✓</span>
+                        </button>
+
+                        <button type="button" class="lang-option" data-lang="si">
+                            <span class="lang-name">සිංහල (Sinhala)</span>
+                            <span class="lang-check">✓</span>
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- CONTACT DETAILS -->
+
+                <div class="settings-card">
+
+                    <h3>Contact Details</h3>
+                    <p class="settings-card-desc">
+                        Your name and NIC can't be changed here — contact
+                        support if either needs correcting.
+                    </p>
+
+                    <div class="settings-form-row">
+                        <label for="settingsPhone">Phone Number</label>
+                        <input type="tel" id="settingsPhone" placeholder="07XXXXXXXX">
+                    </div>
+
+                    <div class="settings-form-row">
+                        <label for="settingsAddress">Address</label>
+                        <input type="text" id="settingsAddress" placeholder="Your address">
+                    </div>
+
+                    <button type="button" class="settings-btn-primary" id="saveContactBtn">
+                        Save Contact Details
+                    </button>
+
+                </div>
+
+
+                <!-- NOTIFICATIONS -->
+
+                <div class="settings-card">
+
+                    <h3>Notification Preferences</h3>
+                    <p class="settings-card-desc">
+                        Choose what you'd like to be notified about. These
+                        are saved on this device.
+                    </p>
+
+                    <div class="settings-toggle-row">
+                        <div>
+                            <strong>Order updates</strong>
+                            <p>New orders, status changes, and deliveries.</p>
+                        </div>
+                        <label class="settings-switch">
+                            <input type="checkbox" id="notifyOrders" checked>
+                            <span class="settings-switch-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="settings-toggle-row">
+                        <div>
+                            <strong>Messages</strong>
+                            <p>New messages from buyers or providers.</p>
+                        </div>
+                        <label class="settings-switch">
+                            <input type="checkbox" id="notifyMessages" checked>
+                            <span class="settings-switch-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="settings-toggle-row">
+                        <div>
+                            <strong>Rental updates</strong>
+                            <p>Equipment rental requests and status changes.</p>
+                        </div>
+                        <label class="settings-switch">
+                            <input type="checkbox" id="notifyRentals" checked>
+                            <span class="settings-switch-slider"></span>
+                        </label>
+                    </div>
+
+                    <div class="settings-toggle-row">
+                        <div>
+                            <strong>Tips &amp; announcements</strong>
+                            <p>Occasional farming tips and AgriConnect news.</p>
+                        </div>
+                        <label class="settings-switch">
+                            <input type="checkbox" id="notifyTips">
+                            <span class="settings-switch-slider"></span>
+                        </label>
+                    </div>
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="settings-card">
+
+                    <h3>Change Password</h3>
+                    <p class="settings-card-desc">
+                        Choose a new password with at least 6 characters.
+                    </p>
+
+                    <div class="settings-form-row">
+                        <label for="currentPassword">Current Password</label>
+                        <input type="password" id="currentPassword" placeholder="••••••••">
+                    </div>
+
+                    <div class="settings-form-row">
+                        <label for="newPassword">New Password</label>
+                        <input type="password" id="newPassword" placeholder="••••••••">
+                    </div>
+
+                    <div class="settings-form-row">
+                        <label for="confirmNewPassword">Confirm New Password</label>
+                        <input type="password" id="confirmNewPassword" placeholder="••••••••">
+                    </div>
+
+                    <button type="button" class="settings-btn-primary" id="savePasswordBtn">
+                        Update Password
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <span>
+         © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>|</span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+
+<script>
+
+let user = null;
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem("user")
+        );
+
+} catch (error) {
+
+    user = null;
+
+}
+
+
+const roleNames = {
+
+    farmer: "Farmer",
+    buyer: "Buyer",
+    expert: "Agricultural Expert",
+    equipment_provider: "Equipment Provider"
+
+};
+
+
+const roleIcons = {
+
+    farmer: "🌱",
+    buyer: "🛒",
+    expert: "👨‍🌾",
+    equipment_provider: "🚜"
+
+};
+
+
+function normalizeRole(role) {
+
+    if (!role) {
+        return "";
+    }
+
+    const value =
+        String(role)
+            .toLowerCase()
+            .trim()
+            .replace(/-/g, "_");
+
+    if (value === "farmer") {
+        return "farmer";
+    }
+
+    if (value === "buyer" || value === "buyer/user") {
+        return "buyer";
+    }
+
+    if (
+        value === "expert" ||
+        value === "agricultural_expert" ||
+        value === "agricultural expert" ||
+        value === "agriculture_expert" ||
+        value === "agriculture expert" ||
+        value === "agri_expert" ||
+        value === "agri expert"
+    ) {
+        return "expert";
+    }
+
+    if (
+        value === "equipment_provider" ||
+        value === "equipment provider" ||
+        value === "equipmentprovider" ||
+        value === "provider"
+    ) {
+        return "equipment_provider";
+    }
+
+    return "";
+
+}
+
+
+function getRegisteredRoles() {
+
+    if (!user) {
+        return [];
+    }
+
+    let roles = [];
+
+    if (Array.isArray(user.roles)) {
+        roles = [...user.roles];
+    }
+
+    if (roles.length === 0 && Array.isArray(user.registered_roles)) {
+        roles = [...user.registered_roles];
+    }
+
+    if (roles.length === 0 && Array.isArray(user.registeredRoles)) {
+        roles = [...user.registeredRoles];
+    }
+
+    if (roles.length === 0) {
+
+        try {
+
+            const storedRoles =
+                JSON.parse(
+                    sessionStorage.getItem("registeredRoles") || "null"
+                );
+
+            if (Array.isArray(storedRoles)) {
+                roles = [...storedRoles];
+            }
+
+        } catch (error) {
+
+            roles = [];
+
+        }
+
+    }
+
+    if (roles.length === 0 && user.role) {
+
+        roles =
+            Array.isArray(user.role)
+                ? [...user.role]
+                : [user.role];
+
+    }
+
+    roles =
+        roles
+            .map(normalizeRole)
+            .filter(role => !!role && !!roleNames[role]);
+
+    return [...new Set(roles)];
+
+}
+
+
+function getAccountRoles() {
+
+    return [...new Set(getRegisteredRoles())];
+
+}
+
+
+/*
+ * This file is expert-dashboard.html, so Expert is always
+ * the active role when the account has Expert access,
+ * regardless of which role was active immediately before
+ * the redirect.
+ */
+
+let currentRole = "expert";
+
+
+function loadRoles() {
+
+    const roleOptions =
+        document.getElementById("roleOptions");
+
+    if (!roleOptions) {
+        return;
+    }
+
+    roleOptions.innerHTML = "";
+
+    const roles =
+        getAccountRoles();
+
+    /*
+     * Always show the current role first, regardless of the
+     * order the account's roles happen to be stored in.
+     */
+
+    const sortedRoles =
+        [...roles].sort(function(a, b) {
+
+            if (a === currentRole) return -1;
+            if (b === currentRole) return 1;
+            return 0;
+
+        });
+
+    sortedRoles.forEach(function(role) {
+
+        const button =
+            document.createElement("button");
+
+        button.type = "button";
+        button.className = "dropdown-role";
+
+        if (role === currentRole) {
+            button.classList.add("current");
+        }
+
+        button.innerHTML = `
+
+            <span>
+                ${roleIcons[role] || "👤"}
+            </span>
+
+            <span>
+                ${roleNames[role] || role}
+            </span>
+
+            <span class="role-check">
+                ${role === currentRole ? "✓" : ""}
+            </span>
+
+        `;
+
+        button.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            switchRole(role);
+
+        });
+
+        roleOptions.appendChild(button);
+
+    });
+
+}
+
+
+function switchRole(role) {
+
+    const normalizedRole =
+        normalizeRole(role);
+
+    if (!normalizedRole) {
+        return;
+    }
+
+    if (!getAccountRoles().includes(normalizedRole)) {
+        return;
+    }
+
+    currentRole = normalizedRole;
+
+    sessionStorage.setItem("selectedRole", currentRole);
+    sessionStorage.setItem("currentRole", currentRole);
+
+    if (currentRole === "farmer") {
+        window.location.href = "farmer-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "buyer") {
+        window.location.href = "buyer-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "expert") {
+        window.location.href = "expert-dashboard.html";
+        return;
+    }
+
+    if (currentRole === "equipment_provider") {
+        window.location.href = "rental-dashboard.html";
+    }
+
+}
+
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const profile =
+        document.getElementById("profile");
+
+    if (profile) {
+
+        profile.addEventListener("click", function(event) {
+
+            event.stopPropagation();
+
+            profile.classList.toggle("open");
+
+        });
+
+        document.addEventListener("click", function() {
+
+            profile.classList.remove("open");
+
+        });
+
+    }
+
+    loadRoles();
+
+});
+
+
+/* =========================================================
+   DISPLAY LOGGED-IN USER
+========================================================= */
+
+function displayUser() {
+
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+    } catch (error) {
+
+        user = null;
+
+    }
+
+    if (!user) {
+
+        return;
+
+    }
+
+    const firstName =
+        user.first_name ||
+        user.firstName ||
+        "";
+
+    const lastName =
+        user.last_name ||
+        user.lastName ||
+        "";
+
+    const fullName =
+        `${firstName} ${lastName}`.trim() ||
+        "Agricultural Expert";
+
+    const initials =
+        (
+            (firstName.charAt(0) || "") +
+            (lastName.charAt(0) || "")
+        ).toUpperCase() ||
+        "AE";
+
+    const profileNameEl =
+        document.getElementById("profileName");
+
+    if (profileNameEl) {
+        profileNameEl.textContent = fullName;
+    }
+
+    const profileAvatarEl =
+        document.getElementById("profileAvatar");
+
+    if (profileAvatarEl) {
+        profileAvatarEl.textContent = initials;
+    }
+
+    const profileRoleEl =
+        document.getElementById("profileRole");
+
+    if (profileRoleEl) {
+        profileRoleEl.textContent = roleNames[currentRole] || "Agricultural Expert";
+    }
+
+    // Settings keeps its own static heading rather than
+    // the "Welcome, X!" greeting used on the dashboard.
+
+}
+
+/* =========================================================
+   LOAD REAL CONSULTATIONS (dashboard stats, chart, list)
+========================================================= */
+
+function getCurrentUserId() {
+
+    try {
+
+        const rawUser =
+            sessionStorage.getItem("user");
+
+        const parsedUser =
+            rawUser ? JSON.parse(rawUser) : null;
+
+        return parsedUser && parsedUser.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+
+
+displayUser();
+
+
+function updateNotificationCount() {
+
+    const userId =
+        getCurrentUserId();
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const headerCount = document.getElementById("headerNotificationCount");
+
+            if (headerCount) headerCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+updateNotificationCount();
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function goToNotifications() {
+
+    window.location.href =
+        "expert-notifications.html";
+
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+function openProfile() {
+
+    /*
+     * There's no profile/settings page built yet, so this
+     * intentionally does nothing rather than link to a page
+     * that doesn't exist.
+     */
+
+}
+
+
+/* =========================================================
+   RESOURCE
+========================================================= */
+
+function viewResource(resourceName) {
+
+    window.location.href =
+        "expert-resources.html";
+
+}
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout() {
+
+    const confirmed =
+        await customConfirm("Are you sure you want to logout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+    localStorage.removeItem(
+        "expertLoggedIn"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+
+function updateConsultationBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(c => c.unread_count > 0).length;
+
+            const badgeEl =
+                document.getElementById("consultationBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load consultation badge count:", error);
+        });
+
+}
+
+updateConsultationBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+function customAlert(message, title) {
+
+    let overlay = document.getElementById("simpleAlertOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "simpleAlertOverlay";
+        overlay.style.cssText =
+            "display:flex;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="simpleAlertTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="simpleAlertMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;">
+                    <button type="button" id="simpleAlertOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#17833c;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">OK</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("simpleAlertTitle").textContent = title || "Notice";
+    document.getElementById("simpleAlertMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        document.getElementById("simpleAlertOkBtn").onclick = function () {
+            overlay.style.display = "none";
+            resolve();
+        };
+
+    });
+
+}
+
+
+
+/* =========================================================
+   SETTINGS PAGE
+========================================================= */
+
+const SETTINGS_USER_ID = user && user.id;
+let uploadedAvatarUrl = null;
+let selectedAvatarFile = null;
+
+
+function applyAvatarEverywhere(url) {
+
+    if (!url) return;
+
+    document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+        .forEach(function (el) {
+
+            if (el.tagName === "IMG") {
+                el.src = url;
+            }
+
+        });
+
+    const preview = document.getElementById("avatarPreview");
+
+    if (preview) {
+
+        preview.innerHTML = `<img src="${url}" alt="Profile picture">`;
+
+    }
+
+}
+
+
+async function loadSettingsData() {
+
+    if (!SETTINGS_USER_ID) return;
+
+    try {
+
+        const response =
+            await fetch(`/api/settings/${SETTINGS_USER_ID}`);
+
+        const data =
+            await response.json();
+
+        if (!data.success) return;
+
+        const settings = data.settings;
+
+        const initialsEl =
+            document.getElementById("avatarPreviewInitials");
+
+        if (initialsEl) {
+
+            const initials =
+                `${(settings.first_name || "?")[0]}${(settings.last_name || "?")[0]}`.toUpperCase();
+
+            initialsEl.textContent = initials;
+
+        }
+
+        if (settings.profile_picture) {
+
+            applyAvatarEverywhere(`/uploads/${settings.profile_picture}`);
+
+        }
+
+        document.getElementById("settingsPhone").value =
+            settings.phone || "";
+
+        document.getElementById("settingsAddress").value =
+            settings.address || "";
+
+        setSelectedLanguage(settings.preferred_language || "en");
+
+    } catch (error) {
+
+        console.error("Unable to load settings:", error);
+
+    }
+
+}
+
+
+function setSelectedLanguage(lang) {
+
+    document.querySelectorAll(".lang-option").forEach(function (btn) {
+
+        btn.classList.toggle("selected", btn.dataset.lang === lang);
+
+    });
+
+}
+
+
+/* ---- Avatar upload ---- */
+
+const avatarFileInput = document.getElementById("avatarFileInput");
+const saveAvatarBtn = document.getElementById("saveAvatarBtn");
+
+if (avatarFileInput) {
+
+    avatarFileInput.addEventListener("change", function () {
+
+        const file = avatarFileInput.files[0];
+
+        if (!file) return;
+
+        selectedAvatarFile = file;
+
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+
+            const preview = document.getElementById("avatarPreview");
+
+            if (preview) {
+                preview.innerHTML = `<img src="${e.target.result}" alt="Preview">`;
+            }
+
+        };
+
+        reader.readAsDataURL(file);
+
+        if (saveAvatarBtn) saveAvatarBtn.disabled = false;
+
+    });
+
+}
+
+if (saveAvatarBtn) {
+
+    saveAvatarBtn.addEventListener("click", async function () {
+
+        if (!selectedAvatarFile || !SETTINGS_USER_ID) return;
+
+        const formData = new FormData();
+        formData.append("profile_picture", selectedAvatarFile);
+
+        saveAvatarBtn.disabled = true;
+        saveAvatarBtn.textContent = "Saving...";
+
+        try {
+
+            const response =
+                await fetch(`/api/settings/${SETTINGS_USER_ID}/profile-picture`, {
+                    method: "POST",
+                    body: formData
+                });
+
+            const data =
+                await response.json();
+
+            if (data.success) {
+
+                applyAvatarEverywhere(`/uploads/${data.profile_picture}`);
+                customAlert("Profile picture updated.");
+
+                if (user) {
+                    user.profile_picture = data.profile_picture;
+                    sessionStorage.setItem("user", JSON.stringify(user));
+                }
+
+            } else {
+
+                customAlert(data.message || "Failed to update profile picture.");
+
+            }
+
+        } catch (error) {
+
+            console.error("Avatar upload failed:", error);
+            customAlert("Failed to update profile picture. Please try again.");
+
+        } finally {
+
+            saveAvatarBtn.textContent = "Save Photo";
+            saveAvatarBtn.disabled = true;
+            selectedAvatarFile = null;
+
+        }
+
+    });
+
+}
+
+
+/* ---- Language ---- */
+
+document.querySelectorAll(".lang-option").forEach(function (btn) {
+
+    btn.addEventListener("click", async function () {
+
+        const lang = btn.dataset.lang;
+
+        setSelectedLanguage(lang);
+
+        if (!SETTINGS_USER_ID) return;
+
+        try {
+
+            await fetch(`/api/settings/${SETTINGS_USER_ID}/language`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ language: lang })
+            });
+
+            if (user) {
+                user.preferred_language = lang;
+                sessionStorage.setItem("user", JSON.stringify(user));
+            }
+
+        } catch (error) {
+
+            console.error("Unable to save language:", error);
+
+        }
+
+    });
+
+});
+
+
+/* ---- Contact details ---- */
+
+const saveContactBtn = document.getElementById("saveContactBtn");
+
+if (saveContactBtn) {
+
+    saveContactBtn.addEventListener("click", async function () {
+
+        if (!SETTINGS_USER_ID) return;
+
+        const phone = document.getElementById("settingsPhone").value.trim();
+        const address = document.getElementById("settingsAddress").value.trim();
+
+        try {
+
+            const response =
+                await fetch(`/api/settings/${SETTINGS_USER_ID}/contact`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ phone, address })
+                });
+
+            const data =
+                await response.json();
+
+            customAlert(
+                data.success
+                    ? "Contact details updated."
+                    : (data.message || "Failed to update contact details.")
+            );
+
+        } catch (error) {
+
+            console.error("Unable to save contact details:", error);
+            customAlert("Failed to update contact details. Please try again.");
+
+        }
+
+    });
+
+}
+
+
+/* ---- Password ---- */
+
+const savePasswordBtn = document.getElementById("savePasswordBtn");
+
+if (savePasswordBtn) {
+
+    savePasswordBtn.addEventListener("click", async function () {
+
+        if (!SETTINGS_USER_ID) return;
+
+        const current = document.getElementById("currentPassword").value;
+        const next = document.getElementById("newPassword").value;
+        const confirmVal = document.getElementById("confirmNewPassword").value;
+
+        if (!current || !next || !confirmVal) {
+            customAlert("Please fill in all three password fields.");
+            return;
+        }
+
+        if (next !== confirmVal) {
+            customAlert("New password and confirmation don't match.");
+            return;
+        }
+
+        if (next.length < 6) {
+            customAlert("New password must be at least 6 characters.");
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(`/api/settings/${SETTINGS_USER_ID}/password`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        current_password: current,
+                        new_password: next
+                    })
+                });
+
+            const data =
+                await response.json();
+
+            customAlert(
+                data.message ||
+                (data.success ? "Password updated." : "Failed to update password.")
+            );
+
+            if (data.success) {
+
+                document.getElementById("currentPassword").value = "";
+                document.getElementById("newPassword").value = "";
+                document.getElementById("confirmNewPassword").value = "";
+
+            }
+
+        } catch (error) {
+
+            console.error("Unable to update password:", error);
+            customAlert("Failed to update password. Please try again.");
+
+        }
+
+    });
+
+}
+
+
+/* ---- Notification toggles (per-device, saved locally) ---- */
+
+const NOTIF_TOGGLE_IDS = ["notifyOrders", "notifyMessages", "notifyRentals", "notifyTips"];
+
+NOTIF_TOGGLE_IDS.forEach(function (id) {
+
+    const el = document.getElementById(id);
+
+    if (!el) return;
+
+    const stored = localStorage.getItem("pref_" + id);
+
+    if (stored !== null) {
+        el.checked = stored === "true";
+    }
+
+    el.addEventListener("change", function () {
+
+        localStorage.setItem("pref_" + id, el.checked);
+
+    });
+
+});
+
+
+loadSettingsData();
+
+
+
+
+
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

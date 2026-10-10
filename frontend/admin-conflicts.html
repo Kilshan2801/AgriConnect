@@ -1,0 +1,4660 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    AgriConnect - Reported Conflicts
+</title>
+
+
+<style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f5f7fb;
+
+    color: #182033;
+
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    min-width: 255px;
+
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #281064 0%,
+            #170a45 100%
+        );
+
+    color: white;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+}
+
+
+.sidebar-logo {
+
+    height: 86px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.10);
+}
+
+
+.sidebar-logo img {
+
+    width: 160px;
+
+    height: auto;
+
+    max-height: 62px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.sidebar-content {
+
+    padding:
+        13px 10px;
+}
+
+
+.nav-section-title {
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    color:
+        rgba(255,255,255,0.75);
+
+    padding:
+        14px 12px 10px;
+
+    text-transform:
+        uppercase;
+}
+
+
+.nav-item {
+
+    width: 100%;
+
+    min-height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s;
+}
+
+
+.nav-item:hover {
+
+    background:
+        rgba(255,255,255,0.08);
+}
+
+
+.nav-item.active {
+
+    background:
+        linear-gradient(
+            90deg,
+            #7131c8,
+            #5520a7
+        );
+}
+
+
+.nav-icon {
+
+    width: 22px;
+
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+
+.nav-label {
+
+    flex: 1;
+}
+
+
+.nav-arrow {
+
+    font-size: 12px;
+
+    transition:
+        transform 0.2s;
+}
+
+
+/* =====================================================
+   SUBMENU
+===================================================== */
+
+.submenu {
+
+    display: block;
+
+    padding-left: 35px;
+
+    margin-bottom: 5px;
+
+    position: relative;
+}
+
+
+.submenu::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 24px;
+
+    top: 4px;
+
+    bottom: 6px;
+
+    width: 1px;
+
+    background:
+        rgba(255,255,255,0.25);
+}
+
+
+.submenu a {
+
+    display: block;
+
+    color:
+        rgba(255,255,255,0.9);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    padding:
+        10px;
+
+    border-radius: 6px;
+
+    position: relative;
+}
+
+
+.submenu a::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: -14px;
+
+    top: 15px;
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #7353b9;
+}
+
+
+.submenu a:hover {
+
+    background:
+        rgba(255,255,255,0.08);
+}
+
+
+/* =====================================================
+   SIDEBAR BOTTOM
+===================================================== */
+
+.sidebar-bottom {
+
+    padding:
+        8px 10px 15px;
+}
+
+
+.sidebar-divider {
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.13);
+
+    margin:
+        5px 12px 12px;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 50px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e8ee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    padding:
+        0 27px;
+}
+
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =====================================================
+   HEADER NOTIFICATION
+===================================================== */
+
+.notification {
+
+    position: relative;
+
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s;
+}
+
+
+.notification:hover {
+
+    transform:
+        scale(1.06);
+}
+
+
+.notification-badge {
+
+    position: absolute;
+
+    top: 0;
+
+    right: -2px;
+
+    min-width: 18px;
+
+    height: 18px;
+
+    padding:
+        0 4px;
+
+    border-radius: 50%;
+
+    background: #ff3b30;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    cursor: pointer;
+
+    position: relative;
+}
+
+
+.profile-avatar {
+
+    width: 43px;
+
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #6429c1;
+
+    color: #6429c1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    background: white;
+}
+
+
+.profile-info {
+
+    line-height: 17px;
+}
+
+
+.profile-name {
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+.profile-role {
+
+    font-size: 10px;
+
+    color: #6429c1;
+}
+
+
+.profile-arrow {
+
+    font-size: 11px;
+
+    margin-left: 5px;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+
+    padding:
+        22px 16px 28px;
+}
+
+
+.page-header {
+
+    margin-bottom: 19px;
+}
+
+
+.page-header h1 {
+
+    font-size: 29px;
+
+    color: #151b27;
+
+    margin-bottom: 6px;
+
+    font-weight: 700;
+}
+
+
+.page-header p {
+
+    font-size: 13px;
+
+    color: #596575;
+}
+
+
+/* =====================================================
+   SUMMARY CARDS
+===================================================== */
+
+.summary-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+
+.summary-card {
+
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    min-height: 101px;
+
+    padding: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+
+.summary-icon {
+
+    width: 50px;
+
+    height: 50px;
+
+    min-width: 50px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 24px;
+}
+
+
+.summary-icon.red {
+
+    background: #ffe3e3;
+
+    color: #f22c2c;
+}
+
+
+.summary-icon.orange {
+
+    background: #fff0d9;
+
+    color: #ef8d00;
+}
+
+
+.summary-icon.green {
+
+    background: #e1f5e6;
+
+    color: #188b3e;
+}
+
+
+.summary-icon.purple {
+
+    background: #eee3ff;
+
+    color: #6522c5;
+}
+
+
+.summary-title {
+
+    font-size: 12px;
+
+    color: #555e6b;
+
+    font-weight: bold;
+
+    margin-bottom: 4px;
+}
+
+
+.summary-value {
+
+    font-size: 23px;
+
+    font-weight: bold;
+
+    color: #171c27;
+
+    margin-bottom: 4px;
+}
+
+
+.summary-change {
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+.summary-change.red {
+
+    color: #ef2525;
+}
+
+
+.summary-change.orange {
+
+    color: #e98300;
+}
+
+
+.summary-change.green {
+
+    color: #168b3c;
+}
+
+
+.summary-change.purple {
+
+    color: #6925bd;
+}
+
+
+/* =====================================================
+   FILTERS
+===================================================== */
+
+.filter-card {
+
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    padding:
+        12px 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    margin-bottom: 13px;
+}
+
+
+.search-container {
+
+    position: relative;
+
+    flex: 1;
+}
+
+
+.search-container span {
+
+    position: absolute;
+
+    left: 12px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    font-size: 17px;
+
+    color: #707987;
+}
+
+
+.search-container input {
+
+    width: 100%;
+
+    height: 41px;
+
+    border:
+        1px solid #dfe3e8;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    padding:
+        0 13px 0 38px;
+
+    font-size: 12px;
+}
+
+
+.search-container input:focus {
+
+    border-color: #7025c5;
+}
+
+
+.filter-btn {
+
+    height: 41px;
+
+    min-width: 80px;
+
+    border:
+        1px solid #dfe3e8;
+
+    background: white;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+    color: #333;
+
+    font-weight: bold;
+}
+
+
+.filter-btn:hover {
+
+    background: #f8f5ff;
+}
+
+
+.date-select,
+.sort-select {
+
+    height: 41px;
+
+    border:
+        1px solid #dfe3e8;
+
+    border-radius: 7px;
+
+    background: white;
+
+    padding:
+        0 11px;
+
+    font-size: 10px;
+
+    outline: none;
+
+    color: #333;
+}
+
+
+.date-select {
+
+    min-width: 205px;
+}
+
+
+.sort-select {
+
+    min-width: 130px;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.conflicts-card {
+
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+}
+
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+
+th {
+
+    background: #fafbfc;
+
+    border-bottom:
+        1px solid #e7eaf0;
+
+    text-align: left;
+
+    padding:
+        13px 10px;
+
+    font-size: 12px;
+
+    color: #303744;
+
+    font-weight: bold;
+}
+
+
+td {
+
+    padding:
+        13px 10px;
+
+    border-bottom:
+        1px solid #edf0f3;
+
+    font-size: 12px;
+
+    color: #303744;
+
+    vertical-align: middle;
+}
+
+
+tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+/* =====================================================
+   COLUMN WIDTHS
+===================================================== */
+
+th:nth-child(1),
+td:nth-child(1) {
+
+    width: 15%;
+}
+
+
+th:nth-child(2),
+td:nth-child(2) {
+
+    width: 15%;
+}
+
+
+th:nth-child(3),
+td:nth-child(3) {
+
+    width: 11%;
+}
+
+
+th:nth-child(4),
+td:nth-child(4) {
+
+    width: 18%;
+}
+
+
+th:nth-child(5),
+td:nth-child(5) {
+
+    width: 12%;
+}
+
+
+th:nth-child(6),
+td:nth-child(6) {
+
+    width: 11%;
+}
+
+
+th:nth-child(7),
+td:nth-child(7) {
+
+    width: 18%;
+}
+
+
+/* =====================================================
+   PERSON
+===================================================== */
+
+.person {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.person-avatar {
+
+    width: 34px;
+
+    height: 34px;
+
+    min-width: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+.avatar-green {
+
+    background: #e6f7e9;
+
+    color: #21823b;
+}
+
+
+.avatar-blue {
+
+    background: #e5efff;
+
+    color: #2465c8;
+}
+
+
+.avatar-orange {
+
+    background: #fff0db;
+
+    color: #d77b00;
+}
+
+
+.avatar-purple {
+
+    background: #eee4ff;
+
+    color: #6b25c1;
+}
+
+
+.person-name {
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 4px;
+
+    color: #252b35;
+}
+
+
+.person-role {
+
+    display: inline-block;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    padding:
+        3px 6px;
+
+    border-radius: 4px;
+}
+
+
+.role-farmer {
+
+    background: #e4f6e8;
+
+    color: #21843c;
+}
+
+
+.role-buyer {
+
+    background: #e5efff;
+
+    color: #2367ca;
+}
+
+
+.role-expert {
+
+    background: #eee4ff;
+
+    color: #6b25c1;
+}
+
+
+.role-provider {
+
+    background: #fff0dc;
+
+    color: #d87300;
+}
+
+
+.phone {
+
+    font-size: 10px;
+
+    color: #667080;
+
+    margin-top: 4px;
+}
+
+
+/* =====================================================
+   ISSUE TYPE
+===================================================== */
+
+.issue-type {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+.issue-icon {
+
+    width: 30px;
+
+    height: 30px;
+
+    border-radius: 7px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 14px;
+}
+
+
+.issue-product {
+
+    background: #e7efff;
+
+    color: #316ed0;
+}
+
+
+.issue-service {
+
+    background: #eee5ff;
+
+    color: #6e2bc0;
+}
+
+
+.issue-payment {
+
+    background: #fff1db;
+
+    color: #dc8200;
+}
+
+
+.issue-delivery {
+
+    background: #e8eaff;
+
+    color: #4c53bf;
+}
+
+
+.issue-communication {
+
+    background: #ffe6eb;
+
+    color: #dc3451;
+}
+
+
+.issue-quality {
+
+    background: #e8f8ed;
+
+    color: #24873f;
+}
+
+
+.issue-other {
+
+    background: #f0f1f3;
+
+    color: #636a74;
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.description {
+
+    line-height: 17px;
+
+    color: #4d5561;
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+.date-main {
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    margin-bottom: 4px;
+}
+
+
+.date-time {
+
+    font-size: 10px;
+
+    color: #717987;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status {
+
+    display: inline-block;
+
+    padding:
+        6px 9px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+.status-review {
+
+    background: #fff0d5;
+
+    color: #c87900;
+}
+
+
+.status-resolved {
+
+    background: #def4e4;
+
+    color: #18823b;
+}
+
+
+.status-dismissed {
+
+    background: #ffe0e0;
+
+    color: #df2d2d;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.action-group {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+.view-btn {
+
+    height: 31px;
+
+    padding:
+        0 11px;
+
+    border:
+        1px solid #8e58df;
+
+    background: white;
+
+    border-radius: 6px;
+
+    color: #6523bd;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+
+.view-btn:hover {
+
+    background: #f6f0ff;
+}
+
+
+.action-dropdown {
+
+    width: 31px;
+
+    height: 31px;
+
+    border:
+        1px solid #8e58df;
+
+    background: white;
+
+    border-radius: 6px;
+
+    color: #6523bd;
+
+    cursor: pointer;
+
+    font-size: 11px;
+}
+
+
+/* =====================================================
+   PAGINATION
+===================================================== */
+
+.pagination {
+
+    min-height: 53px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        0 15px;
+
+    border-top:
+        1px solid #edf0f3;
+}
+
+
+.pagination-info {
+
+    font-size: 10px;
+
+    color: #69727f;
+}
+
+
+.page-controls {
+
+    display: flex;
+
+    gap: 5px;
+}
+
+
+.page-button {
+
+    width: 31px;
+
+    height: 31px;
+
+    border:
+        1px solid #dfe3e8;
+
+    background: white;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+
+.page-button.active {
+
+    background: #6523bd;
+
+    color: white;
+
+    border-color: #6523bd;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(16, 10, 30, 0.52);
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 5000;
+
+    padding: 20px;
+}
+
+
+.modal-overlay.show {
+
+    display: flex;
+}
+
+
+.modal {
+
+    width: 100%;
+
+    max-width: 600px;
+
+    background: white;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 20px 55px
+        rgba(0,0,0,0.25);
+
+    overflow: hidden;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+}
+
+
+.modal-header {
+
+    padding:
+        17px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+
+.modal-header h2 {
+
+    font-size: 18px;
+}
+
+
+.close-btn {
+
+    width: 31px;
+
+    height: 31px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f2f4;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+
+.modal-body {
+
+    padding: 20px;
+}
+
+
+.conflict-summary {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 15px;
+}
+
+
+.detail {
+
+    background: #f8f9fb;
+
+    border-radius: 7px;
+
+    padding: 12px;
+}
+
+
+.detail-label {
+
+    display: block;
+
+    font-size: 10px;
+
+    color: #7b8490;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+
+    margin-bottom: 6px;
+}
+
+
+.detail-value {
+
+    font-size: 12px;
+
+    color: #252c37;
+
+    font-weight: bold;
+}
+
+
+.description-box {
+
+    background: #f8f9fb;
+
+    border-radius: 7px;
+
+    padding: 12px;
+
+    margin-top: 10px;
+}
+
+
+.description-box p {
+
+    font-size: 12px;
+
+    color: #454d58;
+
+    line-height: 18px;
+}
+
+
+/* =====================================================
+   MODAL FOOTER
+===================================================== */
+
+.modal-footer {
+
+    padding:
+        13px 20px;
+
+    border-top:
+        1px solid #edf0f3;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+}
+
+
+.modal-action {
+
+    padding:
+        10px 15px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.resolve-btn {
+
+    border: none;
+
+    background: #18833c;
+
+    color: white;
+}
+
+
+.dismiss-btn {
+
+    border: none;
+
+    background: #e83232;
+
+    color: white;
+}
+
+
+.cancel-btn {
+
+    background: white;
+
+    border:
+        1px solid #d9dde3;
+
+    color: #4d5560;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+
+    position: fixed;
+
+    left: 255px;
+
+    right: 0;
+
+    bottom: 0;
+
+    height: 42px;
+
+    background: #004d2b;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 13px;
+
+    font-size: 10px;
+
+    z-index: 900;
+}
+
+
+.footer a {
+
+    color: white;
+
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .summary-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .filter-card {
+
+        flex-wrap: wrap;
+    }
+
+
+    .search-container {
+
+        flex-basis: 100%;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .sidebar {
+
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s;
+    }
+
+
+    .sidebar.open {
+
+        transform:
+            translateX(0);
+    }
+
+
+    .main {
+
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+
+    .footer {
+
+        left: 0;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .summary-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .conflict-summary {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .filter-card {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .date-select,
+    .sort-select,
+    .filter-btn {
+
+        width: 100%;
+    }
+
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="admin-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- MANAGEMENT -->
+
+        <div class="nav-section-title">
+            MANAGEMENT
+        </div>
+
+
+        <!-- MANAGE USERS -->
+
+        <div
+            class="nav-item"
+            onclick="toggleUsers()"
+        >
+
+            <span class="nav-icon">
+                ♙
+            </span>
+
+            <span class="nav-label">
+                Manage Users
+            </span>
+
+            <span
+                class="nav-arrow"
+                id="userArrow"
+            >
+                ▼
+            </span>
+
+        </div>
+
+
+        <!-- USER SUBMENU -->
+
+        <div
+            class="submenu"
+            id="userSubmenu"
+        >
+
+            <a href="admin-manage-users.html?type=farmer">
+                Farmers
+            </a>
+
+            <a href="admin-manage-users.html?type=buyer">
+                Buyers
+            </a>
+
+            <a href="admin-manage-users.html?type=expert">
+                Agri Experts
+            </a>
+
+            <a href="admin-manage-users.html?type=provider">
+                Equipment Providers
+            </a>
+
+        </div>
+
+
+        <!-- INSPECT REGISTRATION -->
+
+        <a
+            href="admin-registrations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▤
+            </span>
+
+            <span class="nav-label">
+                Inspect Registration
+            </span>
+
+        </a>
+
+
+        <!-- REPORTED CONFLICTS -->
+
+        <a
+            href="admin-conflicts.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                ⚿
+            </span>
+
+            <span class="nav-label">
+                Reported Conflicts
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="admin-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="admin-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="admin-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="admin-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="logout()"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+
+        <div class="header-right">
+
+
+            <!-- NOTIFICATIONS -->
+
+            <div
+                class="notification"
+                onclick="goToNotifications()"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span class="notification-badge" id="headerNotificationBadge" style="display:none;">
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div class="profile">
+
+
+                <div class="profile-avatar">
+                    AI
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div class="profile-name">
+                        Admin
+                    </div>
+
+                    <div class="profile-role">
+                        Super Admin
+                    </div>
+
+                </div>
+
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =================================================
+         CONTENT
+    ================================================= -->
+
+    <section class="content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+
+            <h1>
+                Reported Conflicts
+            </h1>
+
+
+            <p>
+                View and manage all reported conflicts between users on the platform.
+            </p>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUMMARY CARDS
+        ================================================= -->
+
+        <div class="summary-grid">
+
+
+            <!-- TOTAL REPORTED -->
+
+            <div class="summary-card">
+
+
+                <div class="summary-icon red">
+                    ⚠
+                </div>
+
+
+                <div>
+
+
+                    <div class="summary-title">
+                        Total Reported
+                    </div>
+
+
+                    <div
+                        class="summary-value"
+                        id="totalReported"
+                    >
+                        7
+                    </div>
+
+
+                    <div class="summary-change red">
+                        ↑ 2 from last month
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- UNDER REVIEW -->
+
+            <div class="summary-card">
+
+
+                <div class="summary-icon orange">
+                    ◷
+                </div>
+
+
+                <div>
+
+
+                    <div class="summary-title">
+                        Under Review
+                    </div>
+
+
+                    <div
+                        class="summary-value"
+                        id="underReview"
+                    >
+                        3
+                    </div>
+
+
+                    <div class="summary-change orange">
+                        ↑ 1 from last month
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- RESOLVED -->
+
+            <div class="summary-card">
+
+
+                <div class="summary-icon green">
+                    ✓
+                </div>
+
+
+                <div>
+
+
+                    <div class="summary-title">
+                        Resolved
+                    </div>
+
+
+                    <div
+                        class="summary-value"
+                        id="resolvedCount"
+                    >
+                        3
+                    </div>
+
+
+                    <div class="summary-change green">
+                        ↑ 2 from last month
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DISMISSED -->
+
+            <div class="summary-card">
+
+
+                <div class="summary-icon purple">
+                    ⊗
+                </div>
+
+
+                <div>
+
+
+                    <div class="summary-title">
+                        Dismissed
+                    </div>
+
+
+                    <div
+                        class="summary-value"
+                        id="dismissedCount"
+                    >
+                        1
+                    </div>
+
+
+                    <div class="summary-change purple">
+                        ↓ 1 from last month
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             FILTERS
+        ================================================= -->
+
+        <div class="filter-card">
+
+
+            <!-- SEARCH -->
+
+            <div class="search-container">
+
+
+                <span>
+                    🔍
+                </span>
+
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by keyword..."
+                >
+
+
+            </div>
+
+
+            <!-- DATE -->
+
+            <select
+                class="date-select"
+                id="dateFilter"
+            >
+
+                <option value="all">
+                    All Time
+                </option>
+
+                <option value="today">
+                    Today
+                </option>
+
+                <option value="week">
+                    This Week
+                </option>
+
+                <option value="month">
+                    This Month
+                </option>
+
+                <option value="custom">
+                    Search a Date
+                </option>
+
+            </select>
+
+
+            <input
+                type="date"
+                class="date-select"
+                id="customDateFilter"
+                style="display:none;"
+            >
+
+
+            <!-- SORT -->
+
+            <select
+                class="sort-select"
+                id="sortFilter"
+            >
+
+                <option value="newest">
+                    Newest First
+                </option>
+
+                <option value="oldest">
+                    Oldest First
+                </option>
+
+                <option value="priority">
+                    Priority (High to Low)
+                </option>
+
+            </select>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             CONFLICT TABLE
+        ================================================= -->
+
+        <div class="conflicts-card">
+
+
+            <table>
+
+
+                <thead>
+
+
+                    <tr>
+
+                        <th>
+                            Reported By
+                        </th>
+
+                        <th>
+                            Against
+                        </th>
+
+                        <th>
+                            Type
+                        </th>
+
+                        <th>
+                            Reported Date
+                        </th>
+
+                        <th>
+                            Priority
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+
+                </thead>
+
+
+                <tbody
+                    id="conflictsTable"
+                ></tbody>
+
+
+            </table>
+
+
+
+            <!-- PAGINATION -->
+
+            <div class="pagination">
+
+
+                <div
+                    class="pagination-info"
+                    id="paginationInfo"
+                >
+                    Showing 1 to 7 of 7 conflicts
+                </div>
+
+
+                <div class="page-controls">
+
+
+                    <button
+                        class="page-button"
+                        disabled
+                    >
+                        ‹
+                    </button>
+
+
+                    <button
+                        class="page-button active"
+                    >
+                        1
+                    </button>
+
+
+                    <button
+                        class="page-button"
+                        disabled
+                    >
+                        ›
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     CONFLICT DETAILS MODAL
+===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="conflictModal"
+>
+
+
+    <div class="modal">
+
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-header">
+
+
+            <h2>
+                Conflict Details
+            </h2>
+
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+
+        </div>
+
+
+
+        <!-- MODAL BODY -->
+
+        <div class="modal-body">
+
+
+            <div class="conflict-summary">
+
+
+                <div class="detail">
+
+
+                    <span class="detail-label">
+                        Conflict ID
+                    </span>
+
+
+                    <span
+                        class="detail-value"
+                        id="modalId"
+                    >
+                        —
+                    </span>
+
+
+                </div>
+
+
+
+                <div class="detail">
+
+
+                    <span class="detail-label">
+                        Status
+                    </span>
+
+
+                    <span
+                        class="detail-value"
+                        id="modalStatus"
+                    >
+                        —
+                    </span>
+
+
+                </div>
+
+
+
+                <div class="detail">
+
+
+                    <span class="detail-label">
+                        Reported By
+                    </span>
+
+
+                    <span
+                        class="detail-value"
+                        id="modalReporter"
+                    >
+                        —
+                    </span>
+
+
+                </div>
+
+
+
+                <div class="detail">
+
+
+                    <span class="detail-label">
+                        Against
+                    </span>
+
+
+                    <span
+                        class="detail-value"
+                        id="modalAgainst"
+                    >
+                        —
+                    </span>
+
+
+                </div>
+
+
+
+                <div class="detail">
+
+
+                    <span class="detail-label">
+                        Issue Type
+                    </span>
+
+
+                    <span
+                        class="detail-value"
+                        id="modalType"
+                    >
+                        —
+                    </span>
+
+
+                </div>
+
+
+
+                <div class="detail">
+
+
+                    <span class="detail-label">
+                        Reported Date
+                    </span>
+
+
+                    <span
+                        class="detail-value"
+                        id="modalDate"
+                    >
+                        —
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- HEADING -->
+
+            <div class="description-box">
+
+
+                <span class="detail-label">
+                    Heading
+                </span>
+
+
+                <p id="modalHeading" style="font-weight:700;">
+                    —
+                </p>
+
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+
+            <div class="description-box">
+
+
+                <span class="detail-label">
+                    Description
+                </span>
+
+
+                <p id="modalDescription">
+                    —
+                </p>
+
+
+            </div>
+
+
+            <!-- PROOF SUBMITTED -->
+
+            <div class="description-box" id="modalProofBox" style="display:none;">
+
+                <span class="detail-label">
+                    Proof Submitted
+                </span>
+
+                <div id="modalProofContent" style="margin-top:8px;">
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- MODAL FOOTER -->
+
+        <div class="modal-footer">
+
+
+            <button
+                class="modal-action resolve-btn"
+                id="resolveButton"
+                onclick="resolveCurrentConflict()"
+            >
+                ✓ Resolve
+            </button>
+
+
+            <button
+                class="modal-action dismiss-btn"
+                id="dismissButton"
+                onclick="dismissCurrentConflict()"
+            >
+                ⊗ Dismiss
+            </button>
+
+
+            <button
+                class="modal-action cancel-btn"
+                onclick="closeModal()"
+            >
+                Close
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+
+    <span>
+        🌱 © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+
+</footer>
+
+
+
+<script>
+
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
+
+function goToNotifications() {
+
+    window.location.href =
+        "admin-notifications.html";
+
+}
+
+
+/* =====================================================
+   CONFLICT DATA
+===================================================== */
+
+let conflicts = [];
+
+
+const reportTypeMeta = {
+    "Order Issue": { icon: "\u25c8", cls: "product" },
+    "Rental Issue": { icon: "\u25c8", cls: "product" },
+    "Payment Issue": { icon: "\u25c8", cls: "product" },
+    "Consultation Issue": { icon: "\u2667", cls: "service" },
+    "Account Issue": { icon: "\u2667", cls: "service" },
+    "Technical Issue": { icon: "\u2667", cls: "service" },
+    "User Issue": { icon: "\u2667", cls: "service" }
+};
+
+const roleDisplayLabel = {
+    farmer: "Farmer",
+    buyer: "Buyer",
+    expert: "Agri Expert",
+    equipment_provider: "Equipment Provider"
+};
+
+const roleAvatarClass = {
+    farmer: "green",
+    buyer: "blue",
+    expert: "orange",
+    equipment_provider: "purple"
+};
+
+const reportStatusMap = {
+    pending: "Under Review",
+    in_review: "Under Review",
+    resolved: "Resolved",
+    rejected: "Dismissed"
+};
+
+
+function formatConflictDate(isoString) {
+
+    const date = new Date(isoString);
+
+    if (isNaN(date)) {
+        return { date: "", time: "" };
+    }
+
+    return {
+        date: date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+        time: date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+    };
+
+}
+
+
+function mapReportToConflict(row) {
+
+    const { date, time } = formatConflictDate(row.created_at);
+
+    const meta = reportTypeMeta[row.report_type] || { icon: "\u25c8", cls: "product" };
+
+    return {
+
+        id: "ISSUE-" + row.id,
+        backendId: row.id,
+
+        reporter:
+            row.first_name || row.last_name
+                ? `${row.first_name || ""} ${row.last_name || ""}`.trim()
+                : "Removed Account",
+        reporterId: row.reporter_id,
+        reporterRemoved: !row.first_name && !row.last_name,
+        reporterIsActive: row.reporter_is_active !== 0,
+        reporterRole: roleDisplayLabel[row.reporter_role] || row.reporter_role || "Buyer",
+        reporterPhone: row.phone || "Not provided",
+        reporterClass: roleAvatarClass[row.reporter_role] || "blue",
+
+        priority: row.priority || "medium",
+
+        // The report form doesn't currently collect who the issue is
+        // against, so this is honestly shown as not specified rather
+        // than guessed.
+        against: "Not specified",
+        againstRole: "N/A",
+        againstClass: "purple",
+
+        type: row.report_type || "Other",
+        typeClass: meta.cls,
+        typeIcon: meta.icon,
+
+        heading: row.subject || "Untitled Issue",
+        description: row.description || "",
+        attachment: row.attachment || "",
+
+        date: date,
+        time: time,
+        rawCreatedAt: row.created_at,
+
+        status: reportStatusMap[row.status] || "Under Review"
+
+    };
+
+}
+
+
+async function loadConflicts() {
+
+    try {
+
+        const response =
+            await fetch("/api/admin/reports");
+
+        const data =
+            await response.json();
+
+        if (data && data.success && Array.isArray(data.reports)) {
+
+            conflicts =
+                data.reports.map(mapReportToConflict);
+
+        } else {
+
+            conflicts = [];
+
+        }
+
+    } catch (error) {
+
+        console.error("Unable to load reported conflicts:", error);
+
+        conflicts = [];
+
+    }
+
+    renderConflicts();
+
+}
+
+
+async function completeConflict(id) {
+
+    const conflict =
+        conflicts.find(c => c.id === id);
+
+    if (!conflict) {
+        return;
+    }
+
+    if (
+        !await customConfirm(
+            `Mark "${conflict.heading}" as complete?`
+        )
+    ) {
+        return;
+    }
+
+    const success =
+        await updateConflictStatusOnBackend(
+            conflict.backendId,
+            "resolved",
+            null
+        );
+
+    if (!success) {
+
+        customAlert(
+            "Failed to update this conflict. Please try again."
+        );
+
+        return;
+
+    }
+
+    conflict.status = "Resolved";
+
+    renderConflicts();
+
+    customAlert(
+        "Conflict marked as complete."
+    );
+
+}
+
+
+async function updateConflictStatusOnBackend(backendId, newStatus, note) {
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/reports/${backendId}/status`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        status: newStatus,
+                        admin_note: note || null
+                    })
+                }
+            );
+
+        const data =
+            await response.json();
+
+        return !!(data && data.success);
+
+    } catch (error) {
+
+        console.error("Failed to update conflict status:", error);
+
+        return false;
+
+    }
+
+}
+
+
+
+let currentConflictId = null;
+
+
+/* =====================================================
+   MANAGE USERS
+===================================================== */
+
+function toggleUsers() {
+
+    const submenu =
+        document.getElementById(
+            "userSubmenu"
+        );
+
+    const arrow =
+        document.getElementById(
+            "userArrow"
+        );
+
+
+    if (
+        submenu.style.display ===
+        "none"
+    ) {
+
+        submenu.style.display =
+            "block";
+
+        arrow.textContent =
+            "▲";
+
+    }
+
+    else {
+
+        submenu.style.display =
+            "none";
+
+        arrow.textContent =
+            "▼";
+
+    }
+
+}
+
+
+/* =====================================================
+   GET INITIALS
+===================================================== */
+
+function getInitials(name) {
+
+    if (!name) {
+
+        return "U";
+
+    }
+
+
+    const parts =
+        name
+            .trim()
+            .split(/\s+/);
+
+
+    if (
+        parts.length === 1
+    ) {
+
+        return parts[0]
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+
+    return (
+
+        parts[0][0] +
+
+        parts[
+            parts.length - 1
+        ][0]
+
+    ).toUpperCase();
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value || "";
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   ROLE CLASS
+===================================================== */
+
+function getRoleClass(role) {
+
+    if (
+        role === "Farmer"
+    ) {
+
+        return "farmer";
+
+    }
+
+
+    if (
+        role === "Buyer"
+    ) {
+
+        return "buyer";
+
+    }
+
+
+    if (
+        role === "Agri Expert"
+    ) {
+
+        return "expert";
+
+    }
+
+
+    return "provider";
+
+}
+
+
+/* =====================================================
+   RENDER CONFLICTS
+===================================================== */
+
+function renderConflicts() {
+
+    let filtered =
+        [...conflicts];
+
+
+    const search =
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    if (search) {
+
+        filtered =
+            filtered.filter(
+                conflict => {
+
+                    return (
+
+                        conflict.reporter
+                            .toLowerCase()
+                            .includes(search)
+
+                        ||
+
+                        conflict.against
+                            .toLowerCase()
+                            .includes(search)
+
+                        ||
+
+                        conflict.type
+                            .toLowerCase()
+                            .includes(search)
+
+                        ||
+
+                        conflict.description
+                            .toLowerCase()
+                            .includes(search)
+
+                        ||
+
+                        conflict.id
+                            .toLowerCase()
+                            .includes(search)
+
+                    );
+
+                }
+            );
+
+    }
+
+
+    const dateRange =
+        document
+            .getElementById(
+                "dateFilter"
+            )
+            .value;
+
+
+    if (dateRange && dateRange !== "all") {
+
+        const now = new Date();
+
+        filtered =
+            filtered.filter(
+                conflict => {
+
+                    if (!conflict.rawCreatedAt) return false;
+
+                    const created = new Date(conflict.rawCreatedAt);
+
+                    if (dateRange === "today") {
+
+                        return (
+                            created.getFullYear() === now.getFullYear() &&
+                            created.getMonth() === now.getMonth() &&
+                            created.getDate() === now.getDate()
+                        );
+
+                    }
+
+                    if (dateRange === "week") {
+
+                        const weekAgo = new Date(now);
+                        weekAgo.setDate(weekAgo.getDate() - 7);
+                        return created >= weekAgo && created <= now;
+
+                    }
+
+                    if (dateRange === "month") {
+
+                        const monthAgo = new Date(now);
+                        monthAgo.setDate(monthAgo.getDate() - 30);
+                        return created >= monthAgo && created <= now;
+
+                    }
+
+                    if (dateRange === "custom") {
+
+                        const pickedValue =
+                            document.getElementById("customDateFilter").value;
+
+                        if (!pickedValue) return true;
+
+                        const picked = new Date(pickedValue + "T00:00:00");
+
+                        return (
+                            created.getFullYear() === picked.getFullYear() &&
+                            created.getMonth() === picked.getMonth() &&
+                            created.getDate() === picked.getDate()
+                        );
+
+                    }
+
+                    return true;
+
+                }
+            );
+
+    }
+
+
+    const sort =
+        document
+            .getElementById(
+                "sortFilter"
+            )
+            .value;
+
+
+    if (
+        sort === "oldest"
+    ) {
+
+        filtered.reverse();
+
+    }
+
+    else if (
+        sort === "priority"
+    ) {
+
+        const priorityWeight = {
+            high: 3,
+            medium: 2,
+            low: 1
+        };
+
+        filtered.sort(
+            (a, b) =>
+                (priorityWeight[b.priority] || 0) -
+                (priorityWeight[a.priority] || 0)
+        );
+
+    }
+
+
+    const table =
+        document.getElementById(
+            "conflictsTable"
+        );
+
+
+    table.innerHTML = "";
+
+
+    if (
+        filtered.length === 0
+    ) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    style="
+                        text-align:center;
+                        padding:60px;
+                        color:#737b87;
+                        font-size:12px;
+                    "
+                >
+
+                    No reported conflicts found.
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        document
+            .getElementById(
+                "paginationInfo"
+            )
+            .textContent =
+            "Showing 0 of 0 conflicts";
+
+
+        return;
+
+    }
+
+
+    filtered.forEach(
+        conflict => {
+
+            let statusClass =
+                "status-review";
+
+
+            if (
+                conflict.status ===
+                "Resolved"
+            ) {
+
+                statusClass =
+                    "status-resolved";
+
+            }
+
+
+            if (
+                conflict.status ===
+                "Dismissed"
+            ) {
+
+                statusClass =
+                    "status-dismissed";
+
+            }
+
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <div class="person">
+
+                        <div
+                            class="
+                                person-avatar
+                                avatar-${escapeHTML(
+                                    conflict.reporterClass
+                                )}
+                            "
+                        >
+                            ${getInitials(
+                                conflict.reporter
+                            )}
+                        </div>
+
+
+                        <div>
+
+                            <div class="person-name">
+
+                                ${escapeHTML(
+                                    conflict.reporter
+                                )}
+
+                            </div>
+
+
+                            <div style="font-size:11px;color:#8a94a6;">
+                                ID: #${escapeHTML(String(conflict.reporterId || "-"))}
+                                ${
+                                    conflict.reporterRemoved
+                                        ? `<span style="margin-left:6px;padding:2px 6px;border-radius:8px;background:#fde8e8;color:#c0392b;font-weight:600;">Account Removed</span>`
+                                        : (!conflict.reporterIsActive
+                                            ? `<span style="margin-left:6px;padding:2px 6px;border-radius:8px;background:#fff4e0;color:#b27600;font-weight:600;">Deactivated</span>`
+                                            : "")
+                                }
+                            </div>
+
+
+                            <span
+                                class="
+                                    person-role
+                                    role-${getRoleClass(
+                                        conflict.reporterRole
+                                    )}
+                                "
+                            >
+
+                                ${escapeHTML(
+                                    conflict.reporterRole
+                                )}
+
+                            </span>
+
+
+                            <div class="phone">
+
+                                ${escapeHTML(
+                                    conflict.reporterPhone
+                                )}
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div class="person">
+
+
+                        <div
+                            class="
+                                person-avatar
+                                avatar-${escapeHTML(
+                                    conflict.againstClass
+                                )}
+                            "
+                        >
+
+                            ${getInitials(
+                                conflict.against
+                            )}
+
+                        </div>
+
+
+                        <div>
+
+                            <div class="person-name">
+
+                                ${escapeHTML(
+                                    conflict.against
+                                )}
+
+                            </div>
+
+
+                            <span
+                                class="
+                                    person-role
+                                    role-${getRoleClass(
+                                        conflict.againstRole
+                                    )}
+                                "
+                            >
+
+                                ${escapeHTML(
+                                    conflict.againstRole
+                                )}
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div class="issue-type">
+
+
+                        <div
+                            class="
+                                issue-icon
+                                issue-${escapeHTML(
+                                    conflict.typeClass
+                                )}
+                            "
+                        >
+
+                            ${escapeHTML(
+                                conflict.typeIcon
+                            )}
+
+                        </div>
+
+
+                        <span>
+
+                            ${escapeHTML(
+                                conflict.type
+                            )}
+
+                        </span>
+
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <div class="date-main">
+
+                        📅
+                        ${escapeHTML(
+                            conflict.date
+                        )}
+
+                    </div>
+
+
+                    <div class="date-time">
+
+                        ◷
+                        ${escapeHTML(
+                            conflict.time
+                        )}
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        style="
+                            display:inline-block;
+                            padding:3px 10px;
+                            border-radius:12px;
+                            font-size:11px;
+                            font-weight:600;
+                            text-transform:capitalize;
+                            background:${
+                                conflict.priority === "high"
+                                    ? "#fde8e8"
+                                    : conflict.priority === "low"
+                                        ? "#e8f7ed"
+                                        : "#fff4e0"
+                            };
+                            color:${
+                                conflict.priority === "high"
+                                    ? "#c0392b"
+                                    : conflict.priority === "low"
+                                        ? "#20823d"
+                                        : "#b27600"
+                            };
+                        "
+                    >
+
+                        ${escapeHTML(conflict.priority)}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="
+                            status
+                            ${statusClass}
+                        "
+                    >
+
+                        ${escapeHTML(
+                            conflict.status
+                        )}
+
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div class="action-group">
+
+
+                        <button
+                            class="view-btn"
+                            onclick="
+                                viewConflict(
+                                    '${escapeHTML(
+                                        conflict.id
+                                    )}'
+                                )
+                            "
+                        >
+
+                            ◉ Review
+
+                        </button>
+
+
+                        <button
+                            class="action-dropdown"
+                            style="width:auto;padding:0 14px;"
+                            onclick="
+                                completeConflict(
+                                    '${escapeHTML(
+                                        conflict.id
+                                    )}'
+                                )
+                            "
+                            ${conflict.status === "Resolved" || conflict.status === "Dismissed" ? "disabled" : ""}
+                        >
+
+                            ✓ Complete
+
+                        </button>
+
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            table.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    document
+        .getElementById(
+            "paginationInfo"
+        )
+        .textContent =
+        `Showing 1 to ${filtered.length} of ${conflicts.length} conflicts`;
+
+
+    updateSummary();
+
+}
+
+
+/* =====================================================
+   UPDATE SUMMARY
+===================================================== */
+
+function updateSummary() {
+
+    const total =
+        conflicts.length;
+
+
+    const review =
+        conflicts.filter(
+            c =>
+                c.status ===
+                "Under Review"
+        ).length;
+
+
+    const resolved =
+        conflicts.filter(
+            c =>
+                c.status ===
+                "Resolved"
+        ).length;
+
+
+    const dismissed =
+        conflicts.filter(
+            c =>
+                c.status ===
+                "Dismissed"
+        ).length;
+
+
+    document
+        .getElementById(
+            "totalReported"
+        )
+        .textContent =
+        total;
+
+
+    document
+        .getElementById(
+            "underReview"
+        )
+        .textContent =
+        review;
+
+
+    document
+        .getElementById(
+            "resolvedCount"
+        )
+        .textContent =
+        resolved;
+
+
+    document
+        .getElementById(
+            "dismissedCount"
+        )
+        .textContent =
+        dismissed;
+
+}
+
+
+/* =====================================================
+   VIEW CONFLICT
+===================================================== */
+
+function viewConflict(id) {
+
+    const conflict =
+        conflicts.find(
+            c =>
+                c.id === id
+        );
+
+
+    if (!conflict) {
+
+        return;
+
+    }
+
+
+    currentConflictId =
+        id;
+
+
+    document
+        .getElementById(
+            "modalId"
+        )
+        .textContent =
+        conflict.id;
+
+
+    document
+        .getElementById(
+            "modalStatus"
+        )
+        .textContent =
+        conflict.status;
+
+
+    document
+        .getElementById(
+            "modalReporter"
+        )
+        .textContent =
+        `${conflict.reporter} (${conflict.reporterRole}) — ID: #${conflict.reporterId || "-"}`;
+
+
+    document
+        .getElementById(
+            "modalAgainst"
+        )
+        .textContent =
+        `${conflict.against} (${conflict.againstRole})`;
+
+
+    document
+        .getElementById(
+            "modalType"
+        )
+        .textContent =
+        conflict.type;
+
+
+    document
+        .getElementById(
+            "modalDate"
+        )
+        .textContent =
+        `${conflict.date} ${conflict.time}`;
+
+
+    document
+        .getElementById(
+            "modalDescription"
+        )
+        .textContent =
+        conflict.description;
+
+
+    document
+        .getElementById(
+            "modalHeading"
+        )
+        .textContent =
+        conflict.heading || "Untitled Issue";
+
+
+    const proofBox =
+        document.getElementById("modalProofBox");
+
+    const proofContent =
+        document.getElementById("modalProofContent");
+
+    if (conflict.attachment) {
+
+        const url = conflict.attachment.startsWith("/uploads")
+            ? conflict.attachment
+            : `/uploads/${conflict.attachment}`;
+
+        const isImage = /\.(png|jpe?g|gif|webp)$/i.test(conflict.attachment);
+
+        proofContent.innerHTML = isImage
+            ? `<a href="${url}" target="_blank" rel="noopener noreferrer"><img src="${url}" alt="Submitted proof" style="max-width:260px;max-height:200px;border-radius:8px;border:1px solid #e6ebe8;"></a>`
+            : `<a href="${url}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border:1px solid #e6ebe8;border-radius:8px;text-decoration:none;color:#172033;">📄 View submitted document</a>`;
+
+        proofBox.style.display = "block";
+
+    } else {
+
+        proofContent.innerHTML =
+            `<p style="color:#8a94a6;font-size:12px;">No proof was submitted with this report.</p>`;
+
+        proofBox.style.display = "block";
+
+    }
+
+
+    const resolveButton =
+        document.getElementById(
+            "resolveButton"
+        );
+
+
+    const dismissButton =
+        document.getElementById(
+            "dismissButton"
+        );
+
+
+    if (
+        conflict.status ===
+        "Under Review"
+    ) {
+
+        resolveButton.style.display =
+            "inline-block";
+
+        dismissButton.style.display =
+            "inline-block";
+
+    }
+
+    else {
+
+        resolveButton.style.display =
+            "none";
+
+        dismissButton.style.display =
+            "none";
+
+    }
+
+
+    document
+        .getElementById(
+            "conflictModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal() {
+
+    document
+        .getElementById(
+            "conflictModal"
+        )
+        .classList.remove(
+            "show"
+        );
+
+
+    currentConflictId =
+        null;
+
+}
+
+
+/* =====================================================
+   RESOLVE CONFLICT
+===================================================== */
+
+async function resolveCurrentConflict() {
+
+    if (
+        !currentConflictId
+    ) {
+
+        return;
+
+    }
+
+
+    const conflict =
+        conflicts.find(
+            c =>
+                c.id ===
+                currentConflictId
+        );
+
+
+    if (!conflict) {
+
+        return;
+
+    }
+
+
+    if (
+        !await customConfirm(
+            "Are you sure you want to mark this conflict as resolved?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const note =
+        prompt(
+            "Resolution note (optional):",
+            ""
+        );
+
+
+    const success =
+        await updateConflictStatusOnBackend(
+            conflict.backendId,
+            "resolved",
+            note
+        );
+
+
+    if (!success) {
+
+        customAlert(
+            "Failed to update this conflict. Please try again."
+        );
+
+        return;
+
+    }
+
+
+    conflict.status =
+        "Resolved";
+
+
+    closeModal();
+
+
+    renderConflicts();
+
+
+    customAlert(
+        "Conflict has been resolved successfully."
+    );
+
+}
+
+
+/* =====================================================
+   DISMISS CONFLICT
+===================================================== */
+
+async function dismissCurrentConflict() {
+
+    if (
+        !currentConflictId
+    ) {
+
+        return;
+
+    }
+
+
+    const conflict =
+        conflicts.find(
+            c =>
+                c.id ===
+                currentConflictId
+        );
+
+
+    if (!conflict) {
+
+        return;
+
+    }
+
+
+    if (
+        !await customConfirm(
+            "Are you sure you want to dismiss this conflict?"
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    const note =
+        prompt(
+            "Reason for dismissal (optional):",
+            ""
+        );
+
+
+    const success =
+        await updateConflictStatusOnBackend(
+            conflict.backendId,
+            "rejected",
+            note
+        );
+
+
+    if (!success) {
+
+        customAlert(
+            "Failed to update this conflict. Please try again."
+        );
+
+        return;
+
+    }
+
+
+    conflict.status =
+        "Dismissed";
+
+
+    closeModal();
+
+
+    renderConflicts();
+
+
+    customAlert(
+        "Conflict has been dismissed."
+    );
+
+}
+
+
+/* =====================================================
+   QUICK ACTION
+===================================================== */
+
+async function quickAction(id) {
+
+    const conflict =
+        conflicts.find(
+            c =>
+                c.id === id
+        );
+
+
+    if (!conflict) {
+
+        return;
+
+    }
+
+
+    if (
+        conflict.status ===
+        "Under Review"
+    ) {
+
+
+        const choice =
+            await customConfirm(
+                "Click OK to resolve this conflict.\n\nClick Cancel to dismiss it."
+            );
+
+
+        const newStatus =
+            choice ? "resolved" : "rejected";
+
+
+        const success =
+            await updateConflictStatusOnBackend(
+                conflict.backendId,
+                newStatus,
+                null
+            );
+
+
+        if (!success) {
+
+            customAlert(
+                "Failed to update this conflict. Please try again."
+            );
+
+            return;
+
+        }
+
+
+        conflict.status =
+            choice ? "Resolved" : "Dismissed";
+
+
+        renderConflicts();
+
+    }
+
+    else {
+
+        viewConflict(id);
+
+    }
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        renderConflicts
+    );
+
+
+/* =====================================================
+   SORT
+===================================================== */
+
+document
+    .getElementById(
+        "sortFilter"
+    )
+    .addEventListener(
+        "change",
+        renderConflicts
+    );
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+document
+    .getElementById(
+        "dateFilter"
+    )
+    .addEventListener(
+        "change",
+        function () {
+
+            const customInput =
+                document.getElementById("customDateFilter");
+
+            if (this.value === "custom") {
+
+                customInput.style.display = "inline-block";
+
+                if (customInput.value) {
+                    renderConflicts();
+                }
+
+            } else {
+
+                customInput.style.display = "none";
+                renderConflicts();
+
+            }
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "customDateFilter"
+    )
+    .addEventListener(
+        "change",
+        renderConflicts
+    );
+
+
+/* =====================================================
+   RESET FILTERS
+===================================================== */
+
+function resetFilters() {
+
+    document
+        .getElementById(
+            "searchInput"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "dateFilter"
+        )
+        .value =
+        "all";
+
+
+    document
+        .getElementById(
+            "customDateFilter"
+        )
+        .value = "";
+
+    document
+        .getElementById(
+            "customDateFilter"
+        )
+        .style.display = "none";
+
+
+    document
+        .getElementById(
+            "sortFilter"
+        )
+        .value =
+        "newest";
+
+
+    renderConflicts();
+
+}
+
+
+/* =====================================================
+   MODAL OUTSIDE CLICK
+===================================================== */
+
+document
+    .getElementById(
+        "conflictModal"
+    )
+    .addEventListener(
+        "click",
+        event => {
+
+            if (
+                event.target.id ===
+                "conflictModal"
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout() {
+
+    const confirmed =
+        await customConfirm("Are you sure you want to logout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+
+    localStorage.removeItem(
+        "adminLoggedIn"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+function updateHeaderNotificationBadge() {
+
+    let userId = null;
+
+    try {
+        const raw = sessionStorage.getItem("user");
+        const parsed = raw ? JSON.parse(raw) : null;
+        userId = parsed && parsed.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) return;
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const badge = document.getElementById("headerNotificationBadge");
+            if (!badge) return;
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = "flex";
+            } else {
+                badge.style.display = "none";
+            }
+
+        })
+        .catch(error => console.error("Unable to load notification count:", error));
+
+}
+
+updateHeaderNotificationBadge();
+
+
+loadConflicts();
+
+</script>
+
+
+
+<!-- =========================================================
+     CUSTOM CONFIRM / ALERT DIALOG
+     Replaces the native browser confirm()/alert() popups with
+     a styled in-app dialog consistent with the rest of the UI.
+========================================================= -->
+
+<div
+    id="customDialogOverlay"
+    style="display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;"
+>
+
+    <div
+        style="background:#fff;border-radius:16px;padding:26px 28px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);"
+    >
+
+        <div
+            id="customDialogIcon"
+            style="width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin-bottom:16px;"
+        >
+            !
+        </div>
+
+        <div
+            id="customDialogTitle"
+            style="font-size:16px;font-weight:700;color:#172033;margin-bottom:8px;"
+        >
+        </div>
+
+        <div
+            id="customDialogMessage"
+            style="font-size:13px;color:#536274;line-height:1.55;margin-bottom:22px;white-space:pre-line;"
+        >
+        </div>
+
+        <div
+            id="customDialogButtons"
+            style="display:flex;gap:10px;justify-content:flex-end;"
+        >
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   CUSTOM CONFIRM / ALERT (replaces window.confirm / window.alert)
+========================================================= */
+
+function customConfirm(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Please Confirm";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "?";
+        icon.style.background = "#fff0e5";
+        icon.style.color = "#e86600";
+
+        buttons.innerHTML = "";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.type = "button";
+        cancelBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:1px solid #dde3e0;background:#fff;color:#536274;font-weight:600;cursor:pointer;font-size:13px;";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish(result) {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") finish(false);
+            if (e.key === "Enter") finish(true);
+        }
+
+        cancelBtn.onclick = () => finish(false);
+        okBtn.onclick = () => finish(true);
+
+        buttons.appendChild(cancelBtn);
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+function customAlert(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Notice";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "i";
+        icon.style.background = "#eaf1ff";
+        icon.style.color = "#2469e9";
+
+        buttons.innerHTML = "";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 22px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish() {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve();
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape" || e.key === "Enter") finish();
+        }
+
+        okBtn.onclick = finish;
+
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+</body>
+
+</html>

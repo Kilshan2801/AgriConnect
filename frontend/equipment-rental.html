@@ -1,0 +1,2799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equipment Rental - AgriConnect</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f4f7f5;color:#172033}
+button,input,select{font-family:inherit}
+
+.dashboard{min-height:100vh;display:flex}
+
+.sidebar{
+    min-width: 255px;
+
+    position:fixed;left:0;top:0;bottom:0;width:255px;
+    background:linear-gradient(180deg,#087b38 0%,#075f2e 100%);
+    color:#fff;z-index:100;overflow-y:auto
+}
+.sidebar-logo {
+    height: 86px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.sidebar-logo img {
+    width: 160px;
+    height: auto;
+    max-height: 62px;
+    object-fit: contain;
+    display: block;
+}
+.nav-item{
+    display:flex;align-items:center;gap:12px;height:45px;padding:0 12px;
+    margin-bottom:4px;border-radius:9px;color:#fff;text-decoration:none;
+    font-size:15px;font-weight:600;transition:.2s
+}
+.nav-item:hover{background:rgba(0,0,0,.15)}
+.nav-item.active{
+    background:#05632f;border-left:4px solid #fff;padding-left:14px
+}
+.nav-icon{width:28px;text-align:center;font-size:20px}
+.nav-text{white-space:nowrap}
+.notification-count{
+    margin-left:auto;background:#25b653;color:#fff;min-width:28px;height:28px;
+    display:flex;align-items:center;justify-content:center;border-radius:50%;font-size:12px
+}
+.sidebar-bottom{padding:0 18px 25px}
+.sidebar-divider{height:1px;background:rgba(255,255,255,.18);margin:8px 10px 18px}
+
+.main-content{
+    margin-left:255px;width:calc(100% - 255px);min-height:100vh;
+    display:flex;flex-direction:column
+}
+.header{
+    height:78px;min-height:78px;background:#fff;border-bottom:1px solid #e0e5e2;
+    display:flex;align-items:center;justify-content:space-between;padding:0 28px
+}
+.header-left{display:flex;align-items:center;gap:15px}
+.mobile-menu{display:none;border:0;background:#087b38;color:#fff;width:40px;height:40px;border-radius:7px;font-size:20px}
+.welcome-section h1{font-size:29px;font-weight:500;color:#111827}
+.welcome-section h1 span{color:#149447;font-weight:700}
+.welcome-section p{margin-top:5px;color:#64748b;font-size:15px}
+
+.header-right{display:flex;align-items:center;gap:20px}
+.header-notification{
+    position:relative;width:40px;height:40px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:24px
+}
+.header-badge{
+    position:absolute;right:-1px;top:0;width:20px;height:20px;border-radius:50%;
+    background:#21ae4d;color:#fff;font-size:10px;font-weight:bold;
+    display:flex;align-items:center;justify-content:center
+}
+.profile{
+    position:relative;display:flex;align-items:center;gap:10px;cursor:pointer;
+    padding:5px 8px;border-radius:10px
+}
+.profile:hover{background:#f4f7f5}
+.profile-picture{
+    font-size: 17px;
+
+    width:43px;height:43px;border-radius:50%;object-fit:cover;
+    border:2px solid #d7e9dc;background:#e9f4ec
+}
+.profile-info{line-height:1.25}
+.profile-name{font-size:16px;font-weight:700;color:#111}
+.profile-role{font-size:13px;color:#149447;margin-top:3px}
+.profile-arrow{font-size:12px;color:#555;margin-left:3px}
+
+.profile-dropdown{
+    display:none;position:absolute;right:0;top:62px;width:255px;background:#fff;
+    border:1px solid #dfe6e1;border-radius:13px;box-shadow:0 10px 30px rgba(0,0,0,.13);
+    z-index:300;overflow:hidden;padding:14px
+}
+.profile.open .profile-dropdown{display:block}
+.dropdown-title{
+    color:#6b7280;font-size:12px;font-weight:700;text-transform:uppercase;
+    padding:6px 10px 10px
+}
+.dropdown-role{
+    width:100%;border:0;background:#fff;display:flex;align-items:center;gap:12px;
+    padding:12px;border-radius:9px;font-size:15px;color:#27303b;cursor:pointer;text-align:left
+}
+.dropdown-role:hover{background:#f2f7f3}
+.dropdown-role.current{background:#e5f5ea;color:#087b38;font-weight:700}
+.role-check{margin-left:auto;font-size:19px;color:#149447;font-weight:700}
+
+.page-content{padding:28px 38px 35px;flex:1}
+.page-heading{margin-bottom:20px}
+.page-heading h2{font-size:28px;margin-bottom:5px}
+.page-heading p{font-size:14px;color:#64748b}
+
+.search-panel{
+    background:#fff;border:1px solid #dfe6e1;border-radius:13px;padding:18px;
+    box-shadow:0 2px 8px rgba(0,0,0,.03);margin-bottom:28px
+}
+.search-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.search-title{font-size:18px;font-weight:700;color:#222}
+.search-subtitle{font-size:12px;color:#7c857f;margin-top:4px}
+.search-type{
+    padding:10px 13px;border:1px solid #ccd6cf;border-radius:8px;background:#fff;
+    color:#333;font-size:12px;outline:none
+}
+.search-main{display:flex;gap:9px}
+.search-input-wrapper{flex:1;position:relative}
+.search-input{
+    width:100%;height:47px;padding:12px 105px 12px 46px;
+    border:1px solid #d5ddd7;border-radius:9px;font-size:14px;outline:none
+}
+.search-input:focus{border-color:#2e8b3a}
+.search-icon{position:absolute;left:17px;top:50%;transform:translateY(-50%);font-size:20px;color:#7d877f}
+.search-tools{
+    position:absolute;right:7px;top:50%;transform:translateY(-50%);
+    display:flex;gap:4px
+}
+.search-tool{
+    width:36px;height:34px;border:0;background:#f1f6f2;border-radius:7px;
+    cursor:pointer;font-size:16px
+}
+.search-tool:hover{background:#e2eee5}
+.search-tool.active{background:#d9efdf}
+.search-button{
+    border:0;background:#2e8b3a;color:#fff;border-radius:9px;padding:0 25px;
+    font-size:13px;font-weight:700;cursor:pointer
+}
+.search-button:hover{background:#256d2e}
+
+.suggestions-box{
+    display:none;position:relative;margin-top:5px;background:#fff;
+    border:1px solid #dfe6e1;border-radius:8px;box-shadow:0 6px 18px rgba(0,0,0,.1);
+    overflow:hidden;z-index:20
+}
+.suggestions-box.show{display:block}
+.suggestion-item{
+    padding:11px 14px;display:flex;gap:10px;align-items:center;cursor:pointer
+}
+.suggestion-item:hover{background:#f4f8f5}
+.suggestion-icon{width:30px;text-align:center}
+
+.section{margin-bottom:30px}
+.section-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:13px}
+.section-heading h3{font-size:21px}
+.section-heading p{font-size:12px;color:#718078;margin-top:4px}
+.view-all{
+    border:1px solid #9bcca9;background:#fff;color:#14883e;border-radius:8px;
+    padding:8px 15px;font-size:12px;font-weight:700;cursor:pointer
+}
+.view-all:hover{background:#eef8f1}
+
+.provider-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:18px
+}
+.provider-card{
+    background:#fff;border:1px solid #dfe6e1;border-radius:12px;padding:18px;
+    box-shadow:0 2px 7px rgba(0,0,0,.03)
+}
+.provider-top{display:flex;align-items:center;gap:12px}
+.provider-logo{
+    width:48px;height:48px;border-radius:50%;background:#e7f5eb;color:#14833b;
+    display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700
+}
+.provider-name{font-size:16px;font-weight:700}
+.provider-location{font-size:11px;color:#718078;margin-top:4px}
+.provider-description{font-size:12px;color:#68756d;line-height:1.5;margin:15px 0}
+.provider-stats{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #edf0ee;padding-top:12px;gap:10px}
+.provider-stat-label{font-size:9px;color:#8a938d;letter-spacing:.4px}
+.provider-stat-value{font-size:13px;font-weight:700;margin-top:3px}
+.provider-view{
+    width:100%;height:38px;margin-top:14px;border:1px solid #2e8b3a;background:#fff;
+    color:#18803d;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer
+}
+.provider-view:hover{background:#eaf6ed}
+
+.rental-list{display:flex;flex-direction:column;gap:10px}
+.rental-card{
+    background:#fff;border:1px solid #dfe6e1;border-radius:11px;padding:14px;
+    display:flex;align-items:center;gap:15px;box-shadow:0 2px 7px rgba(0,0,0,.03)
+}
+.rental-image,.rental-placeholder{
+    width:78px;height:64px;border-radius:8px;object-fit:cover;flex-shrink:0
+}
+.rental-placeholder{
+    background:#eef6f0;display:flex;align-items:center;justify-content:center;font-size:29px
+}
+.rental-main{min-width:190px;flex:1}
+.rental-name{font-size:14px;font-weight:700}
+.rental-provider{font-size:11px;color:#68756d;margin-top:4px}
+.rental-location{font-size:10px;color:#87918a;margin-top:3px}
+.rental-details{display:flex;align-items:center;gap:28px}
+.rental-detail{min-width:82px}
+.rental-detail-label{font-size:9px;color:#8a938d;text-transform:uppercase}
+.rental-detail-value{font-size:11px;font-weight:700;margin-top:4px}
+.status-badge{
+    display:inline-flex;align-items:center;justify-content:center;gap:4px;
+    min-width:75px;padding:7px 10px;border-radius:20px;font-size:10px;font-weight:700
+}
+.status-pending{background:#fff2d8;color:#b27600}
+.status-approved{background:#e4f6e9;color:#18803d}
+.status-active{background:#e2f0fb;color:#2674a8}
+.status-completed{background:#eee8fa;color:#7652a8}
+.status-cancelled{background:#fde8e8;color:#c33c3c}
+.track-button{
+    border:1px solid #2e8b3a;background:#fff;color:#18803d;border-radius:6px;
+    padding:6px 9px;font-size:9px;font-weight:700;cursor:pointer
+}
+
+.empty-state{
+    min-height:150px;background:#fff;border:1px solid #dfe6e1;border-radius:12px;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:25px;color:#222
+}
+.empty-icon{font-size:40px;margin-bottom:9px}
+.empty-state h3{font-size:17px}
+.empty-state p{font-size:12px;color:#718078;margin-top:5px}
+
+.modal-overlay{
+    display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);
+    z-index:500;align-items:center;justify-content:center;padding:20px
+}
+.modal-overlay.show{display:flex}
+.modal{
+    width:min(650px,100%);max-height:90vh;overflow-y:auto;background:#fff;
+    border-radius:14px;box-shadow:0 20px 50px rgba(0,0,0,.25)
+}
+.modal-header{
+    display:flex;align-items:center;justify-content:space-between;padding:17px 20px;
+    border-bottom:1px solid #e6ebe8
+}
+.modal-header h3{font-size:18px}
+.close-modal{
+    width:32px;height:32px;border:0;background:#f1f4f2;border-radius:50%;
+    font-size:20px;cursor:pointer
+}
+.modal-body{padding:20px}
+.provider-detail-head{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.provider-detail-logo{
+    width:58px;height:58px;border-radius:50%;background:#e7f5eb;color:#14833b;
+    display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700
+}
+.detail-box{background:#f5faf6;border-radius:10px;padding:14px;margin-bottom:12px}
+.detail-row{display:flex;justify-content:space-between;gap:20px;padding:7px 0;font-size:12px}
+.detail-row span:first-child{color:#718078}
+.detail-row span:last-child{font-weight:700;text-align:right}
+.equipment-list{border:1px solid #e1e8e3;border-radius:9px;overflow:hidden}
+.equipment-row{padding:12px;border-bottom:1px solid #e8edea;display:flex;justify-content:space-between;gap:10px}
+.equipment-row:last-child{border-bottom:0}
+.modal-footer{padding:15px 20px;border-top:1px solid #e6ebe8;text-align:right}
+.primary-button{
+    border:0;background:#2e8b3a;color:#fff;padding:10px 18px;border-radius:8px;
+    cursor:pointer;font-weight:700;font-size:12px
+}
+
+.image-info{
+    display:none;margin-top:10px;padding:10px;background:#f1f7f2;border-radius:7px;
+    font-size:11px;color:#56705d
+}
+.toast{
+    position:fixed;right:25px;top:25px;min-width:300px;background:#fff;
+    border-left:5px solid #2e8b3a;border-radius:9px;box-shadow:0 8px 25px rgba(0,0,0,.15);
+    padding:14px 17px;z-index:1000;display:flex;gap:10px;align-items:center;
+    opacity:0;transform:translateX(120%);transition:.3s
+}
+.toast.show{opacity:1;transform:translateX(0)}
+.toast-icon{
+    width:32px;height:32px;border-radius:50%;background:#e7f6eb;color:#20823c;
+    display:flex;align-items:center;justify-content:center;font-weight:bold
+}
+.toast-content{flex:1}
+.toast-title{font-size:13px;font-weight:bold}
+.toast-message{margin-top:3px;font-size:10px;color:#777}
+
+.footer{
+    left: 255px;
+
+    min-height:42px;background:#075e31;color:#d8e8dc;display:flex;align-items:center;
+    justify-content:center;gap:14px;font-size:10px
+}
+.footer a{color:#9bd7ad;text-decoration:none}
+
+@media(max-width:1100px){
+    .sidebar{width:245px}.main-content{margin-left:245px;width:calc(100% - 245px)}
+    .provider-grid{grid-template-columns:repeat(2,1fr)}
+    .rental-details{gap:15px}
+}
+@media(max-width:900px){
+    .sidebar{transform:translateX(-100%);transition:.25s}
+    .sidebar.open{transform:translateX(0)}
+    .main-content{margin-left:0;width:100%}
+    .mobile-menu{display:block}
+    .rental-card{flex-wrap:wrap}
+    .rental-details{width:100%;justify-content:space-between}
+}
+@media(max-width:700px){
+    .page-content{padding:18px 15px}.header{padding:15px 18px}
+    .profile-info{display:none}.provider-grid{grid-template-columns:1fr}
+    .search-top{align-items:flex-start;flex-direction:column;gap:10px}
+    .search-main{flex-direction:column}.search-button{height:42px}
+    .rental-details{flex-wrap:wrap}.toast{left:15px;right:15px;min-width:auto}
+}
+
+.messages-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+        <img src="assets/agriconnect-logo-white.png" alt="AgriConnect"
+             onerror="this.style.display='none'">
+    </div>
+
+    <nav class="sidebar-nav">
+        <a href="farmer-dashboard.html" class="nav-item">
+            <span class="nav-icon">▦</span><span class="nav-text">Dashboard</span>
+        </a>
+        <a href="my-crops.html" class="nav-item">
+            <span class="nav-icon">🌿</span><span class="nav-text">My Crops</span>
+        </a>
+        <a href="orders.html" class="nav-item">
+            <span class="nav-icon">🛒</span><span class="nav-text">Orders</span>
+        </a>
+        <a href="equipment-rental.html" class="nav-item active">
+            <span class="nav-icon">🚜</span><span class="nav-text">Equipment Rental</span>
+        </a>
+        <a href="consultations.html" class="nav-item">
+            <span class="nav-icon">👨‍🌾</span><span class="nav-text">Consultations</span>
+        </a>
+        <a href="messages.html" class="nav-item">
+            <span class="nav-icon">💬</span><span class="nav-text">Messages</span>
+
+                <span class="messages-badge" id="messagesBadge" style="display:none;">0</span>
+        </a>
+        <a href="report-issues.html" class="nav-item">
+            <span class="nav-icon">⚠️</span><span class="nav-text">Report Issues</span>
+        </a>
+        <a href="calendar.html" class="nav-item">
+            <span class="nav-icon">📅</span><span class="nav-text">Calendar</span>
+        </a>
+        <a href="notifications.html" class="nav-item">
+            <span class="nav-icon">🔔</span><span class="nav-text">Notifications</span>
+            <span class="notification-count">0</span>
+        </a>
+        <a href="history.html" class="nav-item">
+            <span class="nav-icon">◷</span><span class="nav-text">History</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-bottom">
+        <div class="sidebar-divider"></div>
+        <a href="rental-help-support.html" class="nav-item" onclick="showToast('Help & Support is available from AgriConnect.');return false;">
+            <span class="nav-icon">?</span><span class="nav-text">Help &amp; Support</span>
+        </a>
+        <a href="rental-settings.html" class="nav-item" onclick="showToast('Settings will be available soon.');return false;">
+            <span class="nav-icon">⚙</span><span class="nav-text">Settings</span>
+        </a>
+        <a href="#" class="nav-item" id="logoutButton">
+            <span class="nav-icon">↪</span><span class="nav-text">Logout</span>
+        </a>
+    </div>
+</aside>
+
+<main class="main-content">
+
+<header class="header">
+    <div class="header-left">
+        <button class="mobile-menu" id="mobileMenu" type="button">☰</button>
+        <div class="welcome-section">
+            <h1>Welcome back, <span id="userName">User</span>!</h1>
+            <p>Find and rent agricultural machinery.</p>
+        </div>
+    </div>
+
+    <div class="header-right">
+        <div class="header-notification" onclick="openNotifications()">
+            🔔<span class="header-badge">0</span>
+        </div>
+
+        <div class="profile" id="profile">
+            <img src="https://ui-avatars.com/api/?name=Farmer&background=e9f4ec&color=17833c"
+                 alt="Profile" class="profile-picture" id="profilePicture">
+            <div class="profile-info">
+                <div class="profile-name" id="profileName">Farmer</div>
+                <div class="profile-role">Farmer</div>
+            </div>
+            <span class="profile-arrow">▼</span>
+
+            <div class="profile-dropdown">
+                <div class="dropdown-title">Switch Role</div>
+                <div id="roleOptions"></div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<section class="page-content">
+
+    <div class="page-heading">
+        <h2>Equipment Rental</h2>
+        <p>Discover machinery and rental companies available through AgriConnect.</p>
+    </div>
+
+    <div class="search-panel">
+        <div class="search-top">
+            <div>
+                <div class="search-title">Find Equipment or Rental Companies</div>
+                <div class="search-subtitle">Search by machinery or registered company/rental name.</div>
+            </div>
+
+            <select class="search-type" id="searchType">
+                <option value="machinery">Machinery / Equipment</option>
+                <option value="company">Company / Rental Name</option>
+            </select>
+        </div>
+
+        <div class="search-main">
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" id="searchInput"
+                       placeholder="Search machinery..." autocomplete="off">
+
+                <div class="search-tools">
+                    <button type="button" class="search-tool" id="voiceButton" title="Voice search">🎤</button>
+                    <button type="button" class="search-tool" id="imageButton" title="Search by machinery image">📷</button>
+                </div>
+
+                <input type="file" id="imageInput" accept="image/*" hidden>
+            </div>
+
+            <select class="search-type" id="districtFilter" style="max-width:180px;">
+                <option value="">All Districts</option>
+                <option value="Ampara">Ampara</option>
+                <option value="Anuradhapura">Anuradhapura</option>
+                <option value="Badulla">Badulla</option>
+                <option value="Batticaloa">Batticaloa</option>
+                <option value="Colombo">Colombo</option>
+                <option value="Galle">Galle</option>
+                <option value="Gampaha">Gampaha</option>
+                <option value="Hambantota">Hambantota</option>
+                <option value="Jaffna">Jaffna</option>
+                <option value="Kalutara">Kalutara</option>
+                <option value="Kandy">Kandy</option>
+                <option value="Kegalle">Kegalle</option>
+                <option value="Kilinochchi">Kilinochchi</option>
+                <option value="Kurunegala">Kurunegala</option>
+                <option value="Mannar">Mannar</option>
+                <option value="Matale">Matale</option>
+                <option value="Matara">Matara</option>
+                <option value="Monaragala">Monaragala</option>
+                <option value="Mullaitivu">Mullaitivu</option>
+                <option value="Nuwara Eliya">Nuwara Eliya</option>
+                <option value="Polonnaruwa">Polonnaruwa</option>
+                <option value="Puttalam">Puttalam</option>
+                <option value="Ratnapura">Ratnapura</option>
+                <option value="Trincomalee">Trincomalee</option>
+                <option value="Vavuniya">Vavuniya</option>
+            </select>
+
+            <button class="search-button" id="searchButton" type="button">Search</button>
+        </div>
+
+        <div class="suggestions-box" id="suggestionsBox"></div>
+        <div class="image-info" id="imageSearchInfo"></div>
+    </div>
+
+    <section class="section">
+        <div class="section-header">
+            <div class="section-heading">
+                <h3>Recommended Rental Companies</h3>
+                <p>Explore registered equipment providers available on AgriConnect.</p>
+            </div>
+            <button class="view-all" type="button" onclick="showAllProviders()">View All</button>
+        </div>
+
+        <div class="provider-grid" id="recommendedProviders"></div>
+    </section>
+
+    <section class="section" id="resultsSection" style="display:none;">
+        <div class="section-header">
+            <div class="section-heading">
+                <h3 id="resultsTitle">Search Results</h3>
+                <p id="resultsSubtitle"></p>
+            </div>
+            <button class="view-all" type="button" onclick="clearSearchResults()">Clear</button>
+        </div>
+        <div id="resultsContainer"></div>
+    </section>
+
+    <section class="section my-rentals-section">
+        <div class="section-header">
+            <div class="section-heading">
+                <h3>My Rentals</h3>
+                <p>Track equipment you have requested or currently rented.</p>
+            </div>
+        </div>
+
+        <div class="rental-list" id="myRentals"></div>
+    </section>
+
+</section>
+
+<footer class="footer">
+    <span>© 2026 AgriConnect. All Rights Reserved</span>
+    <span>|</span><a href="#">Privacy Policy</a>
+    <span>|</span><a href="#">Terms of Service</a>
+</footer>
+
+</main>
+</div>
+
+<div class="modal-overlay" id="providerModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Rental Provider</h3>
+            <button class="close-modal" onclick="closeProviderModal()" type="button">×</button>
+        </div>
+        <div class="modal-body" id="providerModalBody"></div>
+        <div class="modal-footer">
+            <button class="primary-button" onclick="closeProviderModal()" type="button">Close</button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="rentModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Request Equipment Rental</h3>
+            <button class="close-modal" onclick="closeRentModal()" type="button">×</button>
+        </div>
+        <div class="modal-body">
+            <div id="rentModalBody"></div>
+            <div class="detail-box">
+                <div class="detail-row">
+                    <span>Start Date</span>
+                    <input id="rentStartDate" type="date">
+                </div>
+                <div class="detail-row">
+                    <span>End Date</span>
+                    <input id="rentEndDate" type="date">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button class="primary-button" id="submitRentalButton" onclick="submitRentalRequest()" type="button">
+                Request Rental
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-overlay" id="trackingModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Rental Tracking</h3>
+            <button class="close-modal" onclick="closeTracking()" type="button">×</button>
+        </div>
+        <div class="modal-body" id="trackingModalBody"></div>
+        <div class="modal-footer">
+            <button class="primary-button" onclick="closeTracking()" type="button">Close</button>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast">
+    <div class="toast-icon">✓</div>
+    <div class="toast-content">
+        <div class="toast-title">AgriConnect</div>
+        <div class="toast-message" id="toastMessage">Done</div>
+    </div>
+</div>
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+const API_BASE_URL = "http://localhost:5000/api";
+
+let user = null;
+try {
+    user = JSON.parse(sessionStorage.getItem("user") || "null");
+} catch(e) {
+    user = null;
+}
+if (!user) {
+    try {
+        user = JSON.parse(sessionStorage.getItem("loggedInUser") || "null");
+    } catch(e) {
+        user = null;
+    }
+}
+
+let currentRole = "farmer";
+let recommendedProviders = [];
+let allProviders = [];
+let searchResultProviders = [];
+let myRentals = [];
+let selectedEquipment = null;
+let currentProvider = null;
+let searchTimer = null;
+
+const roleNames = {
+    farmer:"Farmer",
+    buyer:"Buyer",
+    expert:"Agricultural Expert",
+    equipment_provider:"Equipment Provider"
+};
+
+const roleIcons = {
+    farmer:"🌱",
+    buyer:"🛒",
+    expert:"👨‍🌾",
+    equipment_provider:"🚜"
+};
+
+/* ---------------------------------------------------------
+   SAMPLE DATA
+   These are fallback/demo records. Real backend records
+   are always preferred when the API returns data.
+--------------------------------------------------------- */
+const sampleProviders = [
+    {
+        provider_id:9001,
+        business_name:"GreenField Equipment",
+        district:"Jaffna",
+        business_description:"Reliable agricultural machinery and equipment rental services for local farmers.",
+        equipment_count:8,
+        phone:"077 123 4567",
+        email:"greenfield@example.com",
+        equipment:[
+            {equipment_id:9101,name:"Tractor - Mahindra 575 DI",spec:"75 HP, 2WD",price:3000,available_count:3},
+            {equipment_id:9102,name:"Rotavator - 6 Feet",spec:"Heavy Duty",price:2500,available_count:2}
+        ]
+    },
+    {
+        provider_id:9002,
+        business_name:"AgroMach Solutions",
+        district:"Kilinochchi",
+        business_description:"Agricultural machinery rental provider offering tractors, tillers and harvesting equipment.",
+        equipment_count:12,
+        phone:"071 234 5678",
+        email:"agromach@example.com",
+        equipment:[
+            {equipment_id:9201,name:"Power Weeder - 7 HP",spec:"4 Stroke Engine",price:2000,available_count:4},
+            {equipment_id:9202,name:"Thresher - Multi Crop",spec:"High Efficiency",price:2500,available_count:2}
+        ]
+    },
+    {
+        provider_id:9003,
+        business_name:"Northern Agro Rentals",
+        district:"Vavuniya",
+        business_description:"Affordable equipment rentals with flexible rental periods for farming activities.",
+        equipment_count:6,
+        phone:"076 345 6789",
+        email:"northernagro@example.com",
+        equipment:[
+            {equipment_id:9301,name:"Water Pump - 5 HP",spec:"High Discharge",price:1500,available_count:5},
+            {equipment_id:9302,name:"Seed Drill - 11 Tynes",spec:"Seed & Fertilizer",price:1800,available_count:3}
+        ]
+    }
+];
+
+const sampleRentals = [
+    {
+        rental_id:8001,
+        equipment_id:9101,
+        equipment_name:"Tractor - Mahindra 575 DI",
+        business_name:"GreenField Equipment",
+        provider_location:"Jaffna",
+        start_date:"2026-09-05",
+        end_date:"2026-09-07",
+        total_amount:6000,
+        status:"approved"
+    },
+    {
+        rental_id:8002,
+        equipment_id:9201,
+        equipment_name:"Power Weeder - 7 HP",
+        business_name:"AgroMach Solutions",
+        provider_location:"Kilinochchi",
+        start_date:"2026-09-10",
+        end_date:"2026-09-12",
+        total_amount:4000,
+        status:"active"
+    },
+    {
+        rental_id:8003,
+        equipment_id:9301,
+        equipment_name:"Water Pump - 5 HP",
+        business_name:"Northern Agro Rentals",
+        provider_location:"Vavuniya",
+        start_date:"2026-09-15",
+        end_date:"2026-09-16",
+        total_amount:3000,
+        status:"pending"
+    }
+];
+
+/* ---------------------------------------------------------
+   USER / ROLE
+--------------------------------------------------------- */
+function getUserId() {
+    if (!user) return null;
+    return user.id || user.user_id || user.userId || null;
+}
+
+function getUserName() {
+    if (!user) return "Farmer";
+    const fullName = `${user.first_name || user.firstName || ""} ${user.last_name || user.lastName || ""}`.trim();
+    return fullName || user.name || user.username || "User";
+}
+
+function normalizeRole(role) {
+    const value = String(role || "").trim().toLowerCase();
+    if (value === "farmer") return "farmer";
+    if (value === "buyer" || value === "buyer/user") return "buyer";
+    if (value === "expert" || value === "agricultural expert" || value === "agriculture expert") return "expert";
+    if (value === "equipment provider" || value === "equipmentprovider" || value === "equipment_provider" || value === "provider") return "equipment_provider";
+    return value;
+}
+
+function getAccountRoles() {
+    let roles = [];
+
+    if (user && Array.isArray(user.roles)) roles = [...user.roles];
+    else if (user && Array.isArray(user.registeredRoles)) roles = [...user.registeredRoles];
+    else if (user && user.role) roles = Array.isArray(user.role) ? [...user.role] : [user.role];
+
+    roles = roles.map(normalizeRole).filter(Boolean);
+
+    /*
+       A farmer account can also act as a buyer in AgriConnect.
+       This follows the role-switch behaviour already used by
+       the farmer dashboard.
+    */
+    if (roles.includes("farmer") && !roles.includes("buyer")) roles.push("buyer");
+
+    if (!roles.length) roles = ["farmer"];
+
+    return [...new Set(roles)];
+}
+
+function displayUser() {
+    const name = getUserName();
+    document.getElementById("profileName").textContent = name;
+
+    const welcomeNameEl = document.getElementById("userName");
+    if (welcomeNameEl) welcomeNameEl.textContent = name;
+
+    document.getElementById("profilePicture").src =
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=e9f4ec&color=17833c`;
+}
+
+function loadRoles() {
+    const options = document.getElementById("roleOptions");
+    options.innerHTML = "";
+
+    const roles = getAccountRoles();
+
+    if (!roles.includes("farmer")) roles.unshift("farmer");
+
+    roles.forEach(role => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "dropdown-role" + (role === currentRole ? " current" : "");
+        button.innerHTML = `
+            <span>${roleIcons[role] || "👤"}</span>
+            <span>${escapeHTML(roleNames[role] || role)}</span>
+            ${role === currentRole ? '<span class="role-check">✓</span>' : ""}
+        `;
+        button.onclick = function(event) {
+            event.stopPropagation();
+            switchRole(role);
+        };
+        options.appendChild(button);
+    });
+
+    moveCurrentRoleToFront(options);
+
+}
+
+function switchRole(role) {
+    if (!getAccountRoles().includes(role) && role !== "farmer") {
+        showToast("This role is not registered for this account.");
+        return;
+    }
+
+    sessionStorage.setItem("selectedRole", role);
+    currentRole = role;
+
+    if (role === "farmer") window.location.href = "farmer-dashboard.html";
+    else if (role === "buyer") window.location.href = "buyer-dashboard.html";
+    else if (role === "expert") window.location.href = "expert-dashboard.html";
+    else if (role === "equipment_provider") window.location.href = "rental-dashboard.html";
+}
+
+/* ---------------------------------------------------------
+   PROVIDERS
+--------------------------------------------------------- */
+async function loadRecommendedProviders() {
+    const container = document.getElementById("recommendedProviders");
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/rentals/providers/recommended`);
+        const data = await response.json();
+
+        if (!response.ok) throw new Error(data.message || "Failed to load providers.");
+
+        recommendedProviders = Array.isArray(data.providers) ? data.providers : [];
+
+        if (!recommendedProviders.length) {
+            recommendedProviders = [...sampleProviders];
+        }
+    } catch(error) {
+        console.warn("Provider API unavailable. Showing sample providers.", error);
+        recommendedProviders = [...sampleProviders];
+    }
+
+    renderRecommendedProviders();
+}
+
+function renderRecommendedProviders() {
+    const container = document.getElementById("recommendedProviders");
+
+    if (!recommendedProviders.length) {
+        container.innerHTML = `
+            <div class="empty-state" style="grid-column:1/-1;">
+                <div class="empty-icon">🚜</div>
+                <h3>No rental companies available</h3>
+                <p>Approved equipment providers with listed machinery will appear here.</p>
+            </div>`;
+        return;
+    }
+
+    container.innerHTML = recommendedProviders.map(createProviderCard).join("");
+}
+
+function createProviderCard(provider) {
+    const name = provider.business_name || "Rental Provider";
+    return `
+        <div class="provider-card">
+            <div class="provider-top">
+                <div class="provider-logo">${escapeHTML(getProviderInitial(name))}</div>
+                <div>
+                    <div class="provider-name">${escapeHTML(name)}</div>
+                    <div class="provider-location">📍 ${escapeHTML(provider.district || "Location not available")}</div>
+                </div>
+            </div>
+
+            <div class="provider-description">
+                ${escapeHTML(provider.business_description || "Agricultural equipment rental provider.")}
+            </div>
+
+            <div class="provider-stats">
+                <div>
+                    <div class="provider-stat-label">EQUIPMENT</div>
+                    <div class="provider-stat-value">${Number(provider.equipment_count || (provider.equipment || []).length || 0)}</div>
+                </div>
+                <div>
+                    <div class="provider-stat-label">LOCATION</div>
+                    <div class="provider-stat-value">${escapeHTML(provider.district || "-")}</div>
+                </div>
+            </div>
+
+            <button class="provider-view" type="button"
+                    onclick="openProviderDetails(${Number(provider.provider_id || 0)})">
+                View Details →
+            </button>
+        </div>`;
+}
+
+async function showAllProviders() {
+    try {
+        let providers = [];
+
+        try {
+            const response = await fetch(`${API_BASE_URL}/rentals/providers`);
+            const data = await response.json();
+            if (response.ok && Array.isArray(data.providers)) providers = data.providers;
+        } catch(e) {}
+
+        if (!providers.length) providers = [...sampleProviders];
+
+        allProviders = providers;
+
+        document.getElementById("resultsSection").style.display = "block";
+        document.getElementById("resultsTitle").textContent = "All Rental Companies";
+        document.getElementById("resultsSubtitle").textContent =
+            `${allProviders.length} approved provider${allProviders.length === 1 ? "" : "s"}`;
+
+        document.getElementById("resultsContainer").innerHTML = `
+            <div class="provider-grid">
+                ${allProviders.map(createProviderCard).join("")}
+            </div>`;
+
+        document.getElementById("resultsSection").scrollIntoView({behavior:"smooth"});
+    } catch(error) {
+        showToast("Unable to load rental companies.");
+    }
+}
+
+function getAvailableMachineCount(item) {
+    if (!item) return 0;
+
+    // If the backend already gives us an explicit available count, trust it.
+    const explicitValue = (
+        item.available_count ??
+        item.available_quantity ??
+        item.available_units ??
+        item.quantity_available ??
+        item.units_available ??
+        item.stock ??
+        item.total_available
+    );
+
+    const explicitCount = Number(explicitValue);
+
+    if (Number.isFinite(explicitCount) && explicitCount >= 0 && explicitValue !== undefined) {
+        return explicitCount;
+    }
+
+    // Otherwise derive it: total quantity minus whatever is in
+    // garage/maintenance minus whatever is currently rented.
+    const total = Number(item.quantity);
+    const garage = Number(item.garage_quantity) || 0;
+    const rentedFromBackend = Number(item.rented_quantity);
+
+    if (Number.isFinite(total) && total > 0) {
+
+        if (Number.isFinite(rentedFromBackend)) {
+            return Math.max(0, total - garage - rentedFromBackend);
+        }
+
+        const status = String(item.availability_status || item.status || "").toLowerCase();
+        const rented = (status === "rented" || status === "in_rent") ? total : 0;
+
+        return Math.max(0, total - garage - rented);
+
+    }
+
+    // No explicit quantity tracking exists in the schema - each
+    // equipment row represents one unit, so derive availability
+    // from its status instead of defaulting to 0.
+    const status = String(item.availability_status || item.status || "").toLowerCase();
+    return status === "available" ? 1 : 0;
+}
+
+async function openProviderDetails(providerId) {
+    currentProvider =
+        allProviders.find(p => Number(p.provider_id) === Number(providerId)) ||
+        recommendedProviders.find(p => Number(p.provider_id) === Number(providerId)) ||
+        searchResultProviders.find(p => Number(p.provider_id) === Number(providerId));
+
+    /*
+       A company search returns provider information but not the provider's
+       equipment list. Fetch the complete provider details when necessary.
+    */
+    if (
+        currentProvider &&
+        (!Array.isArray(currentProvider.equipment) ||
+         !currentProvider.equipment.length)
+    ) {
+        try {
+            const response = await fetch(
+                `${API_BASE_URL}/rentals/providers/${encodeURIComponent(providerId)}`
+            );
+
+            const data = await response.json();
+
+            if (response.ok && data.provider) {
+                currentProvider = {
+                    ...currentProvider,
+                    ...data.provider,
+                    equipment: Array.isArray(data.equipment)
+                        ? data.equipment
+                        : []
+                };
+            }
+        } catch (error) {
+            console.warn(
+                "Unable to load provider equipment:",
+                error
+            );
+        }
+    }
+
+    if (!currentProvider) {
+        showToast("Provider details are not available.");
+        return;
+    }
+
+    const name =
+        currentProvider.business_name ||
+        "Rental Provider";
+
+    const equipment =
+        Array.isArray(currentProvider.equipment)
+            ? currentProvider.equipment
+            : [];
+
+    document.getElementById("providerModalBody").innerHTML = `
+        <div class="provider-detail-head">
+            <div class="provider-detail-logo">
+                ${escapeHTML(getProviderInitial(name))}
+            </div>
+
+            <div>
+                <h3>${escapeHTML(name)}</h3>
+
+                <p style="font-size:11px;color:#718078;margin-top:4px;">
+                    📍 ${escapeHTML(
+                        currentProvider.district ||
+                        "Location unavailable"
+                    )}
+                </p>
+            </div>
+        </div>
+
+        <div class="detail-box">
+
+            <div class="detail-row">
+                <span>Provider ID</span>
+                <span>
+                    #${escapeHTML(String(
+                        currentProvider.provider_id ??
+                        "N/A"
+                    ))}
+                </span>
+            </div>
+
+            <div class="detail-row">
+                <span>Phone</span>
+                <span>
+                    ${escapeHTML(
+                        currentProvider.phone ||
+                        "Not available"
+                    )}
+                </span>
+            </div>
+
+            <div class="detail-row">
+                <span>Email</span>
+                <span>
+                    ${escapeHTML(
+                        currentProvider.email ||
+                        "Not available"
+                    )}
+                </span>
+            </div>
+
+            <div class="detail-row">
+                <span>Equipment</span>
+                <span>
+                    ${Number(
+                        currentProvider.equipment_count ||
+                        equipment.length ||
+                        0
+                    )} listed
+                </span>
+            </div>
+
+            <div class="detail-row">
+                <span>Available Machines</span>
+                <span>
+                    ${equipment.reduce(
+                        (total, item) =>
+                            total +
+                            getAvailableMachineCount(item),
+                        0
+                    )} available
+                </span>
+            </div>
+
+        </div>
+
+        <h4 style="margin:15px 0 9px;">
+            Available Equipment
+        </h4>
+
+        <div class="equipment-list">
+
+            ${
+                (
+                    equipment.length
+                        ? equipment
+                        : [{
+                            name:"Agricultural Machinery",
+                            spec:"Contact provider for details",
+                            price:0
+                        }]
+                )
+                .map(item => `
+
+                    <div class="equipment-row">
+
+                        <div style="display:flex;gap:10px;align-items:flex-start;flex:1;min-width:0;">
+
+                            <img
+                                src="${escapeAttribute(item.image || "")}"
+                                alt="${escapeAttribute(item.name || item.equipment_name || "Equipment")}"
+                                style="width:52px;height:52px;object-fit:cover;border-radius:8px;flex-shrink:0;background:#f1f5f2;"
+                                onerror="this.onerror=null;this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 52 52%22><rect width=%2252%22 height=%2252%22 rx=%228%22 fill=%22%23f1f5f2%22/><text x=%2226%22 y=%2233%22 font-size=%2222%22 text-anchor=%22middle%22>🚜</text></svg>';"
+                            >
+
+                            <div style="min-width:0;">
+
+                                <strong style="font-size:12px;">
+                                    ${escapeHTML(
+                                        item.name ||
+                                        item.equipment_name ||
+                                        "Equipment"
+                                    )}
+                                </strong>
+
+                                <div style="font-size:10px;color:#718078;margin-top:3px;">
+                                    ${escapeHTML(
+                                        item.spec ||
+                                        item.description ||
+                                        "Agricultural equipment"
+                                    )}
+                                </div>
+
+                                <div style="font-size:10px;color:#18803d;font-weight:700;margin-top:4px;">
+                                    ${getAvailableMachineCount(item)}
+                                    machine${
+                                        getAvailableMachineCount(item) === 1
+                                            ? ""
+                                            : "s"
+                                    } available
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div style="text-align:right;">
+
+                            <strong style="font-size:11px;color:#18803d;">
+                                ${
+                                    item.price ||
+                                    item.rental_price
+                                        ? formatCurrency(
+                                            item.price ||
+                                            item.rental_price
+                                          ) + " / day"
+                                        : "Contact"
+                                }
+                            </strong>
+
+                            <br>
+
+                            <button
+                                class="track-button"
+                                style="margin-top:5px;"
+                                onclick="openRentModal(
+                                    ${Number(item.equipment_id || 0)},
+                                    '${escapeAttribute(
+                                        item.name ||
+                                        item.equipment_name ||
+                                        "Equipment"
+                                    )}',
+                                    '${escapeAttribute(name)}',
+                                    '${escapeAttribute(
+                                        currentProvider.district || ""
+                                    )}',
+                                    ${Number(
+                                        item.price ||
+                                        item.rental_price ||
+                                        0
+                                    )},
+                                    ${Number(getAvailableMachineCount(item))}
+                                )"
+                            >
+                                Rent
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `)
+                .join("")
+            }
+
+        </div>`;
+
+    document
+        .getElementById("providerModal")
+        .classList.add("show");
+}
+
+function closeProviderModal() {
+    document.getElementById("providerModal").classList.remove("show");
+}
+
+/* ---------------------------------------------------------
+   RENTAL REQUEST
+--------------------------------------------------------- */
+function openRentModal(equipmentId, name, provider, location, price, availableCount) {
+    selectedEquipment = {
+        equipment_id: equipmentId,
+        equipment_name: name,
+        business_name: provider,
+        provider_location: location,
+        price: price,
+        available_count: Number(availableCount) || 1
+    };
+
+    document.getElementById("rentModalBody").innerHTML = `
+        <div class="detail-box">
+            <div class="detail-row"><span>Equipment</span><span>${escapeHTML(name)}</span></div>
+            <div class="detail-row"><span>Provider</span><span>${escapeHTML(provider)}</span></div>
+            <div class="detail-row"><span>Location</span><span>${escapeHTML(location || "-")}</span></div>
+            <div class="detail-row"><span>Price / Day</span><span>${price ? formatCurrency(price) : "Contact provider"}</span></div>
+        </div>
+        <div class="detail-box" style="margin-top:10px;">
+            <div class="detail-row">
+                <span>Quantity</span>
+                <input id="rentQuantity" type="number" min="1" max="${selectedEquipment.available_count}" step="1" value="1" style="width:80px;text-align:right;">
+            </div>
+            <div class="detail-row" style="font-size:11px;color:#6b7683;">
+                <span></span>
+                <span>Max ${selectedEquipment.available_count} available</span>
+            </div>
+        </div>`;
+
+    document.getElementById("rentStartDate").value = "";
+    document.getElementById("rentEndDate").value = "";
+    updateRentalTotalDisplay();
+
+    const qtyInput = document.getElementById("rentQuantity");
+    qtyInput.addEventListener("input", () => {
+        const raw = Number(qtyInput.value);
+        if (Number.isFinite(raw) && raw > selectedEquipment.available_count) {
+            qtyInput.value = selectedEquipment.available_count;
+        }
+        updateRentalTotalDisplay();
+    });
+
+    const todayStr = new Date().toISOString().split("T")[0];
+
+    // Start/End date inputs are static HTML and persist across modal
+    // opens - clone-and-replace to avoid stacking duplicate listeners.
+    const oldStart = document.getElementById("rentStartDate");
+    const newStart = oldStart.cloneNode(true);
+    oldStart.parentNode.replaceChild(newStart, oldStart);
+    newStart.value = "";
+    newStart.min = todayStr;
+
+    const oldEnd = document.getElementById("rentEndDate");
+    const newEnd = oldEnd.cloneNode(true);
+    oldEnd.parentNode.replaceChild(newEnd, oldEnd);
+    newEnd.value = "";
+    newEnd.min = todayStr;
+    newEnd.disabled = true;
+
+    newStart.addEventListener("change", () => {
+
+        if (newStart.value && newStart.value < todayStr) {
+            showToast("Start date cannot be before today.");
+            newStart.value = todayStr;
+        }
+
+        if (newStart.value) {
+            newEnd.min = newStart.value;
+            newEnd.disabled = false;
+
+            if (newEnd.value && newEnd.value < newStart.value) {
+                newEnd.value = "";
+            }
+        } else {
+            newEnd.disabled = true;
+            newEnd.value = "";
+        }
+
+        updateRentalTotalDisplay();
+    });
+
+    newEnd.addEventListener("change", () => {
+
+        if (newStart.value && newEnd.value && newEnd.value < newStart.value) {
+            showToast("End date cannot be before the start date.");
+            newEnd.value = newStart.value;
+        }
+
+        updateRentalTotalDisplay();
+    });
+
+    document.getElementById("rentModal").classList.add("show");
+}
+
+function updateRentalTotalDisplay() {
+    const existing = document.getElementById("rentTotalRow");
+    if (existing) existing.remove();
+
+    if (!selectedEquipment) return;
+
+    const startValue = document.getElementById("rentStartDate")?.value;
+    const endValue = document.getElementById("rentEndDate")?.value;
+    const qtyInput = document.getElementById("rentQuantity");
+    const quantity = qtyInput ? (Number(qtyInput.value) || 1) : 1;
+
+    if (!startValue || !endValue) return;
+
+    const start = new Date(startValue);
+    const end = new Date(endValue);
+
+    if (isNaN(start) || isNaN(end) || end < start) return;
+
+    const days = Math.floor((end - start) / 86400000) + 1;
+    const price = Number(selectedEquipment.price) || 0;
+    const total = days * quantity * price;
+
+    const detailBox = document.querySelector("#rentModalBody").nextElementSibling;
+    const row = document.createElement("div");
+    row.id = "rentTotalRow";
+    row.className = "detail-row";
+    row.style.cssText = "font-weight:700;font-size:14px;margin-top:6px;border-top:1px solid #e1e6eb;padding-top:8px;";
+    row.innerHTML = `<span>Total Amount</span><span>${formatCurrency(total)} <span style="font-weight:400;font-size:11px;color:#6b7683;">(${days} day${days === 1 ? "" : "s"} × ${quantity})</span></span>`;
+
+    detailBox.parentElement.insertBefore(row, detailBox.nextElementSibling);
+}
+
+function closeRentModal() {
+    document.getElementById("rentModal").classList.remove("show");
+    selectedEquipment = null;
+}
+
+async function submitRentalRequest() {
+    if (!selectedEquipment) return;
+
+    const renterId = getUserId();
+    const startDate = document.getElementById("rentStartDate").value;
+    const endDate = document.getElementById("rentEndDate").value;
+    const quantity = Number(document.getElementById("rentQuantity")?.value) || 1;
+
+    if (!startDate || !endDate) {
+        showToast("Please select the rental dates.");
+        return;
+    }
+
+    const todayForValidation = new Date().toISOString().split("T")[0];
+
+    if (startDate < todayForValidation) {
+        showToast("Start date cannot be before today.");
+        return;
+    }
+
+    if (endDate < startDate) {
+        showToast("End date cannot be before the start date.");
+        return;
+    }
+
+    if (quantity < 1 || quantity > (selectedEquipment.available_count || 1)) {
+        showToast(`Quantity cannot exceed the available amount (${selectedEquipment.available_count || 1}).`);
+        return;
+    }
+
+    const days = Math.floor((new Date(endDate) - new Date(startDate)) / 86400000) + 1;
+    const price = Number(selectedEquipment.price) || 0;
+    const total = days * quantity * price;
+
+    showRentalActionConfirm(
+        "Confirm Rental Request",
+        `Request ${escapeHTML(selectedEquipment.equipment_name || "this equipment")} for ${days} day${days === 1 ? "" : "s"} (${quantity} unit${quantity === 1 ? "" : "s"})? Total: ${formatCurrency(total)}.`,
+        "Request Rental",
+        () => actuallySubmitRentalRequest(renterId, startDate, endDate, quantity)
+    );
+
+}
+
+async function actuallySubmitRentalRequest(renterId, startDate, endDate, quantity) {
+
+    const button = document.getElementById("submitRentalButton");
+    button.disabled = true;
+    button.textContent = "Submitting...";
+
+    try {
+
+        if (!renterId || !selectedEquipment.equipment_id) {
+            throw new Error("Unable to identify your account or the selected equipment. Please refresh and try again.");
+        }
+
+        const response = await fetch(`${API_BASE_URL}/rentals`, {
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify({
+                equipment_id:selectedEquipment.equipment_id,
+                renter_id:renterId,
+                quantity:quantity,
+                start_date:startDate,
+                end_date:endDate
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) throw new Error(data.message || "Failed to submit rental request.");
+
+        closeRentModal();
+        showToast("The rental is Successfully Submitted.");
+        loadMyRentals();
+
+    } catch(error) {
+
+        console.error("Failed to submit rental request:", error);
+        showToast(error.message || "Unable to submit rental request. Please try again.");
+
+    } finally {
+        button.disabled = false;
+        button.textContent = "Request Rental";
+    }
+}
+
+/* ---------------------------------------------------------
+   MY RENTALS
+--------------------------------------------------------- */
+async function loadMyRentals() {
+    const container = document.getElementById("myRentals");
+    const renterId = getUserId();
+
+    try {
+
+        let serverRentals = [];
+
+        if (renterId) {
+            const response = await fetch(`${API_BASE_URL}/rentals/my/${encodeURIComponent(renterId)}`);
+            const data = await response.json();
+
+            if (response.ok && Array.isArray(data.rentals)) {
+                serverRentals = data.rentals;
+            }
+        }
+
+        myRentals = serverRentals;
+
+    } catch(error) {
+
+        console.error("Unable to load rentals:", error);
+        myRentals = [];
+
+    }
+
+    renderMyRentals();
+}
+
+function renderMyRentals() {
+    const container = document.getElementById("myRentals");
+
+    if (!myRentals.length) {
+        container.innerHTML = `
+            <div class="empty-state">
+                <div class="empty-icon">📋</div>
+                <h3>No active rentals</h3>
+                <p>Your pending and accepted rental requests will appear here.</p>
+            </div>`;
+        return;
+    }
+
+    container.innerHTML = myRentals.map(createRentalCard).join("");
+}
+
+function createRentalCard(rental) {
+    const status = String(rental.status || "pending").toLowerCase();
+
+    let statusClass = "status-pending";
+    let statusText = "Pending";
+    let statusIcon = "●";
+    let actionHtml = "";
+
+    if (status === "pending") {
+
+        statusClass = "status-pending";
+        statusText = "Pending";
+        statusIcon = "●";
+
+        actionHtml = `
+            <button class="track-button" style="margin-top:6px;width:100%;background:#fde8e8;color:#c33c3c;border:1px solid #f5c6c6;"
+                    type="button" onclick="cancelRentalRequest(${Number(rental.rental_id || 0)})">
+                Cancel Request
+            </button>`;
+
+    } else if (status === "approved") {
+
+        statusClass = "status-approved";
+        statusText = "Accepted";
+        statusIcon = "✓";
+
+    } else if (status === "delivered") {
+
+        statusClass = "status-active";
+        statusText = "Delivered";
+        statusIcon = "●";
+
+        actionHtml = `
+            <button class="track-button" style="margin-top:6px;width:100%;background:#18803d;color:#fff;border:none;"
+                    type="button" onclick="markRentalReceived(${Number(rental.rental_id || 0)})">
+                Received
+            </button>`;
+
+    } else if (status === "received") {
+
+        statusClass = "status-active";
+        statusText = "Received";
+        statusIcon = "✓";
+
+        actionHtml = `
+            <button class="track-button" style="margin-top:6px;width:100%;"
+                    type="button" onclick="markRentalReturned(${Number(rental.rental_id || 0)})">
+                Return
+            </button>`;
+
+    } else if (status === "returned") {
+
+        statusClass = "status-active";
+        statusText = "Returned";
+        statusIcon = "●";
+
+    } else if (status === "provider_received") {
+
+        statusClass = "status-approved";
+        statusText = "Received Back";
+        statusIcon = "✓";
+
+        actionHtml = `
+            <button class="track-button" style="margin-top:6px;width:100%;background:#18803d;color:#fff;border:none;"
+                    type="button" onclick="markRentalCompletedByFarmer(${Number(rental.rental_id || 0)})">
+                Complete
+            </button>`;
+
+    } else if (status === "rejected") {
+
+        statusClass = "status-cancelled";
+        statusText = "Rejected";
+        statusIcon = "×";
+
+    } else if (["cancelled","canceled"].includes(status)) {
+
+        statusClass = "status-cancelled";
+        statusText = "Cancelled";
+        statusIcon = "×";
+
+    }
+
+    const showTrack = ["approved","delivered","received","returned","provider_received"].includes(status);
+
+    const showMessageButton = ["approved","delivered","received","returned","provider_received","completed"].includes(status);
+
+    return `
+        <div class="rental-card">
+            <div class="rental-placeholder">🚜</div>
+
+            <div class="rental-main">
+                <div class="rental-name">${escapeHTML(rental.equipment_name || "Equipment")}</div>
+                <div class="rental-provider">${escapeHTML(rental.business_name || "Rental Provider")}</div>
+                <div class="rental-location">📍 ${escapeHTML(rental.provider_location || "Location unavailable")}</div>
+            </div>
+
+            <div class="rental-details">
+                <div class="rental-detail">
+                    <div class="rental-detail-label">START</div>
+                    <div class="rental-detail-value">${formatDate(rental.start_date)}</div>
+                </div>
+
+                <div class="rental-detail">
+                    <div class="rental-detail-label">END</div>
+                    <div class="rental-detail-value">${formatDate(rental.end_date)}</div>
+                </div>
+
+                <div class="rental-detail">
+                    <div class="rental-detail-label">TOTAL</div>
+                    <div class="rental-detail-value" style="color:#18813d;">
+                        ${formatCurrency(rental.total_amount)}
+                    </div>
+                </div>
+
+                <div>
+                    <span class="status-badge ${statusClass}">
+                        ${statusIcon} ${statusText}
+                    </span>
+                    ${actionHtml}
+                    ${showMessageButton ? `
+                        <button class="track-button" style="margin-top:6px;width:100%;background:#eaf1ff;color:#2469e9;border:1px solid #cddcf7;"
+                                type="button" onclick="messageProviderForRental(${Number(rental.rental_id || 0)}, ${Number(rental.provider_user_id || 0)})">
+                            💬 Message
+                        </button>` : ""}
+                    ${showTrack ? `
+                        <button class="track-button" style="margin-top:6px;width:100%;"
+                                type="button" onclick="openTracking(${Number(rental.rental_id || 0)})">
+                            Track
+                        </button>` : ""}
+                </div>
+            </div>
+        </div>`;
+}
+
+
+function showRentalActionConfirm(title, text, confirmLabel, onConfirm) {
+
+    const modal = document.getElementById("rentalActionConfirmModal");
+    document.getElementById("rentalConfirmTitle").textContent = title;
+    document.getElementById("rentalConfirmText").textContent = text;
+
+    const okBtn = document.getElementById("rentalConfirmOk");
+    okBtn.textContent = confirmLabel;
+
+    const cancelBtn = document.getElementById("rentalConfirmCancel");
+
+    const newOkBtn = okBtn.cloneNode(true);
+    okBtn.parentNode.replaceChild(newOkBtn, okBtn);
+
+    newOkBtn.onclick = () => {
+        modal.style.display = "none";
+        onConfirm();
+    };
+
+    cancelBtn.onclick = () => {
+        modal.style.display = "none";
+    };
+
+    modal.style.display = "flex";
+
+}
+
+
+async function messageProviderForRental(rentalId, providerUserId) {
+
+    const userId = getUserId();
+
+    if (!userId || !providerUserId) {
+        showToast("Unable to open this conversation right now.");
+        return;
+    }
+
+    try {
+
+        const response = await fetch(`${API_BASE_URL}/messages/conversations/start`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                user_id: userId,
+                other_user_id: providerUserId,
+                context_type: "rental",
+                context_id: rentalId
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success || !data.conversation) {
+            showToast(data.message || "Unable to open this conversation.");
+            return;
+        }
+
+        localStorage.setItem(
+            "selectedFarmerConversation",
+            JSON.stringify({ conversationId: data.conversation.id })
+        );
+
+        window.location.href = "messages.html";
+
+    } catch (error) {
+
+        console.error("Failed to open provider conversation:", error);
+        showToast("Unable to open this conversation right now.");
+
+    }
+
+}
+
+
+async function cancelRentalRequest(rentalId) {
+
+    showRentalActionConfirm(
+        "Cancel Rental Request",
+        "Are you sure you want to cancel this rental request? This cannot be undone.",
+        "Cancel Request",
+        async () => {
+
+            const userId = getUserId();
+
+            try {
+
+                const response = await fetch(`${API_BASE_URL}/rentals/${encodeURIComponent(rentalId)}/status`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ status: "cancelled", renter_id: userId })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    showToast(data.message || "Unable to cancel rental request.");
+                    return;
+                }
+
+                showToast("The rental is Successfully Cancelled.");
+                loadMyRentals();
+
+            } catch (error) {
+
+                console.error("Failed to cancel rental request:", error);
+                showToast("Unable to cancel rental request right now.");
+
+            }
+
+        }
+    );
+
+}
+
+
+async function markRentalReceived(rentalId) {
+    showRentalActionConfirm(
+        "Confirm Receipt",
+        "Are you sure you have received this equipment from the provider?",
+        "Received",
+        () => advanceRentalStatus(rentalId, "received", "The rental is Successfully Received.")
+    );
+}
+
+async function markRentalReturned(rentalId) {
+    showRentalActionConfirm(
+        "Confirm Return",
+        "Are you sure you want to mark this equipment as returned to the provider?",
+        "Return",
+        () => advanceRentalStatus(rentalId, "returned", "The rental is Successfully Returned.")
+    );
+}
+
+async function advanceRentalStatus(rentalId, status, successMessage) {
+
+    try {
+
+        const response = await fetch(`${API_BASE_URL}/rentals/${encodeURIComponent(rentalId)}/status`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            showToast(data.message || "Unable to update rental status.");
+            return;
+        }
+
+        showToast(successMessage);
+        loadMyRentals();
+
+    } catch (error) {
+
+        console.error("Failed to update rental status:", error);
+        showToast("Unable to update rental status right now.");
+
+    }
+
+}
+
+
+async function markRentalCompletedByFarmer(rentalId) {
+
+    showRentalActionConfirm(
+        "Complete Rental",
+        "Are you sure you want to mark this rental as completed on your side?",
+        "Complete",
+        async () => {
+
+            const userId = getUserId();
+
+            if (!userId) {
+                showToast("Logged-in user information could not be found.");
+                return;
+            }
+
+            try {
+
+                const response = await fetch(`${API_BASE_URL}/rentals/${encodeURIComponent(rentalId)}/complete`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: userId })
+                });
+
+                const data = await response.json();
+
+                if (!response.ok || !data.success) {
+                    showToast(data.message || "Unable to complete rental.");
+                    return;
+                }
+
+                showToast("The rental is Successfully Completed.");
+                loadMyRentals();
+
+            } catch (error) {
+
+                console.error("Failed to complete rental:", error);
+                showToast("Unable to complete rental right now.");
+
+            }
+
+        }
+    );
+
+}
+
+function openTracking(rentalId) {
+    const rental = myRentals.find(r => Number(r.rental_id) === Number(rentalId));
+    if (!rental) return;
+
+    document.getElementById("trackingModalBody").innerHTML = `
+        <div class="detail-box">
+            <div class="detail-row"><span>Equipment</span><span>${escapeHTML(rental.equipment_name || "Equipment")}</span></div>
+            <div class="detail-row"><span>Provider</span><span>${escapeHTML(rental.business_name || "Rental Provider")}</span></div>
+            <div class="detail-row"><span>Start</span><span>${formatDate(rental.start_date)}</span></div>
+            <div class="detail-row"><span>End</span><span>${formatDate(rental.end_date)}</span></div>
+            <div class="detail-row"><span>Status</span><span>${escapeHTML(String(rental.status || "Pending"))}</span></div>
+        </div>
+
+        <div class="timeline-simple">
+            <div style="padding:10px 0;font-weight:700;color:#18803d;">✓ Rental request submitted</div>
+            <div style="padding:10px 0;font-weight:700;color:#18803d;">
+                ${["approved","confirmed","active","in_rent","in rent"].includes(String(rental.status || "").toLowerCase()) ? "✓ Rental accepted / active" : "● Waiting for provider confirmation"}
+            </div>
+            <div style="padding:10px 0;color:#718078;">○ Rental completion</div>
+        </div>`;
+
+    document.getElementById("trackingModal").classList.add("show");
+}
+
+function closeTracking() {
+    document.getElementById("trackingModal").classList.remove("show");
+}
+
+/* ---------------------------------------------------------
+   SEARCH
+--------------------------------------------------------- */
+document.getElementById("searchType").addEventListener("change", function() {
+    const machinery = this.value === "machinery";
+    document.getElementById("searchInput").placeholder =
+        machinery ? "Search machinery or equipment..." : "Search company or rental name...";
+    document.getElementById("imageButton").style.display = machinery ? "block" : "none";
+    document.getElementById("searchInput").value = "";
+    document.getElementById("suggestionsBox").classList.remove("show");
+});
+
+document.getElementById("searchInput").addEventListener("input", function() {
+    const value = this.value.trim();
+    clearTimeout(searchTimer);
+
+    if (!value) {
+        document.getElementById("suggestionsBox").classList.remove("show");
+        return;
+    }
+
+    searchTimer = setTimeout(() => loadSuggestions(value), 250);
+});
+
+async function loadSuggestions(value) {
+    const type = document.getElementById("searchType").value;
+    let suggestions = [];
+
+    try {
+        const endpoint = type === "machinery"
+            ? `${API_BASE_URL}/rentals/suggestions/machinery?q=${encodeURIComponent(value)}`
+            : `${API_BASE_URL}/rentals/suggestions/company?q=${encodeURIComponent(value)}`;
+
+        const response = await fetch(endpoint);
+        const data = await response.json();
+
+        if (response.ok) suggestions = data.suggestions || [];
+    } catch(e) {}
+
+    if (!suggestions.length) {
+        if (type === "machinery") {
+            suggestions = sampleProviders
+                .flatMap(p => p.equipment || [])
+                .map(e => e.name)
+                .filter(n => n.toLowerCase().includes(value.toLowerCase()));
+        } else {
+            suggestions = sampleProviders
+                .map(p => p.business_name)
+                .filter(n => n.toLowerCase().includes(value.toLowerCase()));
+        }
+    }
+
+    renderSuggestions(suggestions.slice(0,6), type);
+}
+
+function renderSuggestions(suggestions, type) {
+    const box = document.getElementById("suggestionsBox");
+
+    if (!suggestions.length) {
+        box.classList.remove("show");
+        return;
+    }
+
+    box.innerHTML = suggestions.map(s => `
+        <div class="suggestion-item" onclick="selectSuggestion('${escapeAttribute(s)}')">
+            <div class="suggestion-icon">${type === "machinery" ? "🚜" : "🏢"}</div>
+            <span>${escapeHTML(s)}</span>
+        </div>`).join("");
+
+    box.classList.add("show");
+}
+
+function selectSuggestion(value) {
+    document.getElementById("searchInput").value = value;
+    document.getElementById("suggestionsBox").classList.remove("show");
+    performSearch();
+}
+
+document.getElementById("searchButton").addEventListener("click", performSearch);
+
+async function performSearch() {
+    const type =
+        document.getElementById("searchType").value;
+
+    const value =
+        document.getElementById("searchInput").value.trim();
+
+    const selectedDistrictEarly =
+        document.getElementById("districtFilter").value;
+
+    if (!value && !selectedDistrictEarly) {
+        showToast("Please enter something to search or choose a district.");
+        return;
+    }
+
+    /*
+       District selected with no search text - browse every
+       approved provider in that district directly, rather than
+       requiring a machinery/company keyword too.
+    */
+    if (!value && selectedDistrictEarly) {
+
+        document
+            .getElementById("suggestionsBox")
+            .classList.remove("show");
+
+        try {
+
+            const response =
+                await fetch(`${API_BASE_URL}/rentals/providers`);
+
+            const data =
+                await response.json();
+
+            const allProviderResults =
+                Array.isArray(data.providers)
+                    ? data.providers
+                    : [];
+
+            const filtered =
+                allProviderResults.filter(provider =>
+                    String(provider.district || "").toLowerCase() ===
+                    selectedDistrictEarly.toLowerCase()
+                );
+
+            searchResultProviders = filtered;
+
+            document
+                .getElementById("resultsSection")
+                .style.display = "block";
+
+            document
+                .getElementById("resultsTitle")
+                .textContent =
+                    `Rental Companies in ${selectedDistrictEarly}`;
+
+            document
+                .getElementById("resultsSubtitle")
+                .textContent =
+                    `${filtered.length} result${filtered.length === 1 ? "" : "s"} found`;
+
+            document
+                .getElementById("resultsContainer")
+                .innerHTML =
+                    filtered.length
+                        ? `<div class="provider-grid">${filtered.map(createProviderCard).join("")}</div>`
+                        : `<div class="empty-state">
+                            <div class="empty-icon">🔍</div>
+                            <h3>No matching results</h3>
+                            <p>No approved rental providers were found in ${escapeHTML(selectedDistrictEarly)}.</p>
+                          </div>`;
+
+        } catch (error) {
+
+            console.warn(
+                "District browse failed:",
+                error
+            );
+
+            showToast("Unable to load providers for this district.");
+
+        }
+
+        return;
+
+    }
+
+    document
+        .getElementById("suggestionsBox")
+        .classList.remove("show");
+
+    let results = [];
+
+    searchResultProviders = [];
+
+    /*
+       COMPANY / RENTAL NAME SEARCH
+
+       Use the backend company-search endpoint directly.
+       This searches all approved providers in the database,
+       not only the providers shown in the recommended section.
+    */
+    if (type === "company") {
+
+        try {
+
+            const response = await fetch(
+                `${API_BASE_URL}/rentals/search/company?q=${encodeURIComponent(value)}`
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message ||
+                    "Failed to search rental companies."
+                );
+            }
+
+            results =
+                Array.isArray(data.results)
+                    ? data.results
+                    : [];
+
+        } catch (error) {
+
+            console.warn(
+                "Company search API unavailable:",
+                error
+            );
+
+            /*
+               Fallback only when the backend request cannot be
+               completed.
+            */
+            const combined = [
+                ...recommendedProviders,
+                ...sampleProviders
+            ];
+
+            results = combined
+                .filter((provider, index, array) =>
+                    array.findIndex(p =>
+                        Number(p.provider_id) ===
+                        Number(provider.provider_id)
+                    ) === index
+                )
+                .filter(provider =>
+                    String(
+                        provider.business_name || ""
+                    )
+                    .toLowerCase()
+                    .includes(value.toLowerCase())
+                );
+        }
+
+    }
+
+    /*
+       MACHINERY SEARCH
+
+       Use the backend machinery-search endpoint directly and
+       convert the returned equipment rows into provider cards.
+    */
+    else {
+
+        try {
+
+            const response = await fetch(
+                `${API_BASE_URL}/rentals/search/machinery?q=${encodeURIComponent(value)}`
+            );
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(
+                    data.message ||
+                    "Failed to search machinery."
+                );
+            }
+
+            const machineryResults =
+                Array.isArray(data.results)
+                    ? data.results
+                    : [];
+
+            const providerMap = new Map();
+
+            machineryResults.forEach(item => {
+
+                const providerId =
+                    Number(item.provider_id);
+
+                if (!providerMap.has(providerId)) {
+
+                    providerMap.set(
+                        providerId,
+                        {
+                            provider_id:
+                                providerId,
+
+                            business_name:
+                                item.business_name,
+
+                            business_description:
+                                item.business_description ||
+                                "Agricultural equipment rental provider.",
+
+                            phone:
+                                item.phone,
+
+                            district:
+                                item.district,
+
+                            equipment_count:
+                                0,
+
+                            equipment: []
+                        }
+                    );
+                }
+
+                const provider =
+                    providerMap.get(providerId);
+
+                provider.equipment.push({
+
+                    equipment_id:
+                        item.equipment_id,
+
+                    name:
+                        item.equipment_name,
+
+                    equipment_name:
+                        item.equipment_name,
+
+                    category:
+                        item.category,
+
+                    description:
+                        item.description,
+
+                    rental_price:
+                        item.rental_price,
+
+                    price:
+                        item.rental_price,
+
+                    price_unit:
+                        item.price_unit,
+
+                    availability_status:
+                        item.availability_status,
+
+                    image:
+                        item.image,
+
+                    available_count:
+                        item.available_count ??
+                        item.available_quantity ??
+                        item.quantity_available ??
+                        item.quantity ??
+                        0
+
+                });
+
+                provider.equipment_count =
+                    provider.equipment.length;
+            });
+
+            results =
+                Array.from(
+                    providerMap.values()
+                );
+
+        } catch (error) {
+
+            console.warn(
+                "Machinery search API unavailable:",
+                error
+            );
+
+            const combined = [
+                ...recommendedProviders,
+                ...sampleProviders
+            ];
+
+            results = combined
+                .filter((provider, index, array) =>
+                    array.findIndex(p =>
+                        Number(p.provider_id) ===
+                        Number(provider.provider_id)
+                    ) === index
+                )
+                .filter(provider =>
+                    String(
+                        provider.business_name || ""
+                    )
+                    .toLowerCase()
+                    .includes(value.toLowerCase())
+
+                    ||
+
+                    (provider.equipment || [])
+                        .some(e =>
+                            String(
+                                e.name ||
+                                e.equipment_name ||
+                                ""
+                            )
+                            .toLowerCase()
+                            .includes(
+                                value.toLowerCase()
+                            )
+                        )
+                );
+        }
+    }
+
+    /*
+       Apply the district filter, if one is selected, on top of
+       whatever search results came back above.
+    */
+    const selectedDistrict =
+        document.getElementById("districtFilter").value;
+
+    if (selectedDistrict) {
+        results = results.filter(provider =>
+            String(provider.district || "").toLowerCase() ===
+            selectedDistrict.toLowerCase()
+        );
+    }
+
+    /*
+       Keep search results available so the View Details button
+       can find the provider even when it was not recommended.
+    */
+    searchResultProviders = results;
+
+    document
+        .getElementById("resultsSection")
+        .style.display = "block";
+
+    document
+        .getElementById("resultsTitle")
+        .textContent =
+            type === "machinery"
+                ? "Machinery Search Results"
+                : "Company Search Results";
+
+    document
+        .getElementById("resultsSubtitle")
+        .textContent =
+            `${results.length} result${
+                results.length === 1
+                    ? ""
+                    : "s"
+            } found`;
+
+    document
+        .getElementById("resultsContainer")
+        .innerHTML =
+            results.length
+
+                ? `<div class="provider-grid">
+                    ${results
+                        .map(createProviderCard)
+                        .join("")}
+                   </div>`
+
+                : `<div class="empty-state">
+
+                    <div class="empty-icon">
+                        🔍
+                    </div>
+
+                    <h3>
+                        No matching results
+                    </h3>
+
+                    <p>
+                        No approved ${
+                            type === "company"
+                                ? "rental company"
+                                : "machinery"
+                        } was found matching
+                        "${escapeHTML(value)}".
+                    </p>
+
+                   </div>`;
+
+    document
+        .getElementById("resultsSection")
+        .scrollIntoView({
+            behavior:"smooth"
+        });
+}
+
+function clearSearchResults() {
+    document.getElementById("resultsSection").style.display = "none";
+    document.getElementById("searchInput").value = "";
+    document.getElementById("suggestionsBox").classList.remove("show");
+}
+
+/* ---------------------------------------------------------
+   VOICE / IMAGE SEARCH
+--------------------------------------------------------- */
+document.getElementById("voiceButton").addEventListener("click", startVoiceSearch);
+
+function startVoiceSearch() {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognition) {
+        showToast("Voice search is not supported in this browser.");
+        return;
+    }
+
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+    recognition.maxAlternatives = 1;
+
+    const button = document.getElementById("voiceButton");
+    button.classList.add("active");
+    button.textContent = "🔴";
+    showToast("Listening...");
+
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        document.getElementById("searchInput").value = event.results[0][0].transcript;
+        performSearch();
+    };
+
+    recognition.onerror = function() {
+        showToast("Voice search could not be completed.");
+    };
+
+    recognition.onend = function() {
+        button.classList.remove("active");
+        button.textContent = "🎤";
+    };
+}
+
+document.getElementById("imageButton").addEventListener("click", function() {
+    document.getElementById("imageInput").click();
+});
+
+document.getElementById("imageInput").addEventListener("change", async function() {
+    const file = this.files[0];
+    if (!file) return;
+
+    const info = document.getElementById("imageSearchInfo");
+    const imageURL = URL.createObjectURL(file);
+
+    info.style.display = "block";
+    info.innerHTML = `
+        <div style="display:flex;align-items:center;gap:10px;">
+            <img src="${imageURL}" alt="Selected search photo" style="width:45px;height:45px;object-fit:cover;border-radius:6px;">
+            <div><strong>Image selected</strong><div style="margin-top:2px;">Searching for similar machinery...</div></div>
+        </div>`;
+
+    showToast("Image selected. Searching matching machinery...");
+
+    try {
+
+        const formData = new FormData();
+        formData.append("search_image", file);
+
+        const response = await fetch(
+            `${API_BASE_URL}/image-search/equipment`,
+            { method: "POST", body: formData }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(data.message || "Image search failed.");
+        }
+
+        const matches = Array.isArray(data.results) ? data.results : [];
+
+        info.innerHTML = `
+            <div style="display:flex;align-items:center;gap:10px;">
+                <img src="${imageURL}" alt="Selected search photo" style="width:45px;height:45px;object-fit:cover;border-radius:6px;">
+                <div><strong>Image selected</strong><div style="margin-top:2px;">${matches.length} visually similar match${matches.length === 1 ? "" : "es"} found</div></div>
+            </div>`;
+
+        /*
+           Group the matched equipment rows by provider, matching
+           the same shape the text machinery search builds, so we
+           can reuse createProviderCard() for rendering.
+        */
+        const providerMap = new Map();
+
+        matches.forEach(item => {
+
+            const providerId = Number(item.provider_id) || 0;
+
+            if (!providerMap.has(providerId)) {
+
+                providerMap.set(providerId, {
+                    provider_id: providerId,
+                    business_name: item.business_name,
+                    business_description: "Agricultural equipment rental provider.",
+                    phone: item.phone,
+                    district: item.district,
+                    equipment_count: 0,
+                    equipment: []
+                });
+
+            }
+
+            const provider = providerMap.get(providerId);
+
+            provider.equipment.push({
+                equipment_id: item.id,
+                name: item.equipment_name,
+                equipment_name: item.equipment_name,
+                category: item.category,
+                rental_price: item.rental_price,
+                price: item.rental_price,
+                price_unit: item.price_unit,
+                availability_status: item.availability_status,
+                image: item.image,
+                available_count: item.quantity ?? 0
+            });
+
+            provider.equipment_count = provider.equipment.length;
+
+        });
+
+        const results = Array.from(providerMap.values());
+
+        document.getElementById("suggestionsBox").classList.remove("show");
+        document.getElementById("resultsSection").style.display = "block";
+        document.getElementById("resultsTitle").textContent = "Visual Match Results";
+        document.getElementById("resultsSubtitle").textContent =
+            `${results.length} provider${results.length === 1 ? "" : "s"} with similar machinery`;
+
+        document.getElementById("resultsContainer").innerHTML =
+            results.length
+                ? `<div class="provider-grid">${results.map(createProviderCard).join("")}</div>`
+                : `<div class="empty-state">
+                    <div class="empty-icon">🔍</div>
+                    <h3>No visually similar machinery found</h3>
+                    <p>Try a clearer photo, or search by machinery name instead.</p>
+                   </div>`;
+
+    } catch (error) {
+
+        console.error("Image search failed:", error);
+        showToast("Image search failed. Please try again.");
+
+    }
+
+});
+
+/* ---------------------------------------------------------
+   GENERAL
+--------------------------------------------------------- */
+function openNotifications() {
+    window.location.href = "notifications.html";
+}
+
+document.getElementById("logoutButton").addEventListener("click", function(event) {
+    event.preventDefault();
+
+    if (!confirm("Are you sure you want to logout?")) return;
+
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("loggedInUser");
+    sessionStorage.removeItem("selectedRole");
+    sessionStorage.removeItem("currentRole");
+
+    window.location.href = "index.html";
+});
+
+document.getElementById("mobileMenu").addEventListener("click", function(event) {
+    event.stopPropagation();
+    document.getElementById("sidebar").classList.toggle("open");
+});
+
+document.querySelectorAll(".modal-overlay").forEach(modal => {
+    modal.addEventListener("click", function(event) {
+        if (event.target === modal) modal.classList.remove("show");
+    });
+});
+
+const profile = document.getElementById("profile");
+
+profile.addEventListener("click", function(event) {
+    event.stopPropagation();
+    profile.classList.toggle("open");
+});
+
+document.addEventListener("click", function() {
+    profile.classList.remove("open");
+});
+
+let toastTimer;
+
+function showToast(message) {
+    const toast = document.getElementById("toast");
+    document.getElementById("toastMessage").textContent = message;
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 3500);
+}
+
+function escapeHTML(value) {
+    const div = document.createElement("div");
+    div.textContent = value == null ? "" : String(value);
+    return div.innerHTML;
+}
+
+function escapeAttribute(value) {
+    return String(value || "")
+        .replace(/\\/g,"\\\\")
+        .replace(/'/g,"\\'");
+}
+
+function getProviderInitial(name) {
+    return String(name || "R").trim().charAt(0).toUpperCase() || "R";
+}
+
+function formatCurrency(value) {
+    return "Rs. " + Number(value || 0).toLocaleString("en-LK", {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+    });
+}
+
+function formatDate(value) {
+    if (!value) return "-";
+    const date = new Date(value);
+    if (Number.isNaN(date.getTime())) return "-";
+    return date.toLocaleDateString("en-GB", {
+        day:"2-digit",month:"short",year:"numeric"
+    });
+}
+
+/* ---------------------------------------------------------
+   INITIALIZE
+--------------------------------------------------------- */
+(function initialize() {
+    currentRole = "farmer";
+    sessionStorage.setItem("selectedRole", "farmer");
+
+    // One-time cleanup: earlier versions of this page saved fake
+    // "demo mode" rentals to localStorage when a submission failed.
+    // Those are no longer used and would show up as confusing
+    // phantom rentals that were never actually created - clear them.
+    localStorage.removeItem("demoMyRentals");
+
+    displayUser();
+    loadRoles();
+    loadRecommendedProviders();
+    loadMyRentals();
+})();
+
+
+function updateMessagesBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(
+                    c => (c.context_type === "order" || c.context_type === "rental" || c.context_type === "consultation")
+                        && c.unread_count > 0
+                ).length;
+
+            const badgeEl =
+                document.getElementById("messagesBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load messages badge count:", error);
+        });
+
+}
+
+updateMessagesBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+    <!-- RENTAL ACTION CONFIRM MODAL -->
+    <div
+        id="rentalActionConfirmModal"
+        style="
+            position:fixed;
+            inset:0;
+            background:rgba(20,32,51,.45);
+            display:none;
+            align-items:center;
+            justify-content:center;
+            padding:24px;
+            z-index:1600;
+        "
+    >
+        <div
+            style="
+                width:min(400px,100%);
+                background:#fff;
+                border-radius:14px;
+                box-shadow:0 18px 50px rgba(0,0,0,.20);
+            "
+        >
+            <div style="padding:20px 24px;border-bottom:1px solid #edf0ee;">
+                <h3 id="rentalConfirmTitle" style="font-size:19px;color:#172033;">Confirm Action</h3>
+            </div>
+            <div style="padding:22px 24px;">
+                <p id="rentalConfirmText" style="font-size:13px;color:#536274;line-height:1.6;">
+                    Are you sure you want to continue?
+                </p>
+                <div style="display:flex;gap:10px;margin-top:22px;justify-content:flex-end;">
+                    <button
+                        type="button"
+                        id="rentalConfirmCancel"
+                        style="padding:10px 18px;border:1px solid #dfe5e1;background:#fff;border-radius:8px;cursor:pointer;font-size:13px;"
+                    >
+                        Cancel
+                    </button>
+                    <button
+                        type="button"
+                        id="rentalConfirmOk"
+                        style="padding:10px 18px;border:none;background:#17833c;color:#fff;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;"
+                    >
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

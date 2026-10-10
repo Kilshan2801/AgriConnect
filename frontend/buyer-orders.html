@@ -1,0 +1,4180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>AgriConnect - My Orders</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7f9;
+    color: #10233f;
+}
+
+button,
+input {
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+
+    width: 255px;
+    min-width: 255px;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    background: linear-gradient(
+        180deg,
+        #0643ad 0%,
+        #07368f 100%
+    );
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   LOGO
+   Matches the white AgriConnect logo shown in your image
+========================================================= */
+
+.sidebar-logo {
+
+    height: 86px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.18);
+}
+
+.sidebar-logo img {
+    max-height: 62px;
+
+
+    width: 160px;
+
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+
+    /*
+       Your existing logo may be green.
+       This makes the complete logo white,
+       matching your screenshot.
+    */
+}
+
+
+/* =========================================================
+   SIDEBAR NAVIGATION
+========================================================= */
+
+.sidebar-nav {
+
+    padding:
+        18px 13px;
+
+    flex: 1;
+}
+
+.nav-item {
+
+    width: 100%;
+
+    min-height: 48px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    padding:
+        10px 15px;
+
+    margin-bottom: 6px;
+
+    border-radius: 10px;
+
+    color: white;
+
+    font-size: 17px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+.nav-item:hover {
+
+    background:
+        rgba(255,255,255,0.10);
+}
+
+.nav-item.active {
+
+    background:
+        #07566b;
+
+    box-shadow:
+        inset 4px 0 0 white;
+}
+
+.nav-icon {
+
+    width: 25px;
+
+    min-width: 25px;
+
+    text-align: center;
+
+    font-size: 20px;
+}
+
+.nav-text {
+
+    flex: 1;
+}
+
+.notification-count {
+
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #f32929;
+
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+
+    padding:
+        5px 13px 15px;
+}
+
+.sidebar-divider {
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.22);
+
+    margin:
+        6px 10px 15px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top-header {
+
+    height: 78px;
+
+    background: white;
+
+    padding:
+        0 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    border-bottom:
+        1px solid #e2e6ea;
+}
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   NOTIFICATION BELL
+========================================================= */
+
+.notification-bell {
+
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+.notification-number {
+
+    position: absolute;
+
+    top: -3px;
+    right: -3px;
+
+    min-width: 19px;
+    height: 19px;
+
+    padding: 0 4px;
+
+    border-radius: 50%;
+
+    background: #f12626;
+
+    color: white;
+
+    font-size: 9px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-area {
+
+    position: relative;
+}
+
+.profile-button {
+
+    border: none;
+
+    background: transparent;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+}
+
+.profile-avatar {
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #07832f;
+
+    color: #07832f;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.profile-name {
+
+    display: block;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color: #101828;
+
+    text-align: left;
+}
+
+.profile-role {
+
+    display: block;
+
+    color: #07823d;
+
+    font-size: 12px;
+
+    margin-top: 2px;
+
+    text-align: left;
+}
+
+.profile-arrow {
+
+    color: #63758a;
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+.profile-dropdown {
+
+    display: none;
+
+    position: absolute;
+
+    right: 0;
+    top: 55px;
+
+    width: 275px;
+
+    background: white;
+
+    border:
+        1px solid #dce4e0;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 35px rgba(0,0,0,0.15);
+
+    overflow: hidden;
+
+    z-index: 5000;
+}
+
+.profile-dropdown.show {
+
+    display: block;
+}
+
+.dropdown-user {
+
+    padding:
+        17px 20px;
+
+    border-bottom:
+        1px solid #e5eae7;
+}
+
+.dropdown-user-name {
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    color: #172840;
+}
+
+.dropdown-user-role {
+
+    color: #07823d;
+
+    font-size: 13px;
+
+    margin-top: 3px;
+}
+
+.switch-title {
+
+    padding:
+        15px 20px 7px;
+
+    color: #67758a;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.role-option {
+
+    margin:
+        0 10px 5px;
+
+    padding:
+        11px 13px;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    cursor: pointer;
+
+    color: #334155;
+
+    font-size: 13px;
+}
+
+.role-option:hover {
+
+    background:
+        #f2f6f4;
+}
+
+.role-option.selected {
+
+    background:
+        #e3f5e8;
+
+    color: #07823d;
+
+    font-weight: bold;
+}
+
+.role-icon {
+
+    width: 23px;
+
+    text-align: center;
+
+    font-size: 17px;
+}
+
+.role-check {
+
+    margin-left: auto;
+
+    color: #07823d;
+
+    font-size: 18px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+
+    flex: 1;
+
+    padding:
+        43px 38px 35px;
+
+    background:
+        #f5f7f9;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.page-title {
+
+    font-size: 34px;
+
+    font-weight: bold;
+
+    color: #101c31;
+
+    margin-bottom: 30px;
+}
+
+.page-title span {
+
+    color: #07823d;
+}
+
+.title-underline {
+
+    width: 44px;
+
+    height: 3px;
+
+    background:
+        #07823d;
+
+    margin-top: 9px;
+}
+
+
+/* =========================================================
+   ORDERS CONTAINER
+========================================================= */
+
+.orders-container {
+
+    width: 100%;
+
+    background: white;
+
+    border:
+        1px solid #e0e5e9;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 5px 18px rgba(0,0,0,0.04);
+
+    overflow: hidden;
+}
+
+
+/* =========================================================
+   ORDER ROW
+========================================================= */
+
+.order-row {
+
+    min-height: 118px;
+
+    padding:
+        16px 20px;
+
+    display: grid;
+
+    grid-template-columns:
+        105px
+        minmax(190px, 1.15fr)
+        minmax(190px, 1fr)
+        135px
+        150px;
+
+    align-items: center;
+
+    gap: 15px;
+
+    border-bottom:
+        1px solid #e4e8eb;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease;
+}
+
+.order-row:hover {
+
+    background:
+        #fafcff;
+}
+
+.order-row:last-child {
+
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.product-image {
+
+    width: 84px;
+    height: 84px;
+
+    border-radius: 9px;
+
+    object-fit: cover;
+
+    background:
+        #eef2f0;
+}
+
+
+/* =========================================================
+   PRODUCT INFORMATION
+========================================================= */
+
+.product-info {
+
+    min-width: 0;
+}
+
+.product-name {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color: #111827;
+
+    margin-bottom: 8px;
+}
+
+.farmer-name {
+
+    font-size: 13px;
+
+    color: #17385f;
+}
+
+
+/* =========================================================
+   ORDER INFORMATION
+========================================================= */
+
+.order-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.order-date {
+
+    font-size: 13px;
+
+    color: #17385f;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+.order-quantity {
+
+    font-size: 13px;
+
+    color: #17385f;
+}
+
+
+/* =========================================================
+   STATUS
+========================================================= */
+
+.status-area {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-start;
+
+    gap: 8px;
+}
+
+.status {
+
+    min-width: 105px;
+
+    padding:
+        9px 12px;
+
+    border-radius: 6px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 5px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.status-confirmed {
+
+    border:
+        1px solid #55a961;
+
+    color: #087a25;
+
+    background:
+        #f8fff9;
+}
+
+.status-rejected {
+
+    border:
+        1px solid #ff6464;
+
+    color: #f02222;
+
+    background:
+        #fff8f8;
+}
+
+.status-processing {
+
+    border:
+        1px solid #f2b634;
+
+    color: #e59400;
+
+    background:
+        #fffdf5;
+}
+
+.status-cancelled {
+
+    border:
+        1px solid #aeb6c0;
+
+    color: #536071;
+
+    background:
+        #fafafa;
+}
+
+.status-pending {
+
+    border:
+        1px solid #5074d5;
+
+    color: #2856c5;
+
+    background:
+        #f7f9ff;
+}
+
+
+/* =========================================================
+   ACTION AREA
+========================================================= */
+
+.order-action {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    min-width: 120px;
+}
+
+
+/* =========================================================
+   MESSAGE BUTTON
+   Appears after farmer accepts/confirms order
+========================================================= */
+
+.message-button {
+
+    border: none;
+
+    background:
+        #07833b;
+
+    color: white;
+
+    border-radius: 6px;
+
+    padding:
+        9px 17px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 6px;
+
+    transition:
+        0.2s ease;
+
+    white-space: nowrap;
+}
+
+.message-button:hover {
+
+    background:
+        #056c30;
+
+    transform:
+        translateY(-1px);
+
+    box-shadow:
+        0 4px 10px rgba(7,131,59,0.20);
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+.cancel-button {
+
+    border:
+        1px solid #b8c1cc;
+
+    background: white;
+
+    color: #344054;
+
+    border-radius: 5px;
+
+    padding:
+        8px 15px;
+
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition:
+        0.2s ease;
+}
+
+.cancel-button:hover {
+
+    background:
+        #f4f6f8;
+
+    border-color:
+        #8d98a6;
+}
+
+
+/* =========================================================
+   DATE
+========================================================= */
+
+.order-date-right {
+
+    font-size: 12px;
+
+    color: #536071;
+
+    text-align: right;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+
+    padding:
+        80px 20px;
+
+    text-align: center;
+}
+
+.empty-icon {
+
+    width: 60px;
+    height: 60px;
+
+    margin:
+        0 auto 15px;
+
+    border-radius: 50%;
+
+    background:
+        #eef5ff;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 27px;
+}
+
+.empty-state h3 {
+
+    color: #172840;
+
+    font-size: 18px;
+
+    margin-bottom: 7px;
+}
+
+.empty-state p {
+
+    color: #67758a;
+
+    font-size: 13px;
+
+    margin-bottom: 18px;
+}
+
+.shop-button {
+
+    border: none;
+
+    background:
+        #1559d4;
+
+    color: white;
+
+    border-radius: 6px;
+
+    padding:
+        10px 19px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.shop-button:hover {
+
+    background:
+        #0d4dbd;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    left: 255px;
+
+
+    min-height: 56px;
+
+    background:
+        #00552d;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 14px;
+
+    font-size: 10px;
+}
+
+.footer a {
+
+    color: white;
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+.toast {
+
+    position: fixed;
+
+    right: 25px;
+    bottom: 25px;
+
+    background:
+        #172b43;
+
+    color: white;
+
+    padding:
+        13px 19px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.2);
+
+    opacity: 0;
+
+    transform:
+        translateY(15px);
+
+    pointer-events: none;
+
+    transition:
+        0.25s ease;
+
+    z-index: 10000;
+}
+
+.toast.show {
+
+    opacity: 1;
+
+    transform:
+        translateY(0);
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .sidebar {
+
+        width: 270px;
+        min-width: 270px;
+    }
+
+    .main {
+
+        margin-left: 270px;
+
+        width:
+            calc(100% - 270px);
+    }
+
+    .order-row {
+
+        grid-template-columns:
+            90px
+            1fr
+            1fr
+            120px
+            130px;
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .sidebar {
+
+        width: 230px;
+        min-width: 230px;
+    }
+
+    .main {
+
+        margin-left: 230px;
+
+        width:
+            calc(100% - 230px);
+    }
+
+    .content {
+
+        padding:
+            30px 20px;
+    }
+
+    .order-row {
+
+        grid-template-columns:
+            80px
+            1fr
+            110px;
+    }
+
+    .order-info {
+
+        display: none;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL SCREEN
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .sidebar {
+
+        width: 210px;
+        min-width: 210px;
+    }
+
+    .main {
+
+        margin-left: 210px;
+
+        width:
+            calc(100% - 210px);
+    }
+
+    .order-row {
+
+        grid-template-columns:
+            70px
+            1fr;
+    }
+
+    .status-area,
+    .order-action {
+
+        grid-column: 2;
+        justify-content: flex-start;
+    }
+
+}
+.tabs-card {
+    background: white;
+    border: 1px solid #e5e9ef;
+    border-radius: 9px 9px 0 0;
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+.order-tabs {
+    display: flex;
+    gap: 30px;
+    height: 54px;
+    align-items: flex-end;
+}
+
+.order-tab {
+    height: 54px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    color: #606979;
+    position: relative;
+    padding: 0 2px 15px;
+}
+
+.order-tab.active {
+    color: #2e8b3a;
+}
+
+.order-tab.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: #2e8b3a;
+    border-radius: 2px 2px 0 0;
+}
+
+.order-tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    margin-left: 5px;
+    border-radius: 20px;
+    background: #eaf5ec;
+    color: #2e8b3a;
+    font-size: 10px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar">
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <!-- NAVIGATION -->
+
+    <nav class="sidebar-nav">
+
+
+        <a
+            href="buyer-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-text">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-search-crops.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔍
+            </span>
+
+            <span class="nav-text">
+                Search for Crops
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-orders.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                🛒
+            </span>
+
+            <span class="nav-text">
+                My Orders
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-messages.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-text">
+                Messages
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-text">
+                Notifications
+            </span>
+
+            <span
+                class="notification-count"
+                id="notificationCount"
+            >
+                0
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-text">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-text">
+                History
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="buyer-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-text">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-text">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="login.html"
+            class="nav-item"
+            onclick="logout(event)"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-text">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="main">
+
+
+<!-- =========================================================
+     HEADER
+========================================================= -->
+
+<header class="top-header">
+
+
+    <div class="header-right">
+
+
+        <!-- NOTIFICATION -->
+
+        <div
+            class="notification-bell"
+            onclick="openNotifications()"
+        >
+
+            🔔
+
+            <span
+                class="notification-number"
+                id="headerNotificationCount"
+            >
+                0
+            </span>
+
+        </div>
+
+
+        <!-- PROFILE -->
+
+        <div class="profile-area">
+
+
+            <button
+                class="profile-button"
+                id="profileButton"
+                type="button"
+            >
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    KI
+                </div>
+
+
+                <div>
+
+                    <span
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Kilshan
+                    </span>
+
+                    <span
+                        class="profile-role"
+                    >
+                        Buyer
+                    </span>
+
+                </div>
+
+
+                <span
+                    class="profile-arrow"
+                    id="profileArrow"
+                >
+                    ▼
+                </span>
+
+            </button>
+
+
+
+            <!-- PROFILE DROPDOWN -->
+
+            <div
+                class="profile-dropdown"
+                id="profileDropdown"
+            >
+
+
+                <div class="dropdown-user">
+
+                    <div
+                        class="dropdown-user-name"
+                        id="dropdownUserName"
+                    >
+                        Kilshan
+                    </div>
+
+
+                    <div
+                        class="dropdown-user-role"
+                    >
+                        Buyer
+                    </div>
+
+                </div>
+
+
+                <div class="switch-title">
+                    SWITCH ROLE
+                </div>
+
+
+                <div
+                    id="rolesContainer"
+                ></div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</header>
+
+
+
+<!-- =========================================================
+     CONTENT
+========================================================= -->
+
+<section class="content">
+
+
+    <div class="page-title">
+
+        My Ordered
+        <span>Crops</span>
+
+        <div class="title-underline"></div>
+
+    </div>
+
+
+    <div class="tabs-card">
+
+        <div class="order-tabs" id="orderTabs">
+
+            <button class="order-tab active" data-status="pending">
+                Pending Orders
+                <span class="order-tab-count" id="pendingTabCount">0</span>
+            </button>
+
+            <button class="order-tab" data-status="confirmed">
+                Confirmed Orders
+                <span class="order-tab-count" id="confirmedTabCount">0</span>
+            </button>
+
+            <button class="order-tab" data-status="delivered">
+                Delivered Orders
+                <span class="order-tab-count" id="deliveredTabCount">0</span>
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="orders-container"
+        id="ordersContainer"
+    ></div>
+
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <span>
+        🌿
+    </span>
+
+    <span>
+        © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+</main>
+
+</div>
+
+
+
+<!-- =========================================================
+     APP CONFIRM MODAL
+========================================================= -->
+
+<style>
+
+.app-confirm-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    align-items: center;
+    justify-content: center;
+    z-index: 9500;
+}
+
+.app-confirm-overlay.show {
+    display: flex;
+}
+
+.app-confirm-box {
+    width: 340px;
+    max-width: calc(100% - 30px);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    padding: 22px;
+}
+
+.app-confirm-message {
+    color: #17202a;
+    font-size: 14px;
+    margin-bottom: 18px;
+    line-height: 1.5;
+}
+
+.app-confirm-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.app-confirm-actions button {
+    flex: 1;
+    border-radius: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.app-confirm-cancel {
+    border: 1px solid #b8c1cc;
+    background: white;
+    color: #344054;
+}
+
+.app-confirm-ok {
+    border: none;
+    background: #07833b;
+    color: white;
+}
+
+</style>
+
+<div
+    class="app-confirm-overlay"
+    id="appConfirmModal"
+>
+
+    <div class="app-confirm-box">
+
+        <p
+            class="app-confirm-message"
+            id="appConfirmMessage"
+        ></p>
+
+        <div class="app-confirm-actions">
+
+            <button
+                type="button"
+                class="app-confirm-cancel"
+                onclick="resolveAppConfirm(false)"
+            >Cancel</button>
+
+            <button
+                type="button"
+                class="app-confirm-ok"
+                onclick="resolveAppConfirm(true)"
+            >OK</button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+></div>
+
+
+
+<script>
+
+/* =========================================================
+   DEMO ORDERS
+========================================================= */
+
+const demoOrders = [
+
+    {
+        id: "ORD-1001",
+
+        product: "Tomato (10kg)",
+
+        farmer: "Kumar Farm",
+
+        quantity: 15,
+
+        pricePerKg: 70,
+
+        total: 1050,
+
+        status: "Confirmed",
+
+        orderedDate: "26.05.2026",
+
+        completedDate: "28.05.2026",
+
+        image:
+            "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=200&q=80"
+    },
+
+
+    {
+        id: "ORD-1002",
+
+        product: "Potato",
+
+        farmer: "Kumar Farm",
+
+        quantity: 5,
+
+        pricePerKg: 100,
+
+        total: 500,
+
+        status: "Rejected",
+
+        orderedDate: "26.05.2026",
+
+        completedDate: "28.05.2026",
+
+        image:
+            "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=200&q=80"
+    },
+
+
+    {
+        id: "ORD-1003",
+
+        product: "Brinjal",
+
+        farmer: "Kumar Farm",
+
+        quantity: 8,
+
+        pricePerKg: 60,
+
+        total: 480,
+
+        status: "Processing",
+
+        orderedDate: "26.05.2026",
+
+        image:
+            "https://images.unsplash.com/photo-1610915398857-5f1fefb2f4d2?auto=format&fit=crop&w=200&q=80"
+    },
+
+
+    {
+        id: "ORD-1004",
+
+        product: "Bean",
+
+        farmer: "Kumar Farm",
+
+        quantity: 12,
+
+        pricePerKg: 80,
+
+        total: 960,
+
+        status: "Cancelled",
+
+        orderedDate: "25.05.2026",
+
+        image:
+            "https://images.unsplash.com/photo-1567375698348-5d9d5ae99de0?auto=format&fit=crop&w=200&q=80"
+    },
+
+
+    {
+        id: "ORD-1005",
+
+        product: "Rice",
+
+        farmer: "Kumar Farm",
+
+        quantity: 20,
+
+        pricePerKg: 65,
+
+        total: 1300,
+
+        status: "Confirmed",
+
+        orderedDate: "24.05.2026",
+
+        completedDate: "25.05.2026",
+
+        image:
+            "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=200&q=80"
+    }
+
+];
+
+
+
+/* =========================================================
+   GET ORDERS
+========================================================= */
+
+function getCurrentUserId() {
+
+    try {
+
+        const user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+        return user && user.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+let __liveOrders = [];
+
+
+function mapOrderRow(row) {
+
+    return {
+
+        id: row.order_id,
+        backendId: row.order_id,
+        farmerId: row.farmer_id,
+        cropId: row.crop_id,
+        product: row.specific_name || row.crop_name,
+        farmer: `${row.farmer_first_name || ""} ${row.farmer_last_name || ""}`.trim() || "Farmer",
+        farmerPhone: row.farmer_phone,
+        image: row.image,
+        quantity: Number(row.quantity) || 0,
+        pricePerKg: Number(row.price_per_kg) || 0,
+        total: Number(row.total_amount) || 0,
+        deliveryAddress: row.delivery_address,
+        orderedDate: new Date(row.created_at).toLocaleDateString("en-GB"),
+        status: row.status
+
+    };
+
+}
+
+
+async function refreshOrders() {
+
+    const buyerId =
+        getCurrentUserId();
+
+    if (!buyerId) {
+
+        __liveOrders = [];
+        return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(`/api/orders/buyer/${buyerId}`);
+
+        const data =
+            await response.json();
+
+        if (data && data.success && Array.isArray(data.orders)) {
+
+            __liveOrders =
+                data.orders.map(mapOrderRow);
+
+        } else {
+
+            __liveOrders = [];
+
+        }
+
+    } catch (error) {
+
+        console.error("Unable to load orders:", error);
+
+        __liveOrders = [];
+
+    }
+
+}
+
+
+function getOrders() {
+
+    return __liveOrders;
+
+}
+
+
+
+/* =========================================================
+   PARSE DATE
+========================================================= */
+
+function parseDate(value) {
+
+    if (!value) {
+
+        return new Date(0);
+
+    }
+
+
+    const text =
+        String(value);
+
+
+    if (
+        text.includes(".")
+    ) {
+
+        const parts =
+            text.split(".");
+
+
+        if (
+            parts.length === 3
+        ) {
+
+            return new Date(
+
+                Number(parts[2]),
+
+                Number(parts[1]) - 1,
+
+                Number(parts[0])
+
+            );
+
+        }
+
+    }
+
+
+    if (
+        text.includes("/")
+    ) {
+
+        const parts =
+            text.split("/");
+
+
+        if (
+            parts.length === 3
+        ) {
+
+            return new Date(
+
+                Number(parts[2]),
+
+                Number(parts[1]) - 1,
+
+                Number(parts[0])
+
+            );
+
+        }
+
+    }
+
+
+    return new Date(value);
+
+}
+
+
+
+/* =========================================================
+   SORT ORDERS
+========================================================= */
+
+function sortOrders(orders) {
+
+    return [
+        ...orders
+    ].sort(
+        (a, b) => {
+
+            return (
+
+                parseDate(
+                    b.orderedDate
+                )
+
+                -
+
+                parseDate(
+                    a.orderedDate
+                )
+
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   RENDER ORDERS
+========================================================= */
+
+function renderOrders() {
+
+    const container =
+        document.getElementById(
+            "ordersContainer"
+        );
+
+
+    const allOrders =
+        sortOrders(
+            getOrders()
+        );
+
+
+    /*
+     * Completed orders move to History once the buyer confirms
+     * delivery, so they never appear on this page at all -
+     * regardless of which tab is active.
+     */
+
+    const activeOrders =
+        allOrders.filter(function (order) {
+
+            const s = (order.status || "").toLowerCase().trim();
+            return s !== "completed";
+
+        });
+
+
+    const pendingOrders =
+        activeOrders.filter(function (order) {
+            return (order.status || "").toLowerCase().trim() === "pending";
+        });
+
+    const confirmedOrders =
+        activeOrders.filter(function (order) {
+            const s = (order.status || "").toLowerCase().trim();
+            return s === "confirmed" || s === "accepted";
+        });
+
+    const deliveredOrders =
+        activeOrders.filter(function (order) {
+            return (order.status || "").toLowerCase().trim() === "delivered";
+        });
+
+
+    const setCount = function (id, value) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+    };
+
+    setCount("pendingTabCount", pendingOrders.length);
+    setCount("confirmedTabCount", confirmedOrders.length);
+    setCount("deliveredTabCount", deliveredOrders.length);
+
+
+    const activeTab =
+        window.activeOrderStatusTab || "pending";
+
+    const orders =
+        activeTab === "pending" ? pendingOrders :
+        activeTab === "confirmed" ? confirmedOrders :
+        deliveredOrders;
+
+
+    container.innerHTML = "";
+
+
+    if (
+        orders.length === 0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    🛒
+                </div>
+
+                <h3>
+                    No orders yet
+                </h3>
+
+                <p>
+                    Your placed orders will appear here.
+                </p>
+
+                <button
+                    class="shop-button"
+                    onclick="
+                        window.location.href =
+                        'buyer-search-crops.html'
+                    "
+                >
+                    Browse Crops
+                </button>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    orders.forEach(
+        order => {
+
+            const row =
+                document.createElement(
+                    "div"
+                );
+
+
+            row.className =
+                "order-row";
+
+
+            const image =
+                order.image ||
+                getProductImage(
+                    order.product
+                );
+
+
+            const status =
+                order.status ||
+                "Processing";
+
+
+            const normalizedStatus =
+                status
+                    .toLowerCase()
+                    .trim();
+
+
+            const canCancel =
+                normalizedStatus ===
+                    "pending";
+
+
+            /*
+             * IMPORTANT:
+             *
+             * Confirmed = farmer accepted order
+             *
+             * Therefore Message button
+             * appears for confirmed orders.
+             */
+
+            const accepted =
+                normalizedStatus ===
+                    "confirmed" ||
+
+                normalizedStatus ===
+                    "accepted";
+
+
+            const isDelivered =
+                normalizedStatus ===
+                    "delivered";
+
+
+            row.innerHTML = `
+
+                <!-- PRODUCT IMAGE -->
+
+                <img
+                    class="product-image"
+                    src="${image}"
+                    alt="${escapeHtml(
+                        order.product
+                    )}"
+                    onerror="
+                        this.src =
+                        'https://via.placeholder.com/100?text=Crop';
+                    "
+                >
+
+
+                <!-- PRODUCT -->
+
+                <div class="product-info">
+
+                    <div class="product-name">
+
+                        ${escapeHtml(
+                            order.product ||
+                            "Crop"
+                        )}
+
+                    </div>
+
+
+                    <div class="farmer-name">
+
+                        From :
+                        ${escapeHtml(
+                            order.farmer ||
+                            "Farmer"
+                        )}
+
+                    </div>
+
+
+                    <div
+                        class="farmer-name"
+                        style="font-size:12px; opacity:0.75;"
+                    >
+
+                        Farmer ID:
+                        ${escapeHtml(
+                            String(
+                                order.farmerId ??
+                                "-"
+                            )
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <!-- ORDER INFORMATION -->
+
+                <div class="order-info">
+
+                    <div class="order-date">
+
+                        📅
+
+                        <span>
+
+                            Ordered :
+                            ${escapeHtml(
+                                order.orderedDate ||
+                                "—"
+                            )}
+
+                        </span>
+
+                    </div>
+
+
+                    <div class="order-quantity">
+
+                        ${Number(
+                            order.quantity
+                        ) || 0}kg
+
+                        &nbsp; • &nbsp;
+
+                        Rs.
+                        ${formatNumber(
+                            order.pricePerKg ||
+                            0
+                        )}/kg
+
+                    </div>
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="status-area">
+
+                    ${getStatusHTML(
+                        status
+                    )}
+
+                </div>
+
+
+                <!-- ACTION -->
+
+                <div class="order-action">
+
+                    ${
+                        isDelivered
+
+                        ? `
+
+                            <button
+                                class="message-button"
+                                type="button"
+                                onclick="
+                                    markOrderReceived(
+                                        '${escapeAttribute(
+                                            order.id
+                                        )}'
+                                    )
+                                "
+                            >
+
+                                📦 Received
+
+                            </button>
+
+                          `
+
+                        : accepted
+
+                        ? `
+
+                            <button
+                                class="message-button"
+                                type="button"
+                                onclick="
+                                    messageFarmer(
+                                        '${escapeAttribute(
+                                            order.id
+                                        )}'
+                                    )
+                                "
+                            >
+
+                                💬 Message
+
+                            </button>
+
+                          `
+
+                        : canCancel
+
+                        ? `
+
+                            <button
+                                class="cancel-button"
+                                type="button"
+                                onclick="
+                                    cancelOrder(
+                                        '${escapeAttribute(
+                                            order.id
+                                        )}'
+                                    )
+                                "
+                            >
+
+                                Cancel
+
+                            </button>
+
+                          `
+
+                        : ""
+
+                    }
+
+                </div>
+
+            `;
+
+
+            /*
+             * Clicking anywhere on the row
+             * except buttons opens order details.
+             */
+
+            row.addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target.closest(
+                            "button"
+                        )
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    openOrderDetails(
+                        order
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   STATUS HTML
+========================================================= */
+
+function getStatusHTML(status) {
+
+    const normalized =
+        String(status)
+            .toLowerCase()
+            .trim();
+
+
+    if (
+        normalized ===
+        "confirmed" ||
+
+        normalized ===
+        "accepted"
+    ) {
+
+        return `
+
+            <span
+                class="
+                    status
+                    status-confirmed
+                "
+            >
+
+                ✓ Confirmed
+
+            </span>
+
+        `;
+
+    }
+
+
+    if (
+        normalized ===
+        "rejected"
+    ) {
+
+        return `
+
+            <span
+                class="
+                    status
+                    status-rejected
+                "
+            >
+
+                ⊗ Rejected
+
+            </span>
+
+        `;
+
+    }
+
+
+    if (
+        normalized ===
+        "delivered"
+    ) {
+
+        return `
+
+            <span
+                class="
+                    status
+                    status-confirmed
+                "
+            >
+
+                🚚 Delivered
+
+            </span>
+
+        `;
+
+    }
+
+
+    if (
+        normalized ===
+        "completed"
+    ) {
+
+        return `
+
+            <span
+                class="
+                    status
+                    status-confirmed
+                "
+            >
+
+                ✓ Completed
+
+            </span>
+
+        `;
+
+    }
+
+
+    if (
+        normalized ===
+        "processing"
+    ) {
+
+        return `
+
+            <span
+                class="
+                    status
+                    status-processing
+                "
+            >
+
+                ◷ Processing
+
+            </span>
+
+        `;
+
+    }
+
+
+    if (
+        normalized ===
+        "cancelled"
+    ) {
+
+        return `
+
+            <span
+                class="
+                    status
+                    status-cancelled
+                "
+            >
+
+                ⊘ Cancelled
+
+            </span>
+
+        `;
+
+    }
+
+
+    return `
+
+        <span
+            class="
+                status
+                status-pending
+            "
+        >
+
+            ◷
+            ${escapeHtml(status)}
+
+        </span>
+
+    `;
+
+}
+
+
+
+/* =========================================================
+   MESSAGE FARMER
+========================================================= */
+
+async function messageFarmer(orderId) {
+
+    const orders =
+        getOrders();
+
+
+    const order =
+        orders.find(
+            item =>
+                String(
+                    item.id
+                ) ===
+                String(
+                    orderId
+                )
+        );
+
+
+    if (!order) {
+
+        showToast(
+            "Order information could not be found."
+        );
+
+        return;
+
+    }
+
+
+    const buyerId =
+        getCurrentUserId();
+
+    if (!buyerId) {
+
+        showToast(
+            "Unable to identify your account. Please log in again."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/messages/conversations/start",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        user_id: buyerId,
+                        other_user_id: order.farmerId,
+                        context_type: "order",
+                        context_id: order.id
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Failed to start conversation."
+            );
+
+        }
+
+
+        localStorage.setItem(
+
+            "selectedBuyerConversation",
+
+            JSON.stringify({
+                farmer: order.farmer
+            })
+
+        );
+
+
+        window.location.href =
+            "buyer-messages.html";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Message farmer error:",
+            error
+        );
+
+        showToast(
+            error.message ||
+            "Failed to open conversation."
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   CANCEL ORDER
+========================================================= */
+
+async function cancelOrder(orderId) {
+
+    if (!orderId) {
+
+        return;
+
+    }
+
+
+    const confirmed =
+        await showAppConfirm(
+            "Are you sure you want to cancel this order?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    const buyerId =
+        getCurrentUserId();
+
+    if (!buyerId) {
+
+        showToast(
+            "Unable to identify your account. Please log in again."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/orders/${orderId}/buyer-status`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        buyer_id: buyerId,
+                        status: "cancelled"
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Failed to cancel order."
+            );
+
+        }
+
+
+        showToast(
+            "Order cancelled successfully."
+        );
+
+
+        await refreshOrders();
+
+
+        renderOrders();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Cancel order error:",
+            error
+        );
+
+        showToast(
+            error.message ||
+            "Failed to cancel order."
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   MARK ORDER RECEIVED
+========================================================= */
+
+async function markOrderReceived(orderId) {
+
+    if (!orderId) {
+
+        return;
+
+    }
+
+
+    const confirmed =
+        await showAppConfirm(
+            "Confirm that you have received this order?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    const buyerId =
+        getCurrentUserId();
+
+    if (!buyerId) {
+
+        showToast(
+            "Unable to identify your account. Please log in again."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/orders/${orderId}/buyer-status`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        buyer_id: buyerId,
+                        status: "completed"
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Failed to update order."
+            );
+
+        }
+
+
+        showToast(
+            "Order marked as received. Thank you!"
+        );
+
+
+        await refreshOrders();
+
+
+        renderOrders();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Mark received error:",
+            error
+        );
+
+        showToast(
+            error.message ||
+            "Failed to update order."
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   ORDER DETAILS
+========================================================= */
+
+function openOrderDetails(order) {
+
+    /*
+     * There's no separate order-details page, so show
+     * the full details (including Farmer ID) inline
+     * instead of navigating to a page that doesn't exist.
+     */
+
+    showToast(
+        `Order #${order.id}\n` +
+        `Crop: ${order.product}\n` +
+        `Farmer: ${order.farmer} (Farmer ID: ${order.farmerId ?? "-"})\n` +
+        `Farmer phone: ${order.farmerPhone || "-"}\n` +
+        `Quantity: ${order.quantity} kg\n` +
+        `Price per kg: Rs. ${order.pricePerKg}\n` +
+        `Total: Rs. ${order.total}\n` +
+        `Delivery address: ${order.deliveryAddress || "-"}\n` +
+        `Ordered: ${order.orderedDate}\n` +
+        `Status: ${order.status}`
+    );
+
+}
+
+
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+function getProductImage(product) {
+
+    const name =
+        String(
+            product || ""
+        ).toLowerCase();
+
+
+    if (
+        name.includes("tomato")
+    ) {
+
+        return
+        "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=200&q=80";
+
+    }
+
+
+    if (
+        name.includes("potato")
+    ) {
+
+        return
+        "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=200&q=80";
+
+    }
+
+
+    if (
+        name.includes("brinjal")
+    ) {
+
+        return
+        "https://images.unsplash.com/photo-1610915398857-5f1fefb2f4d2?auto=format&fit=crop&w=200&q=80";
+
+    }
+
+
+    if (
+        name.includes("bean")
+    ) {
+
+        return
+        "https://images.unsplash.com/photo-1567375698348-5d9d5ae99de0?auto=format&fit=crop&w=200&q=80";
+
+    }
+
+
+    if (
+        name.includes("rice")
+    ) {
+
+        return
+        "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=200&q=80";
+
+    }
+
+
+    return
+        "https://via.placeholder.com/100?text=Crop";
+
+}
+
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function getNotifications() {
+
+    try {
+
+        const notifications =
+            JSON.parse(
+                localStorage.getItem(
+                    "agriconnectNotifications"
+                ) || "[]"
+            );
+
+
+        return Array.isArray(
+            notifications
+        )
+            ? notifications
+            : [];
+
+    }
+
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+function updateNotificationCount() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const sidebarCount = document.getElementById("notificationCount");
+            const headerCount = document.getElementById("headerNotificationCount");
+            const badgeCount = document.getElementById("notificationBadge");
+
+            if (sidebarCount) sidebarCount.textContent = unread;
+            if (headerCount) headerCount.textContent = unread;
+            if (badgeCount) badgeCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+
+function addNotification(
+    title,
+    message,
+    type
+) {
+
+    let notifications =
+        getNotifications();
+
+
+    notifications.unshift({
+
+        id:
+            Date.now(),
+
+        title:
+            title,
+
+        message:
+            message,
+
+        type:
+            type,
+
+        read:
+            false,
+
+        date:
+            new Date()
+                .toISOString()
+
+    });
+
+
+    localStorage.setItem(
+
+        "agriconnectNotifications",
+
+        JSON.stringify(
+            notifications
+        )
+
+    );
+
+
+    updateNotificationCount();
+
+}
+
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+let user = null;
+
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem(
+                "user"
+            ) || "null"
+        );
+
+}
+
+catch (error) {
+
+    user = null;
+
+}
+
+
+if (!user) {
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem(
+                    "loggedInUser"
+                ) || "null"
+            );
+
+    }
+
+    catch (error) {
+
+        user = null;
+
+    }
+
+}
+
+
+const userName =
+    user?.name ||
+    user?.username ||
+    "Kilshan";
+
+
+
+/* =========================================================
+   REGISTERED ROLES
+========================================================= */
+
+function getRegisteredRoles() {
+
+    let roles = [];
+
+
+    if (
+        user &&
+        Array.isArray(
+            user.roles
+        )
+    ) {
+
+        roles =
+            [...user.roles];
+
+    }
+
+
+    if (
+        roles.length === 0
+    ) {
+
+        try {
+
+            const saved =
+                JSON.parse(
+                    sessionStorage.getItem(
+                        "registeredRoles"
+                    ) || "null"
+                );
+
+
+            if (
+                Array.isArray(saved)
+            ) {
+
+                roles =
+                    [...saved];
+
+            }
+
+        }
+
+        catch (error) {
+
+            roles = [];
+
+        }
+
+    }
+
+
+    roles =
+        roles
+            .map(
+                role =>
+                    String(
+                        role
+                    ).trim()
+            )
+            .filter(
+                Boolean
+            );
+
+
+    roles =
+        [...new Set(roles)];
+
+
+    if (
+        roles.length === 0
+    ) {
+
+        roles.push(
+            "Buyer"
+        );
+
+    }
+
+
+    if (
+        !roles.some(
+            role =>
+                role.toLowerCase() ===
+                "buyer"
+        )
+    ) {
+
+        roles.push(
+            "Buyer"
+        );
+
+    }
+
+
+    return roles;
+
+}
+
+
+const registeredRoles =
+    getRegisteredRoles();
+
+
+
+/* =========================================================
+   KEEP THIS PAGE AS BUYER
+========================================================= */
+
+sessionStorage.setItem(
+    "currentRole",
+    "Buyer"
+);
+
+
+
+/* =========================================================
+   ROLE ICON
+========================================================= */
+
+function getRoleIcon(role) {
+
+    const r =
+        role.toLowerCase();
+
+
+    if (
+        r === "buyer"
+    ) {
+
+        return "🛒";
+
+    }
+
+
+    if (
+        r === "farmer"
+    ) {
+
+        return "🧑‍🌾";
+
+    }
+
+
+    if (
+        r.includes("expert")
+    ) {
+
+        return "🧑‍🔬";
+
+    }
+
+
+    if (
+        r.includes("equipment")
+    ) {
+
+        return "🚜";
+
+    }
+
+
+    return "👤";
+
+}
+
+
+
+/* =========================================================
+   INITIALS
+========================================================= */
+
+function getInitials(name) {
+
+    const parts =
+        String(name)
+            .trim()
+            .split(/\s+/);
+
+
+    if (
+        parts.length === 1
+    ) {
+
+        return parts[0]
+            .substring(
+                0,
+                2
+            )
+            .toUpperCase();
+
+    }
+
+
+    return (
+
+        parts[0][0] +
+        parts[1][0]
+
+    ).toUpperCase();
+
+}
+
+
+
+/* =========================================================
+   UPDATE PROFILE
+========================================================= */
+
+function updateProfile() {
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        userName;
+
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        userName;
+
+
+    document.getElementById(
+        "profileAvatar"
+    ).textContent =
+        getInitials(
+            userName
+        );
+
+}
+
+
+
+/* =========================================================
+   RENDER ROLES
+========================================================= */
+
+function renderRoles() {
+
+    const container =
+        document.getElementById(
+            "rolesContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    registeredRoles.forEach(
+        role => {
+
+            const option =
+                document.createElement(
+                    "div"
+                );
+
+
+            option.className =
+                "role-option";
+
+
+            const selected =
+                role.toLowerCase() ===
+                "buyer";
+
+
+            if (selected) {
+
+                option.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            option.innerHTML = `
+
+                <span class="role-icon">
+                    ${getRoleIcon(role)}
+                </span>
+
+                <span>
+                    ${escapeHtml(role)}
+                </span>
+
+                <span
+                    class="role-check"
+                    style="
+                        display:
+                        ${
+                            selected
+                                ? "block"
+                                : "none"
+                        };
+                    "
+                >
+                    ✓
+                </span>
+
+            `;
+
+
+            option.addEventListener(
+                "click",
+                function() {
+
+                    switchRole(
+                        role
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   SWITCH ROLE
+========================================================= */
+
+function switchRole(role) {
+
+    const normalized =
+        String(
+            role
+        ).toLowerCase();
+
+
+    if (
+        normalized ===
+        "buyer"
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            "Buyer"
+        );
+
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+
+        return;
+
+    }
+
+
+    if (
+        normalized ===
+        "farmer"
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            "Farmer"
+        );
+
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+
+        return;
+
+    }
+
+
+    if (
+        normalized.includes(
+            "expert"
+        )
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            role
+        );
+
+
+        window.location.href =
+            "expert-dashboard.html";
+
+
+        return;
+
+    }
+
+
+    if (
+        normalized.includes(
+            "equipment"
+        )
+    ) {
+
+        sessionStorage.setItem(
+            "currentRole",
+            role
+        );
+
+
+        window.location.href =
+            "rental-dashboard.html";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+document
+    .getElementById(
+        "profileButton"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            const dropdown =
+                document.getElementById(
+                    "profileDropdown"
+                );
+
+
+            const arrow =
+                document.getElementById(
+                    "profileArrow"
+                );
+
+
+            dropdown.classList.toggle(
+                "show"
+            );
+
+
+            arrow.textContent =
+                dropdown.classList.contains(
+                    "show"
+                )
+                    ? "▲"
+                    : "▼";
+
+        }
+    );
+
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const area =
+            document.querySelector(
+                ".profile-area"
+            );
+
+
+        if (
+            area &&
+            !area.contains(
+                event.target
+            )
+        ) {
+
+            document
+                .getElementById(
+                    "profileDropdown"
+                )
+                .classList.remove(
+                    "show"
+                );
+
+
+            document.getElementById(
+                "profileArrow"
+            ).textContent =
+                "▼";
+
+        }
+
+    }
+);
+
+
+
+/* =========================================================
+   OPEN NOTIFICATIONS
+========================================================= */
+
+function openNotifications() {
+
+    window.location.href =
+        "buyer-notifications.html";
+
+}
+
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+async function logout(event) {
+
+    event.preventDefault();
+
+
+    const confirmed =
+        await showAppConfirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    sessionStorage.removeItem(
+        "currentRole"
+    );
+
+
+    sessionStorage.removeItem(
+        "loggedInUser"
+    );
+
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+/* =========================================================
+   APP CONFIRM (replaces native browser confirm())
+========================================================= */
+
+let appConfirmResolver = null;
+
+function showAppConfirm(message) {
+
+    document.getElementById("appConfirmMessage").textContent =
+        message;
+
+    document
+        .getElementById("appConfirmModal")
+        .classList.add("show");
+
+    return new Promise(function(resolve) {
+
+        appConfirmResolver = resolve;
+
+    });
+
+}
+
+function resolveAppConfirm(result) {
+
+    document
+        .getElementById("appConfirmModal")
+        .classList.remove("show");
+
+    if (appConfirmResolver) {
+
+        appConfirmResolver(result);
+        appConfirmResolver = null;
+
+    }
+
+}
+
+
+function showToast(message) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    toast.textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    setTimeout(
+        function() {
+
+            toast.classList.remove(
+                "show"
+            );
+
+        },
+        2500
+    );
+
+}
+
+
+
+/* =========================================================
+   FORMAT NUMBER
+========================================================= */
+
+function formatNumber(value) {
+
+    return Number(
+        value || 0
+    ).toLocaleString(
+        "en-LK"
+    );
+
+}
+
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(value) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value == null
+            ? ""
+            : String(value);
+
+
+    return div.innerHTML;
+
+}
+
+
+function escapeAttribute(value) {
+
+    return String(
+        value || ""
+    )
+    .replace(
+        /\\/g,
+        "\\\\"
+    )
+    .replace(
+        /'/g,
+        "\\'"
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    );
+
+}
+
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    async function() {
+
+        /*
+         * Make sure this page always
+         * belongs to Buyer.
+         */
+
+        sessionStorage.setItem(
+            "currentRole",
+            "Buyer"
+        );
+
+
+        await refreshOrders();
+
+
+        renderOrders();
+
+
+        updateProfile();
+
+
+        renderRoles();
+
+
+        updateNotificationCount();
+
+    }
+);
+
+
+
+/* =========================================================
+   REFRESH ORDERS IF CHANGED
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    async function() {
+
+        await refreshOrders();
+
+        renderOrders();
+
+        updateNotificationCount();
+
+    }
+);
+
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (
+            !document.hidden
+        ) {
+
+            renderOrders();
+
+            updateNotificationCount();
+
+        }
+
+    }
+);
+
+
+window.activeOrderStatusTab = "pending";
+
+document.querySelectorAll("#orderTabs .order-tab").forEach(function (tabButton) {
+
+    tabButton.addEventListener("click", function () {
+
+        document.querySelectorAll("#orderTabs .order-tab").forEach(function (t) {
+            t.classList.remove("active");
+        });
+
+        tabButton.classList.add("active");
+
+        window.activeOrderStatusTab = tabButton.dataset.status;
+
+        renderOrders();
+
+    });
+
+});
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+</body>
+
+</html>

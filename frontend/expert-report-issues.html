@@ -1,0 +1,4223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Expert Report Issues</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    min-height: 100%;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7f8;
+    color: #17202a;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   DASHBOARD
+========================================================= */
+
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =========================================================
+   SIDEBAR
+   MATCHED TO expert-dashboard.html
+========================================================= */
+
+.sidebar {
+    min-width: 255px;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #00543f 0%,
+            #003f32 100%
+        );
+
+    color: white;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   SIDEBAR LOGO
+========================================================= */
+
+.sidebar-logo {
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.10);
+
+    flex-shrink: 0;
+}
+
+.sidebar-logo img {
+    width: 160px;
+
+    height: auto;
+
+    max-height: 62px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =========================================================
+   SIDEBAR CONTENT
+========================================================= */
+
+.sidebar-content {
+    padding: 13px 10px;
+
+    flex: 1;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav-item {
+    width: 100%;
+
+    min-height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    background:
+        rgba(255,255,255,0.08);
+}
+
+.nav-item.active {
+    background:
+        linear-gradient(
+            90deg,
+            #19945f,
+            #087a4d
+        );
+}
+
+.nav-icon {
+    width: 22px;
+
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+    padding: 8px 10px 14px;
+
+    flex-shrink: 0;
+}
+
+.sidebar-divider {
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.13);
+
+    margin:
+        5px 12px 10px;
+}
+
+
+/* =========================================================
+   MAIN CONTENT
+========================================================= */
+
+.main-content {
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 42px;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.header {
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e8ee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 28px;
+
+    position: relative;
+
+    z-index: 2000;
+}
+
+.header-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+.welcome-section h1 {
+    font-size: 20px;
+
+    color: #17202a;
+
+    margin-bottom: 3px;
+
+    font-weight: 700;
+}
+
+.welcome-section p {
+    color: #667085;
+
+    font-size: 12px;
+}
+
+
+/* =========================================================
+   HEADER RIGHT
+========================================================= */
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.header-notification {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    color: #003f32;
+
+    transition: 0.2s;
+}
+
+.header-notification:hover {
+    transform: scale(1.06);
+}
+
+.header-badge {
+    position: absolute;
+
+    top: -1px;
+    right: -3px;
+
+    min-width: 18px;
+
+    height: 18px;
+
+    padding: 0 4px;
+
+    border-radius: 50px;
+
+    background: #ef3c35;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile {
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+.profile-picture {
+    font-size: 17px;
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #006b4f;
+
+    background: #eaf7f1;
+
+    object-fit: cover;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-info {
+    line-height: 17px;
+}
+
+.profile-name {
+    font-size: 13px;
+
+    font-weight: bold;
+
+    color: #182033;
+}
+
+.profile-role {
+    font-size: 10px;
+
+    color: #087a4d;
+
+    margin-top: 2px;
+}
+
+.profile-arrow {
+    font-size: 11px;
+
+    margin-left: 2px;
+
+    color: #17202a;
+
+    transition: transform 0.2s;
+}
+
+.profile.open .profile-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+.profile-dropdown {
+    position: absolute;
+
+    top:
+        calc(100% + 12px);
+
+    right: 0;
+
+    width: 280px;
+
+    background: white;
+
+    border:
+        1px solid #e1e7e3;
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 10px 28px
+        rgba(0,0,0,0.14);
+
+    padding: 10px;
+
+    display: none;
+
+    z-index: 9999;
+}
+
+.profile.open .profile-dropdown {
+    display: block;
+}
+
+
+/* =========================================================
+   DROPDOWN USER
+========================================================= */
+
+.dropdown-user {
+    padding:
+        10px 14px 12px;
+
+    border-bottom:
+        1px solid #e8ece9;
+
+    margin-bottom: 6px;
+}
+
+.dropdown-user-name {
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color: #172033;
+}
+
+.dropdown-user-role {
+    margin-top: 3px;
+
+    font-size: 13px;
+
+    color: #17833c;
+}
+
+
+/* =========================================================
+   SWITCH ROLE
+========================================================= */
+
+.dropdown-title {
+    padding:
+        8px 14px 9px;
+
+    color: #687385;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    letter-spacing: 0.4px;
+
+    text-transform: uppercase;
+}
+
+#roleOptions {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.dropdown-role {
+    width: 100%;
+
+    min-height: 49px;
+
+    border: none;
+
+    background: white;
+
+    border-radius: 8px;
+
+    padding: 0 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    color: #344054;
+
+    font-family: inherit;
+
+    font-size: 15px;
+}
+
+.dropdown-role:hover {
+    background: #f3f8f4;
+}
+
+.dropdown-role.current {
+    background: #e5f5e9;
+
+    color: #087f3f;
+
+    font-weight: bold;
+}
+
+.dropdown-role-icon {
+    width: 25px;
+
+    min-width: 25px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+.dropdown-role-name {
+    flex: 1;
+}
+
+.role-check {
+    width: 20px;
+
+    min-width: 20px;
+
+    text-align: center;
+
+    font-size: 20px;
+
+    color: #087f3f;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+    padding:
+        23px 18px 30px;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.page-title {
+    margin-bottom: 18px;
+}
+
+.page-title h2 {
+    font-size: 29px;
+
+    line-height: 34px;
+
+    margin-bottom: 5px;
+
+    color: #121826;
+}
+
+.page-title p {
+    color: #555f70;
+
+    font-size: 13px;
+
+    line-height: 18px;
+}
+
+
+/* =========================================================
+   REPORT LAYOUT
+========================================================= */
+
+.report-layout {
+    display: grid;
+
+    grid-template-columns:
+        minmax(0, 1fr)
+        370px;
+
+    gap: 20px;
+
+    align-items: start;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+.card-header {
+    min-height: 50px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 0 14px;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.card-header-icon {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 9px;
+
+    background: #e4f5e9;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+.card-header h3 {
+    font-size: 15px;
+
+    color: #202633;
+}
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+.report-form {
+    padding: 22px;
+}
+
+.form-row {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 16px;
+}
+
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #172033;
+}
+
+.required {
+    color: #d92d20;
+}
+
+.form-control {
+    width: 100%;
+
+    height: 48px;
+
+    border:
+        1px solid #d5ddd8;
+
+    border-radius: 9px;
+
+    padding: 0 13px;
+
+    background: white;
+
+    color: #172033;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    outline: none;
+}
+
+.form-control:focus {
+    border-color: #17833c;
+
+    box-shadow:
+        0 0 0 3px
+        rgba(23,131,60,0.10);
+}
+
+textarea.form-control {
+    height: 120px;
+
+    resize: vertical;
+
+    padding: 13px;
+
+    line-height: 20px;
+}
+
+
+/* =========================================================
+   CHARACTER COUNT
+========================================================= */
+
+.character-count {
+    text-align: right;
+
+    margin-top: 5px;
+
+    font-size: 12px;
+
+    color: #6b7683;
+}
+
+
+/* =========================================================
+   UPLOAD
+========================================================= */
+
+.upload-area {
+    min-height: 125px;
+
+    border:
+        1px dashed #7acb94;
+
+    border-radius: 10px;
+
+    background: #fbfefc;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    cursor: pointer;
+
+    padding: 15px;
+}
+
+.upload-area:hover {
+    background: #f4fbf6;
+}
+
+.upload-icon {
+    font-size: 25px;
+
+    margin-bottom: 7px;
+}
+
+.upload-main {
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #344054;
+}
+
+.upload-sub {
+    margin-top: 4px;
+
+    font-size: 12px;
+
+    color: #6b7683;
+}
+
+#imageInput {
+    display: none;
+}
+
+.selected-files {
+    margin-top: 8px;
+
+    font-size: 12px;
+
+    color: #17833c;
+}
+
+
+/* =========================================================
+   CONTACT METHOD
+========================================================= */
+
+.contact-options {
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 10px;
+}
+
+.contact-option {
+    min-height: 50px;
+
+    border:
+        1px solid #d5ddd8;
+
+    border-radius: 9px;
+
+    background: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 7px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #344054;
+}
+
+.contact-option.selected {
+    background: #e8f7ed;
+
+    border-color: #27a04d;
+
+    color: #087f3f;
+}
+
+.contact-option input {
+    display: none;
+}
+
+
+/* =========================================================
+   BUTTONS
+========================================================= */
+
+.form-actions {
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 10px;
+
+    margin-top: 8px;
+}
+
+.btn {
+    min-width: 105px;
+
+    height: 46px;
+
+    border-radius: 9px;
+
+    padding: 0 18px;
+
+    font-family: inherit;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.btn-cancel {
+    border:
+        1px solid #d5ddd8;
+
+    background: white;
+
+    color: #344054;
+}
+
+.btn-submit {
+    border: none;
+
+    background: #159447;
+
+    color: white;
+}
+
+.btn-submit:hover {
+    background: #087f3f;
+}
+
+.btn-submit:disabled {
+    opacity: 0.65;
+
+    cursor: not-allowed;
+}
+
+
+/* =========================================================
+   HELP CARD
+========================================================= */
+
+.help-card {
+    padding-bottom: 10px;
+}
+
+.help-item {
+    display: flex;
+
+    gap: 13px;
+
+    padding:
+        17px 20px;
+
+    border-bottom:
+        1px solid #e9eeeb;
+}
+
+.help-item:last-of-type {
+    border-bottom: none;
+}
+
+.help-icon {
+    width: 38px;
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 50%;
+
+    background: #e5f5e9;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+}
+
+.help-content h4 {
+    font-size: 14px;
+
+    color: #172033;
+
+    margin-bottom: 4px;
+}
+
+.help-content p {
+    color: #657386;
+
+    font-size: 13px;
+
+    line-height: 19px;
+}
+
+.help-button {
+    display: flex;
+
+    margin:
+        12px 20px 8px;
+
+    height: 45px;
+
+    border-radius: 9px;
+
+    background: #e0f4e5;
+
+    color: #087f3f;
+
+    text-decoration: none;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+.help-button:hover {
+    background: #d3eedb;
+}
+
+
+/* =========================================================
+   REPORTED ISSUES
+========================================================= */
+
+.issues-card {
+    margin-top: 20px;
+}
+
+.issues-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    padding:
+        14px;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.issues-header-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+.issues-header h3 {
+    font-size: 15px;
+
+    color: #202633;
+}
+
+.refresh-button {
+    height: 40px;
+
+    padding: 0 14px;
+
+    border:
+        1px solid #d5ddd8;
+
+    background: white;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    color: #344054;
+
+    font-family: inherit;
+}
+
+.refresh-button:hover {
+    background: #f4faf5;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+th {
+    background: #f6f8f7;
+
+    color: #344054;
+
+    font-size: 12px;
+
+    text-align: left;
+
+    padding:
+        13px 16px;
+
+    white-space: nowrap;
+}
+
+td {
+    padding:
+        15px 16px;
+
+    border-top:
+        1px solid #e9eeeb;
+
+    font-size: 13px;
+
+    color: #344054;
+
+    white-space: nowrap;
+}
+
+.issue-title {
+    font-weight: bold;
+
+    color: #172033;
+}
+
+.issue-description {
+    margin-top: 3px;
+
+    color: #6b7683;
+
+    max-width: 250px;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.status-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    padding:
+        5px 10px;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+.status-pending {
+    background: #fff1d8;
+
+    color: #a96b00;
+}
+
+.status-resolved {
+    background: #dcf6e4;
+
+    color: #087f3f;
+}
+
+.status-rejected {
+    background: #fde4e2;
+
+    color: #c62828;
+}
+
+.priority-low {
+    color: #17833c;
+
+    font-weight: bold;
+}
+
+.priority-medium {
+    color: #a96b00;
+
+    font-weight: bold;
+}
+
+.priority-high {
+    color: #d92d20;
+
+    font-weight: bold;
+}
+
+.empty-table {
+    padding: 35px;
+
+    text-align: center;
+
+    color: #6b7683;
+}
+
+
+/* =========================================================
+   FOOTER
+   MATCHED TO expert-dashboard.html
+========================================================= */
+
+.footer {
+    position: fixed;
+
+    left: 255px;
+    right: 0;
+    bottom: 0;
+
+    height: 42px;
+
+    background: #004d2a;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    font-size: 10px;
+
+    z-index: 900;
+}
+
+.footer a {
+    color: white;
+
+    text-decoration: none;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .report-layout {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s ease;
+    }
+
+    .sidebar.open {
+        transform:
+            translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    .footer {
+        left: 0;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .content {
+        padding:
+            18px 12px 30px;
+    }
+
+    .header {
+        padding:
+            0 15px;
+    }
+
+    .welcome-section h1 {
+        font-size: 18px;
+    }
+
+    .welcome-section p {
+        font-size: 11px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .profile-arrow {
+        display: none;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .contact-options {
+        grid-template-columns: 1fr;
+    }
+
+    .profile-dropdown {
+        right: -5px;
+    }
+
+}
+
+
+@media (max-width: 450px) {
+
+    .page-title h2 {
+        font-size: 27px;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+}
+
+
+/* =========================================================
+   SIDEBAR SCROLLBAR
+========================================================= */
+
+.sidebar::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+    background:
+        rgba(255,255,255,0.20);
+
+    border-radius: 5px;
+}
+
+
+.consultation-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <!-- SIDEBAR CONTENT -->
+
+    <div class="sidebar-content">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="expert-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- CONSULTATIONS -->
+
+        <a
+            href="expert-consultations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-label">
+                Consultations
+            </span>
+
+            <span class="consultation-badge" id="consultationBadge" style="display:none;">0</span>
+
+        </a>
+
+
+        <!-- RESOURCES -->
+
+        <a
+            href="expert-resources.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                📖
+            </span>
+
+            <span class="nav-label">
+                Resources
+            </span>
+
+        </a>
+
+
+        <!-- REPORT ISSUES -->
+
+        <a
+            href="expert-report-issues.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-label">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="expert-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="expert-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <!-- HELP -->
+
+        <a
+            href="expert-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <!-- SETTINGS -->
+
+        <a
+            href="expert-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <!-- LOGOUT -->
+
+        <a
+            href="#"
+            class="nav-item"
+            id="logoutButton"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+
+<main class="main-content">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+
+        <div class="header-left">
+
+            <div class="welcome-section">
+
+                <h1>
+                    Welcome back, <span id="userName">User</span>!
+                </h1>
+
+                <p>
+                    Facing a problem? Let us know.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- HEADER RIGHT -->
+
+        <div class="header-right">
+
+
+            <!-- NOTIFICATION -->
+
+            <div
+                class="header-notification"
+                id="notificationButton"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="header-badge"
+                    id="notificationCount"
+                >
+                    3
+                </span>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+
+                <img
+                    src="https://ui-avatars.com/api/?name=Agricultural+Expert&background=eaf7f1&color=006b4f"
+                    alt="Profile"
+                    class="profile-picture"
+                    id="profilePicture"
+                >
+
+
+                <div class="profile-info">
+
+                    <div
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Agricultural Expert
+                    </div>
+
+                    <div
+                        class="profile-role"
+                        id="profileRole"
+                    >
+                        Agricultural Expert
+                    </div>
+
+                </div>
+
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+                <!-- PROFILE DROPDOWN -->
+
+                <div
+                    class="profile-dropdown"
+                    id="profileDropdown"
+                >
+
+                    <div class="dropdown-user">
+
+                        <div
+                            class="dropdown-user-name"
+                            id="dropdownUserName"
+                        >
+                            Agricultural Expert
+                        </div>
+
+                        <div
+                            class="dropdown-user-role"
+                            id="dropdownUserRole"
+                        >
+                            Agricultural Expert
+                        </div>
+
+                    </div>
+
+
+                    <div class="dropdown-title">
+                        Switch Role
+                    </div>
+
+
+                    <div id="roleOptions"></div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =========================================================
+         CONTENT
+    ========================================================= -->
+
+    <section class="content">
+
+
+        <div class="page-title">
+
+            <h2>
+                Report Issues
+            </h2>
+
+            <p>
+                Report system problems or issues related to consultations and agricultural services.
+            </p>
+
+        </div>
+
+
+
+        <!-- =====================================================
+             REPORT LAYOUT
+        ===================================================== -->
+
+        <div class="report-layout">
+
+
+            <!-- =================================================
+                 NEW ISSUE
+            ================================================= -->
+
+            <div class="card">
+
+
+                <div class="card-header">
+
+                    <div class="card-header-icon">
+                        📝
+                    </div>
+
+                    <h3>
+                        Report a New Issue
+                    </h3>
+
+                </div>
+
+
+
+                <form
+                    class="report-form"
+                    id="reportForm"
+                >
+
+
+                    <!-- CATEGORY + PRIORITY -->
+
+                    <div class="form-row">
+
+
+                        <div class="form-group">
+
+                            <label for="category" class="form-label">
+
+                                Issue Category
+
+                                <span class="required">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <select
+                                class="form-control"
+                                id="category"
+                                required
+                            >
+
+                                <option value="">
+                                    Select Category
+                                </option>
+
+                                <option value="Consultation Issue">
+                                    Consultation Issue
+                                </option>
+
+                                <option value="Farmer Issue">
+                                    Farmer Issue
+                                </option>
+
+                                <option value="Resource Issue">
+                                    Resource Issue
+                                </option>
+
+                                <option value="Account Issue">
+                                    Account Issue
+                                </option>
+
+                                <option value="Notification Issue">
+                                    Notification Issue
+                                </option>
+
+                                <option value="Technical Issue">
+                                    Technical Issue
+                                </option>
+
+                                <option value="System Issue">
+                                    System Issue
+                                </option>
+
+                                <option value="Other">
+                                    Other
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                        <!-- RELATED ID -->
+
+                        <div
+                            class="form-group"
+                            id="relatedIdGroup"
+                            style="display:none;"
+                        >
+
+                            <label
+                                class="form-label"
+                                id="relatedIdLabel"
+                                for="relatedId"
+                            >
+                                Related ID
+                            </label>
+
+                            <input
+                                type="text"
+                                class="form-control"
+                                id="relatedId"
+                                placeholder="Enter the related ID"
+                            >
+
+                        </div>
+
+
+
+                        <div class="form-group">
+
+                            <label for="priority" class="form-label">
+
+                                Priority
+
+                                <span class="required">
+                                    *
+                                </span>
+
+                            </label>
+
+
+                            <select
+                                class="form-control"
+                                id="priority"
+                                required
+                            >
+
+                                <option value="Low">
+                                    Low
+                                </option>
+
+                                <option
+                                    value="Medium"
+                                    selected
+                                >
+                                    Medium
+                                </option>
+
+                                <option value="High">
+                                    High
+                                </option>
+
+                            </select>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- TITLE -->
+
+                    <div class="form-group">
+
+                        <label for="issueTitle" class="form-label">
+
+                            Issue Title
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="issueTitle"
+                            placeholder="Briefly describe the issue"
+                            maxlength="100"
+                            required
+                        >
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group">
+
+                        <label for="issueDescription" class="form-label">
+
+                            Issue Description
+
+                            <span class="required">
+                                *
+                            </span>
+
+                        </label>
+
+
+                        <textarea
+                            class="form-control"
+                            id="issueDescription"
+                            placeholder="Please provide as much detail as possible..."
+                            maxlength="500"
+                            required
+                        ></textarea>
+
+
+                        <div
+                            class="character-count"
+                            id="characterCount"
+                        >
+                            0/500
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- IMAGE + CONTACT -->
+
+                    <div class="form-row">
+
+
+                        <!-- IMAGE -->
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Attach Images
+                            </label>
+
+
+                            <label
+                                class="upload-area"
+                                for="imageInput"
+                            >
+
+                                <div class="upload-icon">
+                                    ☁️
+                                </div>
+
+                                <div class="upload-main">
+
+                                    Drag &amp; drop images here
+
+                                    <br>
+
+                                    or click to upload
+
+                                </div>
+
+                                <div class="upload-sub">
+                                    JPG, PNG or GIF
+                                </div>
+
+                                <div
+                                    class="selected-files"
+                                    id="selectedFiles"
+                                ></div>
+
+                            </label>
+
+
+                            <input
+                                type="file"
+                                id="imageInput"
+                                accept="image/jpeg,image/png,image/gif"
+                                multiple
+                            >
+
+                        </div>
+
+
+
+                        <!-- CONTACT -->
+
+                        <div class="form-group">
+
+                            <label class="form-label">
+                                Preferred Contact Method
+                            </label>
+
+
+                            <div class="contact-options">
+
+
+                                <label
+                                    class="contact-option selected"
+                                    id="messageContact"
+                                >
+
+                                    <input
+                                        type="radio"
+                                        name="contactMethod"
+                                        value="In-App Message"
+                                        checked
+                                    >
+
+                                    💬 In-App Message
+
+                                </label>
+
+
+                                <label
+                                    class="contact-option"
+                                    id="emailContact"
+                                >
+
+                                    <input
+                                        type="radio"
+                                        name="contactMethod"
+                                        value="Email"
+                                    >
+
+                                    ✉ Email
+
+                                </label>
+
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- ACTIONS -->
+
+                    <div class="form-actions">
+
+
+                        <button
+                            type="button"
+                            class="btn btn-cancel"
+                            id="cancelButton"
+                        >
+                            Cancel
+                        </button>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-submit"
+                        >
+                            🚀 Submit Issue
+                        </button>
+
+
+                    </div>
+
+
+                </form>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 HELP CARD
+            ================================================= -->
+
+            <div class="card help-card">
+
+
+                <div class="card-header">
+
+                    <div class="card-header-icon">
+                        💡
+                    </div>
+
+                    <h3>
+                        Before You Report
+                    </h3>
+
+                </div>
+
+
+                <div class="help-item">
+
+                    <div class="help-icon">
+                        📋
+                    </div>
+
+                    <div class="help-content">
+
+                        <h4>
+                            Check existing solutions
+                        </h4>
+
+                        <p>
+                            Please make sure the issue has not already been solved or listed in our help center.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="help-item">
+
+                    <div class="help-icon">
+                        📄
+                    </div>
+
+                    <div class="help-content">
+
+                        <h4>
+                            Provide clear details
+                        </h4>
+
+                        <p>
+                            Mention what happened, when, and where the issue occurred.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="help-item">
+
+                    <div class="help-icon">
+                        🖼️
+                    </div>
+
+                    <div class="help-content">
+
+                        <h4>
+                            Add screenshots
+                        </h4>
+
+                        <p>
+                            Images help us understand and resolve the issue faster.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="help-item">
+
+                    <div class="help-icon">
+                        🏷️
+                    </div>
+
+                    <div class="help-content">
+
+                        <h4>
+                            Choose the right category
+                        </h4>
+
+                        <p>
+                            Selecting the right category helps us route your issue to the right team.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="help-support.html"
+                    class="help-button"
+                >
+                    Visit Help Center ↗
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             MY REPORTED ISSUES
+        ================================================= -->
+
+        <div class="card issues-card">
+
+
+            <div class="issues-header">
+
+
+                <div class="issues-header-left">
+
+                    <div class="card-header-icon">
+                        📋
+                    </div>
+
+                    <h3>
+                        My Reported Issues
+                    </h3>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="refresh-button"
+                    id="refreshButton"
+                >
+                    ↻ Refresh
+                </button>
+
+
+            </div>
+
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Title
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Priority
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Reported On
+                            </th>
+
+                            <th>
+                                Action
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody id="issuesTableBody">
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="empty-table"
+                            >
+                                No reported issues available.
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+
+                </table>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <span>
+        © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+let user = null;
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem("user")
+        );
+
+}
+catch (error) {
+
+    user = null;
+
+}
+
+
+/* =========================================================
+   ROLE INFORMATION
+========================================================= */
+
+const roleNames = {
+
+    farmer:
+        "Farmer",
+
+    buyer:
+        "Buyer",
+
+    expert:
+        "Agricultural Expert",
+
+    equipment_provider:
+        "Equipment Provider"
+
+};
+
+
+const roleIcons = {
+
+    farmer:
+        "👨‍🌾",
+
+    buyer:
+        "🛒",
+
+    expert:
+        "🌱",
+
+    equipment_provider:
+        "🚜"
+
+};
+
+
+/* =========================================================
+   NORMALIZE ROLE
+========================================================= */
+
+function normalizeRole(role) {
+
+    if (!role) {
+        return "";
+    }
+
+    const value =
+        String(role)
+            .toLowerCase()
+            .trim();
+
+    if (value === "farmer") {
+        return "farmer";
+    }
+
+    if (value === "buyer") {
+        return "buyer";
+    }
+
+    if (
+        value === "expert" ||
+        value === "agricultural expert" ||
+        value === "agri expert"
+    ) {
+
+        return "expert";
+
+    }
+
+    if (
+        value === "equipment_provider" ||
+        value === "equipment provider" ||
+        value === "equipment-provider"
+    ) {
+
+        return "equipment_provider";
+
+    }
+
+    return "";
+
+}
+
+
+/* =========================================================
+   GET REGISTERED ROLE
+========================================================= */
+
+function getRegisteredRole() {
+
+    if (!user) {
+        return "";
+    }
+
+    const possibleRoles = [
+
+        user.registered_role,
+
+        user.registeredRole,
+
+        user.registration_role,
+
+        user.registrationRole,
+
+        user.account_role,
+
+        user.accountRole,
+
+        user.user_role,
+
+        user.userRole,
+
+        user.role
+
+    ];
+
+    for (
+        const role of possibleRoles
+    ) {
+
+        const normalized =
+            normalizeRole(role);
+
+        if (
+            normalized &&
+            roleNames[normalized]
+        ) {
+
+            return normalized;
+
+        }
+
+    }
+
+    return "";
+
+}
+
+
+/* =========================================================
+   GET ACCOUNT ROLES
+========================================================= */
+
+function getAccountRoles() {
+
+    const registeredRole =
+        getRegisteredRole();
+
+    if (registeredRole) {
+
+        if (
+            registeredRole === "buyer"
+        ) {
+
+            return [
+                "buyer"
+            ];
+
+        }
+
+        return [
+            registeredRole,
+            "buyer"
+        ];
+
+    }
+
+    if (
+        user &&
+        Array.isArray(user.roles)
+    ) {
+
+        const roles =
+            user.roles
+                .map(normalizeRole)
+                .filter(
+                    role =>
+                        !!roleNames[role]
+                );
+
+        const uniqueRoles =
+            [...new Set(roles)];
+
+        if (
+            uniqueRoles.length > 0
+        ) {
+
+            const hasNonBuyerRole =
+                uniqueRoles.some(
+                    role =>
+                        role !== "buyer"
+                );
+
+            if (
+                hasNonBuyerRole &&
+                !uniqueRoles.includes("buyer")
+            ) {
+
+                uniqueRoles.push(
+                    "buyer"
+                );
+
+            }
+
+            return uniqueRoles;
+
+        }
+
+    }
+
+    return [
+        "expert"
+    ];
+
+}
+
+
+/* =========================================================
+   CURRENT ROLE
+========================================================= */
+
+let currentRole =
+    normalizeRole(
+        sessionStorage.getItem(
+            "selectedRole"
+        )
+    );
+
+const availableRoles =
+    getAccountRoles();
+
+if (
+    !currentRole ||
+    !availableRoles.includes(
+        currentRole
+    )
+) {
+
+    currentRole =
+        "expert";
+
+    sessionStorage.setItem(
+        "selectedRole",
+        "expert"
+    );
+
+}
+
+
+/* =========================================================
+   DISPLAY USER
+========================================================= */
+
+function displayUser() {
+
+    let fullName =
+        "Agricultural Expert";
+
+    if (user) {
+
+        const firstName =
+            user.first_name ||
+            user.firstName ||
+            "";
+
+        const lastName =
+            user.last_name ||
+            user.lastName ||
+            "";
+
+        fullName =
+            `${firstName} ${lastName}`.trim();
+
+        if (!fullName) {
+
+            fullName =
+                user.name ||
+                user.full_name ||
+                user.fullName ||
+                "Agricultural Expert";
+
+        }
+
+    }
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        fullName;
+
+    const welcomeNameEl =
+        document.getElementById(
+            "userName"
+        );
+
+    if (welcomeNameEl) {
+
+        welcomeNameEl.textContent =
+            fullName;
+
+    }
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        fullName;
+
+    document.getElementById(
+        "profileRole"
+    ).textContent =
+        roleNames[currentRole] ||
+        "Agricultural Expert";
+
+    document.getElementById(
+        "dropdownUserRole"
+    ).textContent =
+        roleNames[currentRole] ||
+        "Agricultural Expert";
+
+    document.getElementById(
+        "profilePicture"
+    ).src =
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=eaf7f1&color=006b4f`;
+
+}
+
+
+function updateNotificationCount() {
+
+    const userId =
+        user && user.id;
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const badgeEl = document.getElementById("notificationCount");
+
+            if (badgeEl) badgeEl.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+updateNotificationCount();
+
+
+/* =========================================================
+   LOAD ROLES
+========================================================= */
+
+function loadRoles() {
+
+    const roleOptions =
+        document.getElementById(
+            "roleOptions"
+        );
+
+    roleOptions.innerHTML = "";
+
+    getAccountRoles().forEach(
+        function(role) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+            button.type =
+                "button";
+
+            button.className =
+                "dropdown-role";
+
+            if (
+                role === currentRole
+            ) {
+
+                button.classList.add(
+                    "current"
+                );
+
+            }
+
+            button.innerHTML = `
+
+                <span
+                    class="dropdown-role-icon"
+                >
+                    ${roleIcons[role] || "👤"}
+                </span>
+
+                <span
+                    class="dropdown-role-name"
+                >
+                    ${roleNames[role] || role}
+                </span>
+
+                <span
+                    class="role-check"
+                >
+                    ${
+                        role === currentRole
+                            ? "✓"
+                            : ""
+                    }
+                </span>
+
+            `;
+
+            button.addEventListener(
+                "click",
+                function(event) {
+
+                    event.stopPropagation();
+
+                    switchRole(role);
+
+                }
+            );
+
+            roleOptions.appendChild(
+                button
+            );
+
+        }
+    );
+
+    moveCurrentRoleToFront(roleOptions);
+
+
+}
+
+
+/* =========================================================
+   SWITCH ROLE
+========================================================= */
+
+function switchRole(role) {
+
+    if (
+        !getAccountRoles().includes(role)
+    ) {
+
+        return;
+
+    }
+
+    sessionStorage.setItem(
+        "selectedRole",
+        role
+    );
+
+    if (role === "buyer") {
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+    }
+
+    else if (role === "farmer") {
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+    }
+
+    else if (role === "expert") {
+
+        window.location.href =
+            "expert-dashboard.html";
+
+    }
+
+    else if (
+        role === "equipment_provider"
+    ) {
+
+        window.location.href =
+            "rental-dashboard.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+const profile =
+    document.getElementById(
+        "profile"
+    );
+
+profile.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        profile.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+document.addEventListener(
+    "click",
+    function() {
+
+        profile.classList.remove(
+            "open"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   NOTIFICATION BUTTON
+========================================================= */
+
+document
+    .getElementById(
+        "notificationButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            window.location.href =
+                "expert-notifications.html";
+
+        }
+    );
+
+
+/* =========================================================
+   CHARACTER COUNT
+========================================================= */
+
+const description =
+    document.getElementById(
+        "issueDescription"
+    );
+
+const characterCount =
+    document.getElementById(
+        "characterCount"
+    );
+
+description.addEventListener(
+    "input",
+    function() {
+
+        characterCount.textContent =
+            `${this.value.length}/500`;
+
+    }
+);
+
+
+/* =========================================================
+   CATEGORY / RELATED ID
+========================================================= */
+
+const categorySelect =
+    document.getElementById(
+        "category"
+    );
+
+const relatedIdGroup =
+    document.getElementById(
+        "relatedIdGroup"
+    );
+
+const relatedId =
+    document.getElementById(
+        "relatedId"
+    );
+
+const relatedIdLabel =
+    document.getElementById(
+        "relatedIdLabel"
+    );
+
+if (categorySelect) {
+
+    categorySelect.addEventListener(
+        "change",
+        function() {
+
+            const value =
+                this.value;
+
+            const relatedCategories = {
+
+                "Consultation Issue": {
+                    label: "Related Consultation ID",
+                    placeholder: "Enter consultation ID"
+                },
+
+                "Farmer Issue": {
+                    label: "Related Farmer ID",
+                    placeholder: "Enter the farmer's ID"
+                }
+
+            };
+
+            const match =
+                relatedCategories[value];
+
+            if (match) {
+
+                relatedIdGroup.style.display =
+                    "block";
+
+                relatedIdLabel.textContent =
+                    match.label;
+
+                relatedId.placeholder =
+                    match.placeholder;
+
+            } else {
+
+                relatedIdGroup.style.display =
+                    "none";
+
+                relatedId.value =
+                    "";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE UPLOAD
+========================================================= */
+
+const imageInput =
+    document.getElementById(
+        "imageInput"
+    );
+
+const selectedFiles =
+    document.getElementById(
+        "selectedFiles"
+    );
+
+imageInput.addEventListener(
+    "change",
+    function() {
+
+        if (
+            this.files.length === 0
+        ) {
+
+            selectedFiles.textContent =
+                "";
+
+            return;
+
+        }
+
+        selectedFiles.textContent =
+            `${this.files.length} image(s) selected`;
+
+    }
+);
+
+
+/* =========================================================
+   CONTACT OPTIONS
+========================================================= */
+
+const contactOptions =
+    document.querySelectorAll(
+        ".contact-option"
+    );
+
+contactOptions.forEach(
+    function(option) {
+
+        option.addEventListener(
+            "click",
+            function() {
+
+                contactOptions.forEach(
+                    item =>
+                        item.classList.remove(
+                            "selected"
+                        )
+                );
+
+                this.classList.add(
+                    "selected"
+                );
+
+                this.querySelector(
+                    "input"
+                ).checked =
+                    true;
+
+            }
+        );
+
+    }
+);
+
+
+/* =========================================================
+   RESET FORM
+========================================================= */
+
+function resetForm() {
+
+    document
+        .getElementById(
+            "reportForm"
+        )
+        .reset();
+
+    characterCount.textContent =
+        "0/500";
+
+    selectedFiles.textContent =
+        "";
+
+    contactOptions.forEach(
+        item =>
+            item.classList.remove(
+                "selected"
+            )
+    );
+
+    document
+        .getElementById(
+            "messageContact"
+        )
+        .classList.add(
+            "selected"
+        );
+
+    document.querySelector(
+        'input[value="In-App Message"]'
+    ).checked =
+        true;
+
+}
+
+
+/* =========================================================
+   CANCEL
+========================================================= */
+
+document
+    .getElementById(
+        "cancelButton"
+    )
+    .addEventListener(
+        "click",
+        resetForm
+    );
+
+
+/* =========================================================
+   SUBMIT ISSUE
+========================================================= */
+
+document
+    .getElementById(
+        "reportForm"
+    )
+    .addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+            const category =
+                document.getElementById(
+                    "category"
+                ).value;
+
+            const priority =
+                document.getElementById(
+                    "priority"
+                ).value;
+
+            const title =
+                document.getElementById(
+                    "issueTitle"
+                ).value.trim();
+
+            const issueDescription =
+                document.getElementById(
+                    "issueDescription"
+                ).value.trim();
+
+            const contactMethod =
+                document.querySelector(
+                    'input[name="contactMethod"]:checked'
+                )?.value ||
+                "In-App Message";
+
+            if (
+                !category ||
+                !title ||
+                !issueDescription
+            ) {
+
+                alert(
+                    "Please fill in all required fields."
+                );
+
+                return;
+
+            }
+
+            const submitButton =
+                document.querySelector(
+                    ".btn-submit"
+                );
+
+            submitButton.disabled =
+                true;
+
+            submitButton.textContent =
+                "Submitting...";
+
+            try {
+
+                const formData =
+                    new FormData();
+
+                formData.append(
+                    "reporter_id",
+                    user && user.id
+                );
+
+                formData.append(
+                    "category",
+                    category
+                );
+
+                formData.append(
+                    "priority",
+                    priority
+                );
+
+                formData.append(
+                    "title",
+                    title
+                );
+
+                formData.append(
+                    "description",
+                    issueDescription
+                );
+
+                formData.append(
+                    "contact_method",
+                    contactMethod
+                );
+
+                formData.append(
+                    "user_role",
+                    "expert"
+                );
+
+                formData.append(
+                    "role",
+                    "expert"
+                );
+
+                if (
+                    imageInput.files.length > 0
+                ) {
+
+                    Array
+                        .from(imageInput.files)
+                        .forEach(
+                            function(file) {
+
+                                formData.append(
+                                    "images",
+                                    file
+                                );
+
+                            }
+                        );
+
+                }
+
+                const response =
+                    await fetch(
+                        "/api/reports",
+                        {
+                            method: "POST",
+                            body: formData
+                        }
+                    );
+
+                const data =
+                    await response.json();
+
+                if (
+                    !response.ok ||
+                    !data.success
+                ) {
+
+                    throw new Error(
+                        data.message ||
+                        "Unable to submit the issue."
+                    );
+
+                }
+
+                alert(
+                    "Issue submitted successfully."
+                );
+
+                addExpertReportNotification(
+                    title
+                );
+
+                resetForm();
+
+                loadReportedIssues();
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Submit issue error:",
+                    error
+                );
+
+                alert(
+                    error.message ||
+                    "Could not submit the issue."
+                );
+
+            }
+
+            finally {
+
+                submitButton.disabled =
+                    false;
+
+                submitButton.textContent =
+                    "🚀 Submit Issue";
+
+            }
+
+        }
+    );
+
+
+/* =========================================================
+   EXPERT REPORT NOTIFICATION
+========================================================= */
+
+function addExpertReportNotification(
+    title
+) {
+
+    const STORAGE_KEY =
+        "expertNotifications";
+
+    let notifications = [];
+
+    try {
+
+        notifications =
+            JSON.parse(
+                localStorage.getItem(
+                    STORAGE_KEY
+                ) || "[]"
+            );
+
+    }
+
+    catch (error) {
+
+        notifications = [];
+
+    }
+
+    if (
+        !Array.isArray(
+            notifications
+        )
+    ) {
+
+        notifications = [];
+
+    }
+
+    notifications.unshift({
+
+        id:
+            "expert-report-" +
+            Date.now(),
+
+        type:
+            "report",
+
+        title:
+            "Report Submitted",
+
+        message:
+            `Your issue "${title}" has been submitted successfully and is being reviewed.`,
+
+        time:
+            "Just now",
+
+        read:
+            false
+
+    });
+
+    localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(
+            notifications
+        )
+    );
+
+}
+
+
+/* =========================================================
+   LOAD REPORTED ISSUES
+========================================================= */
+
+async function loadReportedIssues() {
+
+    const tableBody =
+        document.getElementById(
+            "issuesTableBody"
+        );
+
+    tableBody.innerHTML = `
+
+        <tr>
+
+            <td
+                colspan="6"
+                class="empty-table"
+            >
+                Loading reported issues...
+            </td>
+
+        </tr>
+
+    `;
+
+    try {
+
+        let reporterId = null;
+
+        try {
+
+            const currentUser =
+                JSON.parse(sessionStorage.getItem("user"));
+
+            reporterId =
+                currentUser && currentUser.id;
+
+        } catch (idError) {
+
+            reporterId = null;
+
+        }
+
+        const response =
+            await fetch(
+                `/api/reports/my?reporter_id=${reporterId || ""}`
+            );
+
+        const data =
+            await response.json();
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Unable to load reports."
+            );
+
+        }
+
+        const reports =
+            data.reports ||
+            data.issues ||
+            [];
+
+        displayReportedIssues(
+            reports
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Load reports error:",
+            error
+        );
+
+        tableBody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="empty-table"
+                >
+                    No reported issues available.
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   DISPLAY REPORTS
+========================================================= */
+
+function displayReportedIssues(
+    reports
+) {
+
+    const tableBody =
+        document.getElementById(
+            "issuesTableBody"
+        );
+
+    tableBody.innerHTML =
+        "";
+
+    if (
+        !reports ||
+        reports.length === 0
+    ) {
+
+        tableBody.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="6"
+                    class="empty-table"
+                >
+                    You have not reported any issues yet.
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+    reports.forEach(
+        function(report) {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+            const title =
+                report.subject ||
+                    report.title ||
+                report.issue_title ||
+                "Untitled Issue";
+
+            const issueDescription =
+                report.description ||
+                report.issue_description ||
+                "";
+
+            const category =
+                report.category ||
+                "Other";
+
+            const priority =
+                report.priority ||
+                "Medium";
+
+            const status =
+                report.status ||
+                "Pending";
+
+            const date =
+                report.created_at ||
+                report.reported_on ||
+                report.createdAt;
+
+            const formattedDate =
+                date
+                    ? formatDate(date)
+                    : "—";
+
+            const statusClass =
+                getStatusClass(
+                    status
+                );
+
+            const priorityClass =
+                getPriorityClass(
+                    priority
+                );
+
+            const reportId =
+                report.id ||
+                report._id ||
+                "";
+
+            row.innerHTML = `
+
+                <td>
+
+                    <div class="issue-title">
+                        ${escapeHtml(title)}
+                    </div>
+
+                    <div class="issue-description">
+                        ${escapeHtml(issueDescription)}
+                    </div>
+
+                </td>
+
+                <td>
+                    ${escapeHtml(category)}
+                </td>
+
+                <td>
+
+                    <span class="${priorityClass}">
+                        ${escapeHtml(priority)}
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <span
+                        class="status-badge ${statusClass}"
+                    >
+                        ${escapeHtml(status)}
+                    </span>
+
+                </td>
+
+                <td>
+                    ${formattedDate}
+                </td>
+
+                <td>
+
+                    <button
+                        type="button"
+                        class="refresh-button"
+                        onclick="viewReport('${escapeHtml(reportId)}')"
+                    >
+                        👁 View Details
+                    </button>
+
+                </td>
+
+            `;
+
+            tableBody.appendChild(
+                row
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   VIEW REPORT
+========================================================= */
+
+function viewReport(id) {
+
+    if (!id) {
+
+        alert(
+            "Report details are unavailable."
+        );
+
+        return;
+
+    }
+
+    window.location.href =
+        `expert-report-details.html?id=${encodeURIComponent(id)}`;
+
+}
+
+
+/* =========================================================
+   STATUS CLASS
+========================================================= */
+
+function getStatusClass(
+    status
+) {
+
+    const value =
+        String(
+            status || ""
+        ).toLowerCase();
+
+    if (
+        value.includes("resolved") ||
+        value.includes("completed")
+    ) {
+
+        return "status-resolved";
+
+    }
+
+    if (
+        value.includes("rejected") ||
+        value.includes("closed")
+    ) {
+
+        return "status-rejected";
+
+    }
+
+    return "status-pending";
+
+}
+
+
+/* =========================================================
+   PRIORITY CLASS
+========================================================= */
+
+function getPriorityClass(
+    priority
+) {
+
+    const value =
+        String(
+            priority || ""
+        ).toLowerCase();
+
+    if (
+        value === "high"
+    ) {
+
+        return "priority-high";
+
+    }
+
+    if (
+        value === "low"
+    ) {
+
+        return "priority-low";
+
+    }
+
+    return "priority-medium";
+
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(
+    date
+) {
+
+    try {
+
+        return new Date(
+            date
+        ).toLocaleString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        return String(date);
+
+    }
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =========================================================
+   REFRESH
+========================================================= */
+
+document
+    .getElementById(
+        "refreshButton"
+    )
+    .addEventListener(
+        "click",
+        loadReportedIssues
+    );
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+const mobileMenu =
+    document.createElement(
+        "button"
+    );
+
+mobileMenu.type =
+    "button";
+
+mobileMenu.innerHTML =
+    "☰";
+
+mobileMenu.style.cssText = `
+    display:none;
+    position:fixed;
+    left:15px;
+    top:20px;
+    width:38px;
+    height:38px;
+    border:1px solid #d5ddd8;
+    background:white;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:20px;
+    z-index:3000;
+`;
+
+document.body.appendChild(
+    mobileMenu
+);
+
+function updateMobileMenu() {
+
+    if (
+        window.innerWidth <= 850
+    ) {
+
+        mobileMenu.style.display =
+            "block";
+
+    }
+
+    else {
+
+        mobileMenu.style.display =
+            "none";
+
+        document
+            .getElementById(
+                "sidebar"
+            )
+            .classList.remove(
+                "open"
+            );
+
+    }
+
+}
+
+mobileMenu.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+        document
+            .getElementById(
+                "sidebar"
+            )
+            .classList.toggle(
+                "open"
+            );
+
+    }
+);
+
+window.addEventListener(
+    "resize",
+    updateMobileMenu
+);
+
+updateMobileMenu();
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+document
+    .getElementById(
+        "logoutButton"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to logout?"
+                );
+
+            if (!confirmed) {
+                return;
+            }
+
+            sessionStorage.removeItem(
+                "token"
+            );
+
+            sessionStorage.removeItem(
+                "user"
+            );
+
+            sessionStorage.removeItem(
+                "selectedRole"
+            );
+
+            localStorage.removeItem(
+                "expertLoggedIn"
+            );
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+displayUser();
+
+loadRoles();
+
+loadReportedIssues();
+
+
+
+function updateConsultationBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(c => c.unread_count > 0).length;
+
+            const badgeEl =
+                document.getElementById("consultationBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load consultation badge count:", error);
+        });
+
+}
+
+updateConsultationBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+
+</body>
+
+</html>

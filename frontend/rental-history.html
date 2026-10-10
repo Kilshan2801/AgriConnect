@@ -1,0 +1,5839 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AgriConnect - Rental History</title>
+
+
+    <style>
+
+        /* =====================================================
+           GENERAL
+        ===================================================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #f4f7f5;
+
+            color:
+                #14213d;
+
+            min-height:
+                100vh;
+
+        }
+
+
+        button,
+        input,
+        select {
+
+            font-family:
+                inherit;
+
+        }
+
+
+        /* =====================================================
+           LAYOUT
+        ===================================================== */
+
+        .dashboard {
+
+            display:
+                flex;
+
+            min-height:
+                100vh;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+    min-width: 255px;
+
+
+            position:
+                fixed;
+
+            left:
+                0;
+
+            top:
+                0;
+
+            bottom:
+                0;
+
+            width:
+                255px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #f56a00 0%,
+                    #ef6100 50%,
+                    #ed5b00 100%
+                );
+
+            color:
+                white;
+
+            z-index:
+                1000;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        .sidebar-logo {
+    height: 86px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.sidebar-logo img {
+    width: 160px;
+    height: auto;
+    max-height: 62px;
+    object-fit: contain;
+    display: block;
+}
+
+
+        .sidebar-nav {
+
+            padding:
+                13px 10px;
+
+            overflow-y:
+                auto;
+
+            flex:
+                1;
+
+        }
+
+
+        .nav-item {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:12px;
+
+            min-height:45px;
+
+            padding:
+                0 18px;
+
+            margin-bottom:4px;
+
+            color:
+                white;
+
+            text-decoration:
+                none;
+
+            border-radius:8px;
+
+            font-size:15px;
+
+            font-weight:
+                600;
+
+            transition:
+                0.2s ease;
+
+        }
+
+
+        .nav-item:hover {
+
+            background:
+                rgba(255,255,255,0.12);
+
+        }
+
+
+        .nav-item.active {
+
+            background:
+                rgba(255,190,135,0.38);
+
+            border-left:
+                4px solid
+                white;
+
+            padding-left:
+                14px;
+
+        }
+
+
+        .nav-icon {
+
+            width:22px;
+
+            text-align:
+                center;
+
+            font-size:18px;
+
+            flex-shrink:
+                0;
+
+        }
+
+
+        .nav-text {
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .sidebar-bottom {
+
+            padding:
+                0 10px 14px;
+
+        }
+
+
+        .sidebar-divider {
+
+            height:
+                1px;
+
+            background:
+                rgba(255,255,255,0.25);
+
+            margin:
+                5px 12px 10px;
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .main-content {
+
+            margin-left:
+                255px;
+
+            width:
+                calc(100% - 255px);
+
+            min-height:
+                100vh;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+
+            min-height:
+                78px;
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid
+                #e2e7e4;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                20px 34px;
+
+        }
+
+
+        .header-left {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                14px;
+
+        }
+
+
+        .welcome h1 {
+
+            font-size:
+                30px;
+
+            color:
+                #14213d;
+
+            margin-bottom:
+                4px;
+
+        }
+
+
+        .welcome p {
+
+            color:
+                #65758b;
+
+            font-size:
+                15px;
+
+        }
+
+
+        .header-right {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                22px;
+
+        }
+
+
+        /* =====================================================
+           NOTIFICATION
+        ===================================================== */
+
+        .notification {
+
+            position:
+                relative;
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            cursor:
+                pointer;
+
+            font-size:
+                26px;
+
+        }
+
+
+        .notification-badge {
+
+            position:
+                absolute;
+
+            top:
+                -2px;
+
+            right:
+                -2px;
+
+            min-width:
+                20px;
+
+            height:
+                20px;
+
+            padding:
+                0 5px;
+
+            border-radius:
+                20px;
+
+            background:
+                #e53935;
+
+            color:
+                white;
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile {
+
+            position:
+                relative;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .profile-picture {
+    font-size: 17px;
+
+
+            width:
+                43px;
+
+            height:
+                43px;
+
+            border-radius:
+                50%;
+
+            border:
+                2px solid
+                #13813c;
+
+            background:
+                #edf7ef;
+
+        }
+
+
+        .profile-info {
+
+            min-width:
+                125px;
+
+        }
+
+
+        .profile-name {
+
+            color:
+                #111827;
+
+            font-size:
+                17px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .profile-role {
+
+            color:
+                #16803c;
+
+            font-size:
+                13px;
+
+            margin-top:
+                2px;
+
+        }
+
+
+        .profile-arrow {
+
+            color:
+                #65758b;
+
+            font-size:
+                13px;
+
+        }
+
+
+        /* =====================================================
+           PROFILE DROPDOWN
+        ===================================================== */
+
+        .profile-dropdown {
+
+            position:
+                absolute;
+
+            right:
+                0;
+
+            top:
+                calc(100% + 14px);
+
+            width:
+                300px;
+
+            background:
+                white;
+
+            border:
+                1px solid
+                #dfe5e1;
+
+            border-radius:
+                14px;
+
+            box-shadow:
+                0 14px 35px
+                rgba(0,0,0,0.15);
+
+            padding:
+                18px;
+
+            display:
+                none;
+
+            z-index:
+                3000;
+
+        }
+
+
+        .profile.open .profile-dropdown {
+
+            display:
+                block;
+
+        }
+
+
+        .dropdown-user {
+
+            padding:
+                0 0 15px;
+
+            border-bottom:
+                1px solid
+                #e4e9e6;
+
+            margin-bottom:
+                14px;
+
+        }
+
+
+        .dropdown-name {
+
+            color:
+                #14213d;
+
+            font-size:
+                18px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .dropdown-role {
+
+            color:
+                #16803c;
+
+            font-size:
+                13px;
+
+            margin-top:
+                4px;
+
+        }
+
+
+        .dropdown-label {
+
+            color:
+                #718096;
+
+            font-size:
+                13px;
+
+            margin-bottom:
+                8px;
+
+        }
+
+
+        .role-option {
+
+            width:
+                100%;
+
+            border:
+                0;
+
+            background:
+                transparent;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                12px;
+
+            border-radius:
+                9px;
+
+            cursor:
+                pointer;
+
+            color:
+                #334155;
+
+            font-size:
+                15px;
+
+            text-align:
+                left;
+
+        }
+
+
+        .role-option:hover {
+
+            background:
+                #f2f6f3;
+
+        }
+
+
+        .role-option.current {
+
+            background:
+                #fff0e6;
+
+            color:
+                #ed5b00;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .role-option-icon {
+
+            width:
+                25px;
+
+            text-align:
+                center;
+
+        }
+
+
+        .role-check {
+
+            margin-left:
+                auto;
+
+            font-weight:
+                800;
+
+        }
+
+
+        /* =====================================================
+           MOBILE MENU
+        ===================================================== */
+
+        .mobile-menu {
+
+            display:
+                none;
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            border:
+                none;
+
+            border-radius:
+                8px;
+
+            background:
+                #f06a00;
+
+            color:
+                white;
+
+            font-size:
+                20px;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+        ===================================================== */
+
+        .content {
+
+            padding:
+                34px;
+
+            flex:
+                1;
+
+        }
+
+
+        .page-header {
+
+            margin-bottom:
+                22px;
+
+        }
+
+
+        .page-header h2 {
+
+            font-size:
+                32px;
+
+            color:
+                #14213d;
+
+            margin-bottom:
+                7px;
+
+        }
+
+
+        .page-header p {
+
+            color:
+                #64748b;
+
+            font-size:
+                15px;
+
+        }
+
+
+        /* =====================================================
+           TABS
+        ===================================================== */
+
+        .history-tabs {
+
+            background:
+                white;
+
+            border:
+                1px solid
+                #e1e7e3;
+
+            border-radius:
+                12px 12px 0 0;
+
+            display:
+                flex;
+
+            padding:
+                0 18px;
+
+        }
+
+
+        .history-tab {
+
+            border:
+                none;
+
+            background:
+                transparent;
+
+            padding:
+                17px 24px;
+
+            font-size:
+                15px;
+
+            font-weight:
+                700;
+
+            color:
+                #64748b;
+
+            cursor:
+                pointer;
+
+            border-bottom:
+                3px solid
+                transparent;
+
+        }
+
+
+        .history-tab.active {
+
+            color:
+                #07813d;
+
+            border-bottom-color:
+                #07813d;
+
+        }
+
+
+        /* =====================================================
+           SUMMARY CARDS
+        ===================================================== */
+
+        .summary-cards {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap:
+                15px;
+
+            margin:
+                20px 0;
+
+        }
+
+
+        .summary-card {
+
+            background:
+                white;
+
+            border:
+                1px solid
+                #e0e6e2;
+
+            border-radius:
+                13px;
+
+            padding:
+                19px;
+
+            min-height:
+                125px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                15px;
+
+        }
+
+
+        .summary-icon {
+
+            width:
+                53px;
+
+            height:
+                53px;
+
+            border-radius:
+                15px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                25px;
+
+            flex-shrink:
+                0;
+
+        }
+
+
+        .summary-icon.green {
+
+            background:
+                #e5f6eb;
+
+            color:
+                #13813c;
+
+        }
+
+
+        .summary-icon.orange {
+
+            background:
+                #fff0e4;
+
+            color:
+                #f06a00;
+
+        }
+
+
+        .summary-icon.blue {
+
+            background:
+                #e9f0ff;
+
+            color:
+                #3168d4;
+
+        }
+
+
+        .summary-info {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                4px;
+
+        }
+
+
+        .summary-title {
+
+            color:
+                #64748b;
+
+            font-size:
+                13px;
+
+            font-weight:
+                600;
+
+        }
+
+
+        .summary-value {
+
+            color:
+                #111827;
+
+            font-size:
+                27px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .summary-sub {
+
+            font-size:
+                12px;
+
+            color:
+                #16803c;
+
+        }
+
+
+        .summary-sub.orange {
+
+            color:
+                #f06a00;
+
+        }
+
+
+        .summary-sub.blue {
+
+            color:
+                #3168d4;
+
+        }
+
+
+        /* =====================================================
+           FILTER AREA
+        ===================================================== */
+
+        .filter-card {
+
+            background:
+                white;
+
+            border:
+                1px solid
+                #e0e6e2;
+
+            padding:
+                17px;
+
+            display:
+                flex;
+
+            gap:
+                10px;
+
+            align-items:
+                center;
+
+            flex-wrap:
+                wrap;
+
+        }
+
+
+        .search-wrapper {
+
+            flex:
+                1;
+
+            min-width:
+                250px;
+
+            position:
+                relative;
+
+        }
+
+
+        .search-wrapper span {
+
+            position:
+                absolute;
+
+            left:
+                14px;
+
+            top:
+                50%;
+
+            transform:
+                translateY(-50%);
+
+            font-size:
+                18px;
+
+        }
+
+
+        .search-input {
+
+            width:
+                100%;
+
+            height:
+                45px;
+
+            border:
+                1px solid
+                #d8e0dc;
+
+            border-radius:
+                9px;
+
+            padding:
+                0 14px 0 42px;
+
+            outline:
+                none;
+
+            color:
+                #334155;
+
+            font-size:
+                14px;
+
+        }
+
+
+        .search-input:focus {
+
+            border-color:
+                #0c8a43;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(12,138,67,0.08);
+
+        }
+
+
+        .filter-select {
+
+            height:
+                45px;
+
+            border:
+                1px solid
+                #d8e0dc;
+
+            border-radius:
+                9px;
+
+            padding:
+                0 35px 0 12px;
+
+            background:
+                white;
+
+            color:
+                #334155;
+
+            outline:
+                none;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .date-input {
+
+            height:
+                45px;
+
+            border:
+                1px solid
+                #d8e0dc;
+
+            border-radius:
+                9px;
+
+            padding:
+                0 12px;
+
+            color:
+                #334155;
+
+            outline:
+                none;
+
+        }
+
+
+        /* =====================================================
+           TABLE CARD
+        ===================================================== */
+
+        .history-card {
+
+            margin-top:
+                18px;
+
+            background:
+                white;
+
+            border:
+                1px solid
+                #e0e6e2;
+
+            border-radius:
+                0 0 14px 14px;
+
+            overflow:
+                hidden;
+
+        }
+
+
+        .section-header {
+
+            padding:
+                19px 20px;
+
+            border-bottom:
+                1px solid
+                #e5e9e7;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+        }
+
+
+        .section-title {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                9px;
+
+            color:
+                #087f3f;
+
+            font-size:
+                19px;
+
+            font-weight:
+                800;
+
+        }
+
+
+        .section-title.cancelled {
+
+            color:
+                #d84444;
+
+        }
+
+
+        .table-container {
+
+            width:
+                100%;
+
+            overflow-x:
+                auto;
+
+        }
+
+
+        table {
+
+            width:
+                100%;
+
+            border-collapse:
+                collapse;
+
+            min-width:
+                1150px;
+
+        }
+
+
+        th {
+
+            background:
+                #fafcfb;
+
+            color:
+                #596a7c;
+
+            text-align:
+                left;
+
+            font-size:
+                11px;
+
+            font-weight:
+                800;
+
+            padding:
+                13px 14px;
+
+            border-bottom:
+                1px solid
+                #e3e8e5;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        td {
+
+            padding:
+                16px 14px;
+
+            border-bottom:
+                1px solid
+                #edf0ee;
+
+            color:
+                #334155;
+
+            font-size:
+                13px;
+
+            vertical-align:
+                middle;
+
+        }
+
+
+        tr:last-child td {
+
+            border-bottom:
+                none;
+
+        }
+
+
+        .customer-cell {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            min-width:
+                180px;
+
+        }
+
+
+        .avatar {
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            border-radius:
+                50%;
+
+            background:
+                #fff0e4;
+
+            color:
+                #ef6200;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-weight:
+                800;
+
+            flex-shrink:
+                0;
+
+        }
+
+
+        .customer-name {
+
+            color:
+                #172033;
+
+            font-weight:
+                700;
+
+            margin-bottom:
+                4px;
+
+        }
+
+
+        .customer-phone {
+
+            color:
+                #738195;
+
+            font-size:
+                11px;
+
+        }
+
+
+        .customer-location {
+
+            color:
+                #9a6b61;
+
+            font-size:
+                11px;
+
+            margin-top:
+                3px;
+
+        }
+
+
+        .equipment-cell {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            min-width:
+                210px;
+
+        }
+
+
+        .equipment-image {
+
+            width:
+                48px;
+
+            height:
+                42px;
+
+            object-fit:
+                cover;
+
+            border-radius:
+                7px;
+
+            background:
+                #edf2ef;
+
+        }
+
+
+        .equipment-placeholder {
+
+            width:
+                48px;
+
+            height:
+                42px;
+
+            border-radius:
+                7px;
+
+            background:
+                #fff0e4;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                21px;
+
+        }
+
+
+        .equipment-name {
+
+            color:
+                #172033;
+
+            font-weight:
+                700;
+
+            font-size:
+                12px;
+
+        }
+
+
+        .equipment-category {
+
+            color:
+                #7b8797;
+
+            font-size:
+                10px;
+
+            margin-top:
+                4px;
+
+        }
+
+
+        .quantity {
+
+            font-weight:
+                700;
+
+            color:
+                #172033;
+
+        }
+
+
+        .quantity small {
+
+            display:
+                block;
+
+            color:
+                #7a8795;
+
+            margin-top:
+                3px;
+
+        }
+
+
+        .period {
+
+            line-height:
+                1.6;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .period-date {
+
+            color:
+                #344054;
+
+        }
+
+
+        .period-days {
+
+            color:
+                #7a8795;
+
+            font-size:
+                11px;
+
+        }
+
+
+        .amount {
+
+            font-weight:
+                800;
+
+            color:
+                #172033;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .refund {
+
+            color:
+                #12813d;
+
+            font-weight:
+                800;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .status {
+
+            display:
+                inline-flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            padding:
+                6px 10px;
+
+            border-radius:
+                7px;
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .status.returned {
+
+            background:
+                #e4f7ea;
+
+            color:
+                #0c7c38;
+
+        }
+
+
+        .status.cancelled {
+
+            background:
+                #fde8e8;
+
+            color:
+                #c63c3c;
+
+        }
+
+
+        .status.rejected {
+
+            background:
+                #fff0e5;
+
+            color:
+                #d85d00;
+
+        }
+
+
+        .action-button {
+
+            border:
+                1px solid
+                #16813f;
+
+            background:
+                white;
+
+            color:
+                #16813f;
+
+            padding:
+                8px 12px;
+
+            border-radius:
+                7px;
+
+            font-size:
+                11px;
+
+            font-weight:
+                700;
+
+            cursor:
+                pointer;
+
+        }
+
+
+        .action-button:hover {
+
+            background:
+                #eaf7ee;
+
+        }
+
+
+        .reason {
+
+            max-width:
+                170px;
+
+            color:
+                #65758b;
+
+            font-size:
+                11px;
+
+        }
+
+
+        /* =====================================================
+           EMPTY / LOADING
+        ===================================================== */
+
+        .empty-state {
+
+            text-align:
+                center;
+
+            padding:
+                55px 20px;
+
+            color:
+                #718096;
+
+        }
+
+
+        .empty-icon {
+
+            font-size:
+                40px;
+
+            margin-bottom:
+                12px;
+
+        }
+
+
+        .empty-state h3 {
+
+            color:
+                #334155;
+
+            margin-bottom:
+                7px;
+
+        }
+
+
+        .loading {
+
+            text-align:
+                center;
+
+            padding:
+                55px 20px;
+
+            color:
+                #64748b;
+
+        }
+
+
+        .error-message {
+
+            margin:
+                15px 20px;
+
+            padding:
+                12px 15px;
+
+            border-radius:
+                8px;
+
+            background:
+                #fff0f0;
+
+            color:
+                #c62828;
+
+            font-size:
+                13px;
+
+        }
+
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+
+            position:
+                fixed;
+
+            right:
+                25px;
+
+            bottom:
+                25px;
+
+            min-width:
+                280px;
+
+            background:
+                #08783b;
+
+            color:
+                white;
+
+            border-radius:
+                10px;
+
+            padding:
+                14px 18px;
+
+            display:
+                none;
+
+            align-items:
+                center;
+
+            gap:
+                10px;
+
+            box-shadow:
+                0 10px 25px
+                rgba(0,0,0,0.18);
+
+            z-index:
+                5000;
+
+        }
+
+
+        .toast.show {
+
+            display:
+                flex;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1200px) {
+
+            .summary-cards {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+
+                left:-255px;
+
+                transition:
+                    left 0.25s ease;
+
+            }
+
+
+            .sidebar.open {
+
+                left:
+                    0;
+
+            }
+
+
+            .main-content {
+
+                margin-left:
+                    0;
+
+                width:
+                    100%;
+
+            }
+
+
+            .mobile-menu {
+
+                display:
+                    block;
+
+            }
+
+
+            .header {
+
+                padding:
+                    15px 18px;
+
+            }
+
+
+            .profile-info,
+            .profile-arrow {
+
+                display:
+                    none;
+
+            }
+
+
+            .content {
+
+                padding:
+                    20px 15px;
+
+            }
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .summary-cards {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .header-right {
+
+                gap:
+                    8px;
+
+            }
+
+
+            .profile-picture {
+
+                width:
+                    43px;
+
+                height:
+                    43px;
+
+            }
+
+
+            .page-header h2 {
+
+                font-size:
+                    27px;
+
+            }
+
+
+            .profile-dropdown {
+
+                right:
+                    -8px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <div class="sidebar-logo">
+
+            <img
+                src="assets/agriconnect-logo-white.png"
+                alt="AgriConnect"
+            >
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+
+            <!-- DASHBOARD -->
+
+            <a
+                href="rental-dashboard.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ▦
+                </span>
+
+                <span class="nav-text">
+                    My Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- MY EQUIPMENTS -->
+
+            <a
+                href="rental-equipment.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🚜
+                </span>
+
+                <span class="nav-text">
+                    My Equipments
+                </span>
+
+            </a>
+
+
+            <!-- RENTAL ORDERS -->
+
+            <a
+                href="rental-orders.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    📋
+                </span>
+
+                <span class="nav-text">
+                    Rental Orders
+                </span>
+
+            </a>
+
+
+            <!-- MESSAGES -->
+
+            <a
+                href="rental-messages.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    💬
+                </span>
+
+                <span class="nav-text">
+                    Messages
+                </span>
+                <span
+                    id="sidebarMessagesBadge"
+                    style="display:none;margin-left:auto;background:#e0433c;color:#fff;font-size:11px;font-weight:bold;min-width:20px;height:20px;border-radius:50%;align-items:center;justify-content:center;"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- NOTIFICATIONS -->
+
+            <a
+                href="rental-notifications.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🔔
+                </span>
+
+                <span class="nav-text">
+                    Notifications
+                </span>
+
+            </a>
+
+
+            <!-- REPORT ISSUES -->
+
+            <a
+                href="rental-report-issues.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚠️
+                </span>
+
+                <span class="nav-text">
+                    Report Issues
+                </span>
+
+            </a>
+
+
+            <!-- HISTORY -->
+
+            <a
+                href="rental-history.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span class="nav-text">
+                    History
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-divider"></div>
+
+
+            <a
+                href="rental-help-support.html"
+                class="nav-item"
+                onclick="showToast('Help & Support is available from AgriConnect.'); return false;"
+            >
+
+                <span class="nav-icon">
+                    ?
+                </span>
+
+                <span class="nav-text">
+                    Help &amp; Support
+                </span>
+
+            </a>
+
+
+            <a
+                href="rental-settings.html"
+                class="nav-item"
+                onclick="showToast('Settings will be available soon.'); return false;"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                <span class="nav-text">
+                    Settings
+                </span>
+
+            </a>
+
+
+            <a
+                href="index.html"
+                class="nav-item"
+                id="logoutButton"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                <span class="nav-text">
+                    Logout
+                </span>
+
+            </a>
+
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================= -->
+
+        <header class="header">
+
+
+            <div class="header-left">
+
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                    type="button"
+                >
+                    ☰
+                </button>
+
+
+                <div class="welcome">
+
+                    <h1>
+                        Welcome back, <span id="userName">User</span>!
+                    </h1>
+
+                    <p>
+                        Your past rental activity.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="header-right">
+
+
+                <!-- NOTIFICATIONS -->
+
+                <div
+                    class="notification"
+                    id="notificationButton"
+                    title="Notifications"
+                >
+
+                    🔔
+
+                    <span
+                        class="notification-badge"
+                        id="notificationBadge"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+
+                <!-- PROFILE -->
+
+                <div
+                    class="profile"
+                    id="profile"
+                >
+
+
+                    <img
+                        class="profile-picture"
+                        id="profilePicture"
+                        src="https://ui-avatars.com/api/?name=Equipment%20Provider&background=edf7ef&color=17833c"
+                        alt="Profile"
+                    >
+
+
+                    <div class="profile-info">
+
+                        <div
+                            class="profile-name"
+                            id="profileName"
+                        >
+                            Equipment Provider
+                        </div>
+
+                        <div
+                            class="profile-role"
+                            id="profileRole"
+                        >
+                            Equipment Provider
+                        </div>
+
+                    </div>
+
+
+                    <span class="profile-arrow">
+                        ▼
+                    </span>
+
+
+
+                    <!-- PROFILE DROPDOWN -->
+
+                    <div class="profile-dropdown">
+
+
+                        <div class="dropdown-user">
+
+                            <div
+                                class="dropdown-name"
+                                id="dropdownName"
+                            >
+                                Equipment Provider
+                            </div>
+
+                            <div class="dropdown-role">
+                                Equipment Provider
+                            </div>
+
+                        </div>
+
+
+                        <div class="dropdown-label">
+                            Switch Role
+                        </div>
+
+
+                        <div id="roleOptions"></div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             PAGE CONTENT
+        ================================================= -->
+
+        <section class="content">
+
+
+            <div class="page-header">
+
+                <h2>
+                    Rental History
+                </h2>
+
+                <p>
+                    View and track all returned and cancelled rental orders.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 TABS
+            ================================================= -->
+
+            <div class="history-tabs">
+
+
+                <button
+                    class="history-tab active"
+                    id="returnedTab"
+                    data-tab="returned"
+                    type="button"
+                >
+
+                    Returned Orders
+
+                </button>
+
+
+                <button
+                    class="history-tab"
+                    id="cancelledTab"
+                    data-tab="cancelled"
+                    type="button"
+                >
+
+                    Cancelled Orders
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 SUMMARY CARDS
+            ================================================= -->
+
+            <div class="summary-cards">
+
+
+                <!-- TOTAL RETURNED -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon green">
+                        📦
+                    </div>
+
+                    <div class="summary-info">
+
+                        <span class="summary-title">
+                            Total Returned Orders
+                        </span>
+
+                        <span
+                            class="summary-value"
+                            id="totalReturned"
+                        >
+                            0
+                        </span>
+
+                        <span class="summary-sub">
+                            All Time
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- SUCCESSFULLY RETURNED -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon green">
+                        ✓
+                    </div>
+
+                    <div class="summary-info">
+
+                        <span class="summary-title">
+                            Successfully Returned
+                        </span>
+
+                        <span
+                            class="summary-value"
+                            id="successfullyReturned"
+                        >
+                            0
+                        </span>
+
+                        <span class="summary-sub">
+                            All Time
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- CANCELLED -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon orange">
+                        ×
+                    </div>
+
+                    <div class="summary-info">
+
+                        <span class="summary-title">
+                            Cancelled Orders
+                        </span>
+
+                        <span
+                            class="summary-value"
+                            id="totalCancelled"
+                        >
+                            0
+                        </span>
+
+                        <span class="summary-sub orange">
+                            All Time
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- TOTAL VALUE -->
+
+                <div class="summary-card">
+
+                    <div class="summary-icon blue">
+                        💰
+                    </div>
+
+                    <div class="summary-info">
+
+                        <span class="summary-title">
+                            Completed Rental Value
+                        </span>
+
+                        <span
+                            class="summary-value"
+                            id="completedValue"
+                        >
+                            LKR 0
+                        </span>
+
+                        <span class="summary-sub blue">
+                            All Time
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 FILTERS
+            ================================================= -->
+
+            <div class="filter-card">
+
+
+                <div class="search-wrapper">
+
+                    <span>
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        class="search-input"
+                        id="searchInput"
+                        placeholder="Search by customer name or equipment..."
+                    >
+
+                </div>
+
+
+                <select
+                    class="filter-select"
+                    id="equipmentFilter"
+                >
+
+                    <option value="">
+                        All Equipment
+                    </option>
+
+                </select>
+
+
+                <input
+                    type="date"
+                    class="date-input"
+                    id="fromDate"
+                    title="From date"
+                >
+
+
+                <input
+                    type="date"
+                    class="date-input"
+                    id="toDate"
+                    title="To date"
+                >
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 RETURNED ORDERS
+            ================================================= -->
+
+            <div
+                class="history-card"
+                id="returnedSection"
+            >
+
+
+                <div class="section-header">
+
+                    <div class="section-title">
+
+                        <span>
+                            ✓
+                        </span>
+
+                        Returned Orders
+
+                    </div>
+
+                </div>
+
+
+                <div id="returnedContent">
+
+                    <div class="loading">
+                        Loading rental history...
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 CANCELLED ORDERS
+            ================================================= -->
+
+            <div
+                class="history-card"
+                id="cancelledSection"
+                style="display:none;"
+            >
+
+
+                <div class="section-header">
+
+                    <div class="section-title cancelled">
+
+                        <span>
+                            ×
+                        </span>
+
+                        Cancelled Orders
+
+                    </div>
+
+                </div>
+
+
+                <div id="cancelledContent">
+
+                    <div class="loading">
+                        Loading cancelled orders...
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =========================================================
+     TOAST
+========================================================= -->
+
+<div
+    class="toast"
+    id="toast"
+>
+
+    <span>
+        ✓
+    </span>
+
+    <span id="toastMessage">
+        Done
+    </span>
+
+</div>
+
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+
+/* =========================================================
+   API
+========================================================= */
+
+const API_BASE_URL =
+    "http://localhost:5000/api";
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+let user = null;
+
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem(
+                "user"
+            ) ||
+            "null"
+        );
+
+}
+
+catch (error) {
+
+    user =
+        null;
+
+}
+
+
+if (!user) {
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem(
+                    "loggedInUser"
+                ) ||
+                "null"
+            );
+
+    }
+
+    catch (error) {
+
+        user =
+            null;
+
+    }
+
+}
+
+
+/*
+ * This is a protected Equipment Provider page.
+ */
+
+if (!user) {
+
+    window.location.href =
+        "login.html";
+
+}
+
+
+/* =========================================================
+   GLOBAL DATA
+========================================================= */
+
+let allRentals = [];
+
+let currentTab =
+    "returned";
+
+let providerId =
+    null;
+
+
+/* =========================================================
+   ROLE INFORMATION
+========================================================= */
+
+const roleNames = {
+
+    farmer:
+        "Farmer",
+
+    buyer:
+        "Buyer",
+
+    expert:
+        "Agricultural Expert",
+
+    equipment_provider:
+        "Equipment Provider"
+
+};
+
+
+const roleIcons = {
+
+    farmer:
+        "🌱",
+
+    buyer:
+        "🛒",
+
+    expert:
+        "👨‍🌾",
+
+    equipment_provider:
+        "🚜"
+
+};
+
+
+/* =========================================================
+   NORMALIZE ROLE
+========================================================= */
+
+function normalizeRole(role) {
+
+    const value =
+        String(
+            role || ""
+        )
+            .trim()
+            .toLowerCase();
+
+
+    if (
+        value === "farmer"
+    ) {
+
+        return "farmer";
+
+    }
+
+
+    if (
+        value === "buyer" ||
+        value === "buyer/user"
+    ) {
+
+        return "buyer";
+
+    }
+
+
+    if (
+        value === "expert" ||
+        value === "agricultural expert" ||
+        value === "agriculture expert" ||
+        value === "agri expert"
+    ) {
+
+        return "expert";
+
+    }
+
+
+    if (
+        value === "equipment_provider" ||
+        value === "equipment provider" ||
+        value === "equipment-provider" ||
+        value === "equipmentprovider" ||
+        value === "provider"
+    ) {
+
+        return "equipment_provider";
+
+    }
+
+
+    return "";
+
+}
+
+
+/* =========================================================
+   ACCOUNT ROLES
+========================================================= */
+
+function getAccountRoles() {
+
+    if (!user) {
+
+        return [];
+
+    }
+
+
+    let roles = [];
+
+
+    if (
+        Array.isArray(
+            user.roles
+        )
+    ) {
+
+        roles =
+            [...user.roles];
+
+    }
+
+
+    if (
+        roles.length === 0 &&
+        Array.isArray(
+            user.registeredRoles
+        )
+    ) {
+
+        roles =
+            [...user.registeredRoles];
+
+    }
+
+
+    if (
+        roles.length === 0 &&
+        user.role
+    ) {
+
+        roles =
+            Array.isArray(
+                user.role
+            )
+                ? [...user.role]
+                : [user.role];
+
+    }
+
+
+    roles =
+        roles
+            .map(
+                normalizeRole
+            )
+            .filter(
+                Boolean
+            );
+
+
+    roles =
+        [
+            ...new Set(
+                roles
+            )
+        ];
+
+
+    /*
+     * AgriConnect rule:
+     *
+     * Provider / Farmer / Expert
+     * also has Buyer access.
+     */
+
+    const hasNonBuyer =
+        roles.some(
+            role =>
+                role !== "buyer"
+        );
+
+
+    if (
+        hasNonBuyer &&
+        !roles.includes(
+            "buyer"
+        )
+    ) {
+
+        roles.push(
+            "buyer"
+        );
+
+    }
+
+
+    return [
+        ...new Set(
+            roles
+        )
+    ];
+
+}
+
+
+const registeredRoles =
+    getAccountRoles();
+
+
+/* =========================================================
+   PROVIDER PAGE
+   ========================================================= */
+
+/*
+ * This page is specifically for the Equipment Provider.
+ *
+ * We NEVER change it to Farmer based on localStorage.currentRole.
+ */
+
+sessionStorage.setItem(
+    "selectedRole",
+    "equipment_provider"
+);
+
+sessionStorage.setItem(
+    "currentRole",
+    "equipment_provider"
+);
+
+
+/* =========================================================
+   DISPLAY NAME
+========================================================= */
+
+function getDisplayName() {
+
+    if (!user) {
+
+        return "Equipment Provider";
+
+    }
+
+
+    const firstName =
+        user.first_name ||
+        user.firstName ||
+        "";
+
+
+    const lastName =
+        user.last_name ||
+        user.lastName ||
+        "";
+
+
+    const fullName =
+        `${firstName} ${lastName}`
+            .trim();
+
+
+    return (
+        fullName ||
+        user.name ||
+        user.username ||
+        "Equipment Provider"
+    );
+
+}
+
+
+function updateProfile() {
+
+    const name =
+        getDisplayName();
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        name;
+
+
+    const welcomeNameEl =
+        document.getElementById(
+            "userName"
+        );
+
+    if (welcomeNameEl) {
+
+        welcomeNameEl.textContent =
+            name;
+
+    }
+
+
+    document.getElementById(
+        "dropdownName"
+    ).textContent =
+        name;
+
+
+    document.getElementById(
+        "profileRole"
+    ).textContent =
+        "Equipment Provider";
+
+
+    document.getElementById(
+        "profilePicture"
+    ).src =
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=edf7ef&color=17833c`;
+
+}
+
+
+/* =========================================================
+   RENDER ROLES
+========================================================= */
+
+function renderRoles() {
+
+    const container =
+        document.getElementById(
+            "roleOptions"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    /*
+     * Only roles belonging to THIS account
+     * are shown.
+     */
+
+    let roles =
+        [...registeredRoles];
+
+
+    /*
+     * This page itself is Provider.
+     *
+     * If the current account data is incomplete,
+     * we still allow the current Provider page to work.
+     */
+
+    if (
+        !roles.includes(
+            "equipment_provider"
+        )
+    ) {
+
+        roles.push(
+            "equipment_provider"
+        );
+
+    }
+
+
+    roles =
+        [
+            ...new Set(
+                roles
+            )
+        ];
+
+
+    roles.forEach(
+        function(role) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "role-option";
+
+
+            if (
+                role ===
+                "equipment_provider"
+            ) {
+
+                button.classList.add(
+                    "current"
+                );
+
+            }
+
+
+            button.innerHTML = `
+
+                <span class="role-option-icon">
+                    ${roleIcons[role] || "👤"}
+                </span>
+
+                <span>
+                    ${roleNames[role] || role}
+                </span>
+
+                ${
+                    role ===
+                    "equipment_provider"
+                        ? `
+                            <span class="role-check">
+                                ✓
+                            </span>
+                          `
+                        : ""
+                }
+
+            `;
+
+
+            button.addEventListener(
+                "click",
+                function(event) {
+
+                    event.stopPropagation();
+
+
+                    switchRole(
+                        role
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                button
+            );
+
+        }
+    );
+
+    moveCurrentRoleToFront(container);
+
+
+}
+
+
+/* =========================================================
+   SWITCH ROLE
+========================================================= */
+
+function switchRole(role) {
+
+    /*
+     * Only switch to roles that actually belong
+     * to this account.
+     */
+
+    if (
+        !registeredRoles.includes(
+            role
+        )
+        &&
+        role !==
+            "equipment_provider"
+    ) {
+
+        return;
+
+    }
+
+
+    if (
+        role ===
+        "equipment_provider"
+    ) {
+
+        sessionStorage.setItem(
+            "selectedRole",
+            "equipment_provider"
+        );
+
+        sessionStorage.setItem(
+            "currentRole",
+            "equipment_provider"
+        );
+
+
+        window.location.href =
+            "rental-dashboard.html";
+
+        return;
+
+    }
+
+
+    if (
+        role ===
+        "buyer"
+    ) {
+
+        sessionStorage.setItem(
+            "selectedRole",
+            "buyer"
+        );
+
+        sessionStorage.setItem(
+            "currentRole",
+            "buyer"
+        );
+
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+        return;
+
+    }
+
+
+    if (
+        role ===
+        "farmer"
+    ) {
+
+        sessionStorage.setItem(
+            "selectedRole",
+            "farmer"
+        );
+
+        sessionStorage.setItem(
+            "currentRole",
+            "farmer"
+        );
+
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+        return;
+
+    }
+
+
+    if (
+        role ===
+        "expert"
+    ) {
+
+        sessionStorage.setItem(
+            "selectedRole",
+            "expert"
+        );
+
+        sessionStorage.setItem(
+            "currentRole",
+            "expert"
+        );
+
+
+        window.location.href =
+            "expert-dashboard.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+document
+    .getElementById(
+        "profile"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            this.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+
+document.addEventListener(
+    "click",
+    function() {
+
+        document
+            .getElementById(
+                "profile"
+            )
+            .classList.remove(
+                "open"
+            );
+
+    }
+);
+
+
+/* =========================================================
+   GET PROVIDER PROFILE ID
+========================================================= */
+
+/*
+ * rentals.provider_id points to:
+ *
+ * equipment_provider_profiles.id
+ *
+ * NOT users.id.
+ *
+ * Therefore we first load the approved provider list
+ * and find the provider belonging to the logged-in user.
+ */
+
+async function findProviderId() {
+
+    const userId =
+        user?.id ||
+        user?.userId ||
+        user?.user_id;
+
+
+    if (!userId) {
+
+        throw new Error(
+            "Your login session does not contain a user ID."
+        );
+
+    }
+
+
+    /*
+     * First check if the login object already contains
+     * a provider profile ID.
+     */
+
+    const directProviderId =
+        user.provider_id ||
+        user.providerId ||
+        user.equipment_provider_id ||
+        user.equipmentProviderId;
+
+
+    if (
+        directProviderId
+    ) {
+
+        return directProviderId;
+
+    }
+
+
+    /*
+     * Otherwise get all approved providers and match
+     * using epp.user_id.
+     *
+     * The backend provider response includes both:
+     * provider_id and user_id.
+     */
+
+    const response =
+        await fetch(
+            `${API_BASE_URL}/rentals/providers`
+        );
+
+
+    const data =
+        await response.json();
+
+
+    if (
+        !response.ok ||
+        !data.success
+    ) {
+
+        throw new Error(
+            data.message ||
+            "Unable to find your Equipment Provider profile."
+        );
+
+    }
+
+
+    const providers =
+        Array.isArray(
+            data.providers
+        )
+            ? data.providers
+            : [];
+
+
+    const provider =
+        providers.find(
+            item =>
+                String(
+                    item.user_id
+                ) ===
+                String(
+                    userId
+                )
+        );
+
+
+    if (!provider) {
+
+        throw new Error(
+            "No approved Equipment Provider profile was found for this account."
+        );
+
+    }
+
+
+    return provider.provider_id;
+
+}
+
+
+/* =========================================================
+   LOAD PROVIDER RENTALS
+========================================================= */
+
+async function loadRentalHistory() {
+
+    const returnedContent =
+        document.getElementById(
+            "returnedContent"
+        );
+
+
+    const cancelledContent =
+        document.getElementById(
+            "cancelledContent"
+        );
+
+
+    returnedContent.innerHTML = `
+        <div class="loading">
+            Loading rental history...
+        </div>
+    `;
+
+
+    cancelledContent.innerHTML = `
+        <div class="loading">
+            Loading cancelled orders...
+        </div>
+    `;
+
+
+    try {
+
+        providerId =
+            await findProviderId();
+
+
+        /*
+         * IMPORTANT:
+         *
+         * We use the PROVIDER endpoint.
+         *
+         * NOT:
+         *
+         * /rentals/history/:userId
+         *
+         * because that endpoint is for renter history.
+         */
+
+        const response =
+            await fetch(
+                `${API_BASE_URL}/rentals/provider/${encodeURIComponent(providerId)}`
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (
+            !response.ok ||
+            !data.success
+        ) {
+
+            throw new Error(
+                data.message ||
+                "Failed to load provider rental history."
+            );
+
+        }
+
+
+        allRentals =
+            Array.isArray(
+                data.rentals
+            )
+                ? data.rentals
+                : [];
+
+
+        updateSummary();
+
+
+        populateEquipmentFilter();
+
+
+        renderCurrentTab();
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Rental history error:",
+            error
+        );
+
+
+        const message =
+            escapeHtml(
+                error.message ||
+                "Unable to load rental history."
+            );
+
+
+        returnedContent.innerHTML = `
+
+            <div class="error-message">
+                ${message}
+            </div>
+
+        `;
+
+
+        cancelledContent.innerHTML = `
+
+            <div class="error-message">
+                ${message}
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =========================================================
+   SUMMARY
+========================================================= */
+
+function updateSummary() {
+
+    /*
+     * Provider history statuses:
+     *
+     * completed -> returned
+     * cancelled -> cancelled
+     * rejected  -> rejected/cancelled area
+     */
+
+    const completed =
+        allRentals.filter(
+            rental =>
+                String(
+                    rental.status ||
+                    ""
+                ).toLowerCase() ===
+                "completed"
+        );
+
+
+    const cancelled =
+        allRentals.filter(
+            rental => {
+
+                const status =
+                    String(
+                        rental.status ||
+                        ""
+                    ).toLowerCase();
+
+
+                return (
+                    status ===
+                        "cancelled" ||
+                    status ===
+                        "rejected"
+                );
+
+            }
+        );
+
+
+    const totalValue =
+        completed.reduce(
+            function(sum, rental) {
+
+                return (
+                    sum +
+                    Number(
+                        rental.total_amount ||
+                        0
+                    )
+                );
+
+            },
+            0
+        );
+
+
+    document.getElementById(
+        "totalReturned"
+    ).textContent =
+        completed.length;
+
+
+    document.getElementById(
+        "successfullyReturned"
+    ).textContent =
+        completed.length;
+
+
+    document.getElementById(
+        "totalCancelled"
+    ).textContent =
+        cancelled.length;
+
+
+    document.getElementById(
+        "completedValue"
+    ).textContent =
+        formatCurrency(
+            totalValue
+        );
+
+}
+
+
+/* =========================================================
+   EQUIPMENT FILTER
+========================================================= */
+
+function populateEquipmentFilter() {
+
+    const select =
+        document.getElementById(
+            "equipmentFilter"
+        );
+
+
+    const currentValue =
+        select.value;
+
+
+    const names =
+        [
+            ...new Set(
+                allRentals
+                    .map(
+                        rental =>
+                            rental.equipment_name
+                    )
+                    .filter(
+                        Boolean
+                    )
+            )
+        ]
+        .sort(
+            function(a,b) {
+
+                return String(a)
+                    .localeCompare(
+                        String(b)
+                    );
+
+            }
+        );
+
+
+    select.innerHTML = `
+
+        <option value="">
+            All Equipment
+        </option>
+
+    `;
+
+
+    names.forEach(
+        function(name) {
+
+            const option =
+                document.createElement(
+                    "option"
+                );
+
+
+            option.value =
+                name;
+
+
+            option.textContent =
+                name;
+
+
+            select.appendChild(
+                option
+            );
+
+        }
+    );
+
+
+    if (
+        names.includes(
+            currentValue
+        )
+    ) {
+
+        select.value =
+            currentValue;
+
+    }
+
+}
+
+
+/* =========================================================
+   FILTER RENTALS
+========================================================= */
+
+function getFilteredRentals() {
+
+    const search =
+        document.getElementById(
+            "searchInput"
+        )
+        .value
+        .trim()
+        .toLowerCase();
+
+
+    const equipment =
+        document.getElementById(
+            "equipmentFilter"
+        ).value;
+
+
+    const fromDate =
+        document.getElementById(
+            "fromDate"
+        ).value;
+
+
+    const toDate =
+        document.getElementById(
+            "toDate"
+        ).value;
+
+
+    return allRentals.filter(
+        function(rental) {
+
+            const status =
+                String(
+                    rental.status ||
+                    ""
+                )
+                .toLowerCase();
+
+
+            let belongsToTab =
+                false;
+
+
+            if (
+                currentTab ===
+                "returned"
+            ) {
+
+                belongsToTab =
+                    status ===
+                    "completed";
+
+            }
+
+            else {
+
+                belongsToTab =
+                    status ===
+                        "cancelled" ||
+                    status ===
+                        "rejected";
+
+            }
+
+
+            if (
+                !belongsToTab
+            ) {
+
+                return false;
+
+            }
+
+
+            if (
+                search
+            ) {
+
+                const customerName =
+                    `${rental.renter_first_name || ""} ${rental.renter_last_name || ""}`
+                        .trim()
+                        .toLowerCase();
+
+
+                const equipmentName =
+                    String(
+                        rental.equipment_name ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const phone =
+                    String(
+                        rental.renter_phone ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const rentalId =
+                    String(
+                        rental.rental_id ||
+                        ""
+                    )
+                    .toLowerCase();
+
+
+                const matches =
+                    customerName.includes(
+                        search
+                    )
+                    ||
+                    equipmentName.includes(
+                        search
+                    )
+                    ||
+                    phone.includes(
+                        search
+                    )
+                    ||
+                    rentalId.includes(
+                        search
+                    );
+
+
+                if (
+                    !matches
+                ) {
+
+                    return false;
+
+                }
+
+            }
+
+
+            if (
+                equipment &&
+                rental.equipment_name !==
+                    equipment
+            ) {
+
+                return false;
+
+            }
+
+
+            /*
+             * Use rental start date for the date filter.
+             */
+
+            const rentalDate =
+                normalizeDateOnly(
+                    rental.start_date
+                );
+
+
+            if (
+                fromDate &&
+                rentalDate &&
+                rentalDate <
+                    fromDate
+            ) {
+
+                return false;
+
+            }
+
+
+            if (
+                toDate &&
+                rentalDate &&
+                rentalDate >
+                    toDate
+            ) {
+
+                return false;
+
+            }
+
+
+            return true;
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   RENDER CURRENT TAB
+========================================================= */
+
+function renderCurrentTab() {
+
+    if (
+        currentTab ===
+        "returned"
+    ) {
+
+        document.getElementById(
+            "returnedSection"
+        ).style.display =
+            "block";
+
+
+        document.getElementById(
+            "cancelledSection"
+        ).style.display =
+            "none";
+
+    }
+
+    else {
+
+        document.getElementById(
+            "returnedSection"
+        ).style.display =
+            "none";
+
+
+        document.getElementById(
+            "cancelledSection"
+        ).style.display =
+            "block";
+
+    }
+
+
+    const rentals =
+        getFilteredRentals();
+
+
+    if (
+        currentTab ===
+        "returned"
+    ) {
+
+        renderReturnedOrders(
+            rentals
+        );
+
+    }
+
+    else {
+
+        renderCancelledOrders(
+            rentals
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   RENDER RETURNED ORDERS
+========================================================= */
+
+function renderReturnedOrders(
+    rentals
+) {
+
+    const container =
+        document.getElementById(
+            "returnedContent"
+        );
+
+
+    if (
+        rentals.length ===
+        0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h3>
+                    No returned orders found
+                </h3>
+
+                <p>
+                    Completed rental orders will appear here.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let rows =
+        "";
+
+
+    rentals.forEach(
+        function(rental) {
+
+            const firstName =
+                rental.renter_first_name ||
+                "";
+
+
+            const lastName =
+                rental.renter_last_name ||
+                "";
+
+
+            const customerName =
+                `${firstName} ${lastName}`
+                    .trim() ||
+                "Customer";
+
+
+            const initial =
+                customerName
+                    .charAt(0)
+                    .toUpperCase();
+
+
+            const equipmentName =
+                rental.equipment_name ||
+                "Equipment";
+
+
+            const category =
+                rental.category ||
+                "Agricultural Equipment";
+
+
+            const quantity =
+                Number(
+                    rental.quantity ||
+                    0
+                );
+
+
+            const total =
+                Number(
+                    rental.total_amount ||
+                    0
+                );
+
+
+            const image =
+                getImageUrl(
+                    rental.image
+                );
+
+
+            rows += `
+
+                <tr>
+
+                    <td>
+
+                        <div class="customer-cell">
+
+                            <div class="avatar">
+                                ${escapeHtml(initial)}
+                            </div>
+
+                            <div>
+
+                                <div class="customer-name">
+                                    ${escapeHtml(customerName)}
+                                </div>
+
+                                <div class="customer-phone">
+                                    ${escapeHtml(
+                                        rental.renter_phone ||
+                                        "-"
+                                    )}
+                                </div>
+
+                                ${
+                                    rental.renter_email
+                                        ? `
+                                            <div class="customer-location">
+                                                ${escapeHtml(
+                                                    rental.renter_email
+                                                )}
+                                            </div>
+                                          `
+                                        : ""
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="equipment-cell">
+
+                            ${
+                                image
+                                    ? `
+                                        <img
+                                            src="${escapeAttribute(image)}"
+                                            class="equipment-image"
+                                            alt="Equipment"
+                                            onerror="this.style.display='none';this.nextElementSibling.style.display='flex';"
+                                        >
+
+                                        <div
+                                            class="equipment-placeholder"
+                                            style="display:none;"
+                                        >
+                                            🚜
+                                        </div>
+                                      `
+                                    : `
+                                        <div class="equipment-placeholder">
+                                            🚜
+                                        </div>
+                                      `
+                            }
+
+
+                            <div>
+
+                                <div class="equipment-name">
+                                    ${escapeHtml(equipmentName)}
+                                </div>
+
+                                <div class="equipment-category">
+                                    ${escapeHtml(category)}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="quantity">
+                            ${quantity}
+                            <small>
+                                Unit${quantity === 1 ? "" : "s"}
+                            </small>
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="period">
+
+                            <div class="period-date">
+                                📅
+                                ${formatDate(
+                                    rental.start_date
+                                )}
+                            </div>
+
+                            <div class="period-date">
+                                to
+                                ${formatDate(
+                                    rental.end_date
+                                )}
+                            </div>
+
+                            <div class="period-days">
+                                ${calculateDays(
+                                    rental.start_date,
+                                    rental.end_date
+                                )} Day(s)
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="period">
+
+                            <div class="period-date">
+                                📅
+                                ${formatDate(
+                                    rental.end_date
+                                )}
+                            </div>
+
+                            <div class="period-days">
+                                Rental completed
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="amount">
+                            ${formatCurrency(total)}
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="refund">
+                            ${formatCurrency(total)}
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="status returned">
+                            Returned
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="action-button"
+                            onclick="viewRental(${Number(rental.rental_id)})"
+                        >
+                            View
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    container.innerHTML = `
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Equipment
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Rental Period
+                        </th>
+
+                        <th>
+                            Returned Date
+                        </th>
+
+                        <th>
+                            Total Amount (LKR)
+                        </th>
+
+                        <th>
+                            Refund Amount (LKR)
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    ${rows}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   RENDER CANCELLED ORDERS
+========================================================= */
+
+function renderCancelledOrders(
+    rentals
+) {
+
+    const container =
+        document.getElementById(
+            "cancelledContent"
+        );
+
+
+    if (
+        rentals.length ===
+        0
+    ) {
+
+        container.innerHTML = `
+
+            <div class="empty-state">
+
+                <div class="empty-icon">
+                    ×
+                </div>
+
+                <h3>
+                    No cancelled orders found
+                </h3>
+
+                <p>
+                    Cancelled or rejected rental orders will appear here.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    let rows =
+        "";
+
+
+    rentals.forEach(
+        function(rental) {
+
+            const firstName =
+                rental.renter_first_name ||
+                "";
+
+
+            const lastName =
+                rental.renter_last_name ||
+                "";
+
+
+            const customerName =
+                `${firstName} ${lastName}`
+                    .trim() ||
+                "Customer";
+
+
+            const initial =
+                customerName
+                    .charAt(0)
+                    .toUpperCase();
+
+
+            const status =
+                String(
+                    rental.status ||
+                    ""
+                )
+                .toLowerCase();
+
+
+            const statusText =
+                status ===
+                    "rejected"
+                    ? "Rejected"
+                    : "Cancelled";
+
+
+            const statusClass =
+                status ===
+                    "rejected"
+                    ? "rejected"
+                    : "cancelled";
+
+
+            const quantity =
+                Number(
+                    rental.quantity ||
+                    0
+                );
+
+
+            const total =
+                Number(
+                    rental.total_amount ||
+                    0
+                );
+
+
+            rows += `
+
+                <tr>
+
+                    <td>
+
+                        <div class="customer-cell">
+
+                            <div class="avatar">
+                                ${escapeHtml(initial)}
+                            </div>
+
+                            <div>
+
+                                <div class="customer-name">
+                                    ${escapeHtml(customerName)}
+                                </div>
+
+                                <div class="customer-phone">
+                                    ${escapeHtml(
+                                        rental.renter_phone ||
+                                        "-"
+                                    )}
+                                </div>
+
+                                ${
+                                    rental.renter_email
+                                        ? `
+                                            <div class="customer-location">
+                                                ${escapeHtml(
+                                                    rental.renter_email
+                                                )}
+                                            </div>
+                                          `
+                                        : ""
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="equipment-cell">
+
+                            <div class="equipment-placeholder">
+                                🚜
+                            </div>
+
+                            <div>
+
+                                <div class="equipment-name">
+                                    ${escapeHtml(
+                                        rental.equipment_name ||
+                                        "Equipment"
+                                    )}
+                                </div>
+
+                                <div class="equipment-category">
+                                    ${escapeHtml(
+                                        rental.category ||
+                                        "Agricultural Equipment"
+                                    )}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="quantity">
+                            ${quantity}
+
+                            <small>
+                                Unit${quantity === 1 ? "" : "s"}
+                            </small>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="period">
+
+                            <div class="period-date">
+                                📅
+                                ${formatDate(
+                                    rental.start_date
+                                )}
+                            </div>
+
+                            <div class="period-date">
+                                to
+                                ${formatDate(
+                                    rental.end_date
+                                )}
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="period">
+
+                            <div class="period-date">
+                                📅
+                                ${formatDate(
+                                    rental.created_at
+                                )}
+                            </div>
+
+                            <div class="period-days">
+                                Request / cancellation record
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="amount">
+                            ${formatCurrency(total)}
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="status ${statusClass}">
+                            ${statusText}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="reason">
+
+                            ${
+                                status ===
+                                    "rejected"
+                                    ? "Rental request rejected."
+                                    : "Rental order cancelled."
+                            }
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            type="button"
+                            class="action-button"
+                            onclick="viewRental(${Number(rental.rental_id)})"
+                        >
+                            View
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+
+    container.innerHTML = `
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Customer
+                        </th>
+
+                        <th>
+                            Equipment
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Rental Period
+                        </th>
+
+                        <th>
+                            Request Date
+                        </th>
+
+                        <th>
+                            Total Amount (LKR)
+                        </th>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <th>
+                            Reason
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    ${rows}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =========================================================
+   VIEW RENTAL
+========================================================= */
+
+async function viewRental(
+    rentalId
+) {
+
+    if (!rentalId) {
+
+        return;
+
+    }
+
+
+    const rental =
+        allRentals.find(
+            item =>
+                Number(
+                    item.rental_id
+                ) ===
+                Number(
+                    rentalId
+                )
+        );
+
+
+    if (!rental) {
+
+        alert(
+            "Rental details could not be found."
+        );
+
+        return;
+
+    }
+
+
+    const customerName =
+        `${rental.renter_first_name || ""} ${rental.renter_last_name || ""}`
+            .trim() ||
+        "Customer";
+
+
+    alert(
+
+        "Rental Details\n\n" +
+
+        "Customer: " +
+        customerName +
+
+        "\nPhone: " +
+        (
+            rental.renter_phone ||
+            "-"
+        ) +
+
+        "\nEquipment: " +
+        (
+            rental.equipment_name ||
+            "-"
+        ) +
+
+        "\nQuantity: " +
+        (
+            rental.quantity ||
+            0
+        ) +
+
+        "\nRental Period: " +
+        formatDate(
+            rental.start_date
+        ) +
+        " to " +
+        formatDate(
+            rental.end_date
+        ) +
+
+        "\nTotal Amount: " +
+        formatCurrency(
+            rental.total_amount
+        ) +
+
+        "\nStatus: " +
+        getStatusText(
+            rental.status
+        )
+
+    );
+
+}
+
+
+/* =========================================================
+   STATUS TEXT
+========================================================= */
+
+function getStatusText(
+    status
+) {
+
+    const value =
+        String(
+            status ||
+            ""
+        )
+        .toLowerCase();
+
+
+    const names = {
+
+        pending:
+            "Pending",
+
+        approved:
+            "Accepted",
+
+        active:
+            "Active",
+
+        completed:
+            "Completed",
+
+        cancelled:
+            "Cancelled",
+
+        rejected:
+            "Rejected"
+
+    };
+
+
+    return (
+        names[value] ||
+        status ||
+        "Unknown"
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT CURRENCY
+========================================================= */
+
+function formatCurrency(
+    value
+) {
+
+    return (
+        "LKR " +
+        Number(
+            value || 0
+        ).toLocaleString(
+            "en-LK",
+            {
+                minimumFractionDigits:
+                    0,
+
+                maximumFractionDigits:
+                    2
+            }
+        )
+    );
+
+}
+
+
+/* =========================================================
+   FORMAT DATE
+========================================================= */
+
+function formatDate(
+    value
+) {
+
+    if (!value) {
+
+        return "-";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(
+            value
+        );
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day:
+                "2-digit",
+
+            month:
+                "short",
+
+            year:
+                "numeric"
+        }
+    );
+
+}
+
+
+/* =========================================================
+   DATE ONLY
+========================================================= */
+
+function normalizeDateOnly(
+    value
+) {
+
+    if (!value) {
+
+        return "";
+
+    }
+
+
+    const date =
+        new Date(
+            value
+        );
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return String(
+            value
+        ).substring(
+            0,
+            10
+        );
+
+    }
+
+
+    const year =
+        date.getFullYear();
+
+
+    const month =
+        String(
+            date.getMonth() + 1
+        )
+        .padStart(
+            2,
+            "0"
+        );
+
+
+    const day =
+        String(
+            date.getDate()
+        )
+        .padStart(
+            2,
+            "0"
+        );
+
+
+    return (
+        `${year}-${month}-${day}`
+    );
+
+}
+
+
+/* =========================================================
+   CALCULATE DAYS
+========================================================= */
+
+function calculateDays(
+    start,
+    end
+) {
+
+    if (
+        !start ||
+        !end
+    ) {
+
+        return 0;
+
+    }
+
+
+    const startDate =
+        new Date(
+            start
+        );
+
+
+    const endDate =
+        new Date(
+            end
+        );
+
+
+    const difference =
+        Math.abs(
+            endDate -
+            startDate
+        );
+
+
+    return (
+        Math.floor(
+            difference /
+            86400000
+        ) +
+        1
+    );
+
+}
+
+
+/* =========================================================
+   IMAGE URL
+========================================================= */
+
+function getImageUrl(
+    src
+) {
+
+    if (!src) {
+
+        return "";
+
+    }
+
+
+    const value =
+        String(
+            src
+        ).trim();
+
+
+    if (
+        value.startsWith(
+            "http://"
+        )
+        ||
+        value.startsWith(
+            "https://"
+        )
+        ||
+        value.startsWith(
+            "data:"
+        )
+    ) {
+
+        return value;
+
+    }
+
+
+    if (
+        value.startsWith(
+            "/"
+        )
+    ) {
+
+        return (
+            "http://localhost:5000" +
+            value
+        );
+
+    }
+
+
+    return (
+        "http://localhost:5000/" +
+        value.replace(
+            /^\.?\//,
+            ""
+        )
+    );
+
+}
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHtml(
+    value
+) {
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        value == null
+            ? ""
+            : String(
+                value
+            );
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =========================================================
+   ESCAPE ATTRIBUTE
+========================================================= */
+
+function escapeAttribute(
+    value
+) {
+
+    return escapeHtml(
+        value
+    )
+    .replace(
+        /"/g,
+        "&quot;"
+    )
+    .replace(
+        /'/g,
+        "&#39;"
+    );
+
+}
+
+
+/* =========================================================
+   TABS
+========================================================= */
+
+document
+    .getElementById(
+        "returnedTab"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            currentTab =
+                "returned";
+
+
+            document
+                .getElementById(
+                    "returnedTab"
+                )
+                .classList.add(
+                    "active"
+                );
+
+
+            document
+                .getElementById(
+                    "cancelledTab"
+                )
+                .classList.remove(
+                    "active"
+                );
+
+
+            renderCurrentTab();
+
+        }
+    );
+
+
+document
+    .getElementById(
+        "cancelledTab"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            currentTab =
+                "cancelled";
+
+
+            document
+                .getElementById(
+                    "cancelledTab"
+                )
+                .classList.add(
+                    "active"
+                );
+
+
+            document
+                .getElementById(
+                    "returnedTab"
+                )
+                .classList.remove(
+                    "active"
+                );
+
+
+            renderCurrentTab();
+
+        }
+    );
+
+
+/* =========================================================
+   FILTER EVENTS
+========================================================= */
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        renderCurrentTab
+    );
+
+
+document
+    .getElementById(
+        "equipmentFilter"
+    )
+    .addEventListener(
+        "change",
+        renderCurrentTab
+    );
+
+
+document
+    .getElementById(
+        "fromDate"
+    )
+    .addEventListener(
+        "change",
+        renderCurrentTab
+    );
+
+
+document
+    .getElementById(
+        "toDate"
+    )
+    .addEventListener(
+        "change",
+        renderCurrentTab
+    );
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+document
+    .getElementById(
+        "notificationButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            window.location.href =
+                "rental-notifications.html";
+
+        }
+    );
+
+
+/* =========================================================
+   NOTIFICATION COUNT
+========================================================= */
+
+function updateNotificationCount() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const sidebarCount = document.getElementById("notificationCount");
+            const headerCount = document.getElementById("headerNotificationCount");
+            const badgeCount = document.getElementById("notificationBadge");
+
+            if (sidebarCount) sidebarCount.textContent = unread;
+            if (headerCount) headerCount.textContent = unread;
+            if (badgeCount) badgeCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer =
+    null;
+
+
+function showToast(
+    message
+) {
+
+    const toast =
+        document.getElementById(
+            "toast"
+        );
+
+
+    document.getElementById(
+        "toastMessage"
+    ).textContent =
+        message;
+
+
+    toast.classList.add(
+        "show"
+    );
+
+
+    clearTimeout(
+        toastTimer
+    );
+
+
+    toastTimer =
+        setTimeout(
+            function() {
+
+                toast.classList.remove(
+                    "show"
+                );
+
+            },
+            3000
+        );
+
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+document
+    .getElementById(
+        "mobileMenu"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            document
+                .getElementById(
+                    "sidebar"
+                )
+                .classList.toggle(
+                    "open"
+                );
+
+        }
+    );
+
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const sidebar =
+            document.getElementById(
+                "sidebar"
+            );
+
+
+        const menu =
+            document.getElementById(
+                "mobileMenu"
+            );
+
+
+        if (
+            window.innerWidth <= 850 &&
+            !sidebar.contains(
+                event.target
+            ) &&
+            event.target !==
+                menu
+        ) {
+
+            sidebar.classList.remove(
+                "open"
+            );
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+document
+    .getElementById(
+        "logoutButton"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.preventDefault();
+
+
+            const confirmed =
+                confirm(
+                    "Are you sure you want to logout?"
+                );
+
+
+            if (
+                !confirmed
+            ) {
+
+                return;
+
+            }
+
+
+            sessionStorage.removeItem(
+                "token"
+            );
+
+
+            sessionStorage.removeItem(
+                "user"
+            );
+
+
+            sessionStorage.removeItem(
+                "loggedInUser"
+            );
+
+
+            sessionStorage.removeItem(
+                "selectedRole"
+            );
+
+
+            sessionStorage.removeItem(
+                "currentRole"
+            );
+
+
+            sessionStorage.removeItem(
+                "registeredRoles"
+            );
+
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+
+/* =========================================================
+   INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+        updateProfile();
+
+        renderRoles();
+
+        updateNotificationCount();
+
+        loadRentalHistory();
+
+    }
+);
+
+
+/* =========================================================
+   STORAGE REFRESH
+========================================================= */
+
+window.addEventListener(
+    "storage",
+    function() {
+
+        updateNotificationCount();
+
+    }
+);
+
+
+
+/* =========================================================
+   SIDEBAR MESSAGES BADGE (unread conversation count)
+========================================================= */
+
+function updateSidebarMessagesBadgeGlobal() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) return;
+
+    fetch(`/api/messages/conversations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const badge = document.getElementById("sidebarMessagesBadge");
+
+            if (!badge) return;
+
+            const unreadCount = (Array.isArray(data.conversations) ? data.conversations : [])
+                .filter(c => c.unread_count > 0).length;
+
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.style.display = "flex";
+            } else {
+                badge.style.display = "none";
+            }
+
+        })
+        .catch(error => console.error("Unable to load sidebar messages badge:", error));
+
+}
+
+updateSidebarMessagesBadgeGlobal();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+
+</body>
+
+</html>

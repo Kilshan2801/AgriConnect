@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AgriConnect - Select Role</title>
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        body {
+
+            min-height: 100vh;
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background-image:
+                linear-gradient(
+                    rgba(255, 255, 255, 0.18),
+                    rgba(255, 255, 255, 0.18)
+                ),
+                url("assets/agri-background.png");
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 35px 25px;
+
+        }
+
+
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
+
+        .back-button {
+
+            position: fixed;
+
+            top: 20px;
+
+            left: 25px;
+
+            border: none;
+
+            background:
+                rgba(80, 80, 80, 0.75);
+
+            color: white;
+
+            padding: 9px 18px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            z-index: 100;
+
+        }
+
+
+        .back-button:hover {
+
+            background:
+                rgba(50, 50, 50, 0.9);
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTAINER
+        ===================================================== */
+
+        .container {
+
+            width: 100%;
+
+            max-width: 1250px;
+
+            text-align: center;
+
+        }
+
+
+        /* =====================================================
+           LOGO
+        ===================================================== */
+
+        .logo-container {
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .logo {
+
+            width: 175px;
+
+            max-width: 60%;
+
+            height: auto;
+
+        }
+
+
+        /* =====================================================
+           TITLE
+        ===================================================== */
+
+        .title {
+
+            font-size: 30px;
+
+            font-weight: bold;
+
+            color: #172033;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .subtitle {
+
+            font-size: 16px;
+
+            color: #444;
+
+            margin-bottom: 32px;
+
+        }
+
+
+        /* =====================================================
+           ROLE GRID
+        ===================================================== */
+
+        .role-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 24px;
+
+            width: 100%;
+
+        }
+
+
+        /* =====================================================
+           ROLE CARD
+        ===================================================== */
+
+        .role-card {
+
+            background:
+                rgba(255, 255, 255, 0.93);
+
+            backdrop-filter:
+                blur(8px);
+
+            border-radius: 18px;
+
+            min-height: 330px;
+
+            padding:
+                30px 22px 25px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            box-shadow:
+                0 8px 28px
+                rgba(0, 0, 0, 0.15);
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease;
+
+        }
+
+
+        .role-card:hover {
+
+            transform:
+                translateY(-5px);
+
+            box-shadow:
+                0 13px 32px
+                rgba(0, 0, 0, 0.20);
+
+        }
+
+
+        /* =====================================================
+           ICON
+        ===================================================== */
+
+        .role-icon {
+
+            width: 118px;
+
+            height: 118px;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 55px;
+
+            margin-bottom: 18px;
+
+        }
+
+
+        .farmer-icon {
+
+            background: #dff3df;
+
+        }
+
+
+        .buyer-icon {
+
+            background: #dfebff;
+
+        }
+
+
+        .expert-icon {
+
+            background: #eee0ff;
+
+        }
+
+
+        .provider-icon {
+
+            background: #ffe9dc;
+
+        }
+
+
+        /* =====================================================
+           ROLE INFORMATION
+        ===================================================== */
+
+        .role-title {
+
+            font-size: 23px;
+
+            font-weight: bold;
+
+            color: #172033;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .role-description {
+
+            font-size: 14px;
+
+            line-height: 21px;
+
+            color: #666;
+
+            min-height: 65px;
+
+        }
+
+
+        /* =====================================================
+           BUTTON
+        ===================================================== */
+
+        .role-button {
+
+            width: 100%;
+
+            padding: 13px 15px;
+
+            margin-top: 22px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            text-decoration: none;
+
+            cursor: pointer;
+
+            display: inline-block;
+
+            transition:
+                transform 0.1s ease,
+                opacity 0.2s ease;
+
+        }
+
+
+        .role-button:hover {
+
+            opacity: 0.9;
+
+        }
+
+
+        .role-button:active {
+
+            transform:
+                scale(0.98);
+
+        }
+
+
+        /* =====================================================
+           BUTTON COLORS
+        ===================================================== */
+
+        .farmer-button {
+
+            background: #2e7d32;
+
+        }
+
+
+        .buyer-button {
+
+            background: #1976b8;
+
+        }
+
+
+        .expert-button {
+
+            background: #7b3fc6;
+
+        }
+
+
+        .provider-button {
+
+            background: #e85b00;
+
+        }
+
+
+        /* =====================================================
+           BOTTOM TEXT
+        ===================================================== */
+
+        .bottom-text {
+
+            margin-top: 28px;
+
+            color: #555;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE - TABLET
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .role-grid {
+
+                grid-template-columns:
+                    repeat(2, 1fr);
+
+            }
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE - MOBILE
+        ===================================================== */
+
+        @media (max-width: 560px) {
+
+            body {
+
+                padding:
+                    65px 15px 25px;
+
+            }
+
+
+            .role-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .title {
+
+                font-size: 26px;
+
+            }
+
+
+            .subtitle {
+
+                font-size: 14px;
+
+            }
+
+
+            .logo {
+
+                width: 150px;
+
+            }
+
+
+            .role-card {
+
+                min-height: 300px;
+
+            }
+
+
+            .back-button {
+
+                top: 12px;
+
+                left: 12px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =====================================================
+         BACK BUTTON
+    ===================================================== -->
+
+    <button
+        type="button"
+        class="back-button"
+        onclick="goBack()"
+    >
+
+        ← Back
+
+    </button>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <div class="container">
+
+
+        <!-- =================================================
+             LOGO
+        ================================================= -->
+
+        <div class="logo-container">
+
+            <img
+                src="assets/agriconnect-logo.png"
+                alt="AgriConnect"
+                class="logo"
+            >
+
+        </div>
+
+
+
+        <!-- =================================================
+             TITLE
+        ================================================= -->
+
+        <h1 class="title">
+
+            Select Your Role
+
+        </h1>
+
+
+        <p class="subtitle">
+
+            Select your role to continue
+
+        </p>
+
+
+
+        <!-- =================================================
+             ROLE CARDS
+             
+             IMPORTANT:
+             ONLY FOUR NORMAL USER ROLES ARE HERE.
+             
+             ADMINISTRATOR IS NOT INCLUDED.
+        ================================================= -->
+
+        <div class="role-grid">
+
+
+
+            <!-- =============================================
+                 FARMER
+            ============================================== -->
+
+            <div class="role-card">
+
+
+                <div>
+
+                    <div class="role-icon farmer-icon">
+
+                        👨‍🌾
+
+                    </div>
+
+
+                    <div class="role-title">
+
+                        Farmer
+
+                    </div>
+
+
+                    <div class="role-description">
+
+                        Manage your crops, connect with buyers,
+                        experts and equipment providers.
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="login.html?role=farmer"
+                    class="role-button farmer-button"
+                    onclick="selectRole('farmer')"
+                >
+
+                    Farmer Login
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 BUYER
+            ============================================== -->
+
+            <div class="role-card">
+
+
+                <div>
+
+                    <div class="role-icon buyer-icon">
+
+                        🛒
+
+                    </div>
+
+
+                    <div class="role-title">
+
+                        Buyer
+
+                    </div>
+
+
+                    <div class="role-description">
+
+                        Search for crops, place orders and
+                        communicate directly with farmers.
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="login.html?role=buyer"
+                    class="role-button buyer-button"
+                    onclick="selectRole('buyer')"
+                >
+
+                    Buyer Login
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 AGRICULTURAL EXPERT
+            ============================================== -->
+
+            <div class="role-card">
+
+
+                <div>
+
+                    <div class="role-icon expert-icon">
+
+                        👨‍🔬
+
+                    </div>
+
+
+                    <div class="role-title">
+
+                        Agricultural Expert
+
+                    </div>
+
+
+                    <div class="role-description">
+
+                        Provide agricultural advice and
+                        consultations to farmers.
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="login.html?role=expert"
+                    class="role-button expert-button"
+                    onclick="selectRole('expert')"
+                >
+
+                    Expert Login
+
+                </a>
+
+
+            </div>
+
+
+
+            <!-- =============================================
+                 EQUIPMENT PROVIDER
+            ============================================== -->
+
+            <div class="role-card">
+
+
+                <div>
+
+                    <div class="role-icon provider-icon">
+
+                        🚜
+
+                    </div>
+
+
+                    <div class="role-title">
+
+                        Equipment Provider
+
+                    </div>
+
+
+                    <div class="role-description">
+
+                        Rent agricultural equipment and
+                        machinery to farmers.
+
+                    </div>
+
+                </div>
+
+
+                <a
+                    href="login.html?role=equipment_provider"
+                    class="role-button provider-button"
+                    onclick="selectRole('equipment_provider')"
+                >
+
+                    Provider Login
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             BOTTOM TEXT
+        ================================================= -->
+
+        <div class="bottom-text">
+
+            Choose your account type to access AgriConnect.
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ===================================================== -->
+
+    <script>
+
+
+        /* =====================================================
+           SELECT ROLE
+        ===================================================== */
+
+        function selectRole(role) {
+
+            sessionStorage.setItem(
+                "selectedRole",
+                role
+            );
+
+        }
+
+
+
+        /* =====================================================
+           BACK BUTTON
+        ===================================================== */
+
+        function goBack() {
+
+            window.location.href =
+                "index.html";
+
+        }
+
+
+    </script>
+
+
+</body>
+
+</html>

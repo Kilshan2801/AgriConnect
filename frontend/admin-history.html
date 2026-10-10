@@ -1,0 +1,4438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Admin History</title>
+
+<style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #182033;
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    min-width: 255px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #281064 0%,
+            #170a45 100%
+        );
+
+    color: white;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+}
+
+
+/* =====================================================
+   SIDEBAR LOGO
+===================================================== */
+
+.sidebar-logo {
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.10);
+}
+
+.sidebar-logo img {
+    width: 160px;
+    height: auto;
+    max-height: 62px;
+
+    object-fit: contain;
+    display: block;
+}
+
+
+/* =====================================================
+   SIDEBAR CONTENT
+===================================================== */
+
+.sidebar-content {
+    flex: 1;
+    padding: 13px 10px;
+}
+
+
+/* =====================================================
+   SECTION TITLE
+===================================================== */
+
+.section-title {
+    font-size: 11px;
+    font-weight: bold;
+
+    color:
+        rgba(255,255,255,0.75);
+
+    padding:
+        14px 12px 10px;
+
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.nav-item {
+    width: 100%;
+    min-height: 45px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s;
+}
+
+.nav-item:hover {
+    background:
+        rgba(255,255,255,0.08);
+}
+
+.nav-item.active {
+    background:
+        linear-gradient(
+            90deg,
+            #7131c8,
+            #5520a7
+        );
+}
+
+.nav-icon {
+    width: 22px;
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+.nav-arrow {
+    font-size: 12px;
+}
+
+
+/* =====================================================
+   SUBMENU
+===================================================== */
+
+.submenu {
+    display: none;
+
+    padding-left: 35px;
+    margin-bottom: 5px;
+
+    position: relative;
+}
+
+.submenu.show {
+    display: block;
+}
+
+.submenu::before {
+    content: "";
+
+    position: absolute;
+
+    left: 24px;
+    top: 3px;
+    bottom: 5px;
+
+    width: 1px;
+
+    background:
+        rgba(255,255,255,0.25);
+}
+
+.submenu a {
+    display: block;
+
+    color:
+        rgba(255,255,255,0.9);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    padding: 10px;
+
+    border-radius: 6px;
+
+    position: relative;
+}
+
+.submenu a::before {
+    content: "";
+
+    position: absolute;
+
+    left: -14px;
+    top: 15px;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #7353b9;
+}
+
+.submenu a:hover {
+    background:
+        rgba(255,255,255,0.08);
+}
+
+
+/* =====================================================
+   SIDEBAR BOTTOM
+===================================================== */
+
+.sidebar-bottom {
+    padding:
+        8px 10px 15px;
+}
+
+.sidebar-divider {
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.13);
+
+    margin:
+        5px 12px 12px;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 42px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e8ee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    padding:
+        0 27px;
+}
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =====================================================
+   NOTIFICATION
+===================================================== */
+
+.notification {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s;
+}
+
+.notification:hover {
+    transform:
+        scale(1.06);
+}
+
+.notification-badge {
+    position: absolute;
+
+    top: 0;
+    right: -2px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding:
+        0 4px;
+
+    border-radius: 50%;
+
+    background: #ff3b30;
+
+    color: white;
+
+    font-size: 10px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+
+    border:
+        2px solid #6429c1;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #6429c1;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    background: white;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.profile-role {
+    font-size: 10px;
+
+    color: #6429c1;
+
+    margin-top: 2px;
+}
+
+.profile-arrow {
+    font-size: 11px;
+
+    margin-left: 5px;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+    padding:
+        22px 18px 30px;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header {
+    margin-bottom: 19px;
+}
+
+.page-header h1 {
+    font-size: 29px;
+
+    margin-bottom: 6px;
+
+    color: #151b27;
+
+    font-weight: 700;
+}
+
+.page-header p {
+    font-size: 13px;
+
+    color: #596575;
+
+    line-height: 18px;
+}
+
+
+/* =====================================================
+   SUMMARY CARDS
+===================================================== */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+.summary-card {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    min-height: 101px;
+
+    padding: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+.summary-icon {
+    width: 50px;
+    height: 50px;
+
+    min-width: 50px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 27px;
+}
+
+.summary-icon.purple {
+    background: #eee3ff;
+    color: #6522c5;
+}
+
+.summary-icon.orange {
+    background: #fff0dc;
+    color: #ff6500;
+}
+
+.summary-icon.green {
+    background: #e4f7e8;
+    color: #17853b;
+}
+
+.summary-icon.blue {
+    background: #e7efff;
+    color: #2167d2;
+}
+
+.summary-icon.red {
+    background: #ffe5e5;
+    color: #ef2828;
+}
+
+.summary-title {
+    font-size: 12px;
+
+    color: #555e6b;
+
+    font-weight: bold;
+
+    margin-bottom: 4px;
+}
+
+.summary-value {
+    font-size: 24px;
+
+    font-weight: bold;
+
+    color: #171c27;
+
+    margin-bottom: 4px;
+}
+
+.summary-bottom {
+    font-size: 11px;
+
+    color: #687180;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   FILTER BAR
+===================================================== */
+
+.filter-card {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    padding: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 14px;
+}
+
+.search-container {
+    position: relative;
+    flex: 1;
+}
+
+.search-container span {
+    position: absolute;
+
+    left: 12px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    font-size: 17px;
+
+    color: #707987;
+}
+
+.search-container input {
+    width: 100%;
+
+    height: 41px;
+
+    border:
+        1px solid #dfe3e8;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    padding:
+        0 12px 0 38px;
+
+    font-size: 12px;
+}
+
+.search-container input:focus {
+    border-color: #7025c5;
+}
+
+.filter-select {
+    height: 41px;
+
+    border:
+        1px solid #dfe3e8;
+
+    border-radius: 7px;
+
+    background: white;
+
+    padding:
+        0 11px;
+
+    font-size: 12px;
+
+    color: #333;
+
+    outline: none;
+}
+
+.action-select {
+    min-width: 165px;
+}
+
+.role-select {
+    min-width: 130px;
+}
+
+.date-select {
+    min-width: 190px;
+}
+
+.filter-btn {
+    height: 41px;
+
+    min-width: 82px;
+
+    border:
+        1px solid #8d58df;
+
+    background: white;
+
+    border-radius: 7px;
+
+    color: #6523bd;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.filter-btn:hover {
+    background: #f7f2ff;
+}
+
+
+/* =====================================================
+   HISTORY SECTION
+===================================================== */
+
+.history-section {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    margin-bottom: 14px;
+
+    overflow: hidden;
+}
+
+.section-header {
+    height: 57px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding:
+        0 16px;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.section-header-icon {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 25px;
+}
+
+.icon-purple {
+    background: #eee3ff;
+    color: #6724c5;
+}
+
+.icon-green {
+    background: #e3f6e8;
+    color: #18833c;
+}
+
+.icon-red {
+    background: #ffe4e4;
+    color: #e72d2d;
+}
+
+.section-header-title {
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #202631;
+}
+
+.count-badge {
+    padding:
+        5px 9px;
+
+    border-radius: 10px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.count-purple {
+    background: #eee3ff;
+    color: #6822c3;
+}
+
+.count-green {
+    background: #e1f4e6;
+    color: #18813a;
+}
+
+.count-red {
+    background: #ffe3e3;
+    color: #df2d2d;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.history-table {
+    width: 100%;
+
+    border-collapse: collapse;
+
+    table-layout: fixed;
+}
+
+.history-table th {
+    background: #fbfcfd;
+
+    border-bottom:
+        1px solid #e7eaf0;
+
+    text-align: left;
+
+    padding:
+        12px 10px;
+
+    font-size: 12px;
+
+    color: #303744;
+
+    font-weight: bold;
+}
+
+.history-table td {
+    padding:
+        13px 10px;
+
+    border-bottom:
+        1px solid #edf0f3;
+
+    font-size: 12px;
+
+    color: #303744;
+
+    vertical-align: middle;
+}
+
+.history-table tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =====================================================
+   COLUMN WIDTHS
+===================================================== */
+
+.rejected-table th:nth-child(1),
+.rejected-table td:nth-child(1) {
+    width: 17%;
+}
+
+.rejected-table th:nth-child(2),
+.rejected-table td:nth-child(2) {
+    width: 12%;
+}
+
+.rejected-table th:nth-child(3),
+.rejected-table td:nth-child(3) {
+    width: 15%;
+}
+
+.rejected-table th:nth-child(4),
+.rejected-table td:nth-child(4) {
+    width: 19%;
+}
+
+.rejected-table th:nth-child(5),
+.rejected-table td:nth-child(5) {
+    width: 14%;
+}
+
+.rejected-table th:nth-child(6),
+.rejected-table td:nth-child(6) {
+    width: 14%;
+}
+
+.rejected-table th:nth-child(7),
+.rejected-table td:nth-child(7) {
+    width: 9%;
+}
+
+
+.resolved-table th:nth-child(1),
+.resolved-table td:nth-child(1) {
+    width: 15%;
+}
+
+.resolved-table th:nth-child(2),
+.resolved-table td:nth-child(2) {
+    width: 14%;
+}
+
+.resolved-table th:nth-child(3),
+.resolved-table td:nth-child(3) {
+    width: 18%;
+}
+
+.resolved-table th:nth-child(4),
+.resolved-table td:nth-child(4) {
+    width: 15%;
+}
+
+.resolved-table th:nth-child(5),
+.resolved-table td:nth-child(5) {
+    width: 16%;
+}
+
+.resolved-table th:nth-child(6),
+.resolved-table td:nth-child(6) {
+    width: 14%;
+}
+
+.resolved-table th:nth-child(7),
+.resolved-table td:nth-child(7) {
+    width: 8%;
+}
+
+
+.removed-table th:nth-child(1),
+.removed-table td:nth-child(1) {
+    width: 17%;
+}
+
+.removed-table th:nth-child(2),
+.removed-table td:nth-child(2) {
+    width: 13%;
+}
+
+.removed-table th:nth-child(3),
+.removed-table td:nth-child(3) {
+    width: 14%;
+}
+
+.removed-table th:nth-child(4),
+.removed-table td:nth-child(4) {
+    width: 15%;
+}
+
+.removed-table th:nth-child(5),
+.removed-table td:nth-child(5) {
+    width: 15%;
+}
+
+.removed-table th:nth-child(6),
+.removed-table td:nth-child(6) {
+    width: 16%;
+}
+
+.removed-table th:nth-child(7),
+.removed-table td:nth-child(7) {
+    width: 10%;
+}
+
+
+/* =====================================================
+   PEOPLE
+===================================================== */
+
+.person {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+}
+
+.person-avatar {
+    width: 34px;
+    height: 34px;
+
+    min-width: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.avatar-purple {
+    background: #eee4ff;
+    color: #6b25c1;
+}
+
+.avatar-blue {
+    background: #e5efff;
+    color: #2465c8;
+}
+
+.avatar-green {
+    background: #e6f7e9;
+    color: #21823b;
+}
+
+.avatar-orange {
+    background: #fff0db;
+    color: #d77b00;
+}
+
+.person-name {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 3px;
+}
+
+.user-id {
+    font-size: 10px;
+
+    color: #737c88;
+}
+
+
+/* =====================================================
+   BADGES
+===================================================== */
+
+.role-badge {
+    display: inline-block;
+
+    padding:
+        5px 7px;
+
+    border-radius: 4px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.role-expert {
+    background: #eee4ff;
+    color: #6b25c1;
+}
+
+.role-provider {
+    background: #fff0dc;
+    color: #d87300;
+}
+
+.role-farmer {
+    background: #e4f6e8;
+    color: #21843c;
+}
+
+.role-buyer {
+    background: #e5efff;
+    color: #2367ca;
+}
+
+.contact-main {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 3px;
+}
+
+.contact-sub {
+    font-size: 11px;
+
+    color: #737c88;
+}
+
+.reason-main {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 3px;
+}
+
+.reason-sub {
+    font-size: 11px;
+
+    color: #737c88;
+
+    line-height: 13px;
+}
+
+.date-main {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 3px;
+}
+
+.date-time {
+    font-size: 11px;
+
+    color: #737c88;
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.view-btn {
+    height: 34px;
+
+    padding:
+        0 12px;
+
+    border:
+        1px solid #8d58df;
+
+    background: white;
+
+    border-radius: 6px;
+
+    color: #6523bd;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.view-btn:hover {
+    background: #f7f2ff;
+}
+
+.removed-btn {
+    border-color: #ffb8b8;
+
+    color: #df3030;
+
+    background: #fff4f4;
+}
+
+
+/* =====================================================
+   SECTION FOOTER
+===================================================== */
+
+.section-footer {
+    height: 44px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding:
+        0 16px;
+
+    border-top:
+        1px solid #edf0f3;
+}
+
+.view-all {
+    color: #6724c5;
+
+    text-decoration: none;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.view-all.green {
+    color: #16823a;
+}
+
+.view-all.red {
+    color: #df3030;
+}
+
+
+/* =====================================================
+   PAGINATION
+===================================================== */
+
+.pagination {
+    height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 6px;
+
+    padding:
+        0 12px;
+}
+
+.page-button {
+    width: 32px;
+    height: 32px;
+
+    border:
+        1px solid #dfe3e8;
+
+    background: white;
+
+    border-radius: 6px;
+
+    font-size: 12px;
+
+    cursor: pointer;
+}
+
+.page-button:hover {
+    background: #f7f2ff;
+}
+
+.page-button.active {
+    background: #6523bd;
+
+    color: white;
+
+    border-color: #6523bd;
+}
+
+.page-button:disabled {
+    color: #b5bbc3;
+
+    cursor: not-allowed;
+}
+
+.dots {
+    font-size: 10px;
+
+    padding:
+        0 2px;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(16,10,30,0.52);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 5000;
+
+    padding: 20px;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    width: 90%;
+
+    max-width: 600px;
+
+    background: white;
+
+    border-radius: 11px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,0.25);
+}
+
+.modal-header {
+    padding:
+        17px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+
+    color: #202631;
+}
+
+.close-btn {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f2f4;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.detail-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 11px;
+}
+
+.detail {
+    background: #f8f9fb;
+
+    padding: 12px;
+
+    border-radius: 7px;
+}
+
+.detail-label {
+    display: block;
+
+    font-size: 10px;
+
+    text-transform: uppercase;
+
+    color: #7a8390;
+
+    font-weight: bold;
+
+    margin-bottom: 6px;
+}
+
+.detail-value {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #252c37;
+}
+
+.modal-footer {
+    padding:
+        13px 20px;
+
+    border-top:
+        1px solid #edf0f3;
+
+    display: flex;
+
+    justify-content: flex-end;
+}
+
+.close-modal-btn {
+    padding:
+        9px 15px;
+
+    border:
+        1px solid #d8dce2;
+
+    background: white;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+    position: fixed;
+
+    left: 255px;
+    right: 0;
+    bottom: 0;
+
+    height: 42px;
+
+    background: #004d2b;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    font-size: 10px;
+
+    z-index: 900;
+}
+
+.footer a {
+    color: white;
+
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1150px) {
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+@media (max-width: 1000px) {
+
+    .filter-card {
+        flex-wrap: wrap;
+    }
+
+    .search-container {
+        flex-basis: 100%;
+    }
+
+}
+
+@media (max-width: 800px) {
+
+    .sidebar {
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s;
+    }
+
+    .sidebar.open {
+        transform:
+            translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    .footer {
+        left: 0;
+    }
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-card {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .filter-select,
+    .filter-btn {
+        width: 100%;
+    }
+
+    .detail-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+.tabs-card {
+
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius:
+        9px 9px 0 0;
+
+    padding:
+        0 16px;
+
+    margin-bottom: 20px;
+}
+
+
+.history-tabs {
+
+    display: flex;
+
+    gap: 30px;
+
+    height: 54px;
+
+    align-items: flex-end;
+}
+
+
+.history-tab {
+
+    height: 54px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #606979;
+
+    position: relative;
+
+    padding:
+        0 2px 15px;
+}
+
+
+.history-tab.active {
+
+    color: #6320bd;
+}
+
+
+.history-tab.active::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 0;
+
+    height: 2px;
+
+    background: #7025c5;
+
+    border-radius:
+        2px 2px 0 0;
+}
+
+
+.history-tab-count {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 19px;
+
+    height: 19px;
+
+    padding:
+        0 5px;
+
+    margin-left: 5px;
+
+    border-radius: 20px;
+
+    background: #f0e7fc;
+
+    color: #7025c5;
+
+    font-size: 10px;
+}
+
+
+.history-tab-panel {
+
+    display: none;
+
+}
+
+
+.history-tab-panel.active {
+
+    display: block;
+
+}
+
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="admin-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- MANAGEMENT -->
+
+        <div class="section-title">
+            MANAGEMENT
+        </div>
+
+
+        <!-- MANAGE USERS -->
+
+        <div
+            class="nav-item"
+            onclick="toggleUsers()"
+        >
+
+            <span class="nav-icon">
+                ♙
+            </span>
+
+            <span class="nav-label">
+                Manage Users
+            </span>
+
+            <span
+                class="nav-arrow"
+                id="userArrow"
+            >
+                ▼
+            </span>
+
+        </div>
+
+
+        <div
+            class="submenu"
+            id="userSubmenu"
+        >
+
+            <a href="admin-manage-users.html?type=farmer">
+                Farmers
+            </a>
+
+            <a href="admin-manage-users.html?type=buyer">
+                Buyers
+            </a>
+
+            <a href="admin-manage-users.html?type=expert">
+                Agri Experts
+            </a>
+
+            <a href="admin-manage-users.html?type=provider">
+                Equipment Providers
+            </a>
+
+        </div>
+
+
+        <!-- INSPECT REGISTRATION -->
+
+        <a
+            href="admin-registrations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▤
+            </span>
+
+            <span class="nav-label">
+                Inspect Registration
+            </span>
+
+        </a>
+
+
+        <!-- REPORTED CONFLICTS -->
+
+        <a
+            href="admin-conflicts.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚿
+            </span>
+
+            <span class="nav-label">
+                Reported Conflicts
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="admin-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="admin-history.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="admin-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="admin-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="logout(); return false;"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+
+        <div class="header-right">
+
+
+            <!-- NOTIFICATION BUTTON BEFORE HISTORY -->
+
+            <div
+                class="notification"
+                onclick="goToNotifications()"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span class="notification-badge" id="headerNotificationBadge" style="display:none;">
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div class="profile">
+
+
+                <div class="profile-avatar">
+                    AI
+                </div>
+
+
+                <div>
+
+                    <div class="profile-name">
+                        Admin
+                    </div>
+
+                    <div class="profile-role">
+                        Super Admin
+                    </div>
+
+                </div>
+
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT
+    ===================================================== -->
+
+    <section class="content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <h1>
+                History
+            </h1>
+
+            <p>
+                View system history including rejected registrations and resolved actions.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUMMARY
+        ================================================= -->
+
+        <div class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon purple">
+                    👤
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        Rejected Registrations
+                    </div>
+
+                    <div class="summary-value">
+                        56
+                    </div>
+
+                    <div class="summary-bottom">
+                        All Time
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon orange">
+                    ⚠
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        Resolved Conflicts
+                    </div>
+
+                    <div class="summary-value">
+                        42
+                    </div>
+
+                    <div class="summary-bottom">
+                        All Time
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon green">
+                    👤
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        Removed Users
+                    </div>
+
+                    <div class="summary-value">
+                        78
+                    </div>
+
+                    <div class="summary-bottom">
+                        All Time
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon blue">
+                    👥
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        Total Actions
+                    </div>
+
+                    <div class="summary-value">
+                        176
+                    </div>
+
+                    <div class="summary-bottom">
+                        All Time
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon red">
+                    📅
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        This Month
+                    </div>
+
+                    <div class="summary-value">
+                        18
+                    </div>
+
+                    <div class="summary-bottom">
+                        May 2026
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             FILTERS
+        ================================================= -->
+
+        <div class="filter-card">
+
+
+            <div class="search-container">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by name, email or action description..."
+                >
+
+            </div>
+
+
+            <select
+                class="filter-select action-select"
+                id="actionFilter"
+                onchange="applyFilters()"
+            >
+
+                <option value="all">
+                    All Action Types
+                </option>
+
+                <option value="rejected">
+                    Rejected Registration
+                </option>
+
+                <option value="resolved">
+                    Resolved Conflict
+                </option>
+
+                <option value="removed">
+                    Removed User
+                </option>
+
+            </select>
+
+
+            <select
+                class="filter-select role-select"
+                id="roleFilter"
+                onchange="applyFilters()"
+            >
+
+                <option value="all">
+                    All Roles
+                </option>
+
+                <option value="farmer">
+                    Farmer
+                </option>
+
+                <option value="buyer">
+                    Buyer
+                </option>
+
+                <option value="expert">
+                    Agri Expert
+                </option>
+
+                <option value="provider">
+                    Equipment Provider
+                </option>
+
+            </select>
+
+
+            <select
+                class="filter-select date-select"
+                id="dateFilter"
+            >
+
+                <option>
+                    01 May 2026 - 31 May 2026
+                </option>
+
+                <option>
+                    Today
+                </option>
+
+                <option>
+                    This Week
+                </option>
+
+                <option>
+                    This Month
+                </option>
+
+            </select>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             REJECTED REGISTRATIONS
+        ================================================= -->
+
+
+        <!-- =================================================
+             HISTORY TABS
+        ================================================= -->
+
+        <div class="tabs-card">
+
+            <div class="history-tabs">
+
+                <button class="history-tab active" data-history-tab="rejected">
+                    Rejected Registrations
+                    <span class="history-tab-count" id="rejectedTabCount">0</span>
+                </button>
+
+                <button class="history-tab" data-history-tab="resolved">
+                    Resolved Conflicts
+                    <span class="history-tab-count" id="resolvedTabCount">0</span>
+                </button>
+
+                <button class="history-tab" data-history-tab="removed">
+                    Removed Users
+                    <span class="history-tab-count" id="removedTabCount">0</span>
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div class="history-tab-panel active" id="rejectedTabPanel">
+
+
+        <div class="history-section">
+
+
+            <div class="section-header">
+
+                <div class="section-header-icon icon-purple">
+                    👤
+                </div>
+
+                <span class="section-header-title">
+                    Rejected Registrations
+                </span>
+
+                <span class="count-badge count-purple">
+                    21
+                </span>
+
+            </div>
+
+
+            <table class="history-table rejected-table">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Email / Contact</th>
+                        <th>Reason</th>
+                        <th>Rejected By</th>
+                        <th>Rejected Date</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr
+                        data-action="rejected"
+                        data-role="expert"
+                    >
+
+                        <td>
+
+                            <div class="person">
+
+                                <div class="person-avatar avatar-orange">
+                                    AE
+                                </div>
+
+                                <div>
+
+                                    <div class="person-name">
+                                        Dr. Saman Perera
+                                    </div>
+
+                                    <div class="user-id">
+                                        AE-2026-0012
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="role-badge role-expert">
+                                Agricultural Expert
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact-main">
+                                saman.p@example.com
+                            </div>
+
+                            <div class="contact-sub">
+                                077 234 5678
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="reason-main">
+                                Incomplete credentials
+                            </div>
+
+                            <div class="reason-sub">
+                                License not provided
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact-main">
+                                Admin
+                            </div>
+
+                            <div class="contact-sub">
+                                Super Admin
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="date-main">
+                                15 May 2026
+                            </div>
+
+                            <div class="date-time">
+                                10:25 AM
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewHistory(
+                                    'Rejected Registration',
+                                    'Dr. Saman Perera',
+                                    'Agricultural Expert',
+                                    'saman.p@example.com',
+                                    'Incomplete credentials - License not provided',
+                                    '15 May 2026, 10:25 AM'
+                                )"
+                            >
+                                View Details
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-action="rejected"
+                        data-role="expert"
+                    >
+
+                        <td>
+
+                            <div class="person">
+
+                                <div class="person-avatar avatar-purple">
+                                    AE
+                                </div>
+
+                                <div>
+
+                                    <div class="person-name">
+                                        Prof. Nilan Jayawardena
+                                    </div>
+
+                                    <div class="user-id">
+                                        AE-2026-0013
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="role-badge role-expert">
+                                Agricultural Expert
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact-main">
+                                nilan@example.com
+                            </div>
+
+                            <div class="contact-sub">
+                                076 345 6789
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="reason-main">
+                                Experience not valid
+                            </div>
+
+                            <div class="reason-sub">
+                                Unverified documents
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact-main">
+                                Admin
+                            </div>
+
+                            <div class="contact-sub">
+                                Super Admin
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="date-main">
+                                14 May 2026
+                            </div>
+
+                            <div class="date-time">
+                                04:40 PM
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewHistory(
+                                    'Rejected Registration',
+                                    'Prof. Nilan Jayawardena',
+                                    'Agricultural Expert',
+                                    'nilan@example.com',
+                                    'Experience not valid - Unverified documents',
+                                    '14 May 2026, 04:40 PM'
+                                )"
+                            >
+                                View Details
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-action="rejected"
+                        data-role="provider"
+                    >
+
+                        <td>
+
+                            <div class="person">
+
+                                <div class="person-avatar avatar-blue">
+                                    EP
+                                </div>
+
+                                <div>
+
+                                    <div class="person-name">
+                                        GreenMax Equipment
+                                    </div>
+
+                                    <div class="user-id">
+                                        EP-2026-0008
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="role-badge role-provider">
+                                Equipment Provider
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact-main">
+                                contact@greenmax.lk
+                            </div>
+
+                            <div class="contact-sub">
+                                011 234 5678
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="reason-main">
+                                Invalid business registration
+                            </div>
+
+                            <div class="reason-sub">
+                                Tax document missing
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact-main">
+                                Admin
+                            </div>
+
+                            <div class="contact-sub">
+                                Super Admin
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="date-main">
+                                13 May 2026
+                            </div>
+
+                            <div class="date-time">
+                                09:15 AM
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewHistory(
+                                    'Rejected Registration',
+                                    'GreenMax Equipment',
+                                    'Equipment Provider',
+                                    'contact@greenmax.lk',
+                                    'Invalid business registration - Tax document missing',
+                                    '13 May 2026, 09:15 AM'
+                                )"
+                            >
+                                View Details
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+
+            <div class="section-footer">
+
+                <a
+                    href="admin-registrations.html"
+                    class="view-all"
+                >
+                    View All Rejected Registrations →
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        </div>
+
+
+        <div class="history-tab-panel" id="resolvedTabPanel">
+
+
+        <div class="history-section">
+
+
+            <div class="section-header">
+
+                <div class="section-header-icon icon-green">
+                    ✓
+                </div>
+
+                <span class="section-header-title">
+                    Resolved Conflicts
+                </span>
+
+                <span class="count-badge count-green">
+                    42
+                </span>
+
+            </div>
+
+
+            <table class="history-table resolved-table">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>Conflict ID</th>
+                        <th>Type</th>
+                        <th>Related To</th>
+                        <th>Reported By</th>
+                        <th>Resolved By</th>
+                        <th>Resolved Date</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr
+                        data-action="resolved"
+                        data-role="buyer"
+                    >
+
+                        <td>
+                            <b>CON-2026-0124</b>
+                        </td>
+
+                        <td>
+                            Payment Issue
+                        </td>
+
+                        <td>
+                            Order #ORD-2026-1248
+                        </td>
+
+                        <td>
+
+                            <div class="contact-main">
+                                Kumar A.
+                            </div>
+
+                            <div class="contact-sub">
+                                Buyer
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <div class="contact-main">
+                                Admin
+                            </div>
+
+                            <div class="contact-sub">
+                                Super Admin
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <div class="date-main">
+                                16 May 2026
+                            </div>
+
+                            <div class="date-time">
+                                11:30 AM
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewHistory(
+                                    'Resolved Conflict',
+                                    'CON-2026-0124',
+                                    'Payment Issue',
+                                    'Order #ORD-2026-1248',
+                                    'Kumar A. (Buyer)',
+                                    '16 May 2026, 11:30 AM'
+                                )"
+                            >
+                                View Details
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-action="resolved"
+                        data-role="farmer"
+                    >
+
+                        <td>
+                            <b>CON-2026-0123</b>
+                        </td>
+
+                        <td>
+                            Product Dispute
+                        </td>
+
+                        <td>
+                            Crop: Tomatoes
+                        </td>
+
+                        <td>
+
+                            <div class="contact-main">
+                                Suresh R.
+                            </div>
+
+                            <div class="contact-sub">
+                                Farmer
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <div class="contact-main">
+                                Admin
+                            </div>
+
+                            <div class="contact-sub">
+                                Super Admin
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <div class="date-main">
+                                15 May 2026
+                            </div>
+
+                            <div class="date-time">
+                                02:20 PM
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewHistory(
+                                    'Resolved Conflict',
+                                    'CON-2026-0123',
+                                    'Product Dispute',
+                                    'Crop: Tomatoes',
+                                    'Suresh R. (Farmer)',
+                                    '15 May 2026, 02:20 PM'
+                                )"
+                            >
+                                View Details
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-action="resolved"
+                        data-role="buyer"
+                    >
+
+                        <td>
+                            <b>CON-2026-0122</b>
+                        </td>
+
+                        <td>
+                            Delivery Problem
+                        </td>
+
+                        <td>
+                            Order #ORD-2026-1236
+                        </td>
+
+                        <td>
+
+                            <div class="contact-main">
+                                Priya M.
+                            </div>
+
+                            <div class="contact-sub">
+                                Buyer
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <div class="contact-main">
+                                Admin
+                            </div>
+
+                            <div class="contact-sub">
+                                Super Admin
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <div class="date-main">
+                                14 May 2026
+                            </div>
+
+                            <div class="date-time">
+                                10:45 AM
+                            </div>
+
+                        </td>
+
+                        <td>
+
+                            <button
+                                class="view-btn"
+                                onclick="viewHistory(
+                                    'Resolved Conflict',
+                                    'CON-2026-0122',
+                                    'Delivery Problem',
+                                    'Order #ORD-2026-1236',
+                                    'Priya M. (Buyer)',
+                                    '14 May 2026, 10:45 AM'
+                                )"
+                            >
+                                View Details
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+
+            <div class="section-footer">
+
+                <a
+                    href="admin-conflicts.html"
+                    class="view-all green"
+                >
+                    View All Resolved Conflicts →
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        </div>
+
+
+        <div class="history-tab-panel" id="removedTabPanel">
+
+
+        <div class="history-section">
+
+
+            <div class="section-header">
+
+                <div class="section-header-icon icon-red">
+                    👤
+                </div>
+
+                <span class="section-header-title">
+                    Removed Users
+                </span>
+
+                <span class="count-badge count-red">
+                    78
+                </span>
+
+            </div>
+
+
+            <table class="history-table removed-table">
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>User ID</th>
+                        <th>Removed By</th>
+                        <th>Removed Date</th>
+                        <th>Reason</th>
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    <tr
+                        data-action="removed"
+                        data-role="farmer"
+                    >
+
+                        <td>
+
+                            <div class="person">
+
+                                <div class="person-avatar avatar-green">
+                                    K
+                                </div>
+
+                                <div>
+
+                                    <div class="person-name">
+                                        Kumar A.
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="role-badge role-farmer">
+                                Farmer
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            FRM-2026-0001
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact-main">
+                                Admin
+                            </div>
+
+                            <div class="contact-sub">
+                                Super Admin
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="date-main">
+                                16 May 2026
+                            </div>
+
+                            <div class="date-time">
+                                09:15 AM
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="reason-main">
+                                Account suspended
+                            </div>
+
+                            <div class="reason-sub">
+                                Due to policy violation
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="view-btn removed-btn"
+                                onclick="viewHistory(
+                                    'Removed User',
+                                    'Kumar A.',
+                                    'Farmer',
+                                    'FRM-2026-0001',
+                                    'Account suspended due to policy violation',
+                                    '16 May 2026, 09:15 AM'
+                                )"
+                            >
+                                Removed
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-action="removed"
+                        data-role="buyer"
+                    >
+
+                        <td>
+
+                            <div class="person">
+
+                                <div class="person-avatar avatar-blue">
+                                    B
+                                </div>
+
+                                <div>
+
+                                    <div class="person-name">
+                                        Bharath S.
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="role-badge role-buyer">
+                                Buyer
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            BUY-2026-0015
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact-main">
+                                Admin
+                            </div>
+
+                            <div class="contact-sub">
+                                Super Admin
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="date-main">
+                                15 May 2026
+                            </div>
+
+                            <div class="date-time">
+                                03:40 PM
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="reason-main">
+                                Multiple reports
+                            </div>
+
+                            <div class="reason-sub">
+                                and warnings
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="view-btn removed-btn"
+                                onclick="viewHistory(
+                                    'Removed User',
+                                    'Bharath S.',
+                                    'Buyer',
+                                    'BUY-2026-0015',
+                                    'Multiple reports and warnings',
+                                    '15 May 2026, 03:40 PM'
+                                )"
+                            >
+                                Removed
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-action="removed"
+                        data-role="expert"
+                    >
+
+                        <td>
+
+                            <div class="person">
+
+                                <div class="person-avatar avatar-orange">
+                                    AE
+                                </div>
+
+                                <div>
+
+                                    <div class="person-name">
+                                        Dr. Chaminda Silva
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="role-badge role-expert">
+                                Agricultural Expert
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            AE-2026-0007
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact-main">
+                                Admin
+                            </div>
+
+                            <div class="contact-sub">
+                                Super Admin
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="date-main">
+                                14 May 2026
+                            </div>
+
+                            <div class="date-time">
+                                11:20 AM
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="reason-main">
+                                Submitted false
+                            </div>
+
+                            <div class="reason-sub">
+                                information
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="view-btn removed-btn"
+                                onclick="viewHistory(
+                                    'Removed User',
+                                    'Dr. Chaminda Silva',
+                                    'Agricultural Expert',
+                                    'AE-2026-0007',
+                                    'Submitted false information',
+                                    '14 May 2026, 11:20 AM'
+                                )"
+                            >
+                                Removed
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                    <tr
+                        data-action="removed"
+                        data-role="provider"
+                    >
+
+                        <td>
+
+                            <div class="person">
+
+                                <div class="person-avatar avatar-purple">
+                                    EP
+                                </div>
+
+                                <div>
+
+                                    <div class="person-name">
+                                        AgriTech Solutions
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="role-badge role-provider">
+                                Equipment Provider
+                            </span>
+
+                        </td>
+
+
+                        <td>
+                            EP-2026-0003
+                        </td>
+
+
+                        <td>
+
+                            <div class="contact-main">
+                                Admin
+                            </div>
+
+                            <div class="contact-sub">
+                                Super Admin
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="date-main">
+                                13 May 2026
+                            </div>
+
+                            <div class="date-time">
+                                01:05 PM
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="reason-main">
+                                Violation of platform
+                            </div>
+
+                            <div class="reason-sub">
+                                guidelines
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <button
+                                class="view-btn removed-btn"
+                                onclick="viewHistory(
+                                    'Removed User',
+                                    'AgriTech Solutions',
+                                    'Equipment Provider',
+                                    'EP-2026-0003',
+                                    'Violation of platform guidelines',
+                                    '13 May 2026, 01:05 PM'
+                                )"
+                            >
+                                Removed
+                            </button>
+
+                        </td>
+
+                    </tr>
+
+
+                </tbody>
+
+            </table>
+
+
+            <div class="section-footer">
+
+                <a
+                    href="admin-manage-users.html"
+                    class="view-all red"
+                >
+                    View All Removed Users →
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+        </div>
+
+
+
+
+
+        <!-- =================================================
+             PAGINATION
+        ================================================= -->
+
+        <div class="pagination">
+
+
+            <button
+                class="page-button"
+                disabled
+            >
+                «
+            </button>
+
+
+            <button
+                class="page-button"
+                disabled
+            >
+                ‹
+            </button>
+
+
+            <button
+                class="page-button active"
+            >
+                1
+            </button>
+
+
+            <button class="page-button">
+                2
+            </button>
+
+
+            <button class="page-button">
+                3
+            </button>
+
+
+            <button class="page-button">
+                4
+            </button>
+
+
+            <button class="page-button">
+                5
+            </button>
+
+
+            <span class="dots">
+                ...
+            </span>
+
+
+            <button class="page-button">
+                8
+            </button>
+
+
+            <button class="page-button">
+                ›
+            </button>
+
+
+            <button class="page-button">
+                »
+            </button>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     HISTORY DETAILS MODAL
+===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="historyModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h2>
+                History Details
+            </h2>
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <div class="detail-grid">
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Action
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalAction"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Name / ID
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalName"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Role / Type
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalRole"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Email / Related To
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalContact"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Reason / Reported By
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalReason"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail">
+
+                    <span class="detail-label">
+                        Date
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalDate"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="close-modal-btn"
+                onclick="closeModal()"
+            >
+                Close
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <span>
+        🌱 © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>|</span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+
+<script>
+
+/* =====================================================
+   NOTIFICATION NAVIGATION
+===================================================== */
+
+function goToNotifications() {
+
+    window.location.href =
+        "admin-notifications.html";
+
+}
+
+
+/* =====================================================
+   MANAGE USERS SUBMENU
+===================================================== */
+
+function toggleUsers() {
+
+    const submenu =
+        document.getElementById(
+            "userSubmenu"
+        );
+
+    const arrow =
+        document.getElementById(
+            "userArrow"
+        );
+
+
+    if (
+        submenu.classList.contains(
+            "show"
+        )
+    ) {
+
+        submenu.classList.remove(
+            "show"
+        );
+
+        arrow.textContent =
+            "▼";
+
+    }
+
+    else {
+
+        submenu.classList.add(
+            "show"
+        );
+
+        arrow.textContent =
+            "▲";
+
+    }
+
+}
+
+
+/* =====================================================
+   SEARCH + FILTER
+===================================================== */
+
+function escapeHtmlAdminHistory(value) {
+
+    const div = document.createElement("div");
+    div.textContent = value == null ? "" : String(value);
+    return div.innerHTML;
+
+}
+
+
+const registrationTypeRoleLabel = {
+    expert: "Agricultural Expert",
+    equipment_provider: "Equipment Provider"
+};
+
+
+const removedUserRoleLabel = {
+    farmer: "Farmer",
+    buyer: "Buyer",
+    expert: "Agricultural Expert",
+    equipment_provider: "Equipment Provider"
+};
+
+
+// The frontend's roleFilter dropdown uses "provider" while the
+// database uses "equipment_provider" - translate for data-role.
+function toFilterRoleValue(role) {
+
+    return role === "equipment_provider" ? "provider" : role;
+
+}
+
+
+function formatAdminHistoryDate(isoString) {
+
+    const date = new Date(isoString);
+
+    if (isNaN(date)) {
+        return { main: "", time: "" };
+    }
+
+    return {
+        main: date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }),
+        time: date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+    };
+
+}
+
+
+function buildRejectedRegistrationRowHtml(row) {
+
+    const name =
+        `${row.first_name || ""} ${row.last_name || ""}`.trim() || "User";
+
+    const initial =
+        name.split(/\s+/).map(p => p.charAt(0)).join("").slice(0, 2).toUpperCase() || "U";
+
+    const roleLabel =
+        registrationTypeRoleLabel[row.registration_type] || row.registration_type;
+
+    const { main, time } =
+        formatAdminHistoryDate(row.reviewed_at || row.created_at);
+
+    const reason =
+        row.review_note || "No reason provided.";
+
+    return `
+        <tr data-action="rejected" data-role="${escapeHtmlAdminHistory(toFilterRoleValue(row.registration_type))}">
+            <td>
+                <div class="person">
+                    <div class="person-avatar avatar-orange">${escapeHtmlAdminHistory(initial)}</div>
+                    <div>
+                        <div class="person-name">${escapeHtmlAdminHistory(name)}</div>
+                        <div class="user-id">USER-${row.id}</div>
+                    </div>
+                </div>
+            </td>
+            <td><span class="role-badge role-${escapeHtmlAdminHistory(toFilterRoleValue(row.registration_type))}">${escapeHtmlAdminHistory(roleLabel)}</span></td>
+            <td>
+                <div class="contact-main">${escapeHtmlAdminHistory(row.email || "")}</div>
+                <div class="contact-sub">${escapeHtmlAdminHistory(row.phone || "")}</div>
+            </td>
+            <td><div class="reason-main">${escapeHtmlAdminHistory(reason)}</div></td>
+            <td>
+                <div class="contact-main">Admin</div>
+                <div class="contact-sub">Super Admin</div>
+            </td>
+            <td>
+                <div class="date-main">${escapeHtmlAdminHistory(main)}</div>
+                <div class="date-time">${escapeHtmlAdminHistory(time)}</div>
+            </td>
+            <td>
+                <button class="view-btn" onclick="viewHistory('Rejected Registration', '${escapeHtmlAdminHistory(name).replace(/'/g, "\\'")}', '${escapeHtmlAdminHistory(roleLabel)}', '${escapeHtmlAdminHistory(row.email || "")}', '${escapeHtmlAdminHistory(reason).replace(/'/g, "\\'")}', '${escapeHtmlAdminHistory(main)}, ${escapeHtmlAdminHistory(time)}')">
+                    View Details
+                </button>
+            </td>
+        </tr>
+    `;
+
+}
+
+
+function buildResolvedReportRowHtml(row) {
+
+    const { main, time } =
+        formatAdminHistoryDate(row.resolved_at || row.created_at);
+
+    const statusLabel =
+        row.status === "resolved" ? "Resolved Conflict" : "Rejected Report";
+
+    return `
+        <tr data-action="resolved" data-role="${escapeHtmlAdminHistory(toFilterRoleValue(row.reporter_role))}">
+            <td><b>ISSUE-${row.id}</b></td>
+            <td>${escapeHtmlAdminHistory(row.report_type || "Issue")}</td>
+            <td>${escapeHtmlAdminHistory(row.subject || "")}</td>
+            <td>
+                <div class="contact-main">${escapeHtmlAdminHistory(`${row.first_name || ""} ${row.last_name || ""}`.trim() || "User")}</div>
+                <div class="contact-sub">${escapeHtmlAdminHistory(removedUserRoleLabel[row.reporter_role] || row.reporter_role)}</div>
+            </td>
+            <td>
+                <div class="contact-main">Admin</div>
+                <div class="contact-sub">Super Admin</div>
+            </td>
+            <td>
+                <div class="date-main">${escapeHtmlAdminHistory(main)}</div>
+                <div class="date-time">${escapeHtmlAdminHistory(time)}</div>
+            </td>
+            <td>
+                <button class="view-btn" onclick="viewHistory('${statusLabel}', 'ISSUE-${row.id}', '${escapeHtmlAdminHistory(row.report_type || "Issue")}', '${escapeHtmlAdminHistory(row.subject || "").replace(/'/g, "\\'")}', '${escapeHtmlAdminHistory(row.admin_note || "").replace(/'/g, "\\'")}', '${escapeHtmlAdminHistory(main)}, ${escapeHtmlAdminHistory(time)}')">
+                    View Details
+                </button>
+            </td>
+        </tr>
+    `;
+
+}
+
+
+function buildRemovedUserRowHtml(row) {
+
+    const name =
+        `${row.first_name || ""} ${row.last_name || ""}`.trim() || "User";
+
+    const initial =
+        name.charAt(0).toUpperCase() || "U";
+
+    const roleLabel =
+        removedUserRoleLabel[row.role] || row.role;
+
+    const { main, time } =
+        formatAdminHistoryDate(row.removed_at);
+
+    const reason =
+        row.removed_reason || "No reason provided.";
+
+    return `
+        <tr data-action="removed" data-role="${escapeHtmlAdminHistory(toFilterRoleValue(row.role))}">
+            <td>
+                <div class="person">
+                    <div class="person-avatar avatar-green">${escapeHtmlAdminHistory(initial)}</div>
+                    <div><div class="person-name">${escapeHtmlAdminHistory(name)}</div></div>
+                </div>
+            </td>
+            <td><span class="role-badge role-${escapeHtmlAdminHistory(toFilterRoleValue(row.role))}">${escapeHtmlAdminHistory(roleLabel)}</span></td>
+            <td>USER-${row.id}</td>
+            <td>
+                <div class="contact-main">Admin</div>
+                <div class="contact-sub">Super Admin</div>
+            </td>
+            <td>
+                <div class="date-main">${escapeHtmlAdminHistory(main)}</div>
+                <div class="date-time">${escapeHtmlAdminHistory(time)}</div>
+            </td>
+            <td><div class="reason-main">${escapeHtmlAdminHistory(reason)}</div></td>
+            <td>
+                <button class="view-btn removed-btn" onclick="viewHistory('Removed User', '${escapeHtmlAdminHistory(name).replace(/'/g, "\\'")}', '${escapeHtmlAdminHistory(roleLabel)}', 'USER-${row.id}', '${escapeHtmlAdminHistory(reason).replace(/'/g, "\\'")}', '${escapeHtmlAdminHistory(main)}, ${escapeHtmlAdminHistory(time)}')">
+                    Removed
+                </button>
+            </td>
+        </tr>
+    `;
+
+}
+
+
+async function loadAdminHistory() {
+
+    try {
+
+        const response =
+            await fetch("/api/admin/history");
+
+        const data =
+            await response.json();
+
+        if (!data || !data.success) {
+            return;
+        }
+
+        const rejectedTbody =
+            document.querySelector(".rejected-table tbody");
+
+        const resolvedTbody =
+            document.querySelector(".resolved-table tbody");
+
+        const removedTbody =
+            document.querySelector(".removed-table tbody");
+
+        rejectedTbody.innerHTML =
+            (data.rejected_registrations || []).map(buildRejectedRegistrationRowHtml).join("");
+
+        resolvedTbody.innerHTML =
+            (data.resolved_reports || []).map(buildResolvedReportRowHtml).join("");
+
+        removedTbody.innerHTML =
+            (data.removed_users || []).map(buildRemovedUserRowHtml).join("");
+
+        const badges =
+            document.querySelectorAll(".count-badge");
+
+        if (badges[0]) badges[0].textContent = (data.rejected_registrations || []).length;
+        if (badges[1]) badges[1].textContent = (data.resolved_reports || []).length;
+        if (badges[2]) badges[2].textContent = (data.removed_users || []).length;
+
+        const setTabCount = (id, value) => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = value;
+        };
+
+        setTabCount("rejectedTabCount", (data.rejected_registrations || []).length);
+        setTabCount("resolvedTabCount", (data.resolved_reports || []).length);
+        setTabCount("removedTabCount", (data.removed_users || []).length);
+
+        applyFilters();
+
+    } catch (error) {
+
+        console.error("Unable to load admin history:", error);
+
+    }
+
+}
+
+
+loadAdminHistory();
+
+
+/* =====================================================
+   HISTORY TABS (parallel sections, like Manage Registrations)
+===================================================== */
+
+document
+    .querySelectorAll(".history-tab")
+    .forEach(tabButton => {
+
+        tabButton.addEventListener("click", () => {
+
+            document
+                .querySelectorAll(".history-tab")
+                .forEach(t => t.classList.remove("active"));
+
+            tabButton.classList.add("active");
+
+            const target = tabButton.dataset.historyTab;
+
+            document
+                .querySelectorAll(".history-tab-panel")
+                .forEach(panel => panel.classList.remove("active"));
+
+            const panelId =
+                target === "rejected" ? "rejectedTabPanel" :
+                target === "resolved" ? "resolvedTabPanel" :
+                "removedTabPanel";
+
+            const panel = document.getElementById(panelId);
+            if (panel) panel.classList.add("active");
+
+        });
+
+    });
+
+
+function applyFilters() {
+
+    const search =
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const action =
+        document
+            .getElementById(
+                "actionFilter"
+            )
+            .value;
+
+
+    const role =
+        document
+            .getElementById(
+                "roleFilter"
+            )
+            .value;
+
+
+    const rows =
+        document.querySelectorAll(
+            "tbody tr[data-action]"
+        );
+
+
+    rows.forEach(
+        row => {
+
+            const rowAction =
+                row.dataset.action;
+
+            const rowRole =
+                row.dataset.role;
+
+            const rowText =
+                row.textContent
+                    .toLowerCase();
+
+
+            const matchesSearch =
+                !search ||
+                rowText.includes(
+                    search
+                );
+
+
+            const matchesAction =
+                action === "all" ||
+                rowAction === action;
+
+
+            const matchesRole =
+                role === "all" ||
+                rowRole === role;
+
+
+            if (
+                matchesSearch &&
+                matchesAction &&
+                matchesRole
+            ) {
+
+                row.style.display =
+                    "";
+
+            }
+
+            else {
+
+                row.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   LIVE SEARCH
+===================================================== */
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        applyFilters
+    );
+
+
+/* =====================================================
+   VIEW HISTORY
+===================================================== */
+
+function viewHistory(
+    action,
+    name,
+    role,
+    contact,
+    reason,
+    date
+) {
+
+
+    document
+        .getElementById(
+            "modalAction"
+        )
+        .textContent =
+        action;
+
+
+    document
+        .getElementById(
+            "modalName"
+        )
+        .textContent =
+        name;
+
+
+    document
+        .getElementById(
+            "modalRole"
+        )
+        .textContent =
+        role;
+
+
+    document
+        .getElementById(
+            "modalContact"
+        )
+        .textContent =
+        contact;
+
+
+    document
+        .getElementById(
+            "modalReason"
+        )
+        .textContent =
+        reason;
+
+
+    document
+        .getElementById(
+            "modalDate"
+        )
+        .textContent =
+        date;
+
+
+    document
+        .getElementById(
+            "historyModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal() {
+
+    document
+        .getElementById(
+            "historyModal"
+        )
+        .classList.remove(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL OUTSIDE
+===================================================== */
+
+document
+    .getElementById(
+        "historyModal"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target.id ===
+                "historyModal"
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout() {
+
+    const confirmed =
+        await customConfirm("Are you sure you want to logout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    localStorage.removeItem(
+        "adminLoggedIn"
+    );
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+function updateHeaderNotificationBadge() {
+
+    let userId = null;
+
+    try {
+        const raw = sessionStorage.getItem("user");
+        const parsed = raw ? JSON.parse(raw) : null;
+        userId = parsed && parsed.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) return;
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const badge = document.getElementById("headerNotificationBadge");
+            if (!badge) return;
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = "flex";
+            } else {
+                badge.style.display = "none";
+            }
+
+        })
+        .catch(error => console.error("Unable to load notification count:", error));
+
+}
+
+updateHeaderNotificationBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

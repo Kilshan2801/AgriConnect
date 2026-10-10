@@ -1,0 +1,3691 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AgriConnect - History</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f7f5;
+
+            color: #10233f;
+
+            min-height: 100vh;
+        }
+
+
+        .app {
+
+            display: flex;
+
+            min-height: 100vh;
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+           ===================================================== */
+
+        .sidebar {
+
+            width: 255px;
+
+            min-width: 255px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #087b38 0%,
+                    #05652f 100%
+                );
+
+            color: white;
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            bottom: 0;
+
+            display: flex;
+
+            flex-direction: column;
+
+            z-index: 1000;
+
+            overflow-y: auto;
+
+            overflow-x: hidden;
+        }
+
+
+        /* =====================================================
+           LOGO
+           ===================================================== */
+
+        .sidebar-logo {
+
+            height: 86px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 20px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.20);
+
+            flex-shrink: 0;
+        }
+
+
+        .sidebar-logo img {
+
+            width: 160px;
+
+            height: auto;
+
+            max-height: 62px;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+
+        /* =====================================================
+           NAVIGATION
+           ===================================================== */
+
+        .sidebar-nav {
+
+            padding: 15px 12px;
+
+            flex: 1;
+        }
+
+
+        .nav-item {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 11px 13px;
+
+            margin-bottom: 5px;
+
+            border-radius: 8px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            transition:
+                background 0.2s,
+                transform 0.15s;
+        }
+
+
+        .nav-item:hover {
+
+            background:
+                rgba(255,255,255,0.12);
+        }
+
+
+        .nav-item.active {
+
+            background:
+                rgba(0,70,30,0.55);
+
+            box-shadow:
+                inset 3px 0 0 white;
+        }
+
+
+        .nav-icon {
+
+            width: 22px;
+
+            min-width: 22px;
+
+            text-align: center;
+
+            font-size: 18px;
+        }
+
+
+        .nav-text {
+
+            flex: 1;
+        }
+
+
+        .notification-count {
+
+            min-width: 23px;
+
+            height: 23px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #25b94b;
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+           ===================================================== */
+
+        .sidebar-bottom {
+
+            padding:
+                10px 12px 15px;
+
+            flex-shrink: 0;
+        }
+
+
+        .sidebar-divider {
+
+            height: 1px;
+
+            background:
+                rgba(255,255,255,0.20);
+
+            margin:
+                5px 15px 12px;
+        }
+
+
+        /* =====================================================
+           MAIN
+           ===================================================== */
+
+        .main {
+
+            margin-left: 255px;
+
+            width:
+                calc(100% - 255px);
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        .top-header {
+
+            height: 78px;
+
+            background: white;
+
+            border-bottom:
+                1px solid #e1e7e4;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding: 0 40px;
+
+            flex-shrink: 0;
+        }
+
+
+        .header-left h1 {
+
+            font-size: 28px;
+
+            color: #10233f;
+
+            margin-bottom: 5px;
+        }
+
+
+        .header-left p {
+
+            color: #526b86;
+
+            font-size: 17px;
+        }
+
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 22px;
+        }
+
+
+        /* =====================================================
+           NOTIFICATION
+           ===================================================== */
+
+        .header-notification {
+
+            position: relative;
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 27px;
+
+            cursor: pointer;
+        }
+
+
+        .header-notification-badge {
+
+            position: absolute;
+
+            top: -3px;
+
+            right: -2px;
+
+            min-width: 22px;
+
+            height: 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #20ad4c;
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: bold;
+        }
+
+
+        /* =====================================================
+           PROFILE
+           ===================================================== */
+
+        .profile-wrapper {
+
+            position: relative;
+        }
+
+
+        .profile {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            cursor: pointer;
+        }
+
+
+        .profile-avatar {
+
+            width: 43px;
+
+            height: 43px;
+
+            border-radius: 50%;
+
+            background: #edf7f0;
+
+            border:
+                1px solid #cce5d4;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            color: #07823d;
+
+            font-size: 17px;
+        }
+
+
+        .profile-info {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        .profile-name {
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            color: #111;
+        }
+
+
+        .profile-role {
+
+            font-size: 14px;
+
+            color: #07823d;
+
+            margin-top: 2px;
+        }
+
+
+        .profile-arrow {
+
+            font-size: 15px;
+
+            color: #63758b;
+
+            margin-left: 8px;
+        }
+
+
+        /* =====================================================
+           PROFILE DROPDOWN
+           ===================================================== */
+
+        .profile-dropdown {
+
+            display: none;
+
+            position: absolute;
+
+            right: 0;
+
+            top: 65px;
+
+            width: 265px;
+
+            background: white;
+
+            border:
+                1px solid #dfe7e3;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 12px 30px
+                rgba(0,0,0,0.15);
+
+            overflow: hidden;
+
+            z-index: 2000;
+        }
+
+
+        .profile-dropdown.show {
+
+            display: block;
+        }
+
+
+        .dropdown-user {
+
+            padding:
+                18px 20px;
+
+            border-bottom:
+                1px solid #e4e9e7;
+        }
+
+
+        .dropdown-user-name {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #10233f;
+        }
+
+
+        .dropdown-user-role {
+
+            font-size: 14px;
+
+            color: #07823d;
+
+            margin-top: 4px;
+        }
+
+
+        .dropdown-title {
+
+            padding:
+                16px 20px 8px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #67758a;
+
+            letter-spacing: 0.5px;
+        }
+
+
+        .role-option {
+
+            margin:
+                0 10px 5px;
+
+            padding:
+                12px 14px;
+
+            border-radius: 9px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            cursor: pointer;
+
+            color: #23354e;
+
+            font-size: 16px;
+        }
+
+
+        .role-option:hover {
+
+            background: #f1f6f3;
+        }
+
+
+        .role-option.selected {
+
+            background: #e6f5eb;
+
+            color: #07823d;
+
+            font-weight: bold;
+        }
+
+
+        .role-icon {
+
+            width: 25px;
+
+            text-align: center;
+
+            font-size: 19px;
+        }
+
+
+        .role-check {
+
+            margin-left: auto;
+
+            color: #07823d;
+
+            font-size: 22px;
+        }
+
+
+        /* =====================================================
+           PAGE CONTENT
+           ===================================================== */
+
+        .page-content {
+
+            flex: 1;
+
+            padding:
+                34px 45px 50px;
+
+            background: #f4f7f5;
+        }
+
+
+        .page-title {
+
+            font-size: 34px;
+
+            color: #10233f;
+
+            margin-bottom: 8px;
+        }
+
+
+        .page-subtitle {
+
+            font-size: 18px;
+
+            color: #58708b;
+
+            margin-bottom: 28px;
+        }
+
+
+        /* =====================================================
+           HISTORY CARD
+           ===================================================== */
+
+        .history-card {
+
+            background: white;
+
+            border:
+                1px solid #dfe7e3;
+
+            border-radius: 15px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 2px 7px
+                rgba(0,0,0,0.03);
+        }
+
+
+        /* =====================================================
+           TOOLBAR
+           ===================================================== */
+
+        .history-toolbar {
+
+            padding:
+                20px 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            border-bottom:
+                1px solid #e3e9e6;
+        }
+
+
+        .category-tabs {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            flex-wrap: wrap;
+        }
+
+
+        .category-tab {
+
+            border: none;
+
+            background: transparent;
+
+            color: #526b86;
+
+            padding:
+                9px 14px;
+
+            border-radius: 8px;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+
+        .category-tab:hover {
+
+            background:
+                #f1f6f3;
+        }
+
+
+        .category-tab.active {
+
+            background:
+                #e4f4e9;
+
+            color:
+                #087b38;
+        }
+
+
+        .history-count {
+
+            color: #67758a;
+
+            font-size: 14px;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+           HISTORY LIST
+           ===================================================== */
+
+        .history-list {
+
+            width: 100%;
+        }
+
+
+        .history-group-title {
+
+            padding:
+                16px 25px 10px;
+
+            color: #67758a;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.7px;
+
+            background: #fbfcfc;
+        }
+
+
+        .history-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 16px;
+
+            padding:
+                18px 25px;
+
+            border-bottom:
+                1px solid #e8edeb;
+
+            cursor: pointer;
+
+            transition:
+                background 0.15s;
+        }
+
+
+        .history-item:last-child {
+
+            border-bottom: none;
+        }
+
+
+        .history-item:hover {
+
+            background:
+                #f8fbf9;
+        }
+
+
+        /* =====================================================
+           HISTORY ICON
+           ===================================================== */
+
+        .history-icon {
+
+            width: 52px;
+
+            min-width: 52px;
+
+            height: 52px;
+
+            border-radius: 11px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 22px;
+        }
+
+
+        .history-icon.orders {
+
+            background: #eaf5ff;
+        }
+
+
+        .history-icon.returned {
+
+            background: #eaf7ed;
+        }
+
+
+        .history-icon.rejected {
+
+            background: #fff0f0;
+        }
+
+
+        .history-icon.resolved {
+
+            background: #f0edff;
+        }
+
+
+        /* =====================================================
+           HISTORY CONTENT
+           ===================================================== */
+
+        .history-content {
+
+            flex: 1;
+
+            min-width: 0;
+        }
+
+
+        .history-title-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .history-title {
+
+            color: #10233f;
+
+            font-size: 16px;
+
+            font-weight: bold;
+        }
+
+
+        .history-description {
+
+            color: #58708b;
+
+            font-size: 14px;
+
+            line-height: 1.45;
+
+            margin-bottom: 7px;
+        }
+
+
+        .history-meta {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            flex-wrap: wrap;
+
+            color: #7a8998;
+
+            font-size: 12px;
+        }
+
+
+        .history-category {
+
+            padding:
+                3px 8px;
+
+            border-radius: 12px;
+
+            background: #edf2ef;
+
+            color: #526b86;
+        }
+
+
+        /* =====================================================
+           STATUS
+           ===================================================== */
+
+        .history-status {
+
+            padding:
+                6px 11px;
+
+            border-radius: 20px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            white-space: nowrap;
+        }
+
+
+        .status-completed {
+
+            background: #e5f7eb;
+
+            color: #087b38;
+        }
+
+
+        .status-returned {
+
+            background: #e8f7ee;
+
+            color: #087b38;
+        }
+
+
+        .status-rejected {
+
+            background: #ffecec;
+
+            color: #c53636;
+        }
+
+
+        .status-resolved {
+
+            background: #eeeaff;
+
+            color: #6250b4;
+        }
+
+
+        /* =====================================================
+           DATE
+           ===================================================== */
+
+        .history-date {
+
+            align-self: flex-start;
+
+            color: #7a8998;
+
+            font-size: 12px;
+
+            white-space: nowrap;
+        }
+
+
+        /* =====================================================
+           EMPTY
+           ===================================================== */
+
+        .empty-state {
+
+            padding:
+                60px 25px;
+
+            text-align: center;
+
+            color: #67758a;
+        }
+
+
+        .empty-icon {
+
+            font-size: 45px;
+
+            margin-bottom: 12px;
+        }
+
+
+        .empty-state h3 {
+
+            color: #34495e;
+
+            margin-bottom: 7px;
+
+            font-size: 18px;
+        }
+
+
+        .empty-state p {
+
+            font-size: 14px;
+        }
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        .footer {
+    left: 255px;
+
+
+            background: #075d2e;
+
+            color: white;
+
+            min-height: 58px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 13px;
+
+            padding: 10px;
+        }
+
+
+        .footer a {
+
+            color: white;
+
+            text-decoration: none;
+        }
+
+
+        .footer-separator {
+
+            margin:
+                0 15px;
+
+            opacity: 0.8;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 850px) {
+
+            .page-content {
+
+                padding: 25px;
+            }
+
+
+            .history-toolbar {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+            }
+
+
+            .history-count {
+
+                align-self: flex-end;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .sidebar {
+
+                width: 210px;
+
+                min-width: 210px;
+            }
+
+
+            .main {
+
+                margin-left: 210px;
+
+                width:
+                    calc(100% - 210px);
+            }
+
+
+            .sidebar-logo {
+
+                height: 110px;
+            }
+
+
+            .sidebar-logo img {
+
+                width: 110px;
+            }
+
+
+            .top-header {
+
+                padding:
+                    0 20px;
+            }
+
+
+            .header-left h1 {
+
+                font-size: 22px;
+            }
+
+
+            .header-left p {
+
+                font-size: 14px;
+            }
+
+
+            .profile-info {
+
+                display: none;
+            }
+
+
+            .page-content {
+
+                padding:
+                    20px 15px;
+            }
+
+
+            .page-title {
+
+                font-size: 28px;
+            }
+
+
+            .page-subtitle {
+
+                font-size: 15px;
+            }
+
+
+            .history-item {
+
+                padding:
+                    15px;
+
+                gap:
+                    11px;
+            }
+
+
+            .history-icon {
+
+                width: 43px;
+
+                min-width: 43px;
+
+                height: 43px;
+
+                font-size: 19px;
+            }
+
+
+            .history-date {
+
+                display: none;
+            }
+
+
+            .history-status {
+
+                display: none;
+            }
+
+        }
+
+    
+.messages-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- LOGO -->
+
+        <div class="sidebar-logo">
+
+            <img
+                src="assets/agriconnect-logo-white.png"
+                alt="AgriConnect"
+            >
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <a
+                href="farmer-dashboard.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">
+                    ▦
+                </span>
+
+                <span class="nav-text">
+                    Dashboard
+                </span>
+            </a>
+
+
+            <a
+                href="my-crops.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">
+                    🌿
+                </span>
+
+                <span class="nav-text">
+                    My Crops
+                </span>
+            </a>
+
+
+            <a
+                href="orders.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">
+                    🛒
+                </span>
+
+                <span class="nav-text">
+                    Orders
+                </span>
+            </a>
+
+
+            <a
+                href="equipment-rental.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">
+                    🚜
+                </span>
+
+                <span class="nav-text">
+                    Equipment Rental
+                </span>
+            </a>
+
+
+            <a
+                href="consultations.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">
+                    👨‍🌾
+                </span>
+
+                <span class="nav-text">
+                    Consultations
+                </span>
+            </a>
+
+
+            <a
+                href="messages.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">
+                    💬
+                </span>
+
+                <span class="nav-text">
+                    Messages
+                </span>
+
+                <span class="messages-badge" id="messagesBadge" style="display:none;">0</span>
+            </a>
+
+
+            <a
+                href="report-issues.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">
+                    ⚠️
+                </span>
+
+                <span class="nav-text">
+                    Report Issues
+                </span>
+            </a>
+
+
+            <a
+                href="calendar.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">
+                    📅
+                </span>
+
+                <span class="nav-text">
+                    Calendar
+                </span>
+            </a>
+
+
+            <a
+                href="notifications.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🔔
+                </span>
+
+                <span class="nav-text">
+                    Notifications
+                </span>
+
+                <span
+                    class="notification-count"
+                    id="notificationCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <!-- HISTORY ACTIVE -->
+
+            <a
+                href="history.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span class="nav-text">
+                    History
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- =================================================
+             BOTTOM
+             ================================================= -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-divider"></div>
+
+
+            <a
+                href="help-support.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ?
+                </span>
+
+                <span class="nav-text">
+                    Help &amp; Support
+                </span>
+
+            </a>
+
+
+            <a
+                href="settings.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                <span class="nav-text">
+                    Settings
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+                onclick="logout(event)"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                <span class="nav-text">
+                    Logout
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+         ===================================================== -->
+
+    <main class="main">
+
+
+        <!-- HEADER -->
+
+        <header class="top-header">
+
+
+            <div class="header-left">
+
+                <h1>
+                    Welcome back, <span id="userName">User</span>!
+                </h1>
+
+                <p>
+                    Your past activity on AgriConnect.
+                </p>
+
+            </div>
+
+
+            <div class="header-right">
+
+
+                <!-- NOTIFICATION -->
+
+                <div
+                    class="header-notification"
+                    onclick="openNotifications()"
+                    title="Notifications"
+                >
+
+                    🔔
+
+                    <span
+                        class="header-notification-badge"
+                        id="headerNotificationCount"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <!-- PROFILE -->
+
+                <div class="profile-wrapper">
+
+
+                    <div
+                        class="profile"
+                        onclick="toggleProfile()"
+                    >
+
+
+                        <div class="profile-avatar" id="profileAvatarText">
+                            KL
+                        </div>
+
+
+                        <div class="profile-info">
+
+                            <span class="profile-name" id="profileNameText">
+                                Kilshan
+                            </span>
+
+                            <span
+                                class="profile-role"
+                                id="currentRole"
+                            >
+                                Farmer
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            class="profile-arrow"
+                            id="profileArrow"
+                        >
+                            ▼
+                        </span>
+
+
+                    </div>
+
+
+
+                    <!-- PROFILE DROPDOWN -->
+
+                    <div
+                        class="profile-dropdown"
+                        id="profileDropdown"
+                    >
+
+
+                        <div class="dropdown-user">
+
+                            <div class="dropdown-user-name">
+                                Kilshan
+                            </div>
+
+                            <div
+                                class="dropdown-user-role"
+                                id="dropdownCurrentRole"
+                            >
+                                Farmer
+                            </div>
+
+                        </div>
+
+
+                        <div class="dropdown-title">
+                            SWITCH ROLE
+                        </div>
+
+
+                        <div
+                            class="role-option"
+                            data-role="farmer"
+                            onclick="switchRole('farmer')"
+                        >
+
+                            <span class="role-icon">
+                                🧑‍🌾
+                            </span>
+
+                            <span>
+                                Farmer
+                            </span>
+
+                            <span class="role-check">
+                                ✓
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="role-option"
+                            data-role="buyer"
+                            onclick="switchRole('buyer')"
+                        >
+
+                            <span class="role-icon">
+                                🛒
+                            </span>
+
+                            <span>
+                                Buyer
+                            </span>
+
+                            <span
+                                class="role-check"
+                                style="display:none;"
+                            >
+                                ✓
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="role-option"
+                            data-role="expert"
+                            onclick="switchRole('expert')"
+                        >
+
+                            <span class="role-icon">
+                                🧑‍🔬
+                            </span>
+
+                            <span>
+                                Agricultural Expert
+                            </span>
+
+                            <span
+                                class="role-check"
+                                style="display:none;"
+                            >
+                                ✓
+                            </span>
+
+                        </div>
+
+
+                        <div
+                            class="role-option"
+                            data-role="equipment-provider"
+                            onclick="switchRole('equipment-provider')"
+                        >
+
+                            <span class="role-icon">
+                                🚜
+                            </span>
+
+                            <span>
+                                Equipment Provider
+                            </span>
+
+                            <span
+                                class="role-check"
+                                style="display:none;"
+                            >
+                                ✓
+                            </span>
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             PAGE CONTENT
+             ================================================= -->
+
+        <section class="page-content">
+
+
+            <h2 class="page-title">
+                History
+            </h2>
+
+
+            <p class="page-subtitle">
+                Keep track of your completed and closed activities
+                on AgriConnect.
+            </p>
+
+
+            <!-- =================================================
+                 HISTORY CARD
+                 ================================================= -->
+
+            <div class="history-card">
+
+
+                <!-- TOOLBAR -->
+
+                <div class="history-toolbar">
+
+
+                    <div class="category-tabs">
+
+
+                        <button
+                            class="category-tab active"
+                            data-category="all"
+                            onclick="filterHistory('all')"
+                        >
+                            All
+                        </button>
+
+
+                        <button
+                            class="category-tab"
+                            data-category="completed-orders"
+                            onclick="filterHistory('completed-orders')"
+                        >
+                            Completed Orders
+                        </button>
+
+
+                        <button
+                            class="category-tab"
+                            data-category="returned-rentals"
+                            onclick="filterHistory('returned-rentals')"
+                        >
+                            Returned Rentals
+                        </button>
+
+
+                        <button
+                            class="category-tab"
+                            data-category="rejected-rentals"
+                            onclick="filterHistory('rejected-rentals')"
+                        >
+                            Rejected Rentals
+                        </button>
+
+
+                        <button
+                            class="category-tab"
+                            data-category="resolved-issues"
+                            onclick="filterHistory('resolved-issues')"
+                        >
+                            Resolved Issues
+                        </button>
+
+
+                    </div>
+
+
+                    <span
+                        class="history-count"
+                        id="historyCount"
+                    >
+                        0 records
+                    </span>
+
+
+                </div>
+
+
+
+                <!-- HISTORY LIST -->
+
+                <div
+                    class="history-list"
+                    id="historyList"
+                ></div>
+
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            <span>
+                © 2026 AgriConnect. All Rights Reserved
+            </span>
+
+            <span class="footer-separator">
+                |
+            </span>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <span class="footer-separator">
+                |
+            </span>
+
+            <a href="#">
+                Terms of Service
+            </a>
+
+        </footer>
+
+
+    </main>
+
+
+</div>
+
+
+
+<script>
+
+
+    /* =========================================================
+       HISTORY DATA
+       ========================================================= */
+
+    let historyRecords = [];
+
+
+    /*
+     * Load history records created by the
+     * other AgriConnect pages.
+     */
+
+    function getCurrentUserId() {
+
+        try {
+
+            const parsedUser =
+                JSON.parse(
+                    sessionStorage.getItem("user")
+                );
+
+            return parsedUser && parsedUser.id;
+
+        } catch (error) {
+
+            return null;
+
+        }
+
+    }
+
+
+    function historyTimeFromIso(isoString) {
+
+        if (!isoString) {
+            return "00:00";
+        }
+
+        const date = new Date(isoString);
+
+        if (isNaN(date)) {
+            return "00:00";
+        }
+
+        return (
+            String(date.getHours()).padStart(2, "0") +
+            ":" +
+            String(date.getMinutes()).padStart(2, "0")
+        );
+
+    }
+
+
+    function historyDateFromIso(isoString) {
+
+        if (!isoString) {
+            return getTodayKey();
+        }
+
+        const date = new Date(isoString);
+
+        return isNaN(date) ? getTodayKey() : formatDateKey(date);
+
+    }
+
+
+    async function loadHistory() {
+
+        const userId = getCurrentUserId();
+
+        if (!userId) {
+
+            historyRecords = [];
+            return;
+
+        }
+
+        try {
+
+            const response =
+                await fetch(`/api/history?user_id=${userId}&role=farmer`);
+
+            const data =
+                await response.json();
+
+            if (!data || !data.success) {
+
+                historyRecords = [];
+                return;
+
+            }
+
+            const records = [];
+
+            (data.orders || []).forEach(order => {
+
+                if (order.status !== "completed") {
+                    return;
+                }
+
+                records.push({
+
+                    id: "order-" + order.id,
+                    category: "completed-orders",
+                    title: "Order #" + order.id,
+                    description: `${order.crop_name} • ${order.quantity} kg`,
+                    date: historyDateFromIso(order.created_at),
+                    time: historyTimeFromIso(order.created_at),
+                    status: "Completed",
+                    link: "orders.html"
+
+                });
+
+            });
+
+            (data.rentals || []).forEach(rental => {
+
+                if (rental.status === "completed") {
+
+                    records.push({
+
+                        id: "rental-" + rental.id,
+                        category: "returned-rentals",
+                        title: "Rental #" + rental.id,
+                        description: rental.equipment_name,
+                        date: historyDateFromIso(rental.created_at),
+                        time: historyTimeFromIso(rental.created_at),
+                        status: "Returned",
+                        link: "equipment-rental.html"
+
+                    });
+
+                } else if (rental.status === "rejected" || rental.status === "cancelled") {
+
+                    records.push({
+
+                        id: "rental-" + rental.id,
+                        category: "rejected-rentals",
+                        title: "Rental #" + rental.id,
+                        description: rental.equipment_name,
+                        date: historyDateFromIso(rental.created_at),
+                        time: historyTimeFromIso(rental.created_at),
+                        status: rental.status === "rejected" ? "Rejected" : "Cancelled",
+                        link: "equipment-rental.html"
+
+                    });
+
+                }
+
+            });
+
+            (data.reports || []).forEach(report => {
+
+                records.push({
+
+                    id: "report-" + report.id,
+                    category: "resolved-issues",
+                    title: "Report: " + report.subject,
+                    description: report.admin_note || "",
+                    date: historyDateFromIso(report.resolved_at || report.created_at),
+                    time: historyTimeFromIso(report.resolved_at || report.created_at),
+                    status: report.status === "resolved" ? "Resolved" : "Rejected",
+                    link: "report-issues.html"
+
+                });
+
+            });
+
+            historyRecords = records;
+
+            saveHistory();
+
+        } catch (error) {
+
+            console.error("Unable to load history:", error);
+
+            historyRecords = [];
+
+        }
+
+    }
+
+
+
+
+
+    /* =========================================================
+       DATE HELPERS
+       ========================================================= */
+
+    function getTodayKey() {
+
+        return formatDateKey(
+            new Date()
+        );
+
+    }
+
+
+    function getPreviousDateKey(
+        days
+    ) {
+
+
+        const date =
+            new Date();
+
+
+        date.setDate(
+            date.getDate() - days
+        );
+
+
+        return formatDateKey(
+            date
+        );
+
+    }
+
+
+    function formatDateKey(
+        date
+    ) {
+
+
+        return (
+
+            date.getFullYear() +
+            "-" +
+
+            String(
+                date.getMonth() + 1
+            ).padStart(
+                2,
+                "0"
+            ) +
+
+            "-" +
+
+            String(
+                date.getDate()
+            ).padStart(
+                2,
+                "0"
+            )
+
+        );
+
+    }
+
+
+
+    /* =========================================================
+       INITIALIZE
+       ========================================================= */
+
+    document.addEventListener(
+        "DOMContentLoaded",
+        async function() {
+
+
+            await loadHistory();
+
+
+            sortHistory();
+
+
+            renderHistory();
+
+
+            updateNotificationCount();
+
+
+            updateProfileNameAndAvatar();
+
+
+            loadAvailableRoles();
+
+        }
+    );
+
+
+
+    /* =========================================================
+       SORT NEWEST FIRST
+       ========================================================= */
+
+    function sortHistory() {
+
+
+        historyRecords.sort(
+            function(a,b) {
+
+
+                const aDate =
+                    new Date(
+                        a.date +
+                        "T" +
+                        (
+                            a.time ||
+                            "00:00"
+                        )
+                    );
+
+
+                const bDate =
+                    new Date(
+                        b.date +
+                        "T" +
+                        (
+                            b.time ||
+                            "00:00"
+                        )
+                    );
+
+
+                return (
+                    bDate - aDate
+                );
+
+            }
+        );
+
+    }
+
+
+
+    /* =========================================================
+       SAVE HISTORY
+       ========================================================= */
+
+    function saveHistory() {
+
+
+        localStorage.setItem(
+
+            "agriconnectHistory",
+
+            JSON.stringify(
+                historyRecords
+            )
+
+        );
+
+    }
+
+
+
+    /* =========================================================
+       CURRENT FILTER
+       ========================================================= */
+
+    let currentFilter =
+        "all";
+
+
+
+    /* =========================================================
+       FILTER HISTORY
+       ========================================================= */
+
+    function filterHistory(
+        category
+    ) {
+
+
+        currentFilter =
+            category;
+
+
+        document.querySelectorAll(
+            ".category-tab"
+        ).forEach(
+            function(button) {
+
+
+                if (
+                    button.dataset.category ===
+                    category
+                ) {
+
+                    button.classList.add(
+                        "active"
+                    );
+
+                }
+
+                else {
+
+                    button.classList.remove(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+
+        renderHistory();
+
+    }
+
+
+
+    /* =========================================================
+       RENDER HISTORY
+       ========================================================= */
+
+    function renderHistory() {
+
+
+        const list =
+            document.getElementById(
+                "historyList"
+            );
+
+
+        let filtered =
+            historyRecords.filter(
+                function(record) {
+
+
+                    if (
+                        currentFilter ===
+                        "all"
+                    ) {
+
+                        return true;
+
+                    }
+
+
+                    return (
+                        record.category ===
+                        currentFilter
+                    );
+
+                }
+            );
+
+
+        sortHistory();
+
+
+        document.getElementById(
+            "historyCount"
+        ).textContent =
+
+            filtered.length +
+            (
+                filtered.length === 1
+                    ? " record"
+                    : " records"
+            );
+
+
+        if (
+            filtered.length === 0
+        ) {
+
+
+            list.innerHTML = `
+
+                <div class="empty-state">
+
+                    <div class="empty-icon">
+                        📜
+                    </div>
+
+                    <h3>
+                        No history records
+                    </h3>
+
+                    <p>
+                        Completed and closed activities
+                        will appear here.
+                    </p>
+
+                </div>
+
+            `;
+
+
+            return;
+
+        }
+
+
+        /*
+         * Group by date.
+         */
+
+        const groups = {};
+
+
+        filtered.forEach(
+            function(record) {
+
+
+                if (
+                    !groups[
+                        record.date
+                    ]
+                ) {
+
+                    groups[
+                        record.date
+                    ] = [];
+
+                }
+
+
+                groups[
+                    record.date
+                ].push(
+                    record
+                );
+
+            }
+        );
+
+
+        list.innerHTML =
+            "";
+
+
+        Object.keys(groups)
+            .sort(
+                function(a,b) {
+
+                    return (
+                        b.localeCompare(a)
+                    );
+
+                }
+            )
+            .forEach(
+                function(dateKey) {
+
+
+                    const groupTitle =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    groupTitle.className =
+                        "history-group-title";
+
+
+                    groupTitle.textContent =
+                        getDateGroupTitle(
+                            dateKey
+                        );
+
+
+                    list.appendChild(
+                        groupTitle
+                    );
+
+
+                    groups[
+                        dateKey
+                    ].forEach(
+                        function(record) {
+
+
+                            list.appendChild(
+                                createHistoryElement(
+                                    record
+                                )
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+    }
+
+
+
+    /* =========================================================
+       CREATE HISTORY ELEMENT
+       ========================================================= */
+
+    function createHistoryElement(
+        record
+    ) {
+
+
+        const item =
+            document.createElement(
+                "div"
+            );
+
+
+        item.className =
+            "history-item";
+
+
+        const iconData = {
+
+            "completed-orders": {
+
+                icon:
+                    "🛒",
+
+                className:
+                    "orders"
+
+            },
+
+            "returned-rentals": {
+
+                icon:
+                    "🚜",
+
+                className:
+                    "returned"
+
+            },
+
+            "rejected-rentals": {
+
+                icon:
+                    "❌",
+
+                className:
+                    "rejected"
+
+            },
+
+            "resolved-issues": {
+
+                icon:
+                    "⚠️",
+
+                className:
+                    "resolved"
+
+            }
+
+        };
+
+
+        const data =
+            iconData[
+                record.category
+            ] ||
+            iconData[
+                "resolved-issues"
+            ];
+
+
+        const statusClass = {
+
+            Completed:
+                "status-completed",
+
+            Returned:
+                "status-returned",
+
+            Rejected:
+                "status-rejected",
+
+            Resolved:
+                "status-resolved"
+
+        };
+
+
+        const categoryNames = {
+
+            "completed-orders":
+                "Completed Order",
+
+            "returned-rentals":
+                "Returned Rental",
+
+            "rejected-rentals":
+                "Rejected Rental",
+
+            "resolved-issues":
+                "Resolved Issue"
+
+        };
+
+
+        item.innerHTML = `
+
+            <div
+                class="history-icon ${data.className}"
+            >
+                ${data.icon}
+            </div>
+
+
+            <div class="history-content">
+
+
+                <div class="history-title-row">
+
+                    <span class="history-title">
+
+                        ${escapeHtml(
+                            record.title
+                        )}
+
+                    </span>
+
+                </div>
+
+
+                <div class="history-description">
+
+                    ${escapeHtml(
+                        record.description
+                    )}
+
+                </div>
+
+
+                <div class="history-meta">
+
+
+                    <span class="history-category">
+
+                        ${
+                            categoryNames[
+                                record.category
+                            ] ||
+                            "History"
+                        }
+
+                    </span>
+
+
+                    <span>
+
+                        ${
+                            formatTime(
+                                record.time
+                            )
+                        }
+
+                    </span>
+
+
+                </div>
+
+
+            </div>
+
+
+            <span
+                class="history-status ${
+                    statusClass[
+                        record.status
+                    ] ||
+                    "status-completed"
+                }"
+            >
+
+                ${escapeHtml(
+                    record.status ||
+                    "Completed"
+                )}
+
+            </span>
+
+
+            <div class="history-date">
+
+                ${
+                    formatDate(
+                        record.date
+                    )
+                }
+
+            </div>
+
+        `;
+
+
+        /*
+         * Clicking a record opens
+         * the relevant page.
+         */
+
+        item.addEventListener(
+            "click",
+            function() {
+
+
+                if (
+                    record.link &&
+                    record.link !== "#"
+                ) {
+
+                    window.location.href =
+                        record.link;
+
+                }
+
+            }
+        );
+
+
+        return item;
+
+    }
+
+
+
+    /* =========================================================
+       DATE GROUP TITLE
+       ========================================================= */
+
+    function getDateGroupTitle(
+        dateKey
+    ) {
+
+
+        const today =
+            new Date();
+
+
+        const yesterday =
+            new Date();
+
+
+        yesterday.setDate(
+            yesterday.getDate() - 1
+        );
+
+
+        if (
+            dateKey ===
+            formatDateKey(
+                today
+            )
+        ) {
+
+            return "Today";
+
+        }
+
+
+        if (
+            dateKey ===
+            formatDateKey(
+                yesterday
+            )
+        ) {
+
+            return "Yesterday";
+
+        }
+
+
+        return formatDate(
+            dateKey
+        );
+
+    }
+
+
+
+    /* =========================================================
+       FORMAT DATE
+       ========================================================= */
+
+    function formatDate(
+        dateValue
+    ) {
+
+
+        const date =
+            typeof dateValue ===
+            "string"
+
+                ?
+
+                new Date(
+                    dateValue +
+                    "T00:00:00"
+                )
+
+                :
+
+                dateValue;
+
+
+        return date.toLocaleDateString(
+            "en-US",
+            {
+                month:
+                    "short",
+
+                day:
+                    "numeric",
+
+                year:
+                    "numeric"
+            }
+        );
+
+    }
+
+
+
+    /* =========================================================
+       FORMAT TIME
+       ========================================================= */
+
+    function formatTime(
+        time
+    ) {
+
+
+        if (!time) {
+
+            return "Time not set";
+
+        }
+
+
+        const parts =
+            time.split(":");
+
+
+        let hour =
+            parseInt(
+                parts[0]
+            );
+
+
+        const minute =
+            parts[1] ||
+            "00";
+
+
+        const suffix =
+            hour >= 12
+                ? "PM"
+                : "AM";
+
+
+        hour =
+            hour % 12 ||
+            12;
+
+
+        return (
+            hour +
+            ":" +
+            minute +
+            " " +
+            suffix
+        );
+
+    }
+
+
+
+    /* =========================================================
+       NOTIFICATION COUNT
+       ========================================================= */
+
+    function updateNotificationCount() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const sidebarCount = document.getElementById("notificationCount");
+            const headerCount = document.getElementById("headerNotificationCount");
+            const badgeCount = document.getElementById("notificationBadge");
+
+            if (sidebarCount) sidebarCount.textContent = unread;
+            if (headerCount) headerCount.textContent = unread;
+            if (badgeCount) badgeCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+
+
+    /* =========================================================
+       OPEN NOTIFICATIONS
+       ========================================================= */
+
+    function openNotifications() {
+
+        window.location.href =
+            "notifications.html";
+
+    }
+
+
+
+    /* =========================================================
+       PROFILE
+       ========================================================= */
+
+    function toggleProfile() {
+
+
+        const dropdown =
+            document.getElementById(
+                "profileDropdown"
+            );
+
+
+        dropdown.classList.toggle(
+            "show"
+        );
+
+
+        document.getElementById(
+            "profileArrow"
+        ).textContent =
+
+            dropdown.classList.contains(
+                "show"
+            )
+                ? "▲"
+                : "▼";
+
+    }
+
+
+
+    /* =========================================================
+       REGISTERED ROLES
+       ========================================================= */
+
+    function getRegisteredRoles() {
+
+
+        let roles =
+            null;
+
+
+        try {
+
+            roles =
+                JSON.parse(
+
+                    sessionStorage.getItem(
+                        "registeredRoles"
+                    ) || "null"
+
+                );
+
+        }
+
+        catch (error) {
+
+            roles = null;
+
+        }
+
+
+        if (
+            !Array.isArray(roles)
+        ) {
+
+
+            try {
+
+                roles =
+                    JSON.parse(
+
+                        localStorage.getItem(
+                            "userRoles"
+                        ) || "null"
+
+                    );
+
+            }
+
+            catch (error) {
+
+                roles = null;
+
+            }
+
+        }
+
+
+        if (
+            typeof roles ===
+            "string"
+        ) {
+
+            roles = [
+                roles
+            ];
+
+        }
+
+
+        if (
+            !Array.isArray(roles) ||
+            roles.length === 0
+        ) {
+
+
+            const current =
+                sessionStorage.getItem(
+                    "currentRole"
+                );
+
+
+            roles =
+                current
+                    ? [current]
+                    : ["farmer"];
+
+        }
+
+
+        roles =
+            roles.map(
+                function(role) {
+
+                    return String(
+                        role
+                    )
+                    .trim()
+                    .toLowerCase();
+
+                }
+            );
+
+
+        roles =
+            [...new Set(roles)];
+
+
+        /*
+         * IMPORTANT:
+         *
+         * If the account is registered as
+         * Farmer / Expert / Equipment Provider,
+         * Buyer is also available.
+         *
+         * If the account is ONLY Buyer,
+         * Buyer remains the only role.
+         */
+
+        const buyerOnly =
+            roles.length === 1 &&
+            roles[0] === "buyer";
+
+
+        if (
+            !buyerOnly &&
+            !roles.includes("buyer")
+        ) {
+
+            roles.push(
+                "buyer"
+            );
+
+        }
+
+
+        return roles;
+
+    }
+
+
+
+    /* =========================================================
+       UPDATE PROFILE NAME AND AVATAR
+       ========================================================= */
+
+    function updateProfileNameAndAvatar() {
+
+        let fullName = "User";
+
+        try {
+
+            const parsedUser =
+                JSON.parse(
+                    sessionStorage.getItem("user")
+                );
+
+            const firstName =
+                (parsedUser && (parsedUser.first_name || parsedUser.firstName)) || "";
+
+            const lastName =
+                (parsedUser && (parsedUser.last_name || parsedUser.lastName)) || "";
+
+            fullName =
+                `${firstName} ${lastName}`.trim() ||
+                (parsedUser && (parsedUser.name || parsedUser.full_name)) ||
+                "User";
+
+        } catch (error) {
+
+            fullName = "User";
+
+        }
+
+
+        const initials =
+            fullName
+                .split(" ")
+                .filter(Boolean)
+                .map(part => part[0])
+                .join("")
+                .slice(0, 2)
+                .toUpperCase() ||
+            "U";
+
+
+        const nameEl =
+            document.getElementById("profileNameText");
+
+        if (nameEl) {
+            nameEl.textContent = fullName;
+        }
+
+
+        const avatarEl =
+            document.getElementById("profileAvatarText");
+
+        if (avatarEl) {
+            avatarEl.textContent = initials;
+        }
+
+
+        const welcomeNameEl =
+            document.getElementById("userName");
+
+        if (welcomeNameEl) {
+            welcomeNameEl.textContent = fullName;
+        }
+
+    }
+
+
+    /* =========================================================
+       LOAD AVAILABLE ROLES
+       ========================================================= */
+
+    function loadAvailableRoles() {
+
+
+        const roles =
+            getRegisteredRoles();
+
+
+        let current =
+            sessionStorage.getItem(
+                "currentRole"
+            );
+
+
+        if (
+            !current ||
+            !roles.includes(
+                current
+            )
+        ) {
+
+            current =
+                roles[0];
+
+            sessionStorage.setItem(
+                "currentRole",
+                current
+            );
+
+        }
+
+
+        document.querySelectorAll(
+            ".role-option"
+        ).forEach(
+            function(option) {
+
+
+                const role =
+                    option.dataset.role;
+
+
+                if (
+                    roles.includes(
+                        role
+                    )
+                ) {
+
+                    option.style.display =
+                        "flex";
+
+                }
+
+                else {
+
+                    option.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+
+        setCurrentRole(
+            current
+        );
+
+    }
+
+
+
+    /* =========================================================
+       SWITCH ROLE
+       ========================================================= */
+
+    function switchRole(
+        role
+    ) {
+
+
+        const roles =
+            getRegisteredRoles();
+
+
+        if (
+            !roles.includes(
+                role
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        sessionStorage.setItem(
+            "currentRole",
+            role
+        );
+
+
+        setCurrentRole(
+            role
+        );
+
+
+        document.getElementById(
+            "profileDropdown"
+        ).classList.remove(
+            "show"
+        );
+
+
+        document.getElementById(
+            "profileArrow"
+        ).textContent =
+            "▼";
+
+
+        if (
+            role === "farmer"
+        ) {
+
+            window.location.href =
+                "farmer-dashboard.html";
+
+        }
+
+        else if (
+            role === "buyer"
+        ) {
+
+            window.location.href =
+                "buyer-dashboard.html";
+
+        }
+
+        else if (
+            role === "expert"
+        ) {
+
+            window.location.href =
+                "expert-dashboard.html";
+
+        }
+
+        else if (
+            role ===
+            "equipment-provider"
+        ) {
+
+            window.location.href =
+                "rental-dashboard.html";
+
+        }
+
+    }
+
+
+
+    /* =========================================================
+       SET CURRENT ROLE
+       ========================================================= */
+
+    function setCurrentRole(
+        role
+    ) {
+
+
+        const roleNames = {
+
+            farmer:
+                "Farmer",
+
+            buyer:
+                "Buyer",
+
+            expert:
+                "Agricultural Expert",
+
+            "equipment-provider":
+                "Equipment Provider"
+
+        };
+
+
+        const displayName =
+            roleNames[role] ||
+            "Farmer";
+
+
+        document.getElementById(
+            "currentRole"
+        ).textContent =
+            displayName;
+
+
+        document.getElementById(
+            "dropdownCurrentRole"
+        ).textContent =
+            displayName;
+
+
+        document.querySelectorAll(
+            ".role-option"
+        ).forEach(
+            function(option) {
+
+
+                const check =
+                    option.querySelector(
+                        ".role-check"
+                    );
+
+
+                if (
+                    option.dataset.role ===
+                    role
+                ) {
+
+
+                    option.classList.add(
+                        "selected"
+                    );
+
+
+                    if (check) {
+
+                        check.style.display =
+                            "block";
+
+                    }
+
+                }
+
+                else {
+
+
+                    option.classList.remove(
+                        "selected"
+                    );
+
+
+                    if (check) {
+
+                        check.style.display =
+                            "none";
+
+                    }
+
+                }
+
+            }
+        );
+
+    }
+
+
+
+    /* =========================================================
+       LOGOUT
+       ========================================================= */
+
+    async function logout(
+        event
+    ) {
+
+
+        if (event) {
+
+            event.preventDefault();
+
+        }
+
+
+        const confirmed =
+            await customConfirm(
+                "Are you sure you want to logout?"
+            );
+
+
+        if (!confirmed) {
+
+            return;
+
+        }
+
+
+        /*
+         * DO NOT remove registeredRoles.
+         * The account needs those roles
+         * when it logs in again.
+         */
+
+        sessionStorage.removeItem(
+            "currentRole"
+        );
+
+
+        sessionStorage.removeItem(
+            "loggedInUser"
+        );
+
+
+        window.location.href =
+            "login.html";
+
+    }
+
+
+
+    /* =========================================================
+       ESCAPE HTML
+       ========================================================= */
+
+    function escapeHtml(
+        value
+    ) {
+
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+
+        div.textContent =
+            value == null
+                ? ""
+                : value;
+
+
+        return div.innerHTML;
+
+    }
+
+
+
+    /* =========================================================
+       CLOSE PROFILE WHEN CLICKING OUTSIDE
+       ========================================================= */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+
+            const wrapper =
+                document.querySelector(
+                    ".profile-wrapper"
+                );
+
+
+            const dropdown =
+                document.getElementById(
+                    "profileDropdown"
+                );
+
+
+            if (
+                wrapper &&
+                dropdown &&
+                !wrapper.contains(
+                    event.target
+                )
+            ) {
+
+
+                dropdown.classList.remove(
+                    "show"
+                );
+
+
+                document.getElementById(
+                    "profileArrow"
+                ).textContent =
+                    "▼";
+
+            }
+
+        }
+    );
+
+
+
+
+function updateMessagesBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(
+                    c => (c.context_type === "order" || c.context_type === "rental" || c.context_type === "consultation")
+                        && c.unread_count > 0
+                ).length;
+
+            const badgeEl =
+                document.getElementById("messagesBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load messages badge count:", error);
+        });
+
+}
+
+updateMessagesBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

@@ -1,0 +1,5381 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        AgriConnect - Consultations
+    </title>
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+           ===================================================== */
+
+        * {
+
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+
+        /* =====================================================
+           BODY
+           ===================================================== */
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f7f5;
+
+            color: #1f2937;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================================
+           DASHBOARD
+           ===================================================== */
+
+        .dashboard {
+
+            display: flex;
+
+            min-height: 100vh;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+           ===================================================== */
+
+        .sidebar {
+    min-width: 255px;
+
+
+            width: 255px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #087b38 0%,
+                    #05652f 100%
+                );
+
+            color: white;
+
+            display: flex;
+
+            flex-direction: column;
+
+            position: fixed;
+
+            left: 0;
+
+            top: 0;
+
+            bottom: 0;
+
+            z-index: 100;
+
+            overflow-y: auto;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR LOGO
+           ===================================================== */
+
+        .sidebar-logo {
+             height: 86px;
+             display: flex;
+             align-items: center;
+             padding: 0 20px;
+             border-bottom: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .sidebar-logo img {
+             width: 160px;
+             height: auto;
+             max-height: 62px;
+             object-fit: contain;
+             display: block;
+        }
+
+
+        /* =====================================================
+           SIDEBAR NAVIGATION
+           ===================================================== */
+
+        .sidebar-nav {
+
+            padding:
+                15px 12px;
+
+            flex: 1;
+
+        }
+
+
+        .nav-item {
+
+            width: 100%;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                11px 12px;
+
+            margin-bottom: 4px;
+
+            border-radius: 8px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            transition:
+                background 0.2s,
+                transform 0.15s;
+
+        }
+
+
+        .nav-item:hover {
+
+            background:
+                rgba(255, 255, 255, 0.12);
+
+        }
+
+
+        .nav-item.active {
+
+            background:
+                rgba(0, 70, 30, 0.55);
+
+            box-shadow:
+                inset 3px 0 0 white;
+
+        }
+
+
+        .nav-icon {
+
+            width: 22px;
+
+            min-width: 22px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+        }
+
+
+        .nav-text {
+
+            flex: 1;
+
+        }
+
+
+        /* =====================================================
+           NOTIFICATION COUNT
+           ===================================================== */
+
+        .notification-count {
+
+            min-width: 23px;
+
+            height: 23px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #25b94b;
+
+            color: white;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+           ===================================================== */
+
+        .sidebar-bottom {
+
+            padding:
+                10px 12px 15px;
+
+        }
+
+
+        .sidebar-divider {
+
+            height: 1px;
+
+            background:
+                rgba(255, 255, 255, 0.20);
+
+            margin:
+                5px 15px 12px;
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+           ===================================================== */
+
+        .main-content {
+
+            margin-left: 255px;
+
+            width:
+                calc(100% - 255px);
+
+            min-height: 100vh;
+
+            display: flex;
+
+            flex-direction: column;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+           ===================================================== */
+
+        .header {
+
+            height: 78px;
+
+            background: white;
+
+            border-bottom:
+                1px solid #e3e8e4;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            padding:
+                0 28px;
+
+            position: relative;
+
+            z-index: 50;
+
+        }
+
+
+        /* =====================================================
+           WELCOME
+           ===================================================== */
+
+        .welcome-section h1 {
+
+            font-size: 25px;
+
+            font-weight: 500;
+
+            color: #111827;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .welcome-section p {
+
+            font-size: 15px;
+
+            color: #667085;
+
+        }
+
+
+        /* =====================================================
+           HEADER RIGHT
+           ===================================================== */
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 20px;
+
+        }
+
+
+        /* =====================================================
+           HEADER NOTIFICATION
+           ===================================================== */
+
+        .header-notification {
+
+            position: relative;
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 22px;
+
+            cursor: pointer;
+
+        }
+
+
+        .header-badge {
+
+            position: absolute;
+
+            top: -2px;
+
+            right: -3px;
+
+            min-width: 20px;
+
+            height: 20px;
+
+            border-radius: 50%;
+
+            background: #25b94b;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================================
+           PROFILE
+           ===================================================== */
+
+        .profile {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            cursor: pointer;
+
+            padding: 5px;
+
+            border-radius: 10px;
+
+        }
+
+
+        .profile:hover {
+
+            background:
+                #f5f8f6;
+
+        }
+
+
+        .profile-picture {
+    font-size: 17px;
+
+
+            width: 43px;
+
+            height: 43px;
+
+            border-radius: 50%;
+
+            object-fit: cover;
+
+            border:
+                1px solid #cfe4d5;
+
+            background: #e9f4ec;
+
+        }
+
+
+        .profile-info {
+
+            min-width: 80px;
+
+        }
+
+
+        .profile-name {
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            color: #111827;
+
+        }
+
+
+        .profile-role {
+
+            margin-top: 3px;
+
+            font-size: 13px;
+
+            color: #15803b;
+
+        }
+
+
+        .profile-arrow {
+
+            font-size: 12px;
+
+            color: #667085;
+
+            transition:
+                transform 0.2s;
+
+        }
+
+
+        .profile.open .profile-arrow {
+
+            transform:
+                rotate(180deg);
+
+        }
+
+
+        /* =====================================================
+           PROFILE DROPDOWN
+           ONLY REGISTERED ROLES
+           ===================================================== */
+
+        .profile-dropdown {
+
+            position: absolute;
+
+            top: calc(100% + 8px);
+
+            right: 0;
+
+            width: 265px;
+
+            background: white;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 10px 30px
+                rgba(0, 0, 0, 0.15);
+
+            border:
+                1px solid #e1e7e3;
+
+            overflow: hidden;
+
+            display: none;
+
+            z-index: 999;
+
+        }
+
+
+        .profile.open
+        .profile-dropdown {
+
+            display: block;
+
+        }
+
+
+        .dropdown-title {
+
+            padding:
+                15px 18px 10px;
+
+            font-size: 12px;
+
+            font-weight: bold;
+
+            color: #667085;
+
+            text-transform: uppercase;
+
+            letter-spacing: 0.5px;
+
+            background: #ffffff;
+
+        }
+
+
+        #roleOptions {
+
+            padding:
+                0 0 7px;
+
+        }
+
+
+        .dropdown-role {
+
+            width: 100%;
+
+            border: none;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                13px 18px;
+
+            cursor: pointer;
+
+            text-align: left;
+
+            color: #1f2937;
+
+            font-size: 14px;
+
+            transition:
+                background 0.2s;
+
+        }
+
+
+        .dropdown-role:hover {
+
+            background:
+                #f1f8f3;
+
+        }
+
+
+        .dropdown-role.current {
+
+            background:
+                #eaf6ee;
+
+            color: #087b38;
+
+            font-weight: bold;
+
+        }
+
+
+        .dropdown-role
+        > span:first-child {
+
+            width: 25px;
+
+            min-width: 25px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+        }
+
+
+        .dropdown-role
+        > span:nth-child(2) {
+
+            flex: 1;
+
+        }
+
+
+        .role-check {
+
+            color: #168b43;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================================
+           MOBILE MENU
+           ===================================================== */
+
+        .mobile-menu {
+
+            display: none;
+
+            border: none;
+
+            background: transparent;
+
+            font-size: 24px;
+
+            cursor: pointer;
+
+        }
+
+
+        /* =====================================================
+           CONTENT
+           ===================================================== */
+
+        .content {
+
+            flex: 1;
+
+            padding:
+                23px 18px 65px;
+
+        }
+
+
+        /* =====================================================
+           PAGE TITLE
+           ===================================================== */
+
+        .page-title {
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .page-title h2 {
+
+            font-size: 29px;
+
+            color: #111827;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .page-title p {
+
+            color: #667085;
+
+            font-size: 16px;
+
+        }
+
+
+        /* =====================================================
+           SEARCH CONTAINER
+           ===================================================== */
+
+        .search-container {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            background: white;
+
+            border:
+                1px solid #dfe6e1;
+
+            border-radius: 14px;
+
+            padding: 12px;
+
+            box-shadow:
+                0 4px 12px
+                rgba(0, 0, 0, 0.04);
+
+            margin-bottom: 34px;
+
+        }
+
+
+        /* =====================================================
+           SEARCH BOX
+           ===================================================== */
+
+        .search-box {
+
+            flex: 1;
+
+            height: 58px;
+
+            border:
+                1px solid #d7e0da;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding:
+                0 18px;
+
+            background: white;
+
+        }
+
+
+        .search-icon {
+
+            font-size: 24px;
+
+            margin-right: 12px;
+
+        }
+
+
+        .search-box input {
+
+            width: 100%;
+
+            border: none;
+
+            outline: none;
+
+            font-size: 16px;
+
+            color: #172033;
+
+        }
+
+
+        .search-box input::placeholder {
+
+            color: #8b98a7;
+
+        }
+
+
+        /* =====================================================
+           VOICE BUTTON
+           ===================================================== */
+
+        .voice-button {
+
+            width: 58px;
+
+            height: 58px;
+
+            border:
+                1px solid #d7e0da;
+
+            border-radius: 10px;
+
+            background: white;
+
+            font-size: 21px;
+
+            cursor: pointer;
+
+        }
+
+
+        .voice-button:hover {
+
+            background: #f2f8f4;
+
+        }
+
+
+        .voice-button.listening {
+
+            background: #e8f7ed;
+
+            border-color: #35a45a;
+
+        }
+
+
+        /* =====================================================
+           SEARCH TYPE
+           ===================================================== */
+
+        .search-type-wrapper {
+
+            position: relative;
+
+        }
+
+
+        .search-type-button {
+
+            height: 58px;
+
+            min-width: 200px;
+
+            padding:
+                0 17px;
+
+            border:
+                1px solid #d7e0da;
+
+            border-radius: 10px;
+
+            background: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            gap: 18px;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            color: #172033;
+
+        }
+
+
+        .search-type-button:hover {
+
+            background: #f7faf8;
+
+        }
+
+
+        .search-type-arrow {
+
+            font-size: 13px;
+
+            color: #687585;
+
+        }
+
+
+        .search-type-menu {
+
+            position: absolute;
+
+            top: calc(100% + 7px);
+
+            left: 0;
+
+            width: 220px;
+
+            background: white;
+
+            border:
+                1px solid #dfe6e1;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 10px 25px
+                rgba(0, 0, 0, 0.12);
+
+            overflow: hidden;
+
+            display: none;
+
+            z-index: 500;
+
+        }
+
+
+        .search-type-menu.show {
+
+            display: block;
+
+        }
+
+
+        .search-type-option {
+
+            padding:
+                13px 15px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+        }
+
+
+        .search-type-option:hover {
+
+            background: #f1f8f3;
+
+        }
+
+
+        .search-type-option.active-option {
+
+            background: #e8f6ed;
+
+            color: #087b38;
+
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================================
+           FILTER BUTTON
+           ===================================================== */
+
+        .filter-button {
+
+            width: 58px;
+
+            height: 58px;
+
+            border:
+                1px solid #d7e0da;
+
+            border-radius: 10px;
+
+            background: white;
+
+            cursor: pointer;
+
+            font-size: 21px;
+
+        }
+
+
+        .filter-button:hover {
+
+            background: #f2f8f4;
+
+        }
+
+
+        /* =====================================================
+           SUGGESTIONS
+           ===================================================== */
+
+        .suggestions {
+
+            position: absolute;
+
+            top: 82px;
+
+            left: 12px;
+
+            right: 380px;
+
+            background: white;
+
+            border:
+                1px solid #dfe6e1;
+
+            border-radius: 10px;
+
+            box-shadow:
+                0 10px 25px
+                rgba(0, 0, 0, 0.12);
+
+            overflow: hidden;
+
+            display: none;
+
+            z-index: 400;
+
+        }
+
+
+        .suggestion-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                12px 15px;
+
+            cursor: pointer;
+
+        }
+
+
+        .suggestion-item:hover {
+
+            background: #f2f8f4;
+
+        }
+
+
+        .suggestion-main {
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #172033;
+
+        }
+
+
+        .suggestion-sub {
+
+            font-size: 12px;
+
+            color: #7a8794;
+
+            margin-top: 3px;
+
+        }
+
+
+        /* =====================================================
+           SECTION HEADER
+           ===================================================== */
+
+        .section-header {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .section-header h3 {
+
+            font-size: 25px;
+
+            color: #12213a;
+
+        }
+
+
+        .section-header span {
+
+            color: #6d7886;
+
+            font-size: 14px;
+
+        }
+
+
+        /* =====================================================
+           EXPERT LIST
+           ===================================================== */
+
+        .expert-list {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 12px;
+
+        }
+
+
+        /* =====================================================
+           EXPERT CARD
+           ===================================================== */
+
+        .expert-card {
+
+            background: white;
+
+            border:
+                1px solid #dfe6e1;
+
+            border-radius: 13px;
+
+            min-height: 105px;
+
+            padding:
+                18px 22px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            box-shadow:
+                0 3px 10px
+                rgba(0, 0, 0, 0.035);
+
+        }
+
+
+        .expert-avatar {
+
+            width: 62px;
+
+            height: 62px;
+
+            min-width: 62px;
+
+            border-radius: 50%;
+
+            background: #e5f3e9;
+
+            color: #13803b;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 19px;
+
+            font-weight: bold;
+
+        }
+
+
+        .expert-info {
+
+            flex: 1;
+
+            min-width: 0;
+
+        }
+
+
+        .expert-name {
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+            color: #162238;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .expert-specialization {
+
+            color: #687585;
+
+            font-size: 14px;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .availability {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 6px;
+
+            color: #17833c;
+
+            font-size: 13px;
+
+        }
+
+
+        .availability-dot {
+
+            width: 8px;
+
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: #20ad4d;
+
+        }
+
+
+        .view-details {
+
+            border: none;
+
+            background: transparent;
+
+            color: #087b38;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+
+            padding: 10px;
+
+        }
+
+
+        .view-details:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =====================================================
+           EMPTY STATE
+           ===================================================== */
+
+        .empty-state {
+
+            background: white;
+
+            border:
+                1px dashed #cbd6cf;
+
+            border-radius: 12px;
+
+            padding: 40px;
+
+            text-align: center;
+
+            color: #687585;
+
+        }
+
+
+        .empty-state-icon {
+
+            font-size: 35px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        /* =====================================================
+           LOADING
+           ===================================================== */
+
+        .loading {
+
+            padding: 35px;
+
+            text-align: center;
+
+            color: #6d7886;
+
+        }
+
+
+        /* =====================================================
+           EXPERT DETAILS MODAL
+           ===================================================== */
+
+        .expert-modal-overlay {
+
+            position: fixed;
+
+            inset: 0;
+
+            background:
+                rgba(0, 0, 0, 0.45);
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 25px;
+
+            z-index: 2000;
+
+        }
+
+
+        .expert-modal {
+
+            width: 100%;
+
+            max-width: 680px;
+
+            max-height: 90vh;
+
+            overflow-y: auto;
+
+            background: white;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 20px 55px
+                rgba(0, 0, 0, 0.22);
+
+            padding: 28px;
+
+            position: relative;
+
+        }
+
+
+        .expert-modal-close {
+
+            position: absolute;
+
+            right: 18px;
+
+            top: 15px;
+
+            width: 36px;
+
+            height: 36px;
+
+            border: none;
+
+            border-radius: 50%;
+
+            background: #f1f5f2;
+
+            color: #475467;
+
+            font-size: 25px;
+
+            line-height: 1;
+
+            cursor: pointer;
+
+        }
+
+
+        .expert-modal-close:hover {
+
+            background: #e3ebe6;
+
+        }
+
+
+        .expert-modal-header {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 18px;
+
+            padding-right: 40px;
+
+            padding-bottom: 23px;
+
+            border-bottom:
+                1px solid #e5eae7;
+
+        }
+
+
+        .expert-large-avatar {
+
+            width: 82px;
+
+            height: 82px;
+
+            min-width: 82px;
+
+            border-radius: 50%;
+
+            background: #e4f3e8;
+
+            color: #087b38;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 25px;
+
+            font-weight: bold;
+
+        }
+
+
+        .expert-modal-header h2 {
+
+            font-size: 23px;
+
+            color: #172033;
+
+            margin-bottom: 6px;
+
+        }
+
+
+        .modal-specialization {
+
+            color: #667085;
+
+            font-size: 15px;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .modal-availability {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            color: #15803b;
+
+            font-size: 13px;
+
+        }
+
+
+        .modal-availability span {
+
+            width: 8px;
+
+            height: 8px;
+
+            background: #20ad4d;
+
+            border-radius: 50%;
+
+        }
+
+
+        /* =====================================================
+           EXPERT DETAIL GRID
+           ===================================================== */
+
+        .expert-details-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 12px;
+
+            margin-top: 22px;
+
+        }
+
+
+        .detail-box {
+
+            border:
+                1px solid #e1e8e3;
+
+            border-radius: 10px;
+
+            padding: 14px;
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 12px;
+
+            background: #fbfdfc;
+
+        }
+
+
+        .detail-icon {
+
+            width: 35px;
+
+            height: 35px;
+
+            min-width: 35px;
+
+            border-radius: 8px;
+
+            background: #e7f5eb;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 17px;
+
+        }
+
+
+        .detail-label {
+
+            color: #667085;
+
+            font-size: 12px;
+
+            margin-bottom: 4px;
+
+        }
+
+
+        .detail-value {
+
+            color: #172033;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            word-break: break-word;
+
+        }
+
+
+        /* =====================================================
+           EXPERT BIO
+           ===================================================== */
+
+        .expert-bio {
+
+            margin-top: 22px;
+
+        }
+
+
+        .expert-bio h3 {
+
+            font-size: 17px;
+
+            color: #172033;
+
+            margin-bottom: 8px;
+
+        }
+
+
+        .expert-bio p {
+
+            color: #667085;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+
+        }
+
+
+        /* =====================================================
+           MODAL ACTIONS
+           ===================================================== */
+
+        .expert-modal-actions {
+
+            display: flex;
+
+            justify-content: flex-end;
+
+            gap: 10px;
+
+            margin-top: 25px;
+
+            padding-top: 20px;
+
+            border-top:
+                1px solid #e5eae7;
+
+        }
+
+
+        .modal-secondary-btn,
+        .modal-primary-btn {
+
+            min-height: 42px;
+
+            padding:
+                0 18px;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+        }
+
+
+        .modal-secondary-btn {
+
+            background: white;
+
+            border:
+                1px solid #d5ded8;
+
+            color: #475467;
+
+        }
+
+
+        .modal-secondary-btn:hover {
+
+            background: #f7faf8;
+
+        }
+
+
+        .modal-primary-btn {
+
+            background: #11863e;
+
+            border:
+                1px solid #11863e;
+
+            color: white;
+
+        }
+
+
+        .modal-primary-btn:hover {
+
+            background: #0b7133;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+           ===================================================== */
+
+        .footer {
+
+            position: fixed;
+
+            bottom: 0;
+
+            left: 255px;
+
+            right: 0;
+
+            height: 42px;
+
+            background: #075b2e;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 12px;
+
+            font-size: 10px;
+
+            z-index: 90;
+
+        }
+
+
+        .footer a {
+
+            color: white;
+
+            text-decoration: none;
+
+        }
+
+
+        .footer a:hover {
+
+            text-decoration: underline;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+           ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .sidebar {
+
+                width: 220px;
+
+            }
+
+
+            .main-content {
+
+                margin-left: 220px;
+
+                width:
+                    calc(100% - 220px);
+
+            }
+
+
+            .footer {
+
+                left: 220px;
+
+            }
+
+
+            .search-type-button {
+
+                min-width: 160px;
+
+            }
+
+        }
+
+
+        @media (max-width: 850px) {
+
+            .sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform 0.25s ease;
+
+            }
+
+
+            .sidebar.open {
+
+                transform:
+                    translateX(0);
+
+            }
+
+
+            .main-content {
+
+                margin-left: 0;
+
+                width: 100%;
+
+            }
+
+
+            .footer {
+
+                left: 0;
+
+            }
+
+
+            .mobile-menu {
+
+                display: block;
+
+            }
+
+
+            .header {
+
+                padding:
+                    0 18px;
+
+            }
+
+
+            .content {
+
+                padding:
+                    25px 18px 75px;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .profile-info {
+
+                display: none;
+
+            }
+
+
+            .header-right {
+
+                gap: 8px;
+
+            }
+
+
+            .search-container {
+
+                flex-wrap: wrap;
+
+            }
+
+
+            .search-box {
+
+                flex-basis: 100%;
+
+            }
+
+
+            .search-type-wrapper {
+
+                flex: 1;
+
+            }
+
+
+            .search-type-button {
+
+                width: 100%;
+
+                min-width: 0;
+
+            }
+
+
+            .suggestions {
+
+                right: 12px;
+
+            }
+
+
+            .expert-card {
+
+                align-items: flex-start;
+
+                flex-wrap: wrap;
+
+            }
+
+
+            .view-details {
+
+                margin-left: auto;
+
+            }
+
+
+            .footer {
+
+                font-size: 10px;
+
+                gap: 7px;
+
+            }
+
+
+            .expert-details-grid {
+
+                grid-template-columns:
+                    1fr;
+
+            }
+
+
+            .expert-modal {
+
+                padding: 20px;
+
+            }
+
+
+            .expert-modal-header {
+
+                align-items: flex-start;
+
+            }
+
+
+            .expert-large-avatar {
+
+                width: 65px;
+
+                height: 65px;
+
+                min-width: 65px;
+
+                font-size: 20px;
+
+            }
+
+
+            .expert-modal-header h2 {
+
+                font-size: 19px;
+
+            }
+
+
+            .expert-modal-actions {
+
+                flex-direction: column;
+
+            }
+
+
+            .modal-secondary-btn,
+            .modal-primary-btn {
+
+                width: 100%;
+
+            }
+
+        }
+
+    
+.messages-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+    <!-- =====================================================
+         SIDEBAR
+         ===================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <!-- LOGO -->
+
+        <div class="sidebar-logo">
+
+            <img
+                src="assets/agriconnect-logo-white.png"
+                alt="AgriConnect"
+            >
+
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+
+            <a
+                href="farmer-dashboard.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ▦
+                </span>
+
+                <span class="nav-text">
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="my-crops.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🌿
+                </span>
+
+                <span class="nav-text">
+                    My Crops
+                </span>
+
+            </a>
+
+
+            <a
+                href="orders.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🛒
+                </span>
+
+                <span class="nav-text">
+                    Orders
+                </span>
+
+            </a>
+
+
+            <a
+                href="equipment-rental.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🚜
+                </span>
+
+                <span class="nav-text">
+                    Equipment Rental
+                </span>
+
+            </a>
+
+
+            <a
+                href="consultations.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">
+                    👨‍🌾
+                </span>
+
+                <span class="nav-text">
+                    Consultations
+                </span>
+
+            </a>
+
+
+            <a
+                href="messages.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    💬
+                </span>
+
+                <span class="nav-text">
+                    Messages
+                </span>
+
+                <span class="messages-badge" id="messagesBadge" style="display:none;">0</span>
+
+            </a>
+
+
+            <a
+                href="report-issues.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚠️
+                </span>
+
+                <span class="nav-text">
+                    Report Issues
+                </span>
+
+            </a>
+
+
+            <a
+                href="calendar.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    📅
+                </span>
+
+                <span class="nav-text">
+                    Calendar
+                </span>
+
+            </a>
+
+
+            <a
+                href="notifications.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    🔔
+                </span>
+
+                <span class="nav-text">
+                    Notifications
+                </span>
+
+                <span
+                    class="notification-count"
+                    id="sidebarNotificationCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <a
+                href="history.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ◷
+                </span>
+
+                <span class="nav-text">
+                    History
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- =================================================
+             SIDEBAR BOTTOM
+             ================================================= -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-divider"></div>
+
+
+            <a
+                href="help-support.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ?
+                </span>
+
+                <span class="nav-text">
+                    Help &amp; Support
+                </span>
+
+            </a>
+
+
+            <a
+                href="settings.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">
+                    ⚙
+                </span>
+
+                <span class="nav-text">
+                    Settings
+                </span>
+
+            </a>
+
+
+            <a
+                href="#"
+                class="nav-item"
+                id="logoutButton"
+            >
+
+                <span class="nav-icon">
+                    ↪
+                </span>
+
+                <span class="nav-text">
+                    Logout
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+         ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- HEADER -->
+
+        <header class="header">
+
+
+            <div
+                style="
+                    display:flex;
+                    align-items:center;
+                    gap:14px;
+                "
+            >
+
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                    type="button"
+                >
+                    ☰
+                </button>
+
+
+                <div class="welcome-section">
+
+                    <h1>
+                        Welcome,
+                    </h1>
+
+                    <p>
+                        Find agricultural experts
+                        and get professional advice.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- HEADER RIGHT -->
+
+            <div class="header-right">
+
+
+                <div
+                    class="header-notification"
+                    id="headerNotification"
+                    title="Notifications"
+                >
+
+                    🔔
+
+                    <span
+                        class="header-badge"
+                        id="headerNotificationCount"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <!-- PROFILE -->
+
+                <div
+                    class="profile"
+                    id="profile"
+                >
+
+
+                    <img
+                        src="https://ui-avatars.com/api/?name=User&background=e9f4ec&color=17833c"
+                        alt="Profile"
+                        class="profile-picture"
+                        id="profilePicture"
+                    >
+
+
+                    <div class="profile-info">
+
+                        <div
+                            class="profile-name"
+                            id="profileName"
+                        >
+                            User
+                        </div>
+
+
+                        <div
+                            class="profile-role"
+                            id="profileRole"
+                        >
+                            Farmer
+                        </div>
+
+                    </div>
+
+
+                    <span class="profile-arrow">
+                        ▼
+                    </span>
+
+
+                    <!-- PROFILE DROPDOWN -->
+
+                    <div
+                        class="profile-dropdown"
+                        id="profileDropdown"
+                    >
+
+                        <div class="dropdown-title">
+                            Switch Role
+                        </div>
+
+                        <div id="roleOptions"></div>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =====================================================
+             CONTENT
+             ===================================================== -->
+
+        <section class="content">
+
+
+            <div class="page-title">
+
+                <h2>
+                    Consultations
+                </h2>
+
+                <p>
+                    Find agricultural experts by name
+                    or specialization.
+                </p>
+
+            </div>
+
+
+
+            <!-- SEARCH -->
+
+            <div
+                class="search-container"
+                id="searchContainer"
+            >
+
+
+                <div class="search-box">
+
+                    <span class="search-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search expert name..."
+                        autocomplete="off"
+                    >
+
+                </div>
+
+
+                <button
+                    class="voice-button"
+                    id="voiceButton"
+                    title="Voice search"
+                    type="button"
+                >
+                    🎤
+                </button>
+
+
+                <div
+                    class="search-type-wrapper"
+                    id="searchTypeWrapper"
+                >
+
+
+                    <button
+                        class="search-type-button"
+                        id="searchTypeButton"
+                        type="button"
+                    >
+
+                        <span
+                            id="searchTypeText"
+                        >
+                            Expert Name
+                        </span>
+
+                        <span
+                            class="search-type-arrow"
+                        >
+                            ▼
+                        </span>
+
+                    </button>
+
+
+                    <div
+                        class="search-type-menu"
+                        id="searchTypeMenu"
+                    >
+
+                        <div
+                            class="
+                                search-type-option
+                                active-option
+                            "
+                            data-type="name"
+                        >
+                            👤 Expert Name
+                        </div>
+
+
+                        <div
+                            class="
+                                search-type-option
+                            "
+                            data-type="specialization"
+                        >
+                            🌱 Specialization
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <button
+                    class="filter-button"
+                    id="filterButton"
+                    title="Filter"
+                    type="button"
+                >
+                    ☷
+                </button>
+
+
+                <div
+                    id="suggestions"
+                    class="suggestions"
+                ></div>
+
+
+            </div>
+
+
+
+            <!-- EXPERT LIST HEADER -->
+
+            <div class="section-header">
+
+                <div>
+
+                    <h3 id="sectionTitle">
+                        Recommended Experts
+                    </h3>
+
+                </div>
+
+
+                <span id="resultCount">
+                    Loading...
+                </span>
+
+            </div>
+
+
+
+            <!-- EXPERT LIST -->
+
+            <div
+                id="expertList"
+                class="expert-list"
+            >
+
+                <div class="loading">
+                    Loading agricultural experts...
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+
+        <!-- FOOTER -->
+
+        <footer class="footer">
+
+            <span>
+                © 2026 AgriConnect. All Rights Reserved
+            </span>
+
+            <span>
+                |
+            </span>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <span>
+                |
+            </span>
+
+            <a href="#">
+                Terms of Service
+            </a>
+
+        </footer>
+
+
+    </main>
+
+
+</div>
+
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+    /* =====================================================
+       USER INFORMATION
+       ===================================================== */
+
+    let user = null;
+
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unable to read user:",
+            error
+        );
+
+        user = null;
+
+    }
+
+
+    /* =====================================================
+       ROLE INFORMATION
+       ===================================================== */
+
+    const roleNames = {
+
+        farmer:
+            "Farmer",
+
+        buyer:
+            "Buyer",
+
+        expert:
+            "Agricultural Expert",
+
+        equipment_provider:
+            "Equipment Provider"
+
+    };
+
+
+    const roleIcons = {
+
+        farmer:
+            "🌱",
+
+        buyer:
+            "🛒",
+
+        expert:
+            "👨‍🌾",
+
+        equipment_provider:
+            "🚜"
+
+    };
+
+
+    const roleDashboard = {
+
+        farmer:
+            "farmer-dashboard.html",
+
+        buyer:
+            "buyer-dashboard.html",
+
+        expert:
+            "expert-dashboard.html",
+
+        equipment_provider:
+            "rental-dashboard.html"
+
+    };
+
+
+    /* =====================================================
+       CURRENT ROLE
+       ===================================================== */
+
+    let currentRole =
+        normalizeRole(
+            sessionStorage.getItem(
+                "selectedRole"
+            )
+        );
+
+
+    /* =====================================================
+       NORMALIZE ROLE
+       ===================================================== */
+
+    function normalizeRole(role) {
+
+        if (!role) {
+
+            return null;
+
+        }
+
+
+        const value =
+            String(role)
+                .trim()
+                .toLowerCase()
+                .replace(
+                    /[\s-]+/g,
+                    "_"
+                );
+
+
+        if (
+            value === "farmer"
+        ) {
+
+            return "farmer";
+
+        }
+
+
+        if (
+            value === "buyer"
+        ) {
+
+            return "buyer";
+
+        }
+
+
+        if (
+            value === "expert" ||
+            value === "agricultural_expert" ||
+            value === "agriculture_expert"
+        ) {
+
+            return "expert";
+
+        }
+
+
+        if (
+            value === "equipment_provider" ||
+            value === "equipmentprovider" ||
+            value === "provider"
+        ) {
+
+            return "equipment_provider";
+
+        }
+
+
+        return null;
+
+    }
+
+
+    /* =====================================================
+       GET REGISTERED ROLES
+       ===================================================== */
+
+    function getRegisteredRoles() {
+
+        let registeredRoles = [];
+
+
+        if (
+            user &&
+            Array.isArray(user.roles)
+        ) {
+
+            registeredRoles =
+                user.roles
+                    .map(
+                        normalizeRole
+                    )
+                    .filter(
+                        Boolean
+                    );
+
+        }
+
+
+        if (
+            registeredRoles.length === 0 &&
+            user &&
+            user.role
+        ) {
+
+            const singleRole =
+                normalizeRole(
+                    user.role
+                );
+
+
+            if (singleRole) {
+
+                registeredRoles =
+                    [singleRole];
+
+            }
+
+        }
+
+
+        if (
+            registeredRoles.length === 0 &&
+            currentRole
+        ) {
+
+            registeredRoles =
+                [currentRole];
+
+        }
+
+
+        registeredRoles =
+            [...new Set(
+                registeredRoles
+            )];
+
+
+        /*
+         * Buyer is automatically available
+         * for every non-buyer registered account.
+         *
+         * Example:
+         *
+         * Farmer account
+         * => Farmer + Buyer
+         *
+         * Expert account
+         * => Expert + Buyer
+         *
+         * Equipment Provider account
+         * => Equipment Provider + Buyer
+         *
+         * Buyer-only account
+         * => Buyer only
+         */
+
+        const hasNonBuyerRole =
+            registeredRoles.some(
+                function(role) {
+
+                    return role !== "buyer";
+
+                }
+            );
+
+
+        if (
+            hasNonBuyerRole &&
+            !registeredRoles.includes(
+                "buyer"
+            )
+        ) {
+
+            registeredRoles.push(
+                "buyer"
+            );
+
+        }
+
+
+        return registeredRoles;
+
+    }
+
+
+    /* =====================================================
+       VALIDATE CURRENT ROLE
+       ===================================================== */
+
+    function setValidCurrentRole() {
+
+        const availableRoles =
+            getRegisteredRoles();
+
+
+        if (
+            !availableRoles.includes(
+                currentRole
+            )
+        ) {
+
+            currentRole =
+                availableRoles[0] ||
+                "buyer";
+
+
+            sessionStorage.setItem(
+                "selectedRole",
+                currentRole
+            );
+
+        }
+
+    }
+
+
+    setValidCurrentRole();
+
+
+    /* =====================================================
+       DISPLAY USER
+       ===================================================== */
+
+    function displayUser() {
+
+        if (!user) {
+
+            return;
+
+        }
+
+
+        const firstName =
+            user.first_name ||
+            "";
+
+
+        const lastName =
+            user.last_name ||
+            "";
+
+
+        const fullName =
+            `${firstName} ${lastName}`
+                .trim();
+
+
+        const displayName =
+            fullName ||
+            "User";
+
+
+        document.getElementById(
+            "profileName"
+        ).textContent =
+            displayName;
+
+
+        const profilePicture =
+            document.getElementById(
+                "profilePicture"
+            );
+
+
+        profilePicture.src =
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(displayName)}&background=e9f4ec&color=17833c`;
+
+    }
+
+
+    displayUser();
+
+
+    /* =====================================================
+       DISPLAY CURRENT ROLE
+       ===================================================== */
+
+    function displayCurrentRole() {
+
+        document.getElementById(
+            "profileRole"
+        ).textContent =
+            roleNames[currentRole] ||
+            "Buyer";
+
+    }
+
+
+    displayCurrentRole();
+
+
+    /* =====================================================
+       PROFILE DROPDOWN
+       ===================================================== */
+
+    const profile =
+        document.getElementById(
+            "profile"
+        );
+
+
+    profile.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+            profile.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                !profile.contains(
+                    event.target
+                )
+            ) {
+
+                profile.classList.remove(
+                    "open"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       LOAD REGISTERED ROLES
+       ===================================================== */
+
+    function loadRoles() {
+
+        const roleOptions =
+            document.getElementById(
+                "roleOptions"
+            );
+
+
+        roleOptions.innerHTML =
+            "";
+
+
+        const roles =
+            getRegisteredRoles();
+
+
+        if (
+            roles.length === 0
+        ) {
+
+            roles.push(
+                "buyer"
+            );
+
+        }
+
+
+        roles.forEach(
+            function(role) {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+                    "dropdown-role";
+
+
+                if (
+                    role === currentRole
+                ) {
+
+                    button.classList.add(
+                        "current"
+                    );
+
+                }
+
+
+                const icon =
+                    roleIcons[role] ||
+                    "👤";
+
+
+                const name =
+                    roleNames[role] ||
+                    role;
+
+
+                button.innerHTML = `
+
+                    <span>
+                        ${icon}
+                    </span>
+
+                    <span>
+                        ${name}
+                    </span>
+
+                    ${
+                        role === currentRole
+                            ? `
+                                <span
+                                    class="role-check"
+                                >
+                                    ✓
+                                </span>
+                              `
+                            : ""
+                    }
+
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(event) {
+
+                        event.stopPropagation();
+
+                        switchRole(
+                            role
+                        );
+
+                    }
+                );
+
+
+                roleOptions.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    moveCurrentRoleToFront(roleOptions);
+
+
+    }
+
+
+    loadRoles();
+
+
+    /* =====================================================
+       SWITCH ROLE
+       ===================================================== */
+
+    function switchRole(
+        role
+    ) {
+
+        const availableRoles =
+            getRegisteredRoles();
+
+
+        if (
+            !availableRoles.includes(
+                role
+            )
+        ) {
+
+            alert(
+                "This role is not registered for your account."
+            );
+
+            return;
+
+        }
+
+
+        currentRole =
+            role;
+
+
+        sessionStorage.setItem(
+            "selectedRole",
+            role
+        );
+
+
+        displayCurrentRole();
+
+
+        profile.classList.remove(
+            "open"
+        );
+
+
+        const destination =
+            roleDashboard[role];
+
+
+        if (destination) {
+
+            window.location.href =
+                destination;
+
+        }
+
+    }
+
+
+    /* =====================================================
+       NOTIFICATIONS
+       ===================================================== */
+
+    function openNotifications() {
+
+        window.location.href =
+            "notifications.html";
+
+    }
+
+
+    document
+        .getElementById(
+            "headerNotification"
+        )
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+                openNotifications();
+
+            }
+        );
+
+
+    /* =====================================================
+       LOGOUT
+       ===================================================== */
+
+    document
+        .getElementById(
+            "logoutButton"
+        )
+        .addEventListener(
+            "click",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const confirmed =
+                    await customConfirm(
+                        "Are you sure you want to logout?"
+                    );
+
+
+                if (!confirmed) {
+
+                    return;
+
+                }
+
+
+                sessionStorage.removeItem(
+                    "token"
+                );
+
+
+                sessionStorage.removeItem(
+                    "user"
+                );
+
+
+                sessionStorage.removeItem(
+                    "selectedRole"
+                );
+
+
+                window.location.href =
+                    "index.html";
+
+            }
+        );
+
+
+    /* =====================================================
+       MOBILE MENU
+       ===================================================== */
+
+    document
+        .getElementById(
+            "mobileMenu"
+        )
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+
+                document
+                    .getElementById(
+                        "sidebar"
+                    )
+                    .classList.toggle(
+                        "open"
+                    );
+
+            }
+        );
+
+
+    /* =====================================================
+       SEARCH ELEMENTS
+       ===================================================== */
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const searchTypeButton =
+        document.getElementById(
+            "searchTypeButton"
+        );
+
+
+    const searchTypeMenu =
+        document.getElementById(
+            "searchTypeMenu"
+        );
+
+
+    const searchTypeText =
+        document.getElementById(
+            "searchTypeText"
+        );
+
+
+    const suggestionsBox =
+        document.getElementById(
+            "suggestions"
+        );
+
+
+    const expertList =
+        document.getElementById(
+            "expertList"
+        );
+
+
+    const resultCount =
+        document.getElementById(
+            "resultCount"
+        );
+
+
+    const sectionTitle =
+        document.getElementById(
+            "sectionTitle"
+        );
+
+
+    let searchType =
+        "name";
+
+
+    let currentExperts =
+        [];
+
+
+    let suggestionTimeout;
+
+
+    /* =====================================================
+       SEARCH TYPE DROPDOWN
+       ===================================================== */
+
+    searchTypeButton.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+            searchTypeMenu.classList.toggle(
+                "show"
+            );
+
+        }
+    );
+
+
+    document
+        .querySelectorAll(
+            ".search-type-option"
+        )
+        .forEach(
+            function(option) {
+
+                option.addEventListener(
+                    "click",
+                    function() {
+
+                        searchType =
+                            this.dataset.type;
+
+
+                        document
+                            .querySelectorAll(
+                                ".search-type-option"
+                            )
+                            .forEach(
+                                function(item) {
+
+                                    item.classList.remove(
+                                        "active-option"
+                                    );
+
+                                }
+                            );
+
+
+                        this.classList.add(
+                            "active-option"
+                        );
+
+
+                        if (
+                            searchType ===
+                            "name"
+                        ) {
+
+                            searchTypeText.textContent =
+                                "Expert Name";
+
+
+                            searchInput.placeholder =
+                                "Search expert name...";
+
+                        }
+
+                        else {
+
+                            searchTypeText.textContent =
+                                "Specialization";
+
+
+                            searchInput.placeholder =
+                                "Search specialization...";
+
+                        }
+
+
+                        searchInput.value =
+                            "";
+
+
+                        suggestionsBox.style.display =
+                            "none";
+
+
+                        searchTypeMenu.classList.remove(
+                            "show"
+                        );
+
+
+                        loadRecommendedExperts();
+
+                    }
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       CLOSE SEARCH TYPE DROPDOWN
+       ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                !event.target.closest(
+                    ".search-type-wrapper"
+                )
+            ) {
+
+                searchTypeMenu.classList.remove(
+                    "show"
+                );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       SEARCH INPUT
+       ===================================================== */
+
+    searchInput.addEventListener(
+        "input",
+        function() {
+
+            const query =
+                this.value.trim();
+
+
+            clearTimeout(
+                suggestionTimeout
+            );
+
+
+            if (!query) {
+
+                suggestionsBox.style.display =
+                    "none";
+
+
+                loadRecommendedExperts();
+
+
+                return;
+
+            }
+
+
+            suggestionTimeout =
+                setTimeout(
+                    function() {
+
+                        if (
+                            searchType ===
+                            "name"
+                        ) {
+
+                            showSuggestions(
+                                query
+                            );
+
+                        }
+
+                        else {
+
+                            searchExperts(
+                                query
+                            );
+
+                        }
+
+                    },
+                    250
+                );
+
+        }
+    );
+
+
+    /* =====================================================
+       SEARCH API
+       ===================================================== */
+
+    async function searchExperts(
+        query
+    ) {
+
+        expertList.innerHTML = `
+
+            <div class="loading">
+                Searching agricultural experts...
+            </div>
+
+        `;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/consultations/search?q=${encodeURIComponent(query)}`
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !data.success
+            ) {
+
+                showEmptyState(
+                    "Unable to search experts."
+                );
+
+                return;
+
+            }
+
+
+            currentExperts =
+                data.experts ||
+                [];
+
+
+            sectionTitle.textContent =
+                searchType === "name"
+                    ? "Search Results"
+                    : "Experts by Specialization";
+
+
+            displayExperts(
+                currentExperts
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Expert search error:",
+                error
+            );
+
+
+            showEmptyState(
+                "Could not connect to the server."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       NAME SUGGESTIONS
+       ===================================================== */
+
+    async function showSuggestions(
+        query
+    ) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/consultations/search?q=${encodeURIComponent(query)}`
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !data.success ||
+                !data.experts ||
+                data.experts.length === 0
+            ) {
+
+                suggestionsBox.style.display =
+                    "none";
+
+                return;
+
+            }
+
+
+            suggestionsBox.innerHTML =
+                "";
+
+
+            data.experts
+                .slice(
+                    0,
+                    5
+                )
+                .forEach(
+                    function(expert) {
+
+                        const item =
+                            document.createElement(
+                                "div"
+                            );
+
+
+                        item.className =
+                            "suggestion-item";
+
+
+                        const name =
+                            `${expert.first_name || ""} ${expert.last_name || ""}`
+                                .trim() ||
+                            "Agricultural Expert";
+
+
+                        const specialization =
+                            expert.specialization ||
+                            "Agricultural Specialist";
+
+
+                        item.innerHTML = `
+
+                            <span>
+                                👤
+                            </span>
+
+                            <div>
+
+                                <div
+                                    class="suggestion-main"
+                                >
+                                    ${escapeHtml(name)}
+                                </div>
+
+                                <div
+                                    class="suggestion-sub"
+                                >
+                                    ${escapeHtml(specialization)}
+                                </div>
+
+                            </div>
+
+                        `;
+
+
+                        item.addEventListener(
+                            "click",
+                            function() {
+
+                                searchInput.value =
+                                    name;
+
+
+                                suggestionsBox.style.display =
+                                    "none";
+
+
+                                searchExperts(
+                                    name
+                                );
+
+                            }
+                        );
+
+
+                        suggestionsBox.appendChild(
+                            item
+                        );
+
+                    }
+                );
+
+
+            suggestionsBox.style.display =
+                "block";
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Suggestion error:",
+                error
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       ENTER KEY
+       ===================================================== */
+
+    searchInput.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key ===
+                "Enter"
+            ) {
+
+                event.preventDefault();
+
+
+                const query =
+                    this.value.trim();
+
+
+                suggestionsBox.style.display =
+                    "none";
+
+
+                if (query) {
+
+                    searchExperts(
+                        query
+                    );
+
+                }
+
+                else {
+
+                    loadRecommendedExperts();
+
+                }
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       CLOSE SUGGESTIONS
+       ===================================================== */
+
+    document.addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                !event.target.closest(
+                    "#searchContainer"
+                )
+            ) {
+
+                suggestionsBox.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       LOAD RECOMMENDED EXPERTS
+       ===================================================== */
+
+    async function loadRecommendedExperts() {
+
+        expertList.innerHTML = `
+
+            <div class="loading">
+                Loading agricultural experts...
+            </div>
+
+        `;
+
+
+        try {
+
+            const response =
+                await fetch(
+                    "/api/consultations/recommended"
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !data.success
+            ) {
+
+                showEmptyState(
+                    "Unable to load experts."
+                );
+
+                return;
+
+            }
+
+
+            currentExperts =
+                data.experts ||
+                [];
+
+
+            sectionTitle.textContent =
+                "Recommended Experts";
+
+
+            displayExperts(
+                currentExperts
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Recommended experts error:",
+                error
+            );
+
+
+            showEmptyState(
+                "Could not connect to the server."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       DISPLAY EXPERTS
+       ===================================================== */
+
+    function displayExperts(
+        experts
+    ) {
+
+        expertList.innerHTML =
+            "";
+
+
+        resultCount.textContent =
+            `${experts.length} expert${experts.length === 1 ? "" : "s"}`;
+
+
+        if (
+            experts.length === 0
+        ) {
+
+            showEmptyState(
+                "No agricultural experts found."
+            );
+
+            return;
+
+        }
+
+
+        experts.forEach(
+            function(expert) {
+
+                const card =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                card.className =
+                    "expert-card";
+
+
+                const firstName =
+                    expert.first_name ||
+                    "";
+
+
+                const lastName =
+                    expert.last_name ||
+                    "";
+
+
+                const fullName =
+                    `${firstName} ${lastName}`
+                        .trim();
+
+
+                const displayName =
+                    fullName ||
+                    "Agricultural Expert";
+
+
+                const initials =
+                    getInitials(
+                        firstName,
+                        lastName
+                    );
+
+
+                const specialization =
+                    expert.specialization ||
+                    "Agricultural Specialist";
+
+
+                const expertId =
+                    expert.id;
+
+
+                card.innerHTML = `
+
+                    <div
+                        class="expert-avatar"
+                    >
+                        ${escapeHtml(initials)}
+                    </div>
+
+
+                    <div
+                        class="expert-info"
+                    >
+
+                        <div
+                            class="expert-name"
+                        >
+                            ${escapeHtml(displayName)}
+                        </div>
+
+
+                        <div
+                            class="expert-specialization"
+                        >
+                            ${escapeHtml(specialization)}
+                        </div>
+
+
+                        <div
+                            class="availability"
+                        >
+
+                            <span
+                                class="availability-dot"
+                            ></span>
+
+                            Available
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="view-details"
+                        type="button"
+                    >
+                        View Details →
+                    </button>
+
+                `;
+
+
+                const viewButton =
+                    card.querySelector(
+                        ".view-details"
+                    );
+
+
+                viewButton.addEventListener(
+                    "click",
+                    function() {
+
+                        viewExpert(
+                            expertId
+                        );
+
+                    }
+                );
+
+
+                expertList.appendChild(
+                    card
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       VIEW EXPERT DETAILS
+       
+       IMPORTANT:
+       This replaces the old alert().
+       ===================================================== */
+
+    async function viewExpert(
+        expertId
+    ) {
+
+        if (!expertId) {
+
+            showTemporaryMessage(
+                "Expert information is unavailable."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/consultations/experts/${expertId}`
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !data.success ||
+                !data.expert
+            ) {
+
+                showTemporaryMessage(
+                    data.message ||
+                    "Unable to load expert details."
+                );
+
+                return;
+
+            }
+
+
+            const expert =
+                data.expert;
+
+
+            const firstName =
+                expert.first_name ||
+                "";
+
+
+            const lastName =
+                expert.last_name ||
+                "";
+
+
+            const fullName =
+                `${firstName} ${lastName}`
+                    .trim() ||
+                "Agricultural Expert";
+
+
+            const initials =
+                getInitials(
+                    firstName,
+                    lastName
+                );
+
+
+            const specialization =
+                expert.specialization ||
+                "Agricultural Specialist";
+
+
+            const qualification =
+                expert.qualification ||
+                expert.qualifications ||
+                "Not provided";
+
+
+            const experience =
+                expert.experience_years !== undefined &&
+                expert.experience_years !== null &&
+                expert.experience_years !== ""
+                    ? `${expert.experience_years} years`
+                    : (
+                        expert.experience ||
+                        "Not provided"
+                    );
+
+
+            const phone =
+                expert.phone ||
+                expert.phone_number ||
+                "Not provided";
+
+
+            const email =
+                expert.email ||
+                "Not provided";
+
+
+            const bio =
+                expert.bio ||
+                expert.description ||
+                "No biography has been provided by this expert.";
+
+
+            /*
+             * Remove an existing modal first
+             * so multiple modals cannot stack.
+             */
+
+            const existingModal =
+                document.getElementById(
+                    "expertDetailsModal"
+                );
+
+
+            if (existingModal) {
+
+                existingModal.remove();
+
+            }
+
+
+            /*
+             * Create modal
+             */
+
+            const modal =
+                document.createElement(
+                    "div"
+                );
+
+
+            modal.id =
+                "expertDetailsModal";
+
+
+            modal.innerHTML = `
+
+                <div
+                    class="expert-modal-overlay"
+                >
+
+                    <div
+                        class="expert-modal"
+                        role="dialog"
+                        aria-modal="true"
+                        aria-labelledby="expertModalName"
+                    >
+
+
+                        <button
+                            class="expert-modal-close"
+                            id="closeExpertModal"
+                            type="button"
+                            aria-label="Close"
+                        >
+                            ×
+                        </button>
+
+
+
+                        <!-- ==========================
+                             EXPERT HEADER
+                             ========================== -->
+
+                        <div
+                            class="expert-modal-header"
+                        >
+
+
+                            <div
+                                class="expert-large-avatar"
+                            >
+                                ${escapeHtml(initials)}
+                            </div>
+
+
+                            <div>
+
+                                <h2
+                                    id="expertModalName"
+                                >
+                                    ${escapeHtml(fullName)}
+                                </h2>
+
+
+                                <p
+                                    class="modal-specialization"
+                                >
+                                    ${escapeHtml(specialization)}
+                                </p>
+
+
+                                <div
+                                    class="modal-availability"
+                                >
+
+                                    <span></span>
+
+                                    Available for consultation
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- ==========================
+                             DETAILS
+                             ========================== -->
+
+                        <div
+                            class="expert-details-grid"
+                        >
+
+
+                            <div
+                                class="detail-box"
+                            >
+
+                                <div
+                                    class="detail-icon"
+                                >
+                                    🎓
+                                </div>
+
+
+                                <div>
+
+                                    <div
+                                        class="detail-label"
+                                    >
+                                        Qualification
+                                    </div>
+
+
+                                    <div
+                                        class="detail-value"
+                                    >
+                                        ${escapeHtml(qualification)}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div
+                                class="detail-box"
+                            >
+
+                                <div
+                                    class="detail-icon"
+                                >
+                                    💼
+                                </div>
+
+
+                                <div>
+
+                                    <div
+                                        class="detail-label"
+                                    >
+                                        Experience
+                                    </div>
+
+
+                                    <div
+                                        class="detail-value"
+                                    >
+                                        ${escapeHtml(experience)}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div
+                                class="detail-box"
+                            >
+
+                                <div
+                                    class="detail-icon"
+                                >
+                                    🌱
+                                </div>
+
+
+                                <div>
+
+                                    <div
+                                        class="detail-label"
+                                    >
+                                        Specialization
+                                    </div>
+
+
+                                    <div
+                                        class="detail-value"
+                                    >
+                                        ${escapeHtml(specialization)}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div
+                                class="detail-box"
+                            >
+
+                                <div
+                                    class="detail-icon"
+                                >
+                                    📧
+                                </div>
+
+
+                                <div>
+
+                                    <div
+                                        class="detail-label"
+                                    >
+                                        Email
+                                    </div>
+
+
+                                    <div
+                                        class="detail-value"
+                                    >
+                                        ${escapeHtml(email)}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+
+                            <div
+                                class="detail-box"
+                            >
+
+                                <div
+                                    class="detail-icon"
+                                >
+                                    📞
+                                </div>
+
+
+                                <div>
+
+                                    <div
+                                        class="detail-label"
+                                    >
+                                        Contact
+                                    </div>
+
+
+                                    <div
+                                        class="detail-value"
+                                    >
+                                        ${escapeHtml(phone)}
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- ==========================
+                             ABOUT
+                             ========================== -->
+
+                        <div
+                            class="expert-bio"
+                        >
+
+                            <h3>
+                                About the Expert
+                            </h3>
+
+
+                            <p>
+                                ${escapeHtml(bio)}
+                            </p>
+
+                        </div>
+
+
+
+                        <!-- ==========================
+                             ACTIONS
+                             ========================== -->
+
+                        <div
+                            class="expert-modal-actions"
+                        >
+
+
+                            <button
+                                type="button"
+                                class="modal-secondary-btn"
+                                id="closeExpertModalBottom"
+                            >
+                                Close
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="modal-primary-btn"
+                                id="startConsultationBtn"
+                            >
+                                💬 Start Consultation
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            document.body.appendChild(
+                modal
+            );
+
+
+            /*
+             * Close button
+             */
+
+            document
+                .getElementById(
+                    "closeExpertModal"
+                )
+                .addEventListener(
+                    "click",
+                    closeExpertModal
+                );
+
+
+            /*
+             * Bottom close button
+             */
+
+            document
+                .getElementById(
+                    "closeExpertModalBottom"
+                )
+                .addEventListener(
+                    "click",
+                    closeExpertModal
+                );
+
+
+            /*
+             * Start consultation
+             */
+
+            document
+                .getElementById(
+                    "startConsultationBtn"
+                )
+                .addEventListener(
+                    "click",
+                    async function() {
+
+                        const farmerId =
+                            user && user.id;
+
+                        if (!farmerId) {
+
+                            alert(
+                                "Unable to identify your account. Please log in again."
+                            );
+
+                            return;
+
+                        }
+
+                        const expertUserId =
+                            expert.user_id;
+
+                        if (!expertUserId) {
+
+                            alert(
+                                "This expert's account could not be found."
+                            );
+
+                            return;
+
+                        }
+
+                        try {
+
+                            const response =
+                                await fetch(
+                                    "/api/messages/conversations/start",
+                                    {
+                                        method: "POST",
+                                        headers: { "Content-Type": "application/json" },
+                                        body: JSON.stringify({
+                                            user_id: farmerId,
+                                            other_user_id: expertUserId,
+                                            context_type: "consultation"
+                                        })
+                                    }
+                                );
+
+                            const data =
+                                await response.json();
+
+                            if (!response.ok || !data.success) {
+
+                                throw new Error(
+                                    data.message ||
+                                    "Failed to start consultation."
+                                );
+
+                            }
+
+                            localStorage.setItem(
+
+                                "selectedFarmerConversation",
+
+                                JSON.stringify({
+                                    conversationId: data.conversation.id
+                                })
+
+                            );
+
+                            window.location.href =
+                                "messages.html";
+
+                        }
+
+                        catch (error) {
+
+                            console.error(
+                                "Start consultation error:",
+                                error
+                            );
+
+                            alert(
+                                error.message ||
+                                "Failed to start consultation."
+                            );
+
+                        }
+
+                    }
+                );
+
+
+            /*
+             * Click outside modal
+             * to close it.
+             */
+
+            document
+                .querySelector(
+                    ".expert-modal-overlay"
+                )
+                .addEventListener(
+                    "click",
+                    function(event) {
+
+                        if (
+                            event.target ===
+                            this
+                        ) {
+
+                            closeExpertModal();
+
+                        }
+
+                    }
+                );
+
+
+            /*
+             * ESC key
+             */
+
+            document.addEventListener(
+                "keydown",
+                handleExpertModalEscape
+            );
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "View expert error:",
+                error
+            );
+
+
+            showTemporaryMessage(
+                "Could not load expert details."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       CLOSE EXPERT MODAL
+       ===================================================== */
+
+    function closeExpertModal() {
+
+        const modal =
+            document.getElementById(
+                "expertDetailsModal"
+            );
+
+
+        if (modal) {
+
+            modal.remove();
+
+        }
+
+
+        document.removeEventListener(
+            "keydown",
+            handleExpertModalEscape
+        );
+
+    }
+
+
+    /* =====================================================
+       ESCAPE KEY FOR MODAL
+       ===================================================== */
+
+    function handleExpertModalEscape(
+        event
+    ) {
+
+        if (
+            event.key ===
+            "Escape"
+        ) {
+
+            closeExpertModal();
+
+        }
+
+    }
+
+
+    /* =====================================================
+       TEMPORARY MESSAGE
+       
+       Used instead of browser alert()
+       for expert-details errors.
+       ===================================================== */
+
+    function showTemporaryMessage(
+        message
+    ) {
+
+        const existing =
+            document.getElementById(
+                "temporaryMessage"
+            );
+
+
+        if (existing) {
+
+            existing.remove();
+
+        }
+
+
+        const messageBox =
+            document.createElement(
+                "div"
+            );
+
+
+        messageBox.id =
+            "temporaryMessage";
+
+
+        messageBox.style.position =
+            "fixed";
+
+
+        messageBox.style.top =
+            "25px";
+
+
+        messageBox.style.right =
+            "25px";
+
+
+        messageBox.style.background =
+            "#ffffff";
+
+
+        messageBox.style.color =
+            "#172033";
+
+
+        messageBox.style.padding =
+            "14px 18px";
+
+
+        messageBox.style.borderRadius =
+            "10px";
+
+
+        messageBox.style.boxShadow =
+            "0 8px 25px rgba(0,0,0,0.15)";
+
+
+        messageBox.style.border =
+            "1px solid #dfe6e1";
+
+
+        messageBox.style.zIndex =
+            "3000";
+
+
+        messageBox.style.fontSize =
+            "14px";
+
+
+        messageBox.textContent =
+            message;
+
+
+        document.body.appendChild(
+            messageBox
+        );
+
+
+        setTimeout(
+            function() {
+
+                if (
+                    messageBox
+                ) {
+
+                    messageBox.remove();
+
+                }
+
+            },
+            3000
+        );
+
+    }
+
+
+    /* =====================================================
+       VOICE SEARCH
+       ===================================================== */
+
+    const voiceButton =
+        document.getElementById(
+            "voiceButton"
+        );
+
+
+    const SpeechRecognition =
+        window.SpeechRecognition ||
+        window.webkitSpeechRecognition;
+
+
+    if (
+        SpeechRecognition
+    ) {
+
+        const recognition =
+            new SpeechRecognition();
+
+
+        recognition.lang =
+            "en-US";
+
+
+        recognition.interimResults =
+            false;
+
+
+        recognition.continuous =
+            false;
+
+
+        recognition.onstart =
+            function() {
+
+                voiceButton.classList.add(
+                    "listening"
+                );
+
+                voiceButton.textContent =
+                    "🔴";
+
+            };
+
+
+        recognition.onresult =
+            function(event) {
+
+                const transcript =
+                    event.results[0][0]
+                        .transcript;
+
+
+                searchInput.value =
+                    transcript;
+
+
+                searchExperts(
+                    transcript
+                );
+
+            };
+
+
+        recognition.onerror =
+            function(error) {
+
+                console.error(
+                    "Voice search error:",
+                    error
+                );
+
+
+                showTemporaryMessage(
+                    "Voice search could not be used. Please try typing instead."
+                );
+
+            };
+
+
+        recognition.onend =
+            function() {
+
+                voiceButton.classList.remove(
+                    "listening"
+                );
+
+                voiceButton.textContent =
+                    "🎤";
+
+            };
+
+
+        voiceButton.addEventListener(
+            "click",
+            function() {
+
+                try {
+
+                    recognition.start();
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+    }
+
+    else {
+
+        voiceButton.addEventListener(
+            "click",
+            function() {
+
+                showTemporaryMessage(
+                    "Voice search is not supported by this browser."
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       FILTER BUTTON
+       ===================================================== */
+
+    document
+        .getElementById(
+            "filterButton"
+        )
+        .addEventListener(
+            "click",
+            function() {
+
+                showTemporaryMessage(
+                    "Additional filters will be available soon."
+                );
+
+            }
+        );
+
+
+    /* =====================================================
+       EMPTY STATE
+       ===================================================== */
+
+    function showEmptyState(
+        message
+    ) {
+
+        expertList.innerHTML = `
+
+            <div
+                class="empty-state"
+            >
+
+                <div
+                    class="empty-state-icon"
+                >
+                    🌱
+                </div>
+
+                <div>
+                    ${escapeHtml(message)}
+                </div>
+
+            </div>
+
+        `;
+
+
+        resultCount.textContent =
+            "0 experts";
+
+    }
+
+
+    /* =====================================================
+       INITIALS
+       ===================================================== */
+
+    function getInitials(
+        firstName,
+        lastName
+    ) {
+
+        const first =
+            firstName
+                ? firstName.charAt(0)
+                : "";
+
+
+        const last =
+            lastName
+                ? lastName.charAt(0)
+                : "";
+
+
+        return (
+            first +
+            last
+        ).toUpperCase() ||
+        "EX";
+
+    }
+
+
+    /* =====================================================
+       ESCAPE HTML
+       ===================================================== */
+
+    function escapeHtml(
+        value
+    ) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+
+        }
+
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =====================================================
+       START PAGE
+       ===================================================== */
+
+    loadRecommendedExperts();
+
+
+
+function updateMessagesBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(
+                    c => (c.context_type === "order" || c.context_type === "rental" || c.context_type === "consultation")
+                        && c.unread_count > 0
+                ).length;
+
+            const badgeEl =
+                document.getElementById("messagesBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load messages badge count:", error);
+        });
+
+}
+
+updateMessagesBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

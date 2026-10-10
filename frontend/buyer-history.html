@@ -1,0 +1,3556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Buyer History</title>
+
+<style>
+
+/* =====================================================
+   RESET
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7f5;
+    color: #172033;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   DASHBOARD
+===================================================== */
+
+.dashboard {
+    display: flex;
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+
+    width: 255px;
+    min-width: 255px;
+
+    background: linear-gradient(
+        180deg,
+        #0643ad 0%,
+        #07368f 100%
+    );
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+}
+
+
+/* =====================================================
+   LOGO
+===================================================== */
+
+.sidebar-logo {
+
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid rgba(255,255,255,0.12);
+
+    flex-shrink: 0;
+}
+
+.sidebar-logo img {
+    max-height: 62px;
+
+
+    width: 160px;
+    max-width: 80%;
+
+    height: auto;
+
+    display: block;
+
+    object-fit: contain;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.sidebar-nav {
+    padding: 15px 12px;
+    flex: 1;
+}
+
+.nav-item {
+
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+
+    gap: 13px;
+
+    padding: 11px 13px;
+
+    margin-bottom: 5px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    font-size: 14px;
+
+    transition: 0.2s ease;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.12);
+}
+
+.nav-item.active {
+
+    background:
+        rgba(0,70,30,0.55);
+
+    box-shadow:
+        inset 3px 0 0 white;
+}
+
+.nav-icon {
+
+    width: 22px;
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+.nav-text {
+    flex: 1;
+}
+
+
+/* =====================================================
+   SIDEBAR BOTTOM
+===================================================== */
+
+.sidebar-bottom {
+    padding: 10px 12px 15px;
+}
+
+.sidebar-divider {
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.20);
+
+    margin:
+        5px 15px 12px;
+}
+
+
+/* =====================================================
+   MAIN CONTENT
+===================================================== */
+
+.main-content {
+
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 55px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e3e8e4;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding: 0 34px;
+
+    position: relative;
+
+    z-index: 2000;
+}
+
+.welcome-section h1 {
+
+    font-size: 28px;
+
+    color: #172033;
+
+    margin-bottom: 5px;
+}
+
+.welcome-section p {
+
+    color: #667085;
+
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   HEADER RIGHT
+===================================================== */
+
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =====================================================
+   NOTIFICATION
+===================================================== */
+
+.header-notification {
+
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    font-size: 23px;
+}
+
+.header-badge {
+
+    position: absolute;
+
+    top: -3px;
+    right: -2px;
+
+    min-width: 20px;
+    height: 20px;
+
+    padding: 0 5px;
+
+    border-radius: 50%;
+
+    background: #25b94b;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile {
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+
+    cursor: pointer;
+
+    user-select: none;
+}
+
+.profile-picture {
+    font-size: 17px;
+
+
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    border:
+        1px solid #cce2d2;
+
+    background: #e9f4ec;
+}
+
+.profile-info {
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: center;
+
+    min-width: 75px;
+}
+
+.profile-name {
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #172033;
+
+    line-height: 20px;
+}
+
+.profile-role {
+
+    font-size: 13px;
+
+    color: #17833c;
+
+    line-height: 18px;
+}
+
+.profile-arrow {
+
+    font-size: 12px;
+
+    color: #667085;
+
+    transition: 0.2s;
+}
+
+.profile.open .profile-arrow {
+    transform: rotate(180deg);
+}
+
+
+/* =====================================================
+   PROFILE DROPDOWN
+===================================================== */
+
+.profile-dropdown {
+
+    position: absolute;
+
+    top: calc(100% + 14px);
+
+    right: 0;
+
+    width: 280px;
+
+    background: white;
+
+    border:
+        1px solid #e1e7e3;
+
+    border-radius: 13px;
+
+    box-shadow:
+        0 10px 28px rgba(0,0,0,0.14);
+
+    padding: 10px;
+
+    display: none;
+
+    z-index: 9999;
+}
+
+.profile.open .profile-dropdown {
+    display: block;
+}
+
+.dropdown-user {
+
+    padding:
+        10px 14px 12px;
+
+    border-bottom:
+        1px solid #e8ece9;
+
+    margin-bottom: 6px;
+}
+
+.dropdown-user-name {
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    color: #172033;
+}
+
+.dropdown-user-role {
+
+    margin-top: 3px;
+
+    font-size: 13px;
+
+    color: #17833c;
+}
+
+.dropdown-title {
+
+    padding:
+        8px 14px 9px;
+
+    color: #687385;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+}
+
+#roleOptions {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 4px;
+}
+
+.dropdown-role {
+
+    width: 100%;
+
+    min-height: 49px;
+
+    border: none;
+
+    background: white;
+
+    border-radius: 8px;
+
+    padding: 0 13px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    cursor: pointer;
+
+    text-align: left;
+
+    color: #344054;
+
+    font-size: 15px;
+}
+
+.dropdown-role:hover {
+    background: #f3f8f4;
+}
+
+.dropdown-role.current {
+
+    background: #e5f5e9;
+
+    color: #087f3f;
+
+    font-weight: bold;
+}
+
+.dropdown-role-icon {
+
+    width: 25px;
+
+    min-width: 25px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+.dropdown-role-name {
+    flex: 1;
+}
+
+.role-check {
+
+    width: 20px;
+
+    color: #087f3f;
+
+    font-size: 20px;
+
+    text-align: center;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+
+    padding:
+        32px 34px 70px;
+}
+
+
+/* =====================================================
+   PAGE TITLE
+===================================================== */
+
+.page-title {
+    margin-bottom: 25px;
+}
+
+.page-title h2 {
+
+    font-size: 32px;
+
+    line-height: 38px;
+
+    margin-bottom: 7px;
+
+    color: #172033;
+}
+
+.page-title h2 span {
+    color: #17833c;
+}
+
+.page-title p {
+
+    color: #64748b;
+
+    font-size: 15px;
+}
+
+
+/* =====================================================
+   SUMMARY CARDS
+===================================================== */
+
+.summary-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap: 18px;
+
+    margin-bottom: 22px;
+}
+
+.summary-card {
+
+    background: white;
+
+    border:
+        1px solid #dfe6e1;
+
+    border-radius: 14px;
+
+    padding: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.035);
+}
+
+.summary-icon {
+
+    width: 50px;
+    height: 50px;
+
+    border-radius: 12px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+}
+
+.order-summary-icon {
+
+    background: #e8f1ff;
+
+    color: #185abc;
+}
+
+.issue-summary-icon {
+
+    background: #e5f5e9;
+
+    color: #087f3f;
+}
+
+.summary-info h3 {
+
+    font-size: 25px;
+
+    color: #172033;
+
+    margin-bottom: 3px;
+}
+
+.summary-info p {
+
+    font-size: 13px;
+
+    color: #667085;
+}
+
+
+/* =====================================================
+   MAIN HISTORY CARD
+===================================================== */
+
+.history-card {
+
+    background: white;
+
+    border:
+        1px solid #dfe6e1;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.035);
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+.filter-bar {
+
+    padding:
+        17px 22px;
+
+    border-bottom:
+        1px solid #e7ece9;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+}
+
+.filter-button {
+
+    border:
+        1px solid #d5ddd8;
+
+    background: white;
+
+    color: #536071;
+
+    padding:
+        9px 18px;
+
+    border-radius: 8px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.filter-button:hover {
+
+    background:
+        #f4f8f5;
+}
+
+.filter-button.active {
+
+    background:
+        #087f3f;
+
+    border-color:
+        #087f3f;
+
+    color: white;
+}
+
+
+/* =====================================================
+   SECTION HEADER
+===================================================== */
+
+.section-header {
+
+    padding:
+        18px 22px;
+
+    border-bottom:
+        1px solid #e7ece9;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+}
+
+.section-title {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 11px;
+}
+
+.section-title-icon {
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 9px;
+
+    background: #e5f5e9;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+}
+
+.section-title h3 {
+
+    font-size: 17px;
+
+    color: #172033;
+}
+
+.section-count {
+
+    font-size: 12px;
+
+    color: #667085;
+}
+
+
+/* =====================================================
+   HISTORY ITEM
+===================================================== */
+
+.history-list {
+    width: 100%;
+}
+
+.history-item {
+
+    padding:
+        19px 22px;
+
+    border-bottom:
+        1px solid #e9eeeb;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    transition: 0.2s ease;
+}
+
+.history-item:last-child {
+    border-bottom: none;
+}
+
+.history-item:hover {
+    background: #fbfdfc;
+}
+
+.history-item-icon {
+
+    width: 46px;
+    height: 46px;
+
+    min-width: 46px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+}
+
+.order-icon {
+
+    background: #eaf2ff;
+
+    color: #1559d4;
+}
+
+.issue-icon {
+
+    background: #e7f5eb;
+
+    color: #087f3f;
+}
+
+.history-item-content {
+
+    flex: 1;
+
+    min-width: 0;
+}
+
+.history-item-title {
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #172033;
+
+    margin-bottom: 5px;
+}
+
+.history-item-description {
+
+    font-size: 12px;
+
+    line-height: 1.5;
+
+    color: #667085;
+
+    margin-bottom: 7px;
+}
+
+.history-meta {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    font-size: 10px;
+
+    color: #8792a1;
+}
+
+.history-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    padding:
+        4px 9px;
+
+    border-radius: 10px;
+
+    font-size: 9px;
+
+    font-weight: bold;
+}
+
+.completed-badge {
+
+    background: #e1f5e7;
+
+    color: #087f3f;
+}
+
+.resolved-badge {
+
+    background: #e1f5e7;
+
+    color: #087f3f;
+}
+
+.order-id {
+
+    color: #1559d4;
+
+    font-weight: bold;
+}
+
+.history-action {
+
+    flex-shrink: 0;
+}
+
+.view-button {
+
+    border:
+        1px solid #d5ddd8;
+
+    background: white;
+
+    color: #087f3f;
+
+    padding:
+        8px 13px;
+
+    border-radius: 7px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.view-button:hover {
+
+    background:
+        #eef8f1;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-state {
+
+    padding:
+        65px 25px;
+
+    text-align: center;
+
+    display: none;
+}
+
+.empty-state.show {
+    display: block;
+}
+
+.empty-icon {
+
+    width: 62px;
+    height: 62px;
+
+    border-radius: 50%;
+
+    background: #edf4ef;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin: 0 auto 14px;
+
+    font-size: 27px;
+}
+
+.empty-state h3 {
+
+    font-size: 17px;
+
+    color: #172033;
+
+    margin-bottom: 6px;
+}
+
+.empty-state p {
+
+    font-size: 12px;
+
+    color: #6b7683;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+
+    position: fixed;
+
+    left: 255px;
+    right: 0;
+    bottom: 0;
+
+    height: 48px;
+
+    background: #075b2e;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 12px;
+
+    font-size: 11px;
+
+    z-index: 900;
+}
+
+.footer a {
+    color: white;
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+.mobile-menu {
+
+    display: none;
+
+    width: 38px;
+    height: 38px;
+
+    border:
+        1px solid #d5ddd8;
+
+    background: white;
+
+    border-radius: 8px;
+
+    cursor: pointer;
+
+    font-size: 20px;
+}
+
+
+@media (max-width: 900px) {
+
+    .sidebar {
+
+        width: 220px;
+
+        min-width: 220px;
+    }
+
+    .main-content {
+
+        margin-left: 220px;
+
+        width:
+            calc(100% - 220px);
+    }
+
+    .footer {
+        left: 220px;
+    }
+
+}
+
+
+@media (max-width: 750px) {
+
+    .sidebar {
+
+        left: -245px;
+
+        width: 245px;
+
+        min-width: 245px;
+
+        transition: left 0.25s ease;
+    }
+
+    .sidebar.open {
+        left: 0;
+    }
+
+    .main-content {
+
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    .footer {
+        left: 0;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    .header {
+
+        min-height: 95px;
+
+        height: auto;
+
+        padding:
+            15px 18px;
+    }
+
+    .welcome-section h1 {
+        font-size: 22px;
+    }
+
+    .welcome-section p {
+        font-size: 12px;
+    }
+
+    .profile-info,
+    .profile-arrow {
+        display: none;
+    }
+
+    .content {
+        padding: 22px 18px 70px;
+    }
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+
+
+@media (max-width: 550px) {
+
+    .history-item {
+        flex-wrap: wrap;
+    }
+
+    .history-action {
+        width: 100%;
+        margin-left: 61px;
+    }
+
+    .view-button {
+        width: 100%;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+
+    <nav class="sidebar-nav">
+
+
+        <a
+            href="buyer-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-text">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-search-crops.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔍
+            </span>
+
+            <span class="nav-text">
+                Search for Crops
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-orders.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🛒
+            </span>
+
+            <span class="nav-text">
+                My Orders
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-messages.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-text">
+                Messages
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-text">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-text">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <!-- ACTIVE HISTORY -->
+
+        <a
+            href="buyer-history.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-text">
+                History
+            </span>
+
+        </a>
+
+
+    </nav>
+
+
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="buyer-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-text">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="buyer-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-text">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="index.html"
+            class="nav-item"
+            id="logoutButton"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-text">
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main-content">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+
+        <div
+            style="
+                display:flex;
+                align-items:center;
+                gap:14px;
+            "
+        >
+
+            <button
+                class="mobile-menu"
+                id="mobileMenu"
+                type="button"
+            >
+                ☰
+            </button>
+
+
+            <div class="welcome-section">
+
+                <h1>
+                    Welcome back, <span id="userName">User</span>!
+                </h1>
+
+                <p>
+                    Your past activity on AgriConnect.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <div class="header-right">
+
+
+            <!-- NOTIFICATION -->
+
+            <div
+                class="header-notification"
+                id="notificationButton"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="header-badge"
+                    id="notificationCount"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+
+            <!-- PROFILE -->
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+
+                <img
+                    src="https://ui-avatars.com/api/?name=Buyer&background=e9f4ec&color=17833c"
+                    alt="Profile"
+                    class="profile-picture"
+                    id="profilePicture"
+                >
+
+
+                <div class="profile-info">
+
+                    <div
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Buyer
+                    </div>
+
+                    <div
+                        class="profile-role"
+                        id="profileRole"
+                    >
+                        Buyer
+                    </div>
+
+                </div>
+
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+
+                <!-- DROPDOWN -->
+
+                <div
+                    class="profile-dropdown"
+                    id="profileDropdown"
+                >
+
+                    <div class="dropdown-user">
+
+                        <div
+                            class="dropdown-user-name"
+                            id="dropdownUserName"
+                        >
+                            Buyer
+                        </div>
+
+                        <div
+                            class="dropdown-user-role"
+                            id="dropdownUserRole"
+                        >
+                            Buyer
+                        </div>
+
+                    </div>
+
+
+                    <div class="dropdown-title">
+                        Switch Role
+                    </div>
+
+
+                    <div id="roleOptions"></div>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT
+    ===================================================== -->
+
+    <section class="content">
+
+
+        <!-- TITLE -->
+
+        <div class="page-title">
+
+            <h2>
+                History
+                <span>Overview</span>
+            </h2>
+
+            <p>
+                Keep track of your completed orders and resolved issues.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUMMARY
+        ================================================= -->
+
+        <div class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <div
+                    class="
+                        summary-icon
+                        order-summary-icon
+                    "
+                >
+                    🛒
+                </div>
+
+
+                <div class="summary-info">
+
+                    <h3 id="completedOrderCount">
+                        0
+                    </h3>
+
+                    <p>
+                        Completed Orders
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div
+                    class="
+                        summary-icon
+                        issue-summary-icon
+                    "
+                >
+                    ✓
+                </div>
+
+
+                <div class="summary-info">
+
+                    <h3 id="resolvedIssueCount">
+                        0
+                    </h3>
+
+                    <p>
+                        Resolved Issues
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             HISTORY CARD
+        ================================================= -->
+
+        <div class="history-card">
+
+
+            <!-- FILTER -->
+
+            <div class="filter-bar">
+
+
+                <button
+                    class="filter-button active"
+                    data-filter="all"
+                    onclick="filterHistory('all', this)"
+                >
+                    All
+                </button>
+
+
+                <button
+                    class="filter-button"
+                    data-filter="orders"
+                    onclick="filterHistory('orders', this)"
+                >
+                    Completed Orders
+                </button>
+
+
+                <button
+                    class="filter-button"
+                    data-filter="issues"
+                    onclick="filterHistory('issues', this)"
+                >
+                    Resolved Issues
+                </button>
+
+
+            </div>
+
+
+
+            <!-- SECTION HEADER -->
+
+            <div class="section-header">
+
+
+                <div class="section-title">
+
+                    <div
+                        class="section-title-icon"
+                        id="sectionIcon"
+                    >
+                        📚
+                    </div>
+
+
+                    <h3 id="sectionTitle">
+                        All History
+                    </h3>
+
+                </div>
+
+
+                <span
+                    class="section-count"
+                    id="sectionCount"
+                >
+                    0 records
+                </span>
+
+
+            </div>
+
+
+
+            <!-- HISTORY LIST -->
+
+            <div
+                class="history-list"
+                id="historyList"
+            ></div>
+
+
+
+            <!-- EMPTY -->
+
+            <div
+                class="empty-state"
+                id="emptyState"
+            >
+
+                <div class="empty-icon">
+                    📭
+                </div>
+
+                <h3>
+                    No history available
+                </h3>
+
+                <p>
+                    Completed orders and resolved issues will appear here.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <span>
+        © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>
+        |
+    </span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+/* =====================================================
+   STORAGE
+===================================================== */
+
+const HISTORY_KEY =
+    "buyerHistory";
+
+
+const ORDERS_KEY =
+    "buyerOrders";
+
+
+const REPORTS_KEY =
+    "buyerReports";
+
+
+/* =====================================================
+   CURRENT FILTER
+===================================================== */
+
+let currentFilter =
+    "all";
+
+
+/* =====================================================
+   GET LOCAL STORAGE DATA
+===================================================== */
+
+function getStorageArray(
+    key
+) {
+
+    try {
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(
+                    key
+                ) || "[]"
+            );
+
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+/* =====================================================
+   SAVE HISTORY
+===================================================== */
+
+function saveHistory(
+    history
+) {
+
+    localStorage.setItem(
+        HISTORY_KEY,
+        JSON.stringify(
+            history
+        )
+    );
+
+}
+
+
+/* =====================================================
+   CREATE HISTORY FROM EXISTING DATA
+===================================================== */
+
+function getCurrentUserId() {
+
+    try {
+
+        const parsedUser =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+        return parsedUser && parsedUser.id;
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+let __liveHistory = [];
+
+
+/* =====================================================
+   REFRESH HISTORY FROM THE BACKEND
+===================================================== */
+
+async function refreshHistory() {
+
+    const userId =
+        getCurrentUserId();
+
+    if (!userId) {
+
+        __liveHistory = [];
+        return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(`/api/history?user_id=${userId}&role=buyer`);
+
+        const data =
+            await response.json();
+
+        if (!data || !data.success) {
+
+            __liveHistory = [];
+            return;
+
+        }
+
+        const history = [];
+
+        (data.orders || []).forEach(order => {
+
+            if (order.status !== "completed") {
+                return;
+            }
+
+            history.push({
+
+                id: "history-order-" + order.id,
+                type: "order",
+                referenceId: order.id,
+                title: order.crop_name || "Completed Order",
+                description: `Your order for ${order.crop_name || "the selected crop"} has been successfully completed.`,
+                date: order.created_at,
+                amount: order.total_amount,
+                farmer: ""
+
+            });
+
+        });
+
+        (data.reports || []).forEach(report => {
+
+            history.push({
+
+                id: "history-issue-" + report.id,
+                type: "issue",
+                referenceId: report.id,
+                title: report.subject || "Reported Issue",
+                description: report.admin_note || "Your reported issue has been resolved.",
+                date: report.resolved_at || report.created_at,
+                category: report.report_type || "Issue"
+
+            });
+
+        });
+
+        __liveHistory = history;
+
+        saveHistory(history);
+
+    } catch (error) {
+
+        console.error("Unable to load history:", error);
+
+        __liveHistory = [];
+
+    }
+
+}
+
+
+/* =====================================================
+   GET HISTORY
+===================================================== */
+
+function getHistory() {
+
+    return __liveHistory;
+
+}
+
+
+/* =====================================================
+   FORMAT DATE
+===================================================== */
+
+function formatDate(
+    value
+) {
+
+    if (!value) {
+        return "—";
+    }
+
+
+    try {
+
+        return new Date(
+            value
+        ).toLocaleString(
+            "en-GB",
+            {
+                day:
+                    "2-digit",
+
+                month:
+                    "short",
+
+                year:
+                    "numeric",
+
+                hour:
+                    "2-digit",
+
+                minute:
+                    "2-digit"
+            }
+        );
+
+    }
+
+    catch (error) {
+
+        return String(
+            value
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHtml(
+    value
+) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    return String(
+        value
+    )
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   RENDER HISTORY
+===================================================== */
+
+function renderHistory() {
+
+    const history =
+        getHistory();
+
+
+    const list =
+        document.getElementById(
+            "historyList"
+        );
+
+
+    const empty =
+        document.getElementById(
+            "emptyState"
+        );
+
+
+    let filtered =
+        history;
+
+
+    if (
+        currentFilter === "orders"
+    ) {
+
+        filtered =
+            history.filter(
+                item =>
+                    item.type === "order"
+            );
+
+    }
+
+
+    if (
+        currentFilter === "issues"
+    ) {
+
+        filtered =
+            history.filter(
+                item =>
+                    item.type === "issue"
+            );
+
+    }
+
+
+    /*
+     * Sort newest first.
+     */
+
+    filtered.sort(
+        function(a, b) {
+
+            return new Date(
+                b.date
+            ) -
+            new Date(
+                a.date
+            );
+
+        }
+    );
+
+
+    list.innerHTML =
+        "";
+
+
+    /*
+     * Summary counts.
+     */
+
+    const completedOrders =
+        history.filter(
+            item =>
+                item.type === "order"
+        ).length;
+
+
+    const resolvedIssues =
+        history.filter(
+            item =>
+                item.type === "issue"
+        ).length;
+
+
+    document.getElementById(
+        "completedOrderCount"
+    ).textContent =
+        completedOrders;
+
+
+    document.getElementById(
+        "resolvedIssueCount"
+    ).textContent =
+        resolvedIssues;
+
+
+    document.getElementById(
+        "sectionCount"
+    ).textContent =
+        `${filtered.length} record${
+            filtered.length === 1
+                ? ""
+                : "s"
+        }`;
+
+
+    if (
+        filtered.length === 0
+    ) {
+
+        empty.classList.add(
+            "show"
+        );
+
+        return;
+
+    }
+
+
+    empty.classList.remove(
+        "show"
+    );
+
+
+    filtered.forEach(
+        function(item) {
+
+            const element =
+                document.createElement(
+                    "div"
+                );
+
+
+            element.className =
+                "history-item";
+
+
+            if (
+                item.type === "order"
+            ) {
+
+                element.innerHTML = `
+
+                    <div
+                        class="
+                            history-item-icon
+                            order-icon
+                        "
+                    >
+                        🛒
+                    </div>
+
+
+                    <div
+                        class="
+                            history-item-content
+                        "
+                    >
+
+                        <div
+                            class="
+                                history-item-title
+                            "
+                        >
+                            ${escapeHtml(
+                                item.title
+                            )}
+                        </div>
+
+
+                        <div
+                            class="
+                                history-item-description
+                            "
+                        >
+                            ${escapeHtml(
+                                item.description
+                            )}
+                        </div>
+
+
+                        <div
+                            class="history-meta"
+                        >
+
+                            <span
+                                class="
+                                    history-badge
+                                    completed-badge
+                                "
+                            >
+                                Completed
+                            </span>
+
+
+                            <span
+                                class="order-id"
+                            >
+                                Order:
+                                ${escapeHtml(
+                                    item.referenceId
+                                )}
+                            </span>
+
+
+                            <span>
+                                ${formatDate(
+                                    item.date
+                                )}
+                            </span>
+
+
+                            ${
+                                item.farmer
+                                    ? `
+                                        <span>
+                                            Farmer:
+                                            ${escapeHtml(
+                                                item.farmer
+                                            )}
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+
+                            ${
+                                item.amount
+                                    ? `
+                                        <span>
+                                            Total:
+                                            ${escapeHtml(
+                                                item.amount
+                                            )}
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="history-action"
+                    >
+
+                        <button
+                            type="button"
+                            class="view-button"
+                            onclick="viewHistoryItem(
+                                '${escapeHtml(
+                                    item.referenceId
+                                )}',
+                                'order'
+                            )"
+                        >
+                            View Order
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
+            else {
+
+                element.innerHTML = `
+
+                    <div
+                        class="
+                            history-item-icon
+                            issue-icon
+                        "
+                    >
+                        ✓
+                    </div>
+
+
+                    <div
+                        class="
+                            history-item-content
+                        "
+                    >
+
+                        <div
+                            class="
+                                history-item-title
+                            "
+                        >
+                            ${escapeHtml(
+                                item.title
+                            )}
+                        </div>
+
+
+                        <div
+                            class="
+                                history-item-description
+                            "
+                        >
+                            ${escapeHtml(
+                                item.description
+                            )}
+                        </div>
+
+
+                        <div
+                            class="history-meta"
+                        >
+
+                            <span
+                                class="
+                                    history-badge
+                                    resolved-badge
+                                "
+                            >
+                                Resolved
+                            </span>
+
+
+                            <span>
+                                ${
+                                    item.category
+                                        ? escapeHtml(
+                                            item.category
+                                        )
+                                        : "Report Issue"
+                                }
+                            </span>
+
+
+                            <span>
+                                Resolved:
+                                ${formatDate(
+                                    item.date
+                                )}
+                            </span>
+
+
+                            <span>
+                                Report:
+                                ${escapeHtml(
+                                    item.referenceId
+                                )}
+                            </span>
+
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="history-action"
+                    >
+
+                        <button
+                            type="button"
+                            class="view-button"
+                            onclick="viewHistoryItem(
+                                '${escapeHtml(
+                                    item.referenceId
+                                )}',
+                                'issue'
+                            )"
+                        >
+                            View Issue
+                        </button>
+
+                    </div>
+
+                `;
+
+            }
+
+
+            list.appendChild(
+                element
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   FILTER HISTORY
+===================================================== */
+
+function filterHistory(
+    filter,
+    button
+) {
+
+    currentFilter =
+        filter;
+
+
+    document
+        .querySelectorAll(
+            ".filter-button"
+        )
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+
+    button.classList.add(
+        "active"
+    );
+
+
+    const title =
+        document.getElementById(
+            "sectionTitle"
+        );
+
+
+    const icon =
+        document.getElementById(
+            "sectionIcon"
+        );
+
+
+    if (
+        filter === "orders"
+    ) {
+
+        title.textContent =
+            "Completed Orders";
+
+        icon.textContent =
+            "🛒";
+
+    }
+
+    else if (
+        filter === "issues"
+    ) {
+
+        title.textContent =
+            "Resolved Issues";
+
+        icon.textContent =
+            "✓";
+
+    }
+
+    else {
+
+        title.textContent =
+            "All History";
+
+        icon.textContent =
+            "📚";
+
+    }
+
+
+    renderHistory();
+
+}
+
+
+/* =====================================================
+   VIEW HISTORY ITEM
+===================================================== */
+
+function viewHistoryItem(
+    id,
+    type
+) {
+
+    if (
+        type === "order"
+    ) {
+
+        /*
+         * Send the buyer to the orders page.
+         */
+
+        window.location.href =
+            `buyer-orders.html?order=${encodeURIComponent(id)}`;
+
+        return;
+
+    }
+
+
+    if (
+        type === "issue"
+    ) {
+
+        /*
+         * Send the buyer to the report page.
+         */
+
+        window.location.href =
+            `buyer-report-issues.html?report=${encodeURIComponent(id)}`;
+
+    }
+
+}
+
+
+/* =====================================================
+   PROFILE / USER
+===================================================== */
+
+let user =
+    null;
+
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem(
+                "user"
+            ) || "null"
+        );
+
+}
+
+catch (error) {
+
+    user =
+        null;
+
+}
+
+
+/* =====================================================
+   USER NAME
+===================================================== */
+
+function getUserName() {
+
+    if (!user) {
+        return "Buyer";
+    }
+
+
+    const firstName =
+        user.first_name ||
+        user.firstName ||
+        "";
+
+
+    const lastName =
+        user.last_name ||
+        user.lastName ||
+        "";
+
+
+    const fullName =
+        `${firstName} ${lastName}`.trim();
+
+
+    return (
+        fullName ||
+        user.name ||
+        user.username ||
+        "Buyer"
+    );
+
+}
+
+
+/* =====================================================
+   INITIALS
+===================================================== */
+
+function getInitials(
+    name
+) {
+
+    const parts =
+        String(
+            name
+        )
+        .trim()
+        .split(
+            /\s+/
+        );
+
+
+    if (
+        parts.length === 1
+    ) {
+
+        return parts[0]
+            .substring(
+                0,
+                2
+            )
+            .toUpperCase();
+
+    }
+
+
+    return (
+        parts[0][0] +
+        parts[1][0]
+    ).toUpperCase();
+
+}
+
+
+/* =====================================================
+   PROFILE DISPLAY
+===================================================== */
+
+function displayUser() {
+
+    const name =
+        getUserName();
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        name;
+
+
+    const welcomeNameEl =
+        document.getElementById(
+            "userName"
+        );
+
+    if (welcomeNameEl) {
+
+        welcomeNameEl.textContent =
+            name;
+
+    }
+
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        name;
+
+
+    document.getElementById(
+        "profilePicture"
+    ).src =
+        `https://ui-avatars.com/api/?name=${encodeURIComponent(
+            name
+        )}&background=e9f4ec&color=17833c`;
+
+}
+
+
+/* =====================================================
+   ROLES
+===================================================== */
+
+function getRoles() {
+
+    let roles =
+        [];
+
+
+    if (
+        user &&
+        Array.isArray(
+            user.roles
+        )
+    ) {
+
+        roles =
+            user.roles;
+
+    }
+
+
+    roles =
+        roles
+            .map(
+                role =>
+                    String(
+                        role
+                    ).trim()
+            )
+            .filter(
+                Boolean
+            );
+
+
+    roles =
+        [
+            ...new Set(
+                roles
+            )
+        ];
+
+
+    if (
+        roles.length === 0
+    ) {
+
+        roles.push(
+            "Buyer"
+        );
+
+    }
+
+
+    if (
+        !roles.some(
+            role =>
+                role.toLowerCase() ===
+                "buyer"
+        )
+    ) {
+
+        roles.push(
+            "Buyer"
+        );
+
+    }
+
+
+    return roles;
+
+}
+
+
+/* =====================================================
+   ROLE ICON
+===================================================== */
+
+function roleIcon(
+    role
+) {
+
+    const value =
+        String(
+            role
+        ).toLowerCase();
+
+
+    if (
+        value.includes(
+            "farmer"
+        )
+    ) {
+
+        return "🧑‍🌾";
+
+    }
+
+
+    if (
+        value.includes(
+            "buyer"
+        )
+    ) {
+
+        return "🛒";
+
+    }
+
+
+    if (
+        value.includes(
+            "expert"
+        )
+    ) {
+
+        return "🧑‍🔬";
+
+    }
+
+
+    if (
+        value.includes(
+            "equipment"
+        )
+    ) {
+
+        return "🚜";
+
+    }
+
+
+    return "👤";
+
+}
+
+
+/* =====================================================
+   LOAD ROLES
+===================================================== */
+
+function loadRoles() {
+
+    const container =
+        document.getElementById(
+            "roleOptions"
+        );
+
+
+    container.innerHTML =
+        "";
+
+
+    getRoles().forEach(
+        function(role) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "dropdown-role";
+
+
+            const isBuyer =
+                String(
+                    role
+                ).toLowerCase() ===
+                "buyer";
+
+
+            if (
+                isBuyer
+            ) {
+
+                button.classList.add(
+                    "current"
+                );
+
+            }
+
+
+            button.innerHTML = `
+
+                <span
+                    class="
+                        dropdown-role-icon
+                    "
+                >
+                    ${roleIcon(
+                        role
+                    )}
+                </span>
+
+
+                <span
+                    class="
+                        dropdown-role-name
+                    "
+                >
+                    ${escapeHtml(
+                        role
+                    )}
+                </span>
+
+
+                <span
+                    class="role-check"
+                >
+                    ${
+                        isBuyer
+                            ? "✓"
+                            : ""
+                    }
+                </span>
+
+            `;
+
+
+            button.addEventListener(
+                "click",
+                function() {
+
+                    switchRole(
+                        role
+                    );
+
+                }
+            );
+
+
+            container.appendChild(
+                button
+            );
+
+        }
+    );
+
+    moveCurrentRoleToFront(container);
+
+
+}
+
+
+/* =====================================================
+   SWITCH ROLE
+===================================================== */
+
+function switchRole(
+    role
+) {
+
+    const value =
+        String(
+            role
+        ).toLowerCase();
+
+
+    sessionStorage.setItem(
+        "selectedRole",
+        value
+    );
+
+
+    if (
+        value === "buyer"
+    ) {
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+    }
+
+    else if (
+        value === "farmer"
+    ) {
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+    }
+
+    else if (
+        value.includes(
+            "expert"
+        )
+    ) {
+
+        window.location.href =
+            "expert-dashboard.html";
+
+    }
+
+    else if (
+        value.includes(
+            "equipment"
+        )
+    ) {
+
+        window.location.href =
+            "rental-dashboard.html";
+
+    }
+
+}
+
+
+/* =====================================================
+   PROFILE DROPDOWN
+===================================================== */
+
+document
+    .getElementById(
+        "profile"
+    )
+    .addEventListener(
+        "click",
+        async function(event) {
+
+            event.stopPropagation();
+
+
+            this.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+
+document.addEventListener(
+    "click",
+    function() {
+
+        document
+            .getElementById(
+                "profile"
+            )
+            .classList.remove(
+                "open"
+            );
+
+    }
+);
+
+
+/* =====================================================
+   NOTIFICATION
+===================================================== */
+
+document
+    .getElementById(
+        "notificationButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            window.location.href =
+                "buyer-notifications.html";
+
+        }
+    );
+
+
+/* =====================================================
+   NOTIFICATION COUNT
+===================================================== */
+
+function updateNotificationCount() {
+
+    try {
+
+        const notifications =
+            JSON.parse(
+                localStorage.getItem(
+                    "buyerNotifications"
+                ) || "[]"
+            );
+
+
+        const unread =
+            Array.isArray(
+                notifications
+            )
+                ? notifications.filter(
+                    notification =>
+                        !notification.read
+                ).length
+                : 0;
+
+
+        document.getElementById(
+            "notificationCount"
+        ).textContent =
+            unread;
+
+    }
+
+    catch (error) {
+
+        document.getElementById(
+            "notificationCount"
+        ).textContent =
+            "0";
+
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+document
+    .getElementById(
+        "mobileMenu"
+    )
+    .addEventListener(
+        "click",
+        async function(event) {
+
+            event.stopPropagation();
+
+
+            document
+                .getElementById(
+                    "sidebar"
+                )
+                .classList.toggle(
+                    "open"
+                );
+
+        }
+    );
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+document
+    .getElementById(
+        "logoutButton"
+    )
+    .addEventListener(
+        "click",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const confirmLogout =
+                await customConfirm(
+                    "Are you sure you want to logout?"
+                );
+
+
+            if (
+                !confirmLogout
+            ) {
+
+                return;
+
+            }
+
+
+            sessionStorage.removeItem(
+                "token"
+            );
+
+
+            sessionStorage.removeItem(
+                "user"
+            );
+
+
+            sessionStorage.removeItem(
+                "selectedRole"
+            );
+
+
+            window.location.href =
+                "index.html";
+
+        }
+    );
+
+
+/* =====================================================
+   REFRESH HISTORY WHEN PAGE BECOMES VISIBLE
+===================================================== */
+
+document.addEventListener(
+    "visibilitychange",
+    function() {
+
+        if (
+            !document.hidden
+        ) {
+
+            refreshHistory().then(function() {
+
+                renderHistory();
+
+                updateNotificationCount();
+
+            });
+
+        }
+
+    }
+);
+
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+displayUser();
+
+loadRoles();
+
+refreshHistory().then(function() {
+
+    renderHistory();
+
+    updateNotificationCount();
+
+});
+
+</script>
+
+
+<!-- =========================================================
+     CUSTOM CONFIRM / ALERT DIALOG
+     Replaces the native browser confirm()/alert() popups with
+     a styled in-app dialog consistent with the rest of the UI.
+========================================================= -->
+
+<div
+    id="customDialogOverlay"
+    style="display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;"
+>
+
+    <div
+        style="background:#fff;border-radius:16px;padding:26px 28px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);"
+    >
+
+        <div
+            id="customDialogIcon"
+            style="width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin-bottom:16px;"
+        >
+            !
+        </div>
+
+        <div
+            id="customDialogTitle"
+            style="font-size:16px;font-weight:700;color:#172033;margin-bottom:8px;"
+        >
+        </div>
+
+        <div
+            id="customDialogMessage"
+            style="font-size:13px;color:#536274;line-height:1.55;margin-bottom:22px;white-space:pre-line;"
+        >
+        </div>
+
+        <div
+            id="customDialogButtons"
+            style="display:flex;gap:10px;justify-content:flex-end;"
+        >
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   CUSTOM CONFIRM / ALERT (replaces window.confirm / window.alert)
+========================================================= */
+
+function customConfirm(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Please Confirm";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "?";
+        icon.style.background = "#fff0e5";
+        icon.style.color = "#e86600";
+
+        buttons.innerHTML = "";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.type = "button";
+        cancelBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:1px solid #dde3e0;background:#fff;color:#536274;font-weight:600;cursor:pointer;font-size:13px;";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish(result) {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") finish(false);
+            if (e.key === "Enter") finish(true);
+        }
+
+        cancelBtn.onclick = () => finish(false);
+        okBtn.onclick = () => finish(true);
+
+        buttons.appendChild(cancelBtn);
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+function customAlert(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Notice";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "i";
+        icon.style.background = "#eaf1ff";
+        icon.style.color = "#2469e9";
+
+        buttons.innerHTML = "";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 22px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish() {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve();
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape" || e.key === "Enter") finish();
+        }
+
+        okBtn.onclick = finish;
+
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+</body>
+
+</html>

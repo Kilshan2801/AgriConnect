@@ -1,0 +1,5272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AgriConnect - Buyer Crop Search</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f4f7f5;
+    color: #10233f;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app {
+    min-height: 100vh;
+    display: flex;
+}
+
+
+/* =========================================================
+   SIDEBAR
+========================================================= */
+
+.sidebar {
+    width: 255px;
+    min-width: 255px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #063fae 0%,
+            #07368e 100%
+        );
+
+    color: white;
+
+    display: flex;
+    flex-direction: column;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.sidebar-logo {
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.16);
+
+    flex-shrink: 0;
+    padding: 0 20px;
+}
+
+.sidebar-logo img {
+    max-height: 62px;
+
+    width: 160px;
+    height: auto;
+
+    object-fit: contain;
+    display: block;
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.sidebar-nav {
+    padding: 15px 13px;
+    flex: 1;
+}
+
+.nav-item {
+    width: 100%;
+    min-height: 43px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 13px;
+
+    margin-bottom: 4px;
+
+    border-radius: 9px;
+
+    color: white;
+
+    font-size: 14px;
+
+    transition: 0.2s ease;
+
+    cursor: pointer;
+}
+
+.nav-item:hover {
+    background:
+        rgba(255,255,255,0.12);
+}
+
+.nav-item.active {
+    background:
+        rgba(255,255,255,0.16);
+
+    box-shadow:
+        inset 3px 0 0 white;
+}
+
+.nav-icon {
+    width: 22px;
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 16px;
+}
+
+.nav-text {
+    flex: 1;
+}
+
+.notification-count {
+    width: 24px;
+    height: 24px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #25bf51;
+
+    font-size: 11px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   SIDEBAR BOTTOM
+========================================================= */
+
+.sidebar-bottom {
+    padding:
+        5px 13px 15px;
+}
+
+.sidebar-divider {
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.18);
+
+    margin:
+        5px 14px 12px;
+}
+
+
+/* =========================================================
+   MAIN
+========================================================= */
+
+.main {
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.top-header {
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e0e6e3;
+
+    padding:
+        0 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    flex-shrink: 0;
+}
+
+.header-title h1 {
+    font-size: 28px;
+
+    color: #10233f;
+
+    margin-bottom: 5px;
+}
+
+.header-title p {
+    font-size: 14px;
+
+    color: #60758f;
+}
+
+
+/* =========================================================
+   HEADER RIGHT
+========================================================= */
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+}
+
+
+/* =========================================================
+   NOTIFICATION
+========================================================= */
+
+.notification-bell {
+    width: 40px;
+    height: 40px;
+
+    position: relative;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+
+    cursor: pointer;
+}
+
+.notification-number {
+    position: absolute;
+
+    right: -3px;
+    top: -4px;
+
+    min-width: 20px;
+    height: 20px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #ef2020;
+
+    color: white;
+
+    font-size: 9px;
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   PROFILE
+========================================================= */
+
+.profile-area {
+    position: relative;
+}
+
+.profile-button {
+    border: none;
+
+    background: transparent;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        1px solid #c9dfd2;
+
+    background: #eef7f0;
+
+    color: #07823d;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
+    font-weight: bold;
+}
+
+.profile-info {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: flex-start;
+}
+
+.profile-name {
+    color: #111827;
+
+    font-size: 16px;
+
+    font-weight: bold;
+}
+
+.profile-role {
+    color: #07823d;
+
+    font-size: 13px;
+
+    margin-top: 2px;
+}
+
+.profile-arrow {
+    color: #61738a;
+
+    font-size: 12px;
+
+    margin-left: 5px;
+}
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+.profile-dropdown {
+    display: none;
+
+    position: absolute;
+
+    right: 0;
+    top: 62px;
+
+    width: 275px;
+
+    background: white;
+
+    border:
+        1px solid #dce4e0;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 12px 35px
+        rgba(0,0,0,0.15);
+
+    overflow: hidden;
+
+    z-index: 5000;
+}
+
+.profile-dropdown.show {
+    display: block;
+}
+
+.dropdown-user {
+    padding:
+        18px 20px;
+
+    border-bottom:
+        1px solid #e5eae7;
+}
+
+.dropdown-user-name {
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #15263e;
+}
+
+.dropdown-user-role {
+    color: #07823d;
+
+    font-size: 14px;
+
+    margin-top: 4px;
+}
+
+.switch-title {
+    padding:
+        16px 20px 7px;
+
+    color: #67758a;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.role-option {
+    margin:
+        0 10px 5px;
+
+    padding:
+        12px 14px;
+
+    border-radius: 9px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    cursor: pointer;
+
+    color: #334155;
+}
+
+.role-option:hover {
+    background: #f2f6f4;
+}
+
+.role-option.selected {
+    background: #e3f5e8;
+
+    color: #07823d;
+
+    font-weight: bold;
+}
+
+.role-icon {
+    width: 24px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+.role-check {
+    margin-left: auto;
+
+    color: #07823d;
+
+    font-size: 20px;
+}
+
+
+/* =========================================================
+   CONTENT
+========================================================= */
+
+.content {
+    flex: 1;
+
+    padding:
+        32px 42px 45px;
+
+    background: #f4f7f5;
+}
+
+
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.page-title {
+    margin-bottom: 20px;
+}
+
+.page-title h2 {
+    font-size: 29px;
+
+    color: #10233f;
+
+    margin-bottom: 6px;
+}
+
+.page-title p {
+    color: #5f748e;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   SEARCH PANEL
+========================================================= */
+
+.search-panel {
+    background: white;
+
+    border:
+        1px solid #dce5e1;
+
+    border-radius: 12px;
+
+    padding: 16px;
+
+    margin-bottom: 22px;
+}
+
+.search-row {
+    display: flex;
+
+    gap: 12px;
+}
+
+.search-box {
+    flex: 1;
+
+    position: relative;
+}
+
+.search-icon {
+    position: absolute;
+
+    left: 15px;
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    font-size: 18px;
+
+    color: #536c86;
+}
+
+.search-input {
+    width: 100%;
+
+    height: 48px;
+
+    border:
+        1px solid #d5dfda;
+
+    border-radius: 8px;
+
+    padding:
+        0 15px 0 44px;
+
+    outline: none;
+
+    color: #26384e;
+
+    font-size: 13px;
+}
+
+.search-input:focus {
+    border-color: #1c55dc;
+
+    box-shadow:
+        0 0 0 2px
+        rgba(28,85,220,0.08);
+}
+
+.category-select {
+    width: 180px;
+
+    height: 48px;
+
+    border:
+        1px solid #d5dfda;
+
+    border-radius: 8px;
+
+    background: white;
+
+    padding:
+        0 13px;
+
+    color: #26384e;
+
+    font-size: 13px;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+
+/* =========================================================
+   RESULTS
+========================================================= */
+
+.results-header {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.results-count {
+    color: #526b86;
+
+    font-size: 13px;
+}
+
+
+/* =========================================================
+   CROP GRID
+========================================================= */
+
+.crop-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 14px;
+}
+
+.crop-card {
+    background: white;
+
+    border:
+        1px solid #d7e1dd;
+
+    border-radius: 10px;
+
+    padding: 10px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    min-height: 105px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.crop-card:hover {
+    transform:
+        translateY(-2px);
+
+    border-color: #2d62db;
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,0,0,0.07);
+}
+
+.crop-image {
+    width: 85px;
+    height: 85px;
+
+    flex-shrink: 0;
+
+    border-radius: 8px;
+
+    object-fit: cover;
+
+    background: #edf2ef;
+}
+
+.crop-info {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.crop-name {
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #182b43;
+
+    margin-bottom: 6px;
+}
+
+.crop-description {
+    font-size: 10px;
+
+    line-height: 1.5;
+
+    color: #67758a;
+
+    max-width: 250px;
+}
+
+.crop-arrow {
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: #edf2ff;
+
+    color: #2454d7;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   VIEW SWITCHING
+========================================================= */
+
+.buyer-view {
+    display: none;
+}
+
+.buyer-view.active-view {
+    display: block;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-button {
+    border: none;
+
+    background: transparent;
+
+    color: #1760c5;
+
+    font-size: 13px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    margin-bottom: 18px;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
+
+
+/* =========================================================
+   CROP HEADER
+========================================================= */
+
+.crop-header {
+    background: white;
+
+    border:
+        1px solid #dce5e1;
+
+    border-radius: 12px;
+
+    padding: 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin-bottom: 20px;
+}
+
+.crop-header-image {
+    width: 105px;
+    height: 105px;
+
+    border-radius: 9px;
+
+    object-fit: cover;
+}
+
+.crop-header-info h2 {
+    font-size: 23px;
+
+    color: #10233f;
+
+    margin-bottom: 7px;
+}
+
+.crop-header-info p {
+    color: #67758a;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   VARIETIES
+========================================================= */
+
+.varieties-heading {
+    display: flex;
+
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 15px;
+}
+
+.varieties-heading h2 {
+    font-size: 18px;
+
+    color: #162840;
+}
+
+.varieties-count {
+    font-size: 12px;
+
+    color: #60758f;
+}
+
+.variety-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 14px;
+}
+
+.variety-card {
+    background: white;
+
+    border:
+        1px solid #d7e1dd;
+
+    border-radius: 10px;
+
+    padding: 11px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 13px;
+
+    min-height: 112px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        border-color 0.15s ease;
+}
+
+.variety-card:hover {
+    transform:
+        translateY(-2px);
+
+    border-color: #2d62db;
+
+    box-shadow:
+        0 5px 15px
+        rgba(0,0,0,0.07);
+}
+
+.variety-image {
+    width: 88px;
+    height: 88px;
+
+    border-radius: 8px;
+
+    object-fit: cover;
+
+    flex-shrink: 0;
+}
+
+.variety-info {
+    flex: 1;
+}
+
+.variety-name {
+    font-size: 14px;
+
+    font-weight: bold;
+
+    color: #182b43;
+
+    margin-bottom: 5px;
+}
+
+.variety-description {
+    font-size: 10px;
+
+    line-height: 1.5;
+
+    color: #67758a;
+
+    margin-bottom: 6px;
+}
+
+.variety-availability {
+    color: #157d3b;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+.variety-arrow {
+    width: 28px;
+    height: 28px;
+
+    border-radius: 50%;
+
+    background: #edf2ff;
+
+    color: #2454d7;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 17px;
+}
+
+
+/* =========================================================
+   PRODUCT DETAILS
+========================================================= */
+
+.product-layout {
+    display: grid;
+
+    grid-template-columns:
+        0.85fr 1.15fr;
+
+    gap: 20px;
+
+    align-items: start;
+}
+
+.product-image-card {
+    background: white;
+
+    border:
+        1px solid #dce5e1;
+
+    border-radius: 12px;
+
+    padding: 18px;
+}
+
+.product-main-image {
+    width: 100%;
+
+    height: 430px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+}
+
+.product-details-card {
+    background: white;
+
+    border:
+        1px solid #dce5e1;
+
+    border-radius: 12px;
+
+    padding: 22px;
+}
+
+.product-title {
+    font-size: 25px;
+
+    color: #10233f;
+
+    margin-bottom: 5px;
+}
+
+.product-subtitle {
+    color: #67758a;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    margin-bottom: 18px;
+}
+
+
+/* =========================================================
+   FARMER BOX
+========================================================= */
+
+.farmer-box {
+    background: #f4f8f5;
+
+    border:
+        1px solid #dce8e0;
+
+    border-radius: 9px;
+
+    padding: 14px;
+
+    margin-bottom: 17px;
+}
+
+.farmer-title {
+    color: #67758a;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    margin-bottom: 6px;
+}
+
+.farmer-name {
+    color: #162840;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+}
+
+.farmer-detail {
+    color: #64748b;
+
+    font-size: 11px;
+
+    margin-top: 3px;
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+========================================================= */
+
+.info-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+}
+
+.info-box {
+    background: #fafcfb;
+
+    border:
+        1px solid #e3e9e6;
+
+    border-radius: 8px;
+
+    padding: 11px;
+}
+
+.info-label {
+    color: #67758a;
+
+    font-size: 10px;
+
+    margin-bottom: 5px;
+}
+
+.info-value {
+    color: #25384f;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.info-value.green {
+    color: #157d3b;
+}
+
+
+/* =========================================================
+   PRICE
+========================================================= */
+
+.price-section {
+    padding:
+        15px 0;
+
+    border-top:
+        1px solid #e6ebe8;
+
+    border-bottom:
+        1px solid #e6ebe8;
+
+    margin-bottom: 16px;
+}
+
+.price-label {
+    color: #67758a;
+
+    font-size: 11px;
+
+    margin-bottom: 4px;
+}
+
+.price {
+    color: #087b3f;
+
+    font-size: 25px;
+
+    font-weight: bold;
+}
+
+.price span {
+    font-size: 12px;
+
+    font-weight: normal;
+
+    color: #67758a;
+}
+
+
+/* =========================================================
+   QUANTITY
+========================================================= */
+
+.quantity-section {
+    margin-bottom: 16px;
+}
+
+.quantity-label {
+    color: #526b86;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    margin-bottom: 7px;
+}
+
+.quantity-control {
+    display: flex;
+
+    align-items: center;
+
+    width: 145px;
+
+    height: 39px;
+
+    border:
+        1px solid #d6e0dc;
+
+    border-radius: 7px;
+
+    overflow: hidden;
+}
+
+.quantity-button {
+    width: 38px;
+    height: 100%;
+
+    border: none;
+
+    background: #f4f7f5;
+
+    color: #24384f;
+
+    font-size: 18px;
+
+    cursor: pointer;
+}
+
+.quantity-button:hover {
+    background: #e8eeeb;
+}
+
+.quantity-input {
+    width: 69px;
+    height: 100%;
+
+    border: none;
+
+    border-left:
+        1px solid #d6e0dc;
+
+    border-right:
+        1px solid #d6e0dc;
+
+    outline: none;
+
+    text-align: center;
+
+    font-size: 13px;
+
+    color: #24384f;
+}
+
+
+/* =========================================================
+   TOTAL
+========================================================= */
+
+.total-section {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    padding: 13px;
+
+    background: #f0f8f2;
+
+    border-radius: 8px;
+
+    margin-bottom: 15px;
+}
+
+.total-label {
+    color: #526b86;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.total-value {
+    color: #087b3f;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+========================================================= */
+
+.action-buttons {
+    display: flex;
+
+    gap: 10px;
+}
+
+.message-button,
+.order-button {
+    flex: 1;
+
+    min-height: 43px;
+
+    border-radius: 7px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.message-button {
+    border:
+        1px solid #2a65d5;
+
+    background: white;
+
+    color: #1d57c1;
+}
+
+.message-button:hover {
+    background: #f1f5ff;
+}
+
+.order-button {
+    border: none;
+
+    background: #087b3f;
+
+    color: white;
+}
+
+.order-button:hover {
+    background: #066632;
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+========================================================= */
+
+.success-message {
+    display: none;
+
+    margin-top: 14px;
+
+    padding: 12px;
+
+    border-radius: 8px;
+
+    background: #e8f7ec;
+
+    border:
+        1px solid #bfe2c8;
+
+    color: #176b35;
+
+    font-size: 11px;
+
+    line-height: 1.6;
+}
+
+.success-message.show {
+    display: block;
+}
+
+
+/* =========================================================
+   MODAL
+========================================================= */
+
+.modal-overlay {
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(0,0,0,0.45);
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9000;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    width: 430px;
+
+    max-width:
+        calc(100% - 30px);
+
+    background: white;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,0.25);
+
+    overflow: hidden;
+}
+
+.modal-header {
+    padding:
+        17px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid #e5eae7;
+}
+
+.modal-header h3 {
+    color: #15263e;
+
+    font-size: 17px;
+}
+
+.modal-close {
+    border: none;
+
+    background: transparent;
+
+    font-size: 24px;
+
+    color: #67758a;
+
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-body p {
+    color: #526b86;
+
+    font-size: 12px;
+
+    margin-bottom: 12px;
+}
+
+.message-input {
+    width: 100%;
+
+    min-height: 125px;
+
+    resize: vertical;
+
+    border:
+        1px solid #d5dfda;
+
+    border-radius: 8px;
+
+    padding: 11px;
+
+    outline: none;
+
+    font-size: 12px;
+
+    color: #26384e;
+}
+
+.message-input:focus {
+    border-color: #1c55dc;
+}
+
+.modal-footer {
+    padding:
+        13px 20px;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 9px;
+
+    border-top:
+        1px solid #e5eae7;
+}
+
+.cancel-button,
+.send-button {
+    border-radius: 6px;
+
+    padding:
+        9px 14px;
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.cancel-button {
+    border:
+        1px solid #d5dfda;
+
+    background: white;
+
+    color: #526b86;
+}
+
+.send-button {
+    border: none;
+
+    background: #087b3f;
+
+    color: white;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-state {
+    grid-column: 1 / -1;
+
+    background: white;
+
+    border:
+        1px solid #dce5e1;
+
+    border-radius: 10px;
+
+    padding: 55px 20px;
+
+    text-align: center;
+
+    color: #67758a;
+
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.footer {
+    left: 255px;
+
+    min-height: 50px;
+
+    background: #075d2e;
+
+    color: white;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 10px;
+}
+
+.footer a {
+    color: white;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 950px) {
+
+    .sidebar {
+        width: 230px;
+        min-width: 230px;
+    }
+
+    .main {
+        margin-left: 230px;
+
+        width:
+            calc(100% - 230px);
+    }
+
+    .content {
+        padding: 25px;
+    }
+
+    .crop-grid,
+    .variety-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .product-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .product-main-image {
+        height: 320px;
+    }
+
+}
+
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        width: 205px;
+        min-width: 205px;
+    }
+
+    .main {
+        margin-left: 205px;
+
+        width:
+            calc(100% - 205px);
+    }
+
+    .top-header {
+        padding: 0 18px;
+    }
+
+    .profile-info {
+        display: none;
+    }
+
+    .search-row {
+        flex-direction: column;
+    }
+
+    .category-select {
+        width: 100%;
+    }
+
+    .crop-header {
+        align-items: flex-start;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+}
+
+.image-search-btn {
+    width: 44px;
+    height: 44px;
+    border: 1px solid #dde3e0;
+    background: #f1f6f2;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 17px;
+    flex-shrink: 0;
+}
+
+.image-search-btn:hover {
+    background: #e2eee5;
+}
+
+.image-search-info {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: #f1f6f2;
+    border-radius: 8px;
+    font-size: 12.5px;
+    color: #3f4a58;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="app">
+
+    <!-- =====================================================
+         SIDEBAR
+    ====================================================== -->
+
+    <aside class="sidebar">
+
+        <div class="sidebar-logo">
+            <img
+                src="assets/agriconnect-logo-white.png"
+                alt="AgriConnect"
+            >
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a
+                href="buyer-dashboard.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">▦</span>
+                <span class="nav-text">My Dashboard</span>
+            </a>
+
+
+            <!-- SEARCH FOR CROPS -->
+            <a
+                href="#"
+                class="nav-item active"
+                onclick="showView('searchView'); return false;"
+            >
+                <span class="nav-icon">🔍</span>
+                <span class="nav-text">Search for Crops</span>
+            </a>
+
+
+            <!-- BUYER ORDERS -->
+            <a
+                href="buyer-orders.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">🛒</span>
+                <span class="nav-text">My Orders</span>
+            </a>
+
+
+            <!-- MESSAGES -->
+            <a
+                href="buyer-messages.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">💬</span>
+                <span class="nav-text">Messages</span>
+            </a>
+
+
+            <!-- NOTIFICATIONS -->
+            <a
+                href="buyer-notifications.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">🔔</span>
+                <span class="nav-text">Notifications</span>
+
+                <span
+                    class="notification-count"
+                    id="notificationCount"
+                >
+                    0
+                </span>
+            </a>
+
+
+            <!-- REPORT ISSUES -->
+            <a
+                href="buyer-report-issues.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⚠️</span>
+                <span class="nav-text">Report Issues</span>
+            </a>
+
+
+            <!-- HISTORY -->
+            <a
+                href="buyer-history.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">◷</span>
+                <span class="nav-text">History</span>
+            </a>
+
+        </nav>
+
+
+        <!-- =================================================
+             SIDEBAR BOTTOM
+        ================================================== -->
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-divider"></div>
+
+
+            <a
+                href="buyer-help-support.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">?</span>
+                <span class="nav-text">Help &amp; Support</span>
+            </a>
+
+
+            <a
+                href="buyer-settings.html"
+                class="nav-item"
+            >
+                <span class="nav-icon">⚙</span>
+                <span class="nav-text">Settings</span>
+            </a>
+
+
+            <a
+                href="login.html"
+                class="nav-item"
+                onclick="logout(event)"
+            >
+                <span class="nav-icon">↪</span>
+                <span class="nav-text">Logout</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main">
+
+
+        <!-- =================================================
+             TOP HEADER
+        ================================================== -->
+
+        <header class="top-header">
+
+
+            <div class="header-title">
+
+                <h1 id="headerTitle">
+                    Search for Crops
+                </h1>
+
+                <p id="headerSubtitle">
+                    Find and explore a wide variety of crops.
+                </p>
+
+            </div>
+
+
+
+            <div class="header-right">
+
+
+                <!-- NOTIFICATION BELL -->
+
+                <div
+                    class="notification-bell"
+                    onclick="openNotifications()"
+                >
+
+                    🔔
+
+                    <span
+                        class="notification-number"
+                        id="headerNotificationCount"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+
+                <!-- PROFILE -->
+
+                <div class="profile-area">
+
+
+                    <button
+                        class="profile-button"
+                        id="profileButton"
+                        type="button"
+                    >
+
+                        <div
+                            class="profile-avatar"
+                            id="profileAvatar"
+                        >
+                            KI
+                        </div>
+
+
+                        <div class="profile-info">
+
+                            <span
+                                class="profile-name"
+                                id="profileName"
+                            >
+                                Kilshan
+                            </span>
+
+                            <span class="profile-role">
+                                Buyer
+                            </span>
+
+                        </div>
+
+
+                        <span
+                            class="profile-arrow"
+                            id="profileArrow"
+                        >
+                            ▼
+                        </span>
+
+                    </button>
+
+
+
+                    <!-- PROFILE DROPDOWN -->
+
+                    <div
+                        class="profile-dropdown"
+                        id="profileDropdown"
+                    >
+
+                        <div class="dropdown-user">
+
+                            <div
+                                class="dropdown-user-name"
+                                id="dropdownUserName"
+                            >
+                                Kilshan
+                            </div>
+
+                            <div class="dropdown-user-role">
+                                Buyer
+                            </div>
+
+                        </div>
+
+
+                        <div class="switch-title">
+                            SWITCH ROLE
+                        </div>
+
+
+                        <div id="rolesContainer"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================== -->
+
+        <section class="content">
+
+
+
+            <!-- =================================================
+                 VIEW 1 — SEARCH FOR CROPS
+            ================================================== -->
+
+            <div
+                id="searchView"
+                class="buyer-view active-view"
+            >
+
+
+                <div class="page-title">
+
+                    <h2>
+                        Search for Crops
+                    </h2>
+
+                    <p>
+                        Find and explore a wide variety of crops.
+                    </p>
+
+                </div>
+
+
+
+                <!-- SEARCH BOX -->
+
+                <div class="search-panel">
+
+                    <div class="search-row">
+
+
+                        <div class="search-box">
+
+                            <span class="search-icon">
+                                🔍
+                            </span>
+
+                            <input
+                                type="text"
+                                id="searchInput"
+                                class="search-input"
+                                placeholder="Search for crops..."
+                                autocomplete="off"
+                            >
+
+                        </div>
+
+
+                        <button
+                            type="button"
+                            class="image-search-btn"
+                            id="cropImageButton"
+                            title="Search by crop photo"
+                        >
+                            📷
+                        </button>
+
+                        <input type="file" id="cropImageInput" accept="image/*" hidden>
+
+
+                        <select
+                            id="categorySelect"
+                            class="category-select"
+                        >
+
+                            <option value="all">
+                                Category
+                            </option>
+
+                            <option value="grains">
+                                Grains
+                            </option>
+
+                            <option value="vegetables">
+                                Vegetables
+                            </option>
+
+                            <option value="fruits">
+                                Fruits
+                            </option>
+
+                            <option value="spices">
+                                Spices
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="image-search-info" id="cropImageSearchInfo"></div>
+
+
+                </div>
+
+
+
+                <!-- RESULTS -->
+
+                <div class="results-header">
+
+                    <div
+                        class="results-count"
+                        id="resultsCount"
+                    >
+                        8 Results
+                    </div>
+
+                </div>
+
+
+                <div
+                    class="crop-grid"
+                    id="cropGrid"
+                ></div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 VIEW 2 — CROP VARIETIES
+            ================================================== -->
+
+            <div
+                id="varietiesView"
+                class="buyer-view"
+            >
+
+
+                <button
+                    class="back-button"
+                    type="button"
+                    onclick="backToSearch()"
+                >
+                    ← Back to Search for Crops
+                </button>
+
+
+
+                <!-- SELECTED CROP HEADER -->
+
+                <div class="crop-header">
+
+
+                    <img
+                        id="cropHeaderImage"
+                        class="crop-header-image"
+                        src=""
+                        alt="Crop"
+                    >
+
+
+                    <div class="crop-header-info">
+
+                        <h2 id="cropName">
+                            Rice
+                        </h2>
+
+                        <p id="cropDescription">
+                            Explore different rice varieties
+                            available from farmers.
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+
+                <!-- VARIETY TITLE -->
+
+                <div class="varieties-heading">
+
+                    <h2>
+                        Available Varieties
+                    </h2>
+
+                    <span
+                        class="varieties-count"
+                        id="varietiesCount"
+                    >
+                        0 Results
+                    </span>
+
+                </div>
+
+
+
+                <!-- VARIETY CARDS -->
+
+                <div
+                    class="variety-grid"
+                    id="varietyGrid"
+                ></div>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 VIEW 3 — PRODUCT DETAILS
+            ================================================== -->
+
+            <div
+                id="productView"
+                class="buyer-view"
+            >
+
+
+                <button
+                    class="back-button"
+                    type="button"
+                    onclick="backToVarieties()"
+                >
+                    ← Back to Crop Varieties
+                </button>
+
+
+
+                <div class="product-layout">
+
+
+
+                    <!-- PRODUCT IMAGE -->
+
+                    <div class="product-image-card">
+
+                        <img
+                            id="productImage"
+                            class="product-main-image"
+                            src=""
+                            alt="Product"
+                        >
+
+                    </div>
+
+
+
+                    <!-- PRODUCT INFORMATION -->
+
+                    <div class="product-details-card">
+
+
+                        <h2
+                            class="product-title"
+                            id="productName"
+                        >
+                            Black Rice
+                        </h2>
+
+
+                        <p
+                            class="product-subtitle"
+                            id="productSubtitle"
+                        >
+                            Premium agricultural product
+                        </p>
+
+
+
+                        <!-- FARMER -->
+
+                        <div class="farmer-box">
+
+                            <div class="farmer-title">
+                                FARMER / SELLER
+                            </div>
+
+
+                            <div
+                                class="farmer-name"
+                                id="farmerName"
+                            >
+                                Kumar Farm
+                            </div>
+
+
+                            <div
+                                class="farmer-detail"
+                                id="farmerIdDetail"
+                            >
+                                🆔 Farmer ID: -
+                            </div>
+
+
+                            <div
+                                class="farmer-detail"
+                                id="farmerLocation"
+                            >
+                                📍 Jaffna, Sri Lanka
+                            </div>
+
+
+                            <div
+                                class="farmer-detail"
+                                id="farmerContact"
+                            >
+                                ☎ +94 77 123 4567
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- PRODUCT INFORMATION GRID -->
+
+                        <div class="info-grid">
+
+
+                            <div class="info-box">
+
+                                <div class="info-label">
+                                    Harvested Date
+                                </div>
+
+                                <div
+                                    class="info-value"
+                                    id="harvestDate"
+                                >
+                                    25.05.2026
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="info-box">
+
+                                <div class="info-label">
+                                    Available Quantity
+                                </div>
+
+                                <div
+                                    class="info-value green"
+                                    id="availableQuantity"
+                                >
+                                    150 kg
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="info-box">
+
+                                <div class="info-label">
+                                    Quality
+                                </div>
+
+                                <div class="info-value">
+                                    Premium
+                                </div>
+
+                            </div>
+
+
+
+                            <div class="info-box">
+
+                                <div class="info-label">
+                                    Availability
+                                </div>
+
+                                <div class="info-value green">
+                                    ● Available
+                                </div>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- PRICE -->
+
+                        <div class="price-section">
+
+                            <div class="price-label">
+                                Price
+                            </div>
+
+                            <div class="price">
+
+                                Rs
+
+                                <span id="priceValue">
+                                    450
+                                </span>
+
+                                <span>
+                                    / kg
+                                </span>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- QUANTITY -->
+
+                        <div class="quantity-section">
+
+                            <div class="quantity-label">
+                                Select Quantity
+                            </div>
+
+
+                            <div class="quantity-control">
+
+
+                                <button
+                                    class="quantity-button"
+                                    type="button"
+                                    onclick="decreaseQuantity()"
+                                >
+                                    −
+                                </button>
+
+
+                                <input
+                                    class="quantity-input"
+                                    id="quantityInput"
+                                    type="number"
+                                    value="1"
+                                    min="1"
+                                    max="150"
+                                >
+
+
+                                <button
+                                    class="quantity-button"
+                                    type="button"
+                                    onclick="increaseQuantity()"
+                                >
+                                    +
+                                </button>
+
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- DELIVERY ADDRESS -->
+
+                        <div class="quantity-section">
+
+                            <div class="quantity-label">
+                                Delivery Address
+                            </div>
+
+                            <textarea
+                                id="deliveryAddress"
+                                rows="2"
+                                placeholder="Enter the address for this delivery..."
+                                style="
+                                    width:100%;
+                                    padding:10px 12px;
+                                    border:1px solid #cbd5e0;
+                                    border-radius:8px;
+                                    font-family:inherit;
+                                    font-size:13px;
+                                    resize:vertical;
+                                "
+                            ></textarea>
+
+                        </div>
+
+
+
+                        <!-- TOTAL -->
+
+                        <div class="total-section">
+
+                            <span class="total-label">
+                                Total Amount
+                            </span>
+
+                            <span
+                                class="total-value"
+                                id="totalAmount"
+                            >
+                                Rs 450
+                            </span>
+
+                        </div>
+
+
+
+                        <!-- ACTION BUTTONS -->
+
+                        <div class="action-buttons">
+
+
+                            <button
+                                class="message-button"
+                                type="button"
+                                onclick="openMessageModal()"
+                            >
+                                💬 Message Farmer
+                            </button>
+
+
+                            <button
+                                class="order-button"
+                                type="button"
+                                onclick="placeOrder()"
+                            >
+                                Place an Order →
+                            </button>
+
+
+                        </div>
+
+
+
+                        <!-- ORDER SUCCESS -->
+
+                        <div
+                            class="success-message"
+                            id="successMessage"
+                        ></div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- =================================================
+             FOOTER
+        ================================================== -->
+
+        <footer class="footer">
+
+            <span>
+                © 2026 AgriConnect. All Rights Reserved
+            </span>
+
+            <span>|</span>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <span>|</span>
+
+            <a href="#">
+                Terms of Service
+            </a>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+
+<!-- =========================================================
+     APP ALERT MODAL
+========================================================== -->
+
+<div
+    class="modal-overlay"
+    id="appAlertModal"
+>
+
+    <div class="modal" style="width: 340px;">
+
+        <div class="modal-header">
+            <h3 id="appAlertTitle">Notice</h3>
+            <button
+                type="button"
+                class="modal-close"
+                onclick="closeAppAlert()"
+            >&times;</button>
+        </div>
+
+        <div class="modal-body">
+            <p id="appAlertMessage" style="margin-bottom: 18px;"></p>
+            <button
+                type="button"
+                class="order-button"
+                style="width: 100%;"
+                onclick="closeAppAlert()"
+            >OK</button>
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =========================================================
+     MESSAGE FARMER MODAL
+========================================================== -->
+
+<div
+    class="modal-overlay"
+    id="messageModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h3>
+                Message Farmer
+            </h3>
+
+
+            <button
+                class="modal-close"
+                type="button"
+                onclick="closeMessageModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+
+        <div class="modal-body">
+
+            <p>
+                Send a message to
+                <strong id="modalFarmerName">
+                    Kumar Farm
+                </strong>
+            </p>
+
+
+            <textarea
+                class="message-input"
+                id="messageInput"
+                placeholder="Type your message..."
+            ></textarea>
+
+        </div>
+
+
+
+        <div class="modal-footer">
+
+            <button
+                class="cancel-button"
+                type="button"
+                onclick="closeMessageModal()"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                class="send-button"
+                type="button"
+                onclick="sendMessage()"
+            >
+                Send Message
+            </button>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =========================================================
+   CROP DATA
+========================================================= */
+
+let crops = [];
+
+let allCropListings = [];
+
+
+/* =========================================================
+   LOAD REAL CROPS FROM THE BACKEND
+   Groups individual crop rows (each is one farmer's listing)
+   into "categories" by crop_name, matching the existing
+   Category -> Listings -> Product drill-down UI.
+========================================================= */
+
+async function loadCrops() {
+
+    try {
+
+        const response =
+            await fetch("/api/crops");
+
+        const data =
+            await response.json();
+
+        allCropListings =
+            (data && data.success && Array.isArray(data.crops))
+                ? data.crops
+                : [];
+
+    } catch (error) {
+
+        console.error("Unable to load crops:", error);
+
+        allCropListings = [];
+
+    }
+
+
+    const groups = new Map();
+
+    allCropListings.forEach(row => {
+
+        const key = row.crop_name || "Crop";
+
+        if (!groups.has(key)) {
+
+            groups.set(key, {
+                id: key,
+                name: key,
+                description: "",
+                image: cropImageUrl(row),
+                listings: []
+            });
+
+        }
+
+        groups.get(key).listings.push(row);
+
+    });
+
+    crops =
+        Array.from(groups.values()).map(group => {
+
+            group.description =
+                `${group.listings.length} listing${group.listings.length === 1 ? "" : "s"} from farmers`;
+
+            return group;
+
+        });
+
+
+    renderCrops();
+
+}
+
+
+function cropImageUrl(row) {
+
+    if (row.image) {
+        return row.image;
+    }
+
+    if (Array.isArray(row.images) && row.images.length > 0) {
+        return row.images[0];
+    }
+
+    return "";
+
+}
+
+
+/* =========================================================
+   DEFAULT PRODUCT INFORMATION
+   (fallback only - real listings always override every field)
+========================================================= */
+
+const productDefaults = {
+
+    farmer: "Farmer",
+
+    farmerId: null,
+
+    location: "Not provided",
+
+    contact: "Not provided",
+
+    harvestedDate: "-",
+
+    availableQuantity: 0,
+
+    price: 0
+
+};
+
+
+
+
+/* =========================================================
+   CURRENT SELECTION
+========================================================= */
+
+let selectedCrop = null;
+
+let selectedVariety = null;
+
+
+
+/* =========================================================
+   ESCAPE HTML
+========================================================= */
+
+function escapeHTML(value) {
+
+    const div = document.createElement("div");
+
+    div.textContent =
+        value === undefined || value === null
+            ? ""
+            : value;
+
+    return div.innerHTML;
+}
+
+
+
+/* =========================================================
+   CHANGE VIEW
+========================================================= */
+
+function showView(viewID) {
+
+    document
+        .querySelectorAll(".buyer-view")
+        .forEach(view => {
+
+            view.classList.remove("active-view");
+
+        });
+
+
+    const selectedView =
+        document.getElementById(viewID);
+
+
+    if (!selectedView) {
+        return;
+    }
+
+
+    selectedView.classList.add("active-view");
+
+
+    const viewInformation = {
+
+        searchView: {
+
+            title: "Search for Crops",
+
+            subtitle:
+                "Find and explore a wide variety of crops."
+
+        },
+
+        varietiesView: {
+
+            title: "Crop Varieties",
+
+            subtitle:
+                "Explore available varieties and find the right crop for you."
+
+        },
+
+        productView: {
+
+            title: "Product Details",
+
+            subtitle:
+                "View product information and place your order."
+
+        }
+
+    };
+
+
+    const information =
+        viewInformation[viewID];
+
+
+    if (information) {
+
+        document.getElementById(
+            "headerTitle"
+        ).textContent =
+            information.title;
+
+
+        document.getElementById(
+            "headerSubtitle"
+        ).textContent =
+            information.subtitle;
+
+    }
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+}
+
+
+
+/* =========================================================
+   RENDER CROPS
+========================================================= */
+
+function renderCrops(list = crops) {
+
+    const grid =
+        document.getElementById("cropGrid");
+
+
+    grid.innerHTML = "";
+
+
+    const resultCount =
+        document.getElementById("resultsCount");
+
+
+    resultCount.textContent =
+        list.length +
+        (list.length === 1
+            ? " Result"
+            : " Results");
+
+
+    if (list.length === 0) {
+
+        grid.innerHTML = `
+
+            <div class="empty-state">
+
+                No crops found.
+
+                <br>
+                <br>
+
+                Try another crop name
+                or category.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    list.forEach(crop => {
+
+        const card =
+            document.createElement("div");
+
+
+        card.className =
+            "crop-card";
+
+
+        card.innerHTML = `
+
+            <img
+                class="crop-image"
+                src="${crop.image || "data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 300%22><rect width=%22300%22 height=%22300%22 fill=%22%23eef5f0%22/><text x=%22150%22 y=%22170%22 font-size=%2280%22 text-anchor=%22middle%22>🥕</text></svg>"}"
+                alt="${escapeHTML(crop.name)}"
+                onerror="
+                    this.onerror=null;
+                    this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 300%22><rect width=%22300%22 height=%22300%22 fill=%22%23eef5f0%22/><text x=%22150%22 y=%22170%22 font-size=%2280%22 text-anchor=%22middle%22>🥕</text></svg>';
+                "
+            >
+
+            <div class="crop-info">
+
+                <div class="crop-name">
+                    ${escapeHTML(crop.name)}
+                </div>
+
+                <div class="crop-description">
+                    ${escapeHTML(crop.description)}
+                </div>
+
+            </div>
+
+            <div class="crop-arrow">
+                →
+            </div>
+
+        `;
+
+
+        card.addEventListener(
+            "click",
+            function () {
+
+                openCrop(crop);
+
+            }
+        );
+
+
+        grid.appendChild(card);
+
+    });
+
+}
+
+
+
+/* =========================================================
+   FILTER CROPS
+========================================================= */
+
+function filterCrops() {
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const categorySelect =
+        document.getElementById(
+            "categorySelect"
+        );
+
+
+    const searchText =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    const filteredCrops =
+        crops.filter(crop => {
+
+            /*
+             * Real crops have no category classification in the
+             * database, so the category dropdown isn't applied
+             * to real data - only the name search is functional.
+             */
+
+            return crop.name
+                .toLowerCase()
+                .includes(searchText);
+
+        });
+
+
+    renderCrops(filteredCrops);
+
+}
+
+
+
+/* =========================================================
+   OPEN CROP
+========================================================= */
+
+function openCrop(crop) {
+
+    selectedCrop = crop;
+
+
+    localStorage.setItem(
+        "selectedCrop",
+        JSON.stringify(crop)
+    );
+
+
+    renderVarieties();
+
+
+    showView(
+        "varietiesView"
+    );
+
+}
+
+
+
+/* =========================================================
+   RENDER VARIETIES
+========================================================= */
+
+function renderVarieties() {
+
+    if (!selectedCrop) {
+        return;
+    }
+
+
+    const crop =
+        selectedCrop;
+
+
+    document.getElementById(
+        "cropName"
+    ).textContent =
+        crop.name;
+
+
+    document.getElementById(
+        "cropDescription"
+    ).textContent =
+        crop.description;
+
+
+    document.getElementById(
+        "cropHeaderImage"
+    ).src =
+        crop.image ||
+        "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23eef5f0'/><text x='150' y='170' font-size='80' text-anchor='middle'>🥕</text></svg>";
+
+
+    document.getElementById(
+        "cropHeaderImage"
+    ).onerror =
+        function() {
+            this.onerror = null;
+            this.src = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 300 300'><rect width='300' height='300' fill='%23eef5f0'/><text x='150' y='170' font-size='80' text-anchor='middle'>🥕</text></svg>";
+        };
+
+
+    document.getElementById(
+        "cropHeaderImage"
+    ).alt =
+        crop.name;
+
+
+    const grid =
+        document.getElementById(
+            "varietyGrid"
+        );
+
+
+    grid.innerHTML = "";
+
+
+    const listings =
+        crop.listings ||
+        [];
+
+
+    document.getElementById(
+        "varietiesCount"
+    ).textContent =
+        listings.length +
+        (
+            listings.length === 1
+                ? " Result"
+                : " Results"
+        );
+
+
+    listings.forEach(
+        row => {
+
+
+            const card =
+                document.createElement(
+                    "div"
+                );
+
+
+            card.className =
+                "variety-card";
+
+
+            const varietyName =
+                row.specific_name ||
+                row.crop_name;
+
+
+            const farmerName =
+                `${row.farmer_first_name || ""} ${row.farmer_last_name || ""}`.trim() ||
+                "Farmer";
+
+
+            const availability =
+                Number(row.quantity) > 0
+                    ? "Available"
+                    : "Out of Stock";
+
+
+            card.innerHTML = `
+
+                <img
+                    class="variety-image"
+                    src="${cropImageUrl(row) || "data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 300%22><rect width=%22300%22 height=%22300%22 fill=%22%23eef5f0%22/><text x=%22150%22 y=%22170%22 font-size=%2280%22 text-anchor=%22middle%22>🥕</text></svg>"}"
+                    alt="${escapeHTML(varietyName)}"
+                    onerror="
+                        this.onerror=null;
+                        this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 300%22><rect width=%22300%22 height=%22300%22 fill=%22%23eef5f0%22/><text x=%22150%22 y=%22170%22 font-size=%2280%22 text-anchor=%22middle%22>🥕</text></svg>';
+                    "
+                >
+
+                <div class="variety-info">
+
+                    <div class="variety-name">
+                        ${escapeHTML(varietyName)}
+                    </div>
+
+                    <div class="variety-description">
+                        From ${escapeHTML(farmerName)} • Rs ${escapeHTML(String(row.price_per_kg))}/kg
+                    </div>
+
+                    <div class="variety-availability">
+                        ● ${escapeHTML(availability)}
+                    </div>
+
+                </div>
+
+                <div class="variety-arrow">
+                    →
+                </div>
+
+            `;
+
+
+            card.addEventListener(
+                "click",
+                function () {
+
+                    openVariety(
+                        row
+                    );
+
+                }
+            );
+
+
+            grid.appendChild(card);
+
+        }
+    );
+
+}
+
+
+
+/* =========================================================
+   OPEN VARIETY
+========================================================= */
+
+function openVariety(variety) {
+
+    selectedVariety =
+        variety;
+
+
+    localStorage.setItem(
+        "selectedVariety",
+        JSON.stringify(variety)
+    );
+
+
+    renderProduct();
+
+
+    showView(
+        "productView"
+    );
+
+}
+
+
+
+/* =========================================================
+   RENDER PRODUCT
+========================================================= */
+
+function renderProduct() {
+
+    const product =
+        getCurrentProduct();
+
+
+    document.getElementById(
+        "productName"
+    ).textContent =
+        product.name ||
+        "Product";
+
+
+    document.getElementById(
+        "productSubtitle"
+    ).textContent =
+        product.description ||
+        "Premium agricultural product";
+
+
+    document.getElementById(
+        "productImage"
+    ).src =
+        product.image ||
+        "";
+
+
+    document.getElementById(
+        "productImage"
+    ).alt =
+        product.name ||
+        "Product";
+
+
+    document.getElementById(
+        "farmerName"
+    ).textContent =
+        product.farmer;
+
+
+    document.getElementById(
+        "farmerIdDetail"
+    ).textContent =
+        "🆔 Farmer ID: " +
+        (product.farmerId ?? "-");
+
+
+    document.getElementById(
+        "farmerLocation"
+    ).textContent =
+        "📍 " +
+        product.location;
+
+
+    document.getElementById(
+        "farmerContact"
+    ).textContent =
+        "☎ " +
+        product.contact;
+
+
+    document.getElementById(
+        "harvestDate"
+    ).textContent =
+        product.harvestedDate;
+
+
+    document.getElementById(
+        "availableQuantity"
+    ).textContent =
+        product.availableQuantity +
+        " kg";
+
+
+    document.getElementById(
+        "quantityInput"
+    ).max =
+        product.availableQuantity;
+
+
+    document.getElementById(
+        "quantityInput"
+    ).value =
+        product.availableQuantity > 0
+            ? 1
+            : 0;
+
+
+    document.getElementById(
+        "priceValue"
+    ).textContent =
+        Number(product.price)
+            .toLocaleString("en-LK");
+
+
+    document.getElementById(
+        "modalFarmerName"
+    ).textContent =
+        product.farmer;
+
+
+    updateTotal();
+
+}
+
+
+
+/* =========================================================
+   CURRENT PRODUCT
+
+   Maps a real crop row (selectedVariety) into the display
+   shape this page's UI already expects.
+========================================================= */
+
+function getCurrentProduct() {
+
+    const row =
+        selectedVariety;
+
+
+    if (!row) {
+
+        return {
+            ...productDefaults
+        };
+
+    }
+
+
+    const farmerName =
+        `${row.farmer_first_name || ""} ${row.farmer_last_name || ""}`.trim() ||
+        "Farmer";
+
+
+    const harvestedDate =
+        row.harvested_date
+            ? new Date(row.harvested_date).toLocaleDateString("en-GB")
+            : "-";
+
+
+    return {
+
+        id: row.id,
+
+        cropId: row.id,
+
+        name: row.specific_name || row.crop_name,
+
+        description: row.description || "",
+
+        image: cropImageUrl(row),
+
+        farmer: farmerName,
+
+        farmerId: row.farmer_id,
+
+        location: row.farmer_district || "Not provided",
+
+        contact: row.farmer_phone || "Not provided",
+
+        harvestedDate: harvestedDate,
+
+        availableQuantity: Number(row.quantity) || 0,
+
+        price: Number(row.price_per_kg) || 0
+
+    };
+
+}
+
+
+
+/* =========================================================
+   GET QUANTITY
+========================================================= */
+
+function getQuantity() {
+
+    const input =
+        document.getElementById(
+            "quantityInput"
+        );
+
+
+    const max =
+        Number(
+            getCurrentProduct()
+                .availableQuantity
+        ) || 150;
+
+
+    let quantity =
+        parseInt(input.value);
+
+
+    if (
+        isNaN(quantity) ||
+        quantity < 1
+    ) {
+
+        quantity = 1;
+
+    }
+
+
+    if (quantity > max) {
+
+        quantity = max;
+
+    }
+
+
+    input.value =
+        quantity;
+
+
+    return quantity;
+
+}
+
+
+
+/* =========================================================
+   UPDATE TOTAL
+========================================================= */
+
+function updateTotal() {
+
+    const product =
+        getCurrentProduct();
+
+
+    const quantity =
+        getQuantity();
+
+
+    const price =
+        Number(product.price) || 450;
+
+
+    const total =
+        quantity * price;
+
+
+    document.getElementById(
+        "totalAmount"
+    ).textContent =
+        "Rs " +
+        total.toLocaleString(
+            "en-LK"
+        );
+
+}
+
+
+
+/* =========================================================
+   INCREASE QUANTITY
+========================================================= */
+
+function increaseQuantity() {
+
+    const input =
+        document.getElementById(
+            "quantityInput"
+        );
+
+
+    const product =
+        getCurrentProduct();
+
+
+    const max =
+        Number(
+            product.availableQuantity
+        ) || 150;
+
+
+    let quantity =
+        parseInt(input.value) || 1;
+
+
+    quantity++;
+
+
+    if (quantity > max) {
+
+        quantity = max;
+
+    }
+
+
+    input.value =
+        quantity;
+
+
+    updateTotal();
+
+}
+
+
+
+/* =========================================================
+   DECREASE QUANTITY
+========================================================= */
+
+function decreaseQuantity() {
+
+    const input =
+        document.getElementById(
+            "quantityInput"
+        );
+
+
+    let quantity =
+        parseInt(input.value) || 1;
+
+
+    quantity--;
+
+
+    if (quantity < 1) {
+
+        quantity = 1;
+
+    }
+
+
+    input.value =
+        quantity;
+
+
+    updateTotal();
+
+}
+
+
+
+/* =========================================================
+   BACK TO SEARCH
+========================================================= */
+
+function backToSearch() {
+
+    showView(
+        "searchView"
+    );
+
+}
+
+
+
+/* =========================================================
+   BACK TO VARIETIES
+========================================================= */
+
+function backToVarieties() {
+
+    showView(
+        "varietiesView"
+    );
+
+}
+
+
+
+/* =========================================================
+   PLACE ORDER
+========================================================= */
+
+async function placeOrder() {
+
+    const product =
+        getCurrentProduct();
+
+
+    const quantity =
+        getQuantity();
+
+
+    const price =
+        Number(product.price) || 0;
+
+
+    const total =
+        quantity * price;
+
+
+    const deliveryAddress =
+        document.getElementById(
+            "deliveryAddress"
+        ).value.trim();
+
+
+    const buyer =
+        getCurrentUser();
+
+
+    if (!buyer || !buyer.id) {
+
+        showAppAlert(
+            "Unable to identify your account. Please log in again."
+        );
+
+        return;
+
+    }
+
+
+    if (!product.cropId) {
+
+        showAppAlert(
+            "This listing could not be found. Please go back and try again."
+        );
+
+        return;
+
+    }
+
+
+    if (!deliveryAddress) {
+
+        showAppAlert(
+            "Please enter a delivery address."
+        );
+
+        return;
+
+    }
+
+
+    if (quantity < 1) {
+
+        showAppAlert(
+            "This crop is currently out of stock."
+        );
+
+        return;
+
+    }
+
+
+    const orderButton =
+        document.querySelector(
+            ".order-button"
+        );
+
+
+    if (orderButton) {
+
+        orderButton.disabled =
+            true;
+
+        orderButton.textContent =
+            "Placing order...";
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/orders",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        buyer_id: buyer.id,
+                        farmer_id: product.farmerId,
+                        crop_id: product.cropId,
+                        quantity: quantity,
+                        price_per_kg: price,
+                        total_amount: total,
+                        delivery_address: deliveryAddress
+                    })
+                }
+            );
+
+
+        const data =
+            await response.json();
+
+
+        if (!response.ok || !data.success) {
+
+            throw new Error(
+                data.message ||
+                "Failed to place order."
+            );
+
+        }
+
+
+        const success =
+            document.getElementById(
+                "successMessage"
+            );
+
+
+        success.innerHTML = `
+
+            <strong>
+                Order placed successfully!
+            </strong>
+
+            <br>
+
+            Order ID:
+            ${escapeHTML(String(data.order.id))}
+
+            <br>
+
+            Quantity:
+            ${quantity} kg
+
+            <br>
+
+            Total:
+            Rs ${total.toLocaleString("en-LK")}
+
+            <br><br>
+
+            <button
+                onclick="openOrders()"
+                style="
+                    border:none;
+                    background:transparent;
+                    color:#1260b8;
+                    font-weight:bold;
+                    cursor:pointer;
+                    padding:0;
+                "
+            >
+                View My Orders →
+            </button>
+
+        `;
+
+
+        success.classList.add(
+            "show"
+        );
+
+
+        document.getElementById(
+            "deliveryAddress"
+        ).value =
+            "";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Place order error:",
+            error
+        );
+
+        showAppAlert(
+            error.message ||
+            "Failed to place order."
+        );
+
+    }
+
+    finally {
+
+        if (orderButton) {
+
+            orderButton.disabled =
+                false;
+
+            orderButton.textContent =
+                "Place an Order →";
+
+        }
+
+    }
+
+}
+
+
+
+/* =========================================================
+   OPEN BUYER ORDERS
+========================================================= */
+
+function openOrders() {
+
+    /*
+       IMPORTANT:
+       This is the BUYER order page.
+       It does NOT go to farmer-orders.html.
+    */
+
+    window.location.href =
+        "buyer-orders.html";
+
+}
+
+
+
+/* =========================================================
+   OPEN NOTIFICATIONS
+========================================================= */
+
+function openNotifications() {
+
+    window.location.href =
+        "buyer-notifications.html";
+
+}
+
+
+
+/* =========================================================
+   MESSAGE MODAL
+========================================================= */
+
+function openMessageModal() {
+
+    document
+        .getElementById(
+            "messageModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+
+    document
+        .getElementById(
+            "messageInput"
+        )
+        .focus();
+
+}
+
+
+function closeMessageModal() {
+
+    document
+        .getElementById(
+            "messageModal"
+        )
+        .classList.remove(
+            "show"
+        );
+
+}
+
+
+/* =========================================================
+   APP ALERT (replaces native browser alert())
+========================================================= */
+
+function showAppAlert(message, title) {
+
+    document.getElementById("appAlertTitle").textContent =
+        title || "Notice";
+
+    document.getElementById("appAlertMessage").textContent =
+        message;
+
+    const body =
+        document.querySelector("#appAlertModal .modal-body");
+
+    body.innerHTML = `
+        <p id="appAlertMessage" style="margin-bottom: 18px;">${escapeHTML(message)}</p>
+        <button
+            type="button"
+            class="order-button"
+            style="width: 100%;"
+            onclick="closeAppAlert()"
+        >OK</button>
+    `;
+
+    document.getElementById("appAlertTitle").textContent =
+        title || "Notice";
+
+    document
+        .getElementById("appAlertModal")
+        .classList.add("show");
+
+}
+
+
+function showAppConfirm(message, title) {
+
+    return new Promise(resolve => {
+
+        document.getElementById("appAlertTitle").textContent =
+            title || "Please Confirm";
+
+        const body =
+            document.querySelector("#appAlertModal .modal-body");
+
+        body.innerHTML = `
+            <p style="margin-bottom: 18px;">${escapeHTML(message)}</p>
+            <div style="display:flex;gap:10px;">
+                <button
+                    type="button"
+                    class="order-button"
+                    style="flex:1;background:#fff;color:#536274;border:1px solid #dde3e0;"
+                    id="appConfirmCancelBtn"
+                >Cancel</button>
+                <button
+                    type="button"
+                    class="order-button"
+                    style="flex:1;"
+                    id="appConfirmOkBtn"
+                >OK</button>
+            </div>
+        `;
+
+        function finish(result) {
+            document.getElementById("appAlertModal").classList.remove("show");
+            resolve(result);
+        }
+
+        document.getElementById("appConfirmCancelBtn").onclick = () => finish(false);
+        document.getElementById("appConfirmOkBtn").onclick = () => finish(true);
+
+        document
+            .getElementById("appAlertModal")
+            .classList.add("show");
+
+    });
+
+}
+
+
+function closeAppAlert() {
+
+    document
+        .getElementById("appAlertModal")
+        .classList.remove("show");
+
+}
+
+
+
+/* =========================================================
+   SEND MESSAGE
+========================================================= */
+
+async function sendMessage() {
+
+    const input =
+        document.getElementById(
+            "messageInput"
+        );
+
+
+    const message =
+        input.value.trim();
+
+
+    if (!message) {
+
+        showAppAlert(
+            "Please enter a message."
+        );
+
+        return;
+
+    }
+
+
+    const product =
+        getCurrentProduct();
+
+
+    const buyer =
+        getCurrentUser();
+
+
+    if (!buyer || !buyer.id) {
+
+        showAppAlert(
+            "Unable to identify your account. Please log in again."
+        );
+
+        return;
+
+    }
+
+
+    if (!product.farmerId) {
+
+        showAppAlert(
+            "This farmer could not be found."
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const startResponse =
+            await fetch(
+                "/api/messages/conversations/start",
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        user_id: buyer.id,
+                        other_user_id: product.farmerId,
+                        context_type: "general"
+                    })
+                }
+            );
+
+
+        const startData =
+            await startResponse.json();
+
+
+        if (!startResponse.ok || !startData.success) {
+
+            throw new Error(
+                startData.message ||
+                "Failed to start conversation."
+            );
+
+        }
+
+
+        const conversationId =
+            startData.conversation.id;
+
+
+        const sendResponse =
+            await fetch(
+                `/api/messages/conversations/${conversationId}/messages`,
+                {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({
+                        sender_id: buyer.id,
+                        message_text: message
+                    })
+                }
+            );
+
+
+        const sendData =
+            await sendResponse.json();
+
+
+        if (!sendResponse.ok || !sendData.success) {
+
+            throw new Error(
+                sendData.message ||
+                "Failed to send message."
+            );
+
+        }
+
+
+        input.value = "";
+
+
+        closeMessageModal();
+
+
+        showAppAlert(
+            "Message sent successfully."
+        );
+
+
+        window.location.href =
+            "buyer-messages.html";
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Send message error:",
+            error
+        );
+
+        showAppAlert(
+            error.message ||
+            "Failed to send message."
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   USER / SESSION
+========================================================= */
+
+/*
+   This page is a Buyer page, but it must use the SAME
+   logged-in account as the Farmer and Buyer dashboards.
+
+   The account identity comes only from localStorage.user.
+   The registered roles come from that same account.
+
+   currentRole / selectedRole represent the dashboard
+   currently being viewed. They do NOT define the account's
+   registered roles.
+*/
+
+function getCurrentUser() {
+
+    try {
+
+        const storedUser =
+            JSON.parse(
+                sessionStorage.getItem("user") || "null"
+            );
+
+        if (storedUser) {
+            return storedUser;
+        }
+
+        /* Compatibility with the older session key. */
+        return JSON.parse(
+            sessionStorage.getItem("loggedInUser") || "null"
+        );
+
+    }
+    catch (error) {
+
+        return null;
+
+    }
+
+}
+
+
+const currentUser =
+    getCurrentUser();
+
+
+/* A protected Buyer page should have a logged-in account. */
+if (!currentUser) {
+
+    window.location.href = "login.html";
+
+}
+
+
+function getCurrentUserName() {
+
+    const user =
+        getCurrentUser();
+
+
+    if (!user) {
+        return "User";
+    }
+
+
+    const firstName =
+        user.first_name ||
+        user.firstName ||
+        "";
+
+
+    const lastName =
+        user.last_name ||
+        user.lastName ||
+        "";
+
+
+    const fullName =
+        `${firstName} ${lastName}`.trim();
+
+
+    return (
+        fullName ||
+        user.name ||
+        user.username ||
+        "User"
+    );
+
+}
+
+
+/* =========================================================
+   REGISTERED ROLES
+========================================================= */
+
+function normalizeRole(role) {
+
+    const value =
+        String(role || "")
+            .trim()
+            .toLowerCase();
+
+
+    if (value === "farmer") {
+        return "Farmer";
+    }
+
+
+    if (
+        value === "buyer" ||
+        value === "buyer/user"
+    ) {
+        return "Buyer";
+    }
+
+
+    if (
+        value === "expert" ||
+        value === "agricultural expert" ||
+        value === "agriculture expert" ||
+        value === "agri expert"
+    ) {
+        return "Agricultural Expert";
+    }
+
+
+    if (
+        value === "equipment provider" ||
+        value === "equipment_provider" ||
+        value === "equipmentprovider" ||
+        value === "provider"
+    ) {
+        return "Equipment Provider";
+    }
+
+
+    return String(role || "").trim();
+
+}
+
+
+function getRegisteredRoles() {
+
+    const user =
+        getCurrentUser();
+
+
+    let roles = [];
+
+
+    /* ONLY use roles belonging to the current account. */
+    if (
+        user &&
+        Array.isArray(user.roles)
+    ) {
+
+        roles =
+            [...user.roles];
+
+    }
+
+
+    /* Compatibility if roles were stored under another
+       property inside the same account object. */
+    if (
+        roles.length === 0 &&
+        user &&
+        Array.isArray(user.registeredRoles)
+    ) {
+
+        roles =
+            [...user.registeredRoles];
+
+    }
+
+
+    /* Compatibility with older single-role account data. */
+    if (
+        roles.length === 0 &&
+        user &&
+        user.role
+    ) {
+
+        roles = Array.isArray(user.role)
+            ? [...user.role]
+            : [user.role];
+
+    }
+
+
+    roles =
+        roles
+            .map(normalizeRole)
+            .filter(Boolean);
+
+
+    roles =
+        [...new Set(roles)];
+
+
+    /*
+       AgriConnect role rule:
+       - Buyer-only account -> Buyer only
+       - Farmer/Expert/Equipment Provider -> that role + Buyer
+
+       Never read another account's global role list.
+    */
+
+    const hasBuyer =
+        roles.some(
+            role =>
+                role.toLowerCase() === "buyer"
+        );
+
+
+    const hasNonBuyer =
+        roles.some(
+            role =>
+                role.toLowerCase() !== "buyer"
+        );
+
+
+    if (
+        hasNonBuyer &&
+        !hasBuyer
+    ) {
+
+        roles.push("Buyer");
+
+    }
+
+
+    /*
+       If there is absolutely no role information, this page
+       can safely identify itself only as Buyer because it is
+       a Buyer page. It must NOT invent Farmer or another user.
+    */
+
+    if (roles.length === 0) {
+
+        roles = ["Buyer"];
+
+    }
+
+
+    return [
+        ...new Set(roles)
+    ];
+
+}
+
+
+const registeredRoles =
+    getRegisteredRoles();
+
+
+/* =========================================================
+   CURRENT ROLE
+========================================================= */
+
+/* This file is the Buyer crop-search page, so Buyer is the
+   active role while this page is open. */
+
+const currentRole =
+    "Buyer";
+
+
+sessionStorage.setItem(
+    "currentRole",
+    "Buyer"
+);
+
+
+sessionStorage.setItem(
+    "selectedRole",
+    "buyer"
+);
+
+
+/* =========================================================
+   ROLE ICON
+========================================================= */
+
+function getRoleIcon(role) {
+
+    const value =
+        String(role || "")
+            .toLowerCase();
+
+
+    if (value === "buyer") {
+        return "🛒";
+    }
+
+
+    if (value === "farmer") {
+        return "🧑‍🌾";
+    }
+
+
+    if (value.includes("expert")) {
+        return "🧑‍🔬";
+    }
+
+
+    if (value.includes("equipment") || value.includes("provider")) {
+        return "🚜";
+    }
+
+
+    return "👤";
+
+}
+
+
+/* =========================================================
+   SWITCH ROLE
+========================================================= */
+
+function switchRole(role) {
+
+    const validRole =
+        registeredRoles.find(
+            registeredRole =>
+                registeredRole.toLowerCase() ===
+                String(role || "").toLowerCase()
+        );
+
+
+    /* Never switch to a role that does not belong to this account. */
+    if (!validRole) {
+        return;
+    }
+
+
+    const value =
+        validRole.toLowerCase();
+
+
+    sessionStorage.setItem(
+        "currentRole",
+        validRole
+    );
+
+
+    sessionStorage.setItem(
+        "selectedRole",
+        value === "agricultural expert"
+            ? "expert"
+            : value === "equipment provider"
+                ? "equipment_provider"
+                : value
+    );
+
+
+    if (value === "buyer") {
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+        return;
+
+    }
+
+
+    if (value === "farmer") {
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+        return;
+
+    }
+
+
+    if (value.includes("expert")) {
+
+        window.location.href =
+            "expert-dashboard.html";
+
+        return;
+
+    }
+
+
+    if (
+        value.includes("equipment") ||
+        value.includes("provider")
+    ) {
+
+        window.location.href =
+            "rental-dashboard.html";
+
+    }
+
+}
+
+
+/* =========================================================
+   UPDATE PROFILE
+========================================================= */
+
+function updateProfile() {
+
+    const name =
+        getCurrentUserName();
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        name;
+
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        name;
+
+
+    const initials =
+        name
+            .trim()
+            .split(/\s+/)
+            .filter(Boolean)
+            .map(word => word[0])
+            .join("")
+            .substring(0, 2)
+            .toUpperCase();
+
+
+    document.getElementById(
+        "profileAvatar"
+    ).textContent =
+        initials || "BU";
+
+}
+
+
+/* =========================================================
+   RENDER ROLES
+========================================================= */
+
+function renderRoles() {
+
+    const container =
+        document.getElementById(
+            "rolesContainer"
+        );
+
+
+    container.innerHTML = "";
+
+
+    registeredRoles.forEach(
+        role => {
+
+            const option =
+                document.createElement(
+                    "div"
+                );
+
+
+            option.className =
+                "role-option";
+
+
+            const selected =
+                role.toLowerCase() ===
+                "buyer";
+
+
+            if (selected) {
+
+                option.classList.add(
+                    "selected"
+                );
+
+            }
+
+
+            option.innerHTML = `
+
+                <span class="role-icon">
+                    ${getRoleIcon(role)}
+                </span>
+
+                <span>
+                    ${escapeHTML(role)}
+                </span>
+
+                <span
+                    class="role-check"
+                    style="display:${selected ? "block" : "none"}"
+                >
+                    ✓
+                </span>
+
+            `;
+
+
+            option.onclick =
+                function(event) {
+
+                    event.stopPropagation();
+
+                    switchRole(role);
+
+                };
+
+
+            container.appendChild(
+                option
+            );
+
+        }
+    );
+
+}
+
+
+/* =========================================================
+   NOTIFICATIONS
+========================================================= */
+
+function getNotifications() {
+
+    try {
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(
+                    "agriconnectNotifications"
+                ) || "[]"
+            );
+
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }
+
+    catch (error) {
+
+        return [];
+
+    }
+
+}
+
+
+
+/* =========================================================
+   UPDATE NOTIFICATION COUNT
+========================================================= */
+
+function updateNotificationCount() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const sidebarCount = document.getElementById("notificationCount");
+            const headerCount = document.getElementById("headerNotificationCount");
+            const badgeCount = document.getElementById("notificationBadge");
+
+            if (sidebarCount) sidebarCount.textContent = unread;
+            if (headerCount) headerCount.textContent = unread;
+            if (badgeCount) badgeCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+
+
+/* =========================================================
+   ADD NOTIFICATION
+========================================================= */
+
+function addNotification(
+    title,
+    message,
+    type
+) {
+
+    const notifications =
+        getNotifications();
+
+
+    notifications.unshift({
+
+        id:
+            Date.now(),
+
+        title:
+            title,
+
+        message:
+            message,
+
+        type:
+            type,
+
+        read:
+            false,
+
+        date:
+            new Date()
+                .toISOString()
+
+    });
+
+
+    localStorage.setItem(
+
+        "agriconnectNotifications",
+
+        JSON.stringify(
+            notifications
+        )
+
+    );
+
+
+    updateNotificationCount();
+
+}
+
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout(event) {
+
+    event.preventDefault();
+
+
+    showAppConfirm(
+        "Are you sure you want to logout?"
+    ).then(confirmLogout => {
+
+        if (
+            !confirmLogout
+        ) {
+            return;
+        }
+
+        sessionStorage.removeItem(
+            "currentRole"
+        );
+
+
+        sessionStorage.removeItem(
+            "loggedInUser"
+        );
+
+
+        window.location.href =
+            "login.html";
+
+    });
+
+}
+
+
+
+/* =========================================================
+   PAGE INITIALIZATION
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function() {
+
+
+        /* This is a Buyer page, so Buyer is the active role.
+           Registered roles still come from the current account. */
+
+        sessionStorage.setItem(
+            "currentRole",
+            "Buyer"
+        );
+
+        sessionStorage.setItem(
+            "selectedRole",
+            "buyer"
+        );
+
+
+
+        /* Load real crops from the backend */
+
+        loadCrops();
+
+
+
+        /* Profile */
+
+        updateProfile();
+
+
+        renderRoles();
+
+
+        updateNotificationCount();
+
+
+
+        /* Search */
+
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .addEventListener(
+                "input",
+                filterCrops
+            );
+
+
+
+        /* Category */
+
+        document
+            .getElementById(
+                "categorySelect"
+            )
+            .addEventListener(
+                "change",
+                filterCrops
+            );
+
+
+
+        /* Quantity */
+
+        document
+            .getElementById(
+                "quantityInput"
+            )
+            .addEventListener(
+                "input",
+                updateTotal
+            );
+
+
+
+        /* Profile dropdown */
+
+        document
+            .getElementById(
+                "profileButton"
+            )
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    event.stopPropagation();
+
+
+                    const dropdown =
+                        document.getElementById(
+                            "profileDropdown"
+                        );
+
+
+                    dropdown.classList.toggle(
+                        "show"
+                    );
+
+
+                    document.getElementById(
+                        "profileArrow"
+                    ).textContent =
+
+                        dropdown.classList.contains(
+                            "show"
+                        )
+
+                            ? "▲"
+
+                            : "▼";
+
+                }
+            );
+
+
+
+        /* Close dropdown */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                const profileArea =
+                    document.querySelector(
+                        ".profile-area"
+                    );
+
+
+                if (
+                    profileArea &&
+                    !profileArea.contains(
+                        event.target
+                    )
+                ) {
+
+                    document
+                        .getElementById(
+                            "profileDropdown"
+                        )
+                        .classList.remove(
+                            "show"
+                        );
+
+
+                    document.getElementById(
+                        "profileArrow"
+                    ).textContent =
+                        "▼";
+
+                }
+
+            }
+        );
+
+
+
+        /* Close message modal
+           when clicking outside */
+
+        document
+            .getElementById(
+                "messageModal"
+            )
+            .addEventListener(
+                "click",
+                function(event) {
+
+                    if (
+                        event.target ===
+                        event.currentTarget
+                    ) {
+
+                        closeMessageModal();
+
+                    }
+
+                }
+            );
+
+
+
+        /*
+           If the Buyer Dashboard sends
+           a crop search term, use it.
+        */
+
+        const savedSearch =
+            localStorage.getItem(
+                "searchCrop"
+            );
+
+
+        if (
+            savedSearch
+        ) {
+
+            document.getElementById(
+                "searchInput"
+            ).value =
+                savedSearch;
+
+
+            localStorage.removeItem(
+                "searchCrop"
+            );
+
+
+            filterCrops();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =========================================================
+   SEARCH CROPS BY IMAGE
+========================================================= */
+
+const cropImageButton = document.getElementById("cropImageButton");
+const cropImageInput = document.getElementById("cropImageInput");
+
+if (cropImageButton && cropImageInput) {
+
+    cropImageButton.addEventListener("click", function () {
+        cropImageInput.click();
+    });
+
+    cropImageInput.addEventListener("change", async function () {
+
+        const file = cropImageInput.files[0];
+
+        if (!file) return;
+
+        const info = document.getElementById("cropImageSearchInfo");
+        const imageURL = URL.createObjectURL(file);
+
+        info.style.display = "flex";
+        info.innerHTML = `
+            <img src="${imageURL}" alt="Selected search photo" style="width:40px;height:40px;object-fit:cover;border-radius:6px;">
+            <span>Searching for visually similar crops...</span>
+        `;
+
+        try {
+
+            const formData = new FormData();
+            formData.append("search_image", file);
+
+            const response = await fetch("/api/image-search/crops", {
+                method: "POST",
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                throw new Error(data.message || "Image search failed.");
+            }
+
+            const matches = Array.isArray(data.results) ? data.results : [];
+
+            info.innerHTML = `
+                <img src="${imageURL}" alt="Selected search photo" style="width:40px;height:40px;object-fit:cover;border-radius:6px;">
+                <span>${matches.length} visually similar crop${matches.length === 1 ? "" : "s"} found</span>
+            `;
+
+            /*
+               Group the matched listings by crop name, the same
+               way loadCrops() does, so the existing crop-grid
+               rendering and click-through behavior just works.
+            */
+            const groups = new Map();
+
+            matches.forEach(row => {
+
+                const key = row.crop_name || "Crop";
+
+                if (!groups.has(key)) {
+
+                    groups.set(key, {
+                        id: key,
+                        name: key,
+                        description: "",
+                        image: cropImageUrl(row),
+                        listings: []
+                    });
+
+                }
+
+                groups.get(key).listings.push(row);
+
+            });
+
+            const imageResults =
+                Array.from(groups.values()).map(group => {
+
+                    group.description =
+                        `${group.listings.length} listing${group.listings.length === 1 ? "" : "s"} from farmers`;
+
+                    return group;
+
+                });
+
+            renderCrops(imageResults);
+
+        } catch (error) {
+
+            console.error("Crop image search failed:", error);
+            info.innerHTML = `<span>Image search failed. Please try again.</span>`;
+
+        }
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>

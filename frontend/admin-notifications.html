@@ -1,0 +1,3205 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>AgriConnect - Admin Notifications</title>
+
+<style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #182033;
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   LAYOUT
+===================================================== */
+
+.dashboard {
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    min-width: 255px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #281064 0%,
+            #170a45 100%
+        );
+
+    color: white;
+    z-index: 1000;
+
+    display: flex;
+    flex-direction: column;
+
+    overflow-y: auto;
+}
+
+
+/* =====================================================
+   SIDEBAR LOGO
+===================================================== */
+
+.sidebar-logo {
+    height: 86px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.10);
+}
+
+.sidebar-logo img {
+    width: 160px;
+    height: auto;
+    max-height: 62px;
+
+    object-fit: contain;
+    display: block;
+}
+
+
+/* =====================================================
+   SIDEBAR CONTENT
+===================================================== */
+
+.sidebar-content {
+    flex: 1;
+    padding: 13px 10px;
+}
+
+
+/* =====================================================
+   NAVIGATION
+===================================================== */
+
+.nav-item {
+    width: 100%;
+    min-height: 45px;
+
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: background 0.2s;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.nav-item.active {
+    background:
+        linear-gradient(
+            90deg,
+            #7131c8,
+            #5520a7
+        );
+}
+
+.nav-icon {
+    width: 22px;
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+.nav-arrow {
+    font-size: 12px;
+
+    transition:
+        transform 0.2s;
+}
+
+
+/* =====================================================
+   SECTION TITLE
+===================================================== */
+
+.section-title {
+    color: rgba(255,255,255,0.75);
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    padding:
+        14px 12px 10px;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.4px;
+}
+
+
+/* =====================================================
+   SUBMENU
+===================================================== */
+
+.submenu {
+    display: none;
+
+    padding-left: 35px;
+
+    position: relative;
+
+    margin-bottom: 5px;
+}
+
+.submenu.show {
+    display: block;
+}
+
+.submenu::before {
+    content: "";
+
+    position: absolute;
+
+    left: 24px;
+    top: 3px;
+    bottom: 5px;
+
+    width: 1px;
+
+    background:
+        rgba(255,255,255,0.25);
+}
+
+.submenu a {
+    display: block;
+
+    color:
+        rgba(255,255,255,0.9);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    padding: 10px;
+
+    border-radius: 6px;
+
+    position: relative;
+}
+
+.submenu a::before {
+    content: "";
+
+    position: absolute;
+
+    left: -14px;
+    top: 15px;
+
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #7353b9;
+}
+
+.submenu a:hover {
+    background:
+        rgba(255,255,255,0.08);
+}
+
+
+/* =====================================================
+   SIDEBAR BOTTOM
+===================================================== */
+
+.sidebar-bottom {
+    padding:
+        8px 10px 15px;
+}
+
+.sidebar-divider {
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.13);
+
+    margin:
+        5px 12px 12px;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 50px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e8ee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    padding: 0 27px;
+}
+
+.header-right {
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =====================================================
+   HEADER NOTIFICATION
+===================================================== */
+
+.header-notification {
+    position: relative;
+
+    width: 40px;
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s;
+}
+
+.header-notification:hover {
+    transform: scale(1.06);
+}
+
+.header-badge {
+    position: absolute;
+
+    top: 0;
+    right: -2px;
+
+    min-width: 18px;
+    height: 18px;
+
+    padding: 0 4px;
+
+    border-radius: 50%;
+
+    background: #ff3b30;
+
+    color: white;
+
+    font-size: 10px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    cursor: pointer;
+
+    position: relative;
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+
+    border:
+        2px solid #6429c1;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    color: #6429c1;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    background: white;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.profile-role {
+    font-size: 10px;
+    color: #6429c1;
+    margin-top: 2px;
+}
+
+.profile-arrow {
+    font-size: 11px;
+    margin-left: 5px;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+    padding:
+        22px 18px 28px;
+}
+
+
+/* =====================================================
+   PAGE HEADER
+===================================================== */
+
+.page-header {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    margin-bottom: 19px;
+}
+
+.page-header h1 {
+    font-size: 29px;
+
+    color: #151b27;
+
+    margin-bottom: 6px;
+
+    font-weight: 700;
+}
+
+.page-header p {
+    font-size: 13px;
+
+    color: #596575;
+
+    line-height: 18px;
+}
+
+.mark-all-btn {
+    border:
+        1px solid #8d58df;
+
+    background: white;
+
+    color: #6523bd;
+
+    border-radius: 6px;
+
+    height: 40px;
+
+    padding:
+        0 16px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.mark-all-btn:hover {
+    background: #f7f2ff;
+}
+
+
+/* =====================================================
+   SUMMARY
+===================================================== */
+
+.summary-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+.summary-card {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    min-height: 101px;
+
+    padding: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+.summary-icon {
+    width: 50px;
+    height: 50px;
+
+    min-width: 50px;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 24px;
+}
+
+.summary-icon.purple {
+    background: #eee3ff;
+    color: #6522c5;
+}
+
+.summary-icon.red {
+    background: #ffe5e5;
+    color: #ef2828;
+}
+
+.summary-icon.green {
+    background: #e4f7e8;
+    color: #17853b;
+}
+
+.summary-icon.blue {
+    background: #e7efff;
+    color: #2167d2;
+}
+
+.summary-title {
+    font-size: 12px;
+
+    color: #555e6b;
+
+    font-weight: bold;
+
+    margin-bottom: 4px;
+}
+
+.summary-value {
+    font-size: 24px;
+
+    font-weight: bold;
+
+    color: #171c27;
+
+    margin-bottom: 4px;
+}
+
+.summary-bottom {
+    font-size: 10px;
+
+    color: #687180;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   FILTER
+===================================================== */
+
+.filter-card {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    padding: 12px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    margin-bottom: 13px;
+}
+
+.search-box {
+    position: relative;
+
+    flex: 1;
+}
+
+.search-box span {
+    position: absolute;
+
+    left: 12px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    font-size: 17px;
+
+    color: #707987;
+}
+
+.search-box input {
+    width: 100%;
+
+    height: 41px;
+
+    border:
+        1px solid #dfe3e8;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    padding:
+        0 12px 0 38px;
+
+    font-size: 12px;
+}
+
+.search-box input:focus {
+    border-color: #7025c5;
+}
+
+
+/* =====================================================
+   CATEGORY BUTTONS
+===================================================== */
+
+.category-buttons {
+    display: flex;
+
+    gap: 6px;
+}
+
+.category-btn {
+    height: 41px;
+
+    padding:
+        0 15px;
+
+    border:
+        1px solid #dfe3e8;
+
+    background: white;
+
+    border-radius: 7px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+
+    color: #4d5561;
+
+    font-weight: bold;
+}
+
+.category-btn:hover {
+    background: #f7f2ff;
+}
+
+.category-btn.active {
+    background: #6824c0;
+
+    border-color: #6824c0;
+
+    color: white;
+}
+
+
+/* =====================================================
+   NOTIFICATION CARD
+===================================================== */
+
+.notification-card {
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    overflow: hidden;
+}
+
+
+/* =====================================================
+   NOTIFICATION HEADER
+===================================================== */
+
+.notification-header {
+    height: 57px;
+
+    padding:
+        0 16px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.notification-header-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+}
+
+.notification-header-icon {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 8px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #eee3ff;
+
+    color: #6523bd;
+
+    font-size: 18px;
+}
+
+.notification-header-title {
+    font-size: 15px;
+
+    font-weight: bold;
+}
+
+.unread-count {
+    background: #eee3ff;
+
+    color: #6523bd;
+
+    padding:
+        5px 9px;
+
+    border-radius: 10px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+/* =====================================================
+   NOTIFICATION ITEM
+===================================================== */
+
+.notification-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    padding:
+        15px 16px;
+
+    border-bottom:
+        1px solid #edf0f3;
+
+    transition:
+        background 0.2s;
+
+    position: relative;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-item:hover {
+    background: #faf9fd;
+}
+
+.notification-item.unread {
+    background: #fbf8ff;
+}
+
+.notification-item.unread::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    top: 0;
+    bottom: 0;
+
+    width: 3px;
+
+    background: #6824c0;
+}
+
+
+/* =====================================================
+   NOTIFICATION ICON
+===================================================== */
+
+.notification-icon {
+    width: 46px;
+    height: 46px;
+
+    min-width: 46px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+.registration-icon {
+    background: #eee3ff;
+    color: #6724c5;
+}
+
+.issue-icon {
+    background: #ffe5e5;
+    color: #ed2929;
+}
+
+.system-icon {
+    background: #e5f7ea;
+    color: #17843a;
+}
+
+
+/* =====================================================
+   NOTIFICATION CONTENT
+===================================================== */
+
+.notification-content {
+    flex: 1;
+
+    min-width: 0;
+}
+
+.notification-title {
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 5px;
+
+    color: #202631;
+}
+
+.notification-description {
+    font-size: 12px;
+
+    color: #626c79;
+
+    line-height: 17px;
+
+    margin-bottom: 6px;
+}
+
+.notification-time {
+    font-size: 10px;
+
+    color: #8a929d;
+}
+
+
+/* =====================================================
+   NOTIFICATION ACTIONS
+===================================================== */
+
+.notification-actions {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+.view-notification {
+    height: 34px;
+
+    padding:
+        0 12px;
+
+    border:
+        1px solid #8d58df;
+
+    background: white;
+
+    border-radius: 6px;
+
+    color: #6523bd;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+}
+
+.view-notification:hover {
+    background: #f6f0ff;
+}
+
+.read-btn {
+    width: 34px;
+    height: 34px;
+
+    border:
+        1px solid #dfe3e8;
+
+    background: white;
+
+    border-radius: 6px;
+
+    cursor: pointer;
+
+    font-size: 13px;
+
+    color: #65707d;
+}
+
+.read-btn:hover {
+    background: #f1f2f4;
+}
+
+
+/* =====================================================
+   EMPTY
+===================================================== */
+
+.no-results {
+    display: none;
+
+    text-align: center;
+
+    padding:
+        55px 20px;
+
+    color: #7b8490;
+}
+
+.no-results-icon {
+    font-size: 42px;
+
+    margin-bottom: 12px;
+}
+
+.no-results h3 {
+    font-size: 15px;
+
+    color: #303742;
+
+    margin-bottom: 6px;
+}
+
+.no-results p {
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   PAGINATION
+===================================================== */
+
+.pagination {
+    height: 55px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+    gap: 6px;
+
+    padding:
+        0 15px;
+
+    border-top:
+        1px solid #edf0f3;
+}
+
+.page-btn {
+    width: 31px;
+    height: 31px;
+
+    border:
+        1px solid #dfe3e8;
+
+    background: white;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+.page-btn:hover {
+    background: #f7f2ff;
+}
+
+.page-btn.active {
+    background: #6523bd;
+
+    color: white;
+
+    border-color: #6523bd;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-overlay {
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(16,10,30,0.52);
+
+    display: none;
+
+    align-items: center;
+    justify-content: center;
+
+    z-index: 5000;
+
+    padding: 20px;
+}
+
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal {
+    width: 90%;
+
+    max-width: 600px;
+
+    background: white;
+
+    border-radius: 11px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 20px 60px
+        rgba(0,0,0,0.25);
+}
+
+.modal-header {
+    padding:
+        17px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+.modal-header h2 {
+    font-size: 18px;
+
+    color: #202631;
+}
+
+.close-btn {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f2f4;
+
+    cursor: pointer;
+
+    font-size: 18px;
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-notification {
+    display: flex;
+
+    gap: 14px;
+
+    margin-bottom: 20px;
+}
+
+.modal-notification-icon {
+    width: 50px;
+    height: 50px;
+
+    min-width: 50px;
+
+    border-radius: 50%;
+
+    background: #eee3ff;
+
+    color: #6724c5;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    font-size: 21px;
+}
+
+.modal-notification h3 {
+    font-size: 15px;
+
+    margin-bottom: 7px;
+}
+
+.modal-notification p {
+    font-size: 12px;
+
+    color: #626c79;
+
+    line-height: 17px;
+}
+
+.modal-details {
+    background: #f8f9fb;
+
+    border-radius: 8px;
+
+    padding: 14px;
+}
+
+.modal-detail {
+    display: flex;
+
+    justify-content: space-between;
+
+    padding: 9px 0;
+
+    border-bottom:
+        1px solid #e7e9ed;
+}
+
+.modal-detail:last-child {
+    border-bottom: none;
+}
+
+.modal-label {
+    font-size: 10px;
+
+    color: #737c88;
+}
+
+.modal-value {
+    font-size: 10px;
+
+    font-weight: bold;
+
+    color: #252c37;
+}
+
+.modal-footer {
+    padding:
+        14px 20px;
+
+    border-top:
+        1px solid #edf0f3;
+
+    display: flex;
+
+    justify-content: flex-end;
+}
+
+.close-modal-btn {
+    padding:
+        10px 16px;
+
+    border:
+        1px solid #d8dce2;
+
+    background: white;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+    position: fixed;
+
+    left: 255px;
+    right: 0;
+    bottom: 0;
+
+    height: 42px;
+
+    background: #004d2b;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 13px;
+
+    font-size: 10px;
+
+    z-index: 900;
+}
+
+.footer a {
+    color: white;
+
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media(max-width:1100px) {
+
+    .summary-grid {
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media(max-width:900px) {
+
+    .sidebar {
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s;
+    }
+
+    .sidebar.open {
+        transform:
+            translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+    .footer {
+        left: 0;
+    }
+
+}
+
+
+@media(max-width:650px) {
+
+    .summary-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .filter-card {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .category-buttons {
+        width: 100%;
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .category-btn {
+        width: 100%;
+    }
+
+    .page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+
+    .notification-item {
+        align-items: flex-start;
+
+        flex-wrap: wrap;
+    }
+
+    .notification-content {
+        min-width:
+            calc(100% - 60px);
+    }
+
+    .notification-actions {
+        width: 100%;
+
+        margin-left: 60px;
+    }
+
+    .profile-role,
+    .profile-arrow {
+        display: none;
+    }
+
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="admin-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- MANAGEMENT -->
+
+        <div class="section-title">
+            MANAGEMENT
+        </div>
+
+
+        <!-- MANAGE USERS -->
+
+        <div
+            class="nav-item"
+            onclick="toggleUsers()"
+        >
+
+            <span class="nav-icon">
+                ♙
+            </span>
+
+            <span class="nav-label">
+                Manage Users
+            </span>
+
+            <span
+                class="nav-arrow"
+                id="userArrow"
+            >
+                ▼
+            </span>
+
+        </div>
+
+
+        <div
+            class="submenu"
+            id="userSubmenu"
+        >
+
+            <a href="admin-manage-users.html?type=farmer">
+                Farmers
+            </a>
+
+            <a href="admin-manage-users.html?type=buyer">
+                Buyers
+            </a>
+
+            <a href="admin-manage-users.html?type=expert">
+                Agri Experts
+            </a>
+
+            <a href="admin-manage-users.html?type=provider">
+                Equipment Providers
+            </a>
+
+        </div>
+
+
+        <!-- INSPECT REGISTRATION -->
+
+        <a
+            href="admin-registrations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▤
+            </span>
+
+            <span class="nav-label">
+                Inspect Registration
+            </span>
+
+        </a>
+
+
+        <!-- REPORTED CONFLICTS -->
+
+        <a
+            href="admin-conflicts.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚿
+            </span>
+
+            <span class="nav-label">
+                Reported Conflicts
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="admin-notifications.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="admin-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="admin-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="admin-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="
+                logout();
+                return false;
+            "
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="header-right">
+
+
+            <div
+                class="header-notification"
+                onclick="
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    })
+                "
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="header-badge"
+                    id="headerBadge"
+                >
+                    5
+                </span>
+
+            </div>
+
+
+            <div class="profile">
+
+                <div class="profile-avatar">
+                    AI
+                </div>
+
+                <div>
+
+                    <div class="profile-name">
+                        Admin
+                    </div>
+
+                    <div class="profile-role">
+                        Super Admin
+                    </div>
+
+                </div>
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT
+    ===================================================== -->
+
+    <section class="content">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="page-header">
+
+            <div>
+
+                <h1>
+                    Notifications
+                </h1>
+
+                <p>
+                    Stay updated about registrations,
+                    reported issues and system activities.
+                </p>
+
+            </div>
+
+
+            <button
+                class="mark-all-btn"
+                onclick="markAllRead()"
+            >
+                ✓ Mark All as Read
+            </button>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUMMARY CARDS
+        ================================================= -->
+
+        <div class="summary-grid">
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon purple">
+                    ♙
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        New Registrations
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="registrationCount"
+                    >
+                        2
+                    </div>
+
+                    <div class="summary-bottom">
+                        Awaiting Review
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon red">
+                    ⚠
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        Reported Issues
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="issueCount"
+                    >
+                        2
+                    </div>
+
+                    <div class="summary-bottom">
+                        Need Attention
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon green">
+                    ✓
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        System Updates
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="systemCount"
+                    >
+                        2
+                    </div>
+
+                    <div class="summary-bottom">
+                        Recent Updates
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="summary-card">
+
+                <div class="summary-icon blue">
+                    🔔
+                </div>
+
+                <div>
+
+                    <div class="summary-title">
+                        Unread Notifications
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="unreadCount"
+                    >
+                        5
+                    </div>
+
+                    <div class="summary-bottom">
+                        Requires Attention
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             FILTER
+        ================================================= -->
+
+        <div class="filter-card">
+
+
+            <div class="search-box">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search notifications..."
+                >
+
+            </div>
+
+
+            <div class="category-buttons">
+
+
+                <button
+                    class="category-btn active"
+                    onclick="
+                        filterCategory(
+                            'all',
+                            this
+                        )
+                    "
+                >
+                    All
+                </button>
+
+
+                <button
+                    class="category-btn"
+                    onclick="
+                        filterCategory(
+                            'registration',
+                            this
+                        )
+                    "
+                >
+                    Registrations
+                </button>
+
+
+                <button
+                    class="category-btn"
+                    onclick="
+                        filterCategory(
+                            'issue',
+                            this
+                        )
+                    "
+                >
+                    Reported Issues
+                </button>
+
+
+                <button
+                    class="category-btn"
+                    onclick="
+                        filterCategory(
+                            'system',
+                            this
+                        )
+                    "
+                >
+                    System Updates
+                </button>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             NOTIFICATION LIST
+        ================================================= -->
+
+        <div class="notification-card">
+
+
+            <div class="notification-header">
+
+                <div class="notification-header-left">
+
+                    <div class="notification-header-icon">
+                        🔔
+                    </div>
+
+                    <span class="notification-header-title">
+                        Recent Notifications
+                    </span>
+
+                    <span
+                        class="unread-count"
+                        id="listUnreadCount"
+                    >
+                        5 Unread
+                    </span>
+
+                </div>
+
+            </div>
+
+
+
+            <div id="notificationListContainer"></div>
+
+
+            <!-- NO RESULTS -->
+
+            <div
+                class="no-results"
+                id="noResults"
+            >
+
+                <div class="no-results-icon">
+                    🔕
+                </div>
+
+                <h3>
+                    No notifications found
+                </h3>
+
+                <p>
+                    Try another search or notification category.
+                </p>
+
+            </div>
+
+
+
+            <!-- PAGINATION -->
+
+            <div class="pagination">
+
+                <button class="page-btn">
+                    ‹
+                </button>
+
+                <button class="page-btn active">
+                    1
+                </button>
+
+                <button class="page-btn">
+                    2
+                </button>
+
+                <button class="page-btn">
+                    3
+                </button>
+
+                <button class="page-btn">
+                    ›
+                </button>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+</div>
+
+
+
+<!-- =====================================================
+     MODAL
+===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="notificationModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Notification Details
+            </h2>
+
+            <button
+                class="close-btn"
+                onclick="closeModal()"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="modal-body">
+
+
+            <div class="modal-notification">
+
+                <div
+                    class="modal-notification-icon"
+                    id="modalIcon"
+                >
+                    🔔
+                </div>
+
+                <div>
+
+                    <h3 id="modalTitle">
+                        Notification
+                    </h3>
+
+                    <p id="modalDescription">
+                        Notification details.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="modal-details">
+
+
+                <div class="modal-detail">
+
+                    <span class="modal-label">
+                        Category
+                    </span>
+
+                    <span
+                        class="modal-value"
+                        id="modalCategory"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="modal-detail">
+
+                    <span class="modal-label">
+                        Status
+                    </span>
+
+                    <span
+                        class="modal-value"
+                        id="modalStatus"
+                    >
+                        Unread
+                    </span>
+
+                </div>
+
+
+                <div class="modal-detail">
+
+                    <span class="modal-label">
+                        Received
+                    </span>
+
+                    <span
+                        class="modal-value"
+                        id="modalTime"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="close-modal-btn"
+                onclick="closeModal()"
+            >
+                Close
+            </button>
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <span>
+        🌱 © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>|</span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+
+<script>
+
+/* =====================================================
+   MANAGE USERS SUBMENU
+===================================================== */
+
+function toggleUsers() {
+
+    const submenu =
+        document.getElementById(
+            "userSubmenu"
+        );
+
+    const arrow =
+        document.getElementById(
+            "userArrow"
+        );
+
+    if (
+        submenu.classList.contains(
+            "show"
+        )
+    ) {
+
+        submenu.classList.remove(
+            "show"
+        );
+
+        arrow.textContent = "▼";
+
+    }
+
+    else {
+
+        submenu.classList.add(
+            "show"
+        );
+
+        arrow.textContent = "▲";
+
+    }
+
+}
+
+
+/* =====================================================
+   CURRENT CATEGORY
+===================================================== */
+
+let currentCategory = "all";
+
+
+/* =====================================================
+   CATEGORY FILTER
+===================================================== */
+
+function filterCategory(
+    category,
+    button
+) {
+
+    currentCategory =
+        category;
+
+    document
+        .querySelectorAll(
+            ".category-btn"
+        )
+        .forEach(
+            btn => {
+
+                btn.classList.remove(
+                    "active"
+                );
+
+            }
+        );
+
+    button.classList.add(
+        "active"
+    );
+
+    applyFilters();
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        applyFilters
+    );
+
+
+/* =====================================================
+   APPLY FILTERS
+===================================================== */
+
+function applyFilters() {
+
+    const search =
+        document
+            .getElementById(
+                "searchInput"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    const notifications =
+        document.querySelectorAll(
+            ".notification-item"
+        );
+
+
+    let visible = 0;
+
+
+    notifications.forEach(
+        item => {
+
+            const category =
+                item.dataset.category;
+
+            const text =
+                item.textContent
+                    .toLowerCase();
+
+            const matchesCategory =
+                currentCategory === "all" ||
+                category === currentCategory;
+
+            const matchesSearch =
+                search === "" ||
+                text.includes(search);
+
+
+            if (
+                matchesCategory &&
+                matchesSearch
+            ) {
+
+                item.style.display =
+                    "flex";
+
+                visible++;
+
+            }
+
+            else {
+
+                item.style.display =
+                    "none";
+
+            }
+
+        }
+    );
+
+
+    const noResults =
+        document.getElementById(
+            "noResults"
+        );
+
+
+    noResults.style.display =
+        visible === 0
+            ? "block"
+            : "none";
+
+}
+
+
+/* =====================================================
+   MARK SINGLE AS READ
+===================================================== */
+
+function getAdminUserId() {
+
+    try {
+        const raw = sessionStorage.getItem("user");
+        const parsed = raw ? JSON.parse(raw) : null;
+        return parsed && parsed.id;
+    } catch (error) {
+        return null;
+    }
+
+}
+
+
+async function markRead(button) {
+
+    const item =
+        button.closest(
+            ".notification-item"
+        );
+
+    const notificationId =
+        item.dataset.notificationId;
+
+    if (
+        item.classList.contains(
+            "unread"
+        )
+    ) {
+
+        item.classList.remove(
+            "unread"
+        );
+
+        updateUnreadCount();
+
+        if (notificationId) {
+
+            try {
+
+                await fetch(
+                    `/api/notifications/${notificationId}/read`,
+                    {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ user_id: getAdminUserId() })
+                    }
+                );
+
+            } catch (error) {
+
+                console.error("Unable to mark notification as read:", error);
+
+            }
+
+            await updateHeaderNotificationBadge();
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   MARK ALL AS READ
+===================================================== */
+
+async function markAllRead() {
+
+    document
+        .querySelectorAll(
+            ".notification-item.unread"
+        )
+        .forEach(
+            item => {
+
+                item.classList.remove(
+                    "unread"
+                );
+
+            }
+        );
+
+
+    updateUnreadCount();
+
+    const userId = getAdminUserId();
+
+    if (userId) {
+
+        try {
+
+            await fetch(
+                "/api/notifications/read-all",
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: userId })
+                }
+            );
+
+        } catch (error) {
+
+            console.error("Unable to mark all notifications as read:", error);
+
+        }
+
+        updateHeaderNotificationBadge();
+
+    }
+
+}
+
+
+/* =====================================================
+   UPDATE UNREAD COUNT
+===================================================== */
+
+function updateUnreadCount() {
+
+    const unread =
+        document.querySelectorAll(
+            ".notification-item.unread"
+        ).length;
+
+
+    document
+        .getElementById(
+            "unreadCount"
+        )
+        .textContent =
+        unread;
+
+
+    document
+        .getElementById(
+            "listUnreadCount"
+        )
+        .textContent =
+        unread + " Unread";
+
+
+    const badge =
+        document.getElementById(
+            "headerBadge"
+        );
+
+
+    if (unread > 0) {
+
+        badge.textContent =
+            unread;
+
+        badge.style.display =
+            "flex";
+
+    }
+
+    else {
+
+        badge.style.display =
+            "none";
+
+    }
+
+}
+
+
+/* =====================================================
+   OPEN REGISTRATION
+===================================================== */
+
+function openRegistration() {
+
+    window.location.href =
+        "admin-registrations.html";
+
+}
+
+
+/* =====================================================
+   OPEN CONFLICTS
+===================================================== */
+
+function openConflicts() {
+
+    window.location.href =
+        "admin-conflicts.html";
+
+}
+
+
+/* =====================================================
+   SYSTEM NOTIFICATION
+===================================================== */
+
+function openSystemNotification() {
+
+    openModal(
+        "AgriConnect System Update",
+        "AgriConnect system information and platform updates.",
+        "System Update",
+        "Recent"
+    );
+
+}
+
+
+/* =====================================================
+   OPEN MODAL
+===================================================== */
+
+function openModal(
+    title,
+    description,
+    category,
+    time
+) {
+
+    document
+        .getElementById(
+            "modalTitle"
+        )
+        .textContent =
+        title;
+
+
+    document
+        .getElementById(
+            "modalDescription"
+        )
+        .textContent =
+        description;
+
+
+    document
+        .getElementById(
+            "modalCategory"
+        )
+        .textContent =
+        category;
+
+
+    document
+        .getElementById(
+            "modalTime"
+        )
+        .textContent =
+        time;
+
+
+    document
+        .getElementById(
+            "modalStatus"
+        )
+        .textContent =
+        "Information";
+
+
+    document
+        .getElementById(
+            "notificationModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal() {
+
+    document
+        .getElementById(
+            "notificationModal"
+        )
+        .classList.remove(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL OUTSIDE
+===================================================== */
+
+document
+    .getElementById(
+        "notificationModal"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            if (
+                event.target.id ===
+                "notificationModal"
+            ) {
+
+                closeModal();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout() {
+
+    const confirmed =
+        await customConfirm("Are you sure you want to logout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    localStorage.removeItem(
+        "adminLoggedIn"
+    );
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+/* =====================================================
+   LOAD LIVE NOTIFICATIONS
+   (admin has no user row in the database - see
+   notificationController.js - so these are built from
+   the real pending registrations and reports instead of
+   the generic notifications table.)
+===================================================== */
+
+function formatAdminRelativeTime(isoString) {
+
+    const date = new Date(isoString);
+
+    if (isNaN(date)) {
+        return "";
+    }
+
+    const diffMinutes =
+        Math.floor((Date.now() - date.getTime()) / 60000);
+
+    if (diffMinutes < 1) {
+        return "Just now";
+    }
+
+    if (diffMinutes < 60) {
+        return diffMinutes + " minute" + (diffMinutes === 1 ? "" : "s") + " ago";
+    }
+
+    const diffHours = Math.floor(diffMinutes / 60);
+
+    if (diffHours < 24) {
+        return diffHours + " hour" + (diffHours === 1 ? "" : "s") + " ago";
+    }
+
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffDays === 1) {
+        return "Yesterday";
+    }
+
+    return diffDays + " days ago";
+
+}
+
+
+function escapeHtmlAdmin(value) {
+
+    const div = document.createElement("div");
+    div.textContent = value == null ? "" : String(value);
+    return div.innerHTML;
+
+}
+
+
+function registrationTypeLabel(registrationType) {
+
+    if (registrationType === "expert") {
+        return "an Agricultural Expert";
+    }
+
+    if (registrationType === "equipment_provider") {
+        return "an Equipment Provider";
+    }
+
+    return "a new role";
+
+}
+
+
+function buildRegistrationNotificationHtml(row) {
+
+    const name =
+        escapeHtmlAdmin(`${row.first_name || ""} ${row.last_name || ""}`.trim());
+
+    const roleLabel =
+        registrationTypeLabel(row.registration_type);
+
+    return `
+        <div class="notification-item unread" data-category="registration">
+            <div class="notification-icon registration-icon">
+                🎓
+            </div>
+            <div class="notification-content">
+                <div class="notification-title">
+                    New ${row.registration_type === "expert" ? "Agricultural Expert" : "Equipment Provider"} Registration
+                </div>
+                <div class="notification-description">
+                    ${name || "A user"} has submitted an application to join AgriConnect as ${roleLabel}.
+                </div>
+                <div class="notification-time">
+                    ${formatAdminRelativeTime(row.created_at)}
+                </div>
+            </div>
+            <div class="notification-actions">
+                <button class="view-notification" onclick="openRegistration()">
+                    View Registration →
+                </button>
+                <button class="read-btn" onclick="markRead(this)" title="Mark as read">
+                    ✓
+                </button>
+            </div>
+        </div>
+    `;
+
+}
+
+
+function buildReportNotificationHtml(row) {
+
+    const name =
+        escapeHtmlAdmin(`${row.first_name || ""} ${row.last_name || ""}`.trim());
+
+    return `
+        <div class="notification-item unread" data-category="issue">
+            <div class="notification-icon issue-icon">
+                ⚠
+            </div>
+            <div class="notification-content">
+                <div class="notification-title">
+                    New Reported Issue: ${escapeHtmlAdmin(row.subject)}
+                </div>
+                <div class="notification-description">
+                    ${name || "A user"} reported an issue.${row.description ? " " + escapeHtmlAdmin(row.description) : ""}
+                </div>
+                <div class="notification-time">
+                    ${formatAdminRelativeTime(row.created_at)}
+                </div>
+            </div>
+            <div class="notification-actions">
+                <button class="view-notification" onclick="openConflicts()">
+                    View Issue →
+                </button>
+                <button class="read-btn" onclick="markRead(this)">
+                    ✓
+                </button>
+            </div>
+        </div>
+    `;
+
+}
+
+
+function buildNotificationHtml(row) {
+
+    const isRegistration = row.type === "registration";
+    const isReport = row.type === "report";
+
+    const icon =
+        isRegistration ? "🎓" : isReport ? "⚠" : "⚙";
+
+    const iconClass =
+        isRegistration ? "registration-icon" : isReport ? "issue-icon" : "system-icon";
+
+    const category =
+        isRegistration ? "registration" : isReport ? "issue" : "system";
+
+    const viewAction =
+        isRegistration
+            ? `<button class="view-notification" onclick="openRegistration()">View Registration →</button>`
+            : isReport
+                ? `<button class="view-notification" onclick="openConflicts()">View Issue →</button>`
+                : "";
+
+    return `
+        <div class="notification-item${row.is_read ? "" : " unread"}" data-category="${category}" data-notification-id="${row.id}">
+            <div class="notification-icon ${iconClass}">
+                ${icon}
+            </div>
+            <div class="notification-content">
+                <div class="notification-title">
+                    ${escapeHtmlAdmin(row.title || "Notification")}
+                </div>
+                <div class="notification-description">
+                    ${escapeHtmlAdmin(row.message || "")}
+                </div>
+                <div class="notification-time">
+                    ${formatAdminRelativeTime(row.created_at)}
+                </div>
+            </div>
+            <div class="notification-actions">
+                ${viewAction}
+                <button class="read-btn" onclick="markRead(this)" title="Mark as read">
+                    ✓
+                </button>
+            </div>
+        </div>
+    `;
+
+}
+
+
+async function updateHeaderNotificationBadge() {
+
+    const userId = getAdminUserId();
+
+    if (!userId) return;
+
+    try {
+
+        const response =
+            await fetch(`/api/notifications/unread-count?user_id=${userId}`);
+
+        const data =
+            await response.json();
+
+        const badge =
+            document.getElementById("headerBadge");
+
+        if (!badge) return;
+
+        const unread =
+            (data && data.success) ? data.unread : 0;
+
+        if (unread > 0) {
+            badge.textContent = unread;
+            badge.style.display = "flex";
+        } else {
+            badge.style.display = "none";
+        }
+
+    } catch (error) {
+
+        console.error("Unable to load header notification badge:", error);
+
+    }
+
+}
+
+
+async function loadAdminNotifications() {
+
+    const card =
+        document.querySelector(".notification-card");
+
+    const noResults =
+        document.getElementById("noResults");
+
+    // Remove the static demo items; everything else in the
+    // card (header, #noResults, pagination) stays untouched.
+    card.querySelectorAll(".notification-item")
+        .forEach(item => item.remove());
+
+    const userId = getAdminUserId();
+
+    if (!userId) return;
+
+    let notifications = [];
+
+    try {
+
+        const response =
+            await fetch(`/api/notifications?user_id=${userId}`);
+
+        const data =
+            await response.json();
+
+        if (data && data.success && Array.isArray(data.notifications)) {
+
+            notifications = data.notifications;
+
+        }
+
+    } catch (error) {
+
+        console.error("Unable to load notifications:", error);
+
+    }
+
+    const registrationCount =
+        notifications.filter(n => n.type === "registration").length;
+
+    const issueCount =
+        notifications.filter(n => n.type === "report").length;
+
+    const systemCount =
+        notifications.filter(n => n.type !== "registration" && n.type !== "report").length;
+
+    const unreadTotal =
+        notifications.filter(n => !n.is_read).length;
+
+    const setText = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value;
+    };
+
+    setText("registrationCount", registrationCount);
+    setText("issueCount", issueCount);
+    setText("systemCount", systemCount);
+    setText("unreadCount", unreadTotal);
+
+    const html =
+        notifications.map(buildNotificationHtml).join("");
+
+    noResults.insertAdjacentHTML(
+        "beforebegin",
+        html
+    );
+
+    updateUnreadCount();
+
+    updateHeaderNotificationBadge();
+
+    if (typeof applyFilters === "function") {
+
+        applyFilters();
+
+    }
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+loadAdminNotifications();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

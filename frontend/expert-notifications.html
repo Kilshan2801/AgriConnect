@@ -1,0 +1,3785 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>AgriConnect - Expert Notifications</title>
+
+
+    <style>
+
+        /* =========================================================
+           RESET
+        ========================================================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+        }
+
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f4f7f5;
+
+            color: #172033;
+
+            min-height: 100vh;
+        }
+
+
+        /* =========================================================
+           SIDEBAR
+           SAME AS EXPERT-DASHBOARD.HTML
+        ========================================================= */
+
+        .sidebar {
+    min-width: 255px;
+
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+            bottom: 0;
+
+            width: 255px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #00543f 0%,
+                    #003f32 100%
+                );
+
+            color: white;
+
+            z-index: 1000;
+
+            display: flex;
+
+            flex-direction: column;
+
+            overflow-y: auto;
+        }
+
+
+        /* =========================================================
+           SIDEBAR LOGO
+        ========================================================= */
+
+        .sidebar-logo {
+
+            height: 86px;
+
+            display: flex;
+
+            align-items: center;
+
+            padding: 0 20px;
+
+            border-bottom:
+                1px solid
+                rgba(255,255,255,0.10);
+
+            flex-shrink: 0;
+        }
+
+
+        .sidebar-logo img {
+
+            width: 160px;
+
+            height: auto;
+
+            max-height: 62px;
+
+            object-fit: contain;
+
+            display: block;
+        }
+
+
+        /* =========================================================
+           SIDEBAR CONTENT
+        ========================================================= */
+
+        .sidebar-content {
+
+            flex: 1;
+
+            padding:
+                13px 10px;
+        }
+
+
+        /* =========================================================
+           NAVIGATION
+        ========================================================= */
+
+        .nav-item {
+
+            width: 100%;
+
+            min-height: 45px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding:
+                11px 12px;
+
+            margin-bottom: 4px;
+
+            border-radius: 8px;
+
+            color: white;
+
+            text-decoration: none;
+
+            font-size: 15px;
+
+            cursor: pointer;
+
+            transition:
+                0.2s ease;
+        }
+
+
+        .nav-item:hover {
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.10
+                );
+        }
+
+
+        /* =========================================================
+           ACTIVE NAVIGATION
+        ========================================================= */
+
+        .nav-item.active {
+
+            background:
+                linear-gradient(
+                    90deg,
+                    #19945f,
+                    #087a4d
+                );
+
+            box-shadow:
+                0 4px 12px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.10
+                );
+        }
+
+
+        /* =========================================================
+           NAV ICON
+        ========================================================= */
+
+        .nav-icon {
+
+            width: 22px;
+
+            min-width: 22px;
+
+            text-align: center;
+
+            font-size: 18px;
+        }
+
+
+        .nav-label {
+
+            flex: 1;
+        }
+
+
+        /* =========================================================
+           SIDEBAR BOTTOM
+        ========================================================= */
+
+        .sidebar-bottom {
+
+            padding:
+                8px 10px 15px;
+
+            flex-shrink: 0;
+        }
+
+
+        .sidebar-divider {
+
+            height: 1px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.15
+                );
+
+            margin:
+                5px 12px 12px;
+        }
+
+
+        /* =========================================================
+           MAIN
+        ========================================================= */
+
+        .main {
+
+            margin-left: 255px;
+
+            width:
+                calc(
+                    100% - 255px
+                );
+
+            min-height: 100vh;
+
+            padding-bottom: 42px;
+        }
+
+
+        /* =========================================================
+           HEADER
+        ========================================================= */
+
+        .header {
+
+            height: 78px;
+
+            background: white;
+
+            border-bottom:
+                1px solid
+                #e3e7e9;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: flex-end;
+
+            padding:
+                0 27px;
+
+            position: relative;
+
+            z-index: 2000;
+        }
+
+
+        .header-right {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 22px;
+        }
+
+
+        /* =========================================================
+           NOTIFICATION BUTTON
+        ========================================================= */
+
+        .header-notification {
+
+            position: relative;
+
+            width: 40px;
+
+            height: 40px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 23px;
+
+            cursor: pointer;
+
+            color: #003f32;
+
+            transition: 0.2s;
+        }
+
+
+        .header-notification:hover {
+
+            transform:
+                scale(1.06);
+        }
+
+
+        .header-badge {
+
+            position: absolute;
+
+            top: 0;
+
+            right: -2px;
+
+            min-width: 18px;
+
+            height: 18px;
+
+            padding:
+                0 4px;
+
+            border-radius: 50%;
+
+            background: #ef3c35;
+
+            color: white;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+        }
+
+
+        /* =========================================================
+           PROFILE
+        ========================================================= */
+
+        .profile {
+
+            position: relative;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 9px;
+
+            cursor: pointer;
+
+            user-select: none;
+        }
+
+
+        .profile-avatar {
+
+            width: 43px;
+
+            height: 43px;
+
+            border:
+                2px solid
+                #006b4f;
+
+            border-radius: 50%;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #eaf7f1;
+
+            color: #006b4f;
+
+            font-size: 17px;
+
+            font-weight: bold;
+        }
+
+
+        .profile-info {
+
+            display: flex;
+
+            flex-direction: column;
+
+            justify-content: center;
+        }
+
+
+        .profile-name {
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #172033;
+
+            line-height: 17px;
+        }
+
+
+        .profile-role {
+
+            font-size: 10px;
+
+            color: #087a4d;
+
+            margin-top: 2px;
+
+            line-height: 13px;
+        }
+
+
+        .profile-arrow {
+
+            font-size: 11px;
+
+            margin-left: 5px;
+
+            color: #667085;
+
+            transition:
+                transform 0.2s;
+        }
+
+
+        .profile.open .profile-arrow {
+
+            transform:
+                rotate(180deg);
+        }
+
+
+        /* =========================================================
+           PROFILE DROPDOWN
+        ========================================================= */
+
+        .profile-dropdown {
+
+            position: absolute;
+
+            top:
+                calc(
+                    100% + 12px
+                );
+
+            right: 0;
+
+            width: 270px;
+
+            background: white;
+
+            border:
+                1px solid
+                #e1e7e3;
+
+            border-radius: 11px;
+
+            box-shadow:
+                0 10px 28px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.14
+                );
+
+            padding: 10px;
+
+            display: none;
+
+            z-index: 9999;
+        }
+
+
+        .profile.open .profile-dropdown {
+
+            display: block;
+        }
+
+
+        /* =========================================================
+           DROPDOWN USER
+        ========================================================= */
+
+        .dropdown-user {
+
+            padding:
+                10px 14px 12px;
+
+            border-bottom:
+                1px solid
+                #e8ece9;
+
+            margin-bottom: 6px;
+        }
+
+
+        .dropdown-user-name {
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            color: #172033;
+        }
+
+
+        .dropdown-user-role {
+
+            margin-top: 3px;
+
+            font-size: 12px;
+
+            color: #087f3f;
+        }
+
+
+        /* =========================================================
+           DROPDOWN TITLE
+        ========================================================= */
+
+        .dropdown-title {
+
+            padding:
+                8px 14px 9px;
+
+            color: #687385;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            letter-spacing: 0.4px;
+
+            text-transform: uppercase;
+        }
+
+
+        #roleOptions {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 4px;
+        }
+
+
+        /* =========================================================
+           DROPDOWN ROLE
+        ========================================================= */
+
+        .dropdown-role {
+
+            width: 100%;
+
+            min-height: 45px;
+
+            border: none;
+
+            background: white;
+
+            border-radius: 8px;
+
+            padding:
+                0 13px;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            cursor: pointer;
+
+            text-align: left;
+
+            color: #344054;
+
+            font-family: inherit;
+
+            font-size: 13px;
+        }
+
+
+        .dropdown-role:hover {
+
+            background:
+                #f3f8f4;
+        }
+
+
+        .dropdown-role.current {
+
+            background:
+                #e5f5e9;
+
+            color:
+                #087f3f;
+
+            font-weight: bold;
+        }
+
+
+        .dropdown-role-icon {
+
+            width: 25px;
+
+            min-width: 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 17px;
+        }
+
+
+        .dropdown-role-name {
+
+            flex: 1;
+        }
+
+
+        .role-check {
+
+            width: 20px;
+
+            min-width: 20px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+            color:
+                #087f3f;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================================================
+           CONTENT
+        ========================================================= */
+
+        .content {
+
+            padding:
+                22px 18px 30px;
+        }
+
+
+        /* =========================================================
+           PAGE TITLE
+        ========================================================= */
+
+        .page-title {
+
+            margin-bottom:
+                19px;
+        }
+
+
+        .page-title h1 {
+
+            font-size: 29px;
+
+            line-height: 34px;
+
+            margin-bottom: 5px;
+
+            color: #141a20;
+        }
+
+
+        .page-title p {
+
+            color:
+                #53616a;
+
+            font-size: 13px;
+
+            line-height: 18px;
+        }
+
+
+        /* =========================================================
+           NOTIFICATION CARD
+        ========================================================= */
+
+        .notification-card {
+
+            background: white;
+
+            border:
+                1px solid
+                #e1e7e4;
+
+            border-radius: 9px;
+
+            box-shadow:
+                0 2px 7px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.025
+                );
+
+            overflow: hidden;
+        }
+
+
+        /* =========================================================
+           NOTIFICATION HEADER
+        ========================================================= */
+
+        .notification-header {
+
+            min-height: 57px;
+
+            padding:
+                0 16px;
+
+            border-bottom:
+                1px solid
+                #edf0f1;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+
+        .notification-header-left {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+        }
+
+
+        .notification-header-icon {
+
+            width: 36px;
+
+            height: 36px;
+
+            border-radius: 9px;
+
+            background:
+                #e5f5e9;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 18px;
+        }
+
+
+        .notification-header h2 {
+
+            font-size: 15px;
+
+            color:
+                #20262c;
+
+            font-weight: bold;
+        }
+
+
+        .mark-read {
+
+            border: none;
+
+            background: transparent;
+
+            color:
+                #087b48;
+
+            font-family: inherit;
+
+            font-size: 11px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .mark-read:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
+           FILTER BAR
+        ========================================================= */
+
+        .notification-filter {
+
+            padding:
+                11px 16px;
+
+            border-bottom:
+                1px solid
+                #edf0f1;
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            background:
+                #fbfdfb;
+
+            overflow-x: auto;
+        }
+
+
+        .filter-button {
+
+            height: 34px;
+
+            padding:
+                0 12px;
+
+            border:
+                1px solid
+                #d5ddd8;
+
+            background: white;
+
+            border-radius: 7px;
+
+            color:
+                #344054;
+
+            font-family: inherit;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            white-space: nowrap;
+        }
+
+
+        .filter-button:hover {
+
+            background:
+                #f3f8f4;
+        }
+
+
+        .filter-button.active {
+
+            background:
+                #087f3f;
+
+            color: white;
+
+            border-color:
+                #087f3f;
+        }
+
+
+        /* =========================================================
+           NOTIFICATION LIST
+        ========================================================= */
+
+        .notification-list {
+
+            display: flex;
+
+            flex-direction: column;
+        }
+
+
+        /* =========================================================
+           NOTIFICATION ITEM
+        ========================================================= */
+
+        .notification-item {
+
+            display: flex;
+
+            align-items: flex-start;
+
+            gap: 13px;
+
+            padding:
+                16px;
+
+            border-bottom:
+                1px solid
+                #edf0f1;
+
+            position: relative;
+
+            transition:
+                background 0.2s;
+        }
+
+
+        .notification-item:hover {
+
+            background:
+                #fbfdfb;
+        }
+
+
+        .notification-item:last-child {
+
+            border-bottom: none;
+        }
+
+
+        .notification-item.unread {
+
+            background:
+                #f8fcf9;
+
+            border-left:
+                3px solid
+                #159447;
+        }
+
+
+        .notification-item.unread:hover {
+
+            background:
+                #f1f9f3;
+        }
+
+
+        /* =========================================================
+           NOTIFICATION ICON
+        ========================================================= */
+
+        .notification-icon {
+
+            width: 45px;
+
+            height: 45px;
+
+            min-width: 45px;
+
+            border-radius: 10px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-size: 21px;
+        }
+
+
+        .notification-icon.consultation {
+
+            background:
+                #e2f5e9;
+
+            color:
+                #087f3f;
+        }
+
+
+        .notification-icon.resolved {
+
+            background:
+                #e1f6e8;
+
+            color:
+                #168743;
+        }
+
+
+        .notification-icon.system {
+
+            background:
+                #eaf5ed;
+
+            color:
+                #17833c;
+        }
+
+
+        /* =========================================================
+           NOTIFICATION CONTENT
+        ========================================================= */
+
+        .notification-content {
+
+            flex: 1;
+
+            min-width: 0;
+        }
+
+
+        .notification-title-row {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 7px;
+
+            margin-bottom: 4px;
+        }
+
+
+        .notification-title {
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color:
+                #20262c;
+        }
+
+
+        .unread-dot {
+
+            width: 7px;
+
+            height: 7px;
+
+            border-radius: 50%;
+
+            background:
+                #159447;
+
+            flex-shrink: 0;
+        }
+
+
+        .notification-message {
+
+            color:
+                #596579;
+
+            font-size: 11px;
+
+            line-height: 16px;
+
+            margin-bottom: 6px;
+        }
+
+
+        .notification-time {
+
+            color:
+                #8791a0;
+
+            font-size: 9px;
+        }
+
+
+        /* =========================================================
+           ACTION
+        ========================================================= */
+
+        .notification-action {
+
+            display: flex;
+
+            align-items: center;
+
+            align-self: center;
+        }
+
+
+        .view-button {
+
+            min-width: 65px;
+
+            height: 32px;
+
+            border:
+                1px solid
+                #7acb94;
+
+            border-radius: 7px;
+
+            background: white;
+
+            color:
+                #087f3f;
+
+            font-family: inherit;
+
+            font-size: 10px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .view-button:hover {
+
+            background:
+                #edf8f0;
+        }
+
+
+        /* =========================================================
+           EMPTY STATE
+        ========================================================= */
+
+        .empty-state {
+
+            padding:
+                50px 25px;
+
+            text-align: center;
+
+            color:
+                #6b7683;
+
+            display: none;
+        }
+
+
+        .empty-icon {
+
+            font-size: 34px;
+
+            margin-bottom: 9px;
+        }
+
+
+        .empty-state h3 {
+
+            font-size: 15px;
+
+            color:
+                #344054;
+
+            margin-bottom: 5px;
+        }
+
+
+        .empty-state p {
+
+            font-size: 10px;
+        }
+
+
+        /* =========================================================
+           FOOTER
+           SAME WIDTH AS EXPERT DASHBOARD
+        ========================================================= */
+
+        .footer {
+
+            position: fixed;
+
+            left: 255px;
+
+            right: 0;
+
+            bottom: 0;
+
+            height: 42px;
+
+            background:
+                #004d32;
+
+            color: white;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            gap: 13px;
+
+            font-size: 10px;
+
+            z-index: 900;
+        }
+
+
+        .footer a {
+
+            color: white;
+
+            text-decoration: none;
+        }
+
+
+        .footer a:hover {
+
+            text-decoration: underline;
+        }
+
+
+        /* =========================================================
+           MOBILE MENU
+        ========================================================= */
+
+        .mobile-menu {
+
+            display: none;
+
+            width: 38px;
+
+            height: 38px;
+
+            border:
+                1px solid
+                #d5ddd8;
+
+            background: white;
+
+            border-radius: 8px;
+
+            cursor: pointer;
+
+            font-size: 19px;
+        }
+
+
+        /* =========================================================
+           RESPONSIVE
+        ========================================================= */
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+
+                transform:
+                    translateX(-100%);
+
+                transition:
+                    transform 0.25s ease;
+            }
+
+
+            .sidebar.open {
+
+                transform:
+                    translateX(0);
+            }
+
+
+            .main {
+
+                margin-left: 0;
+
+                width: 100%;
+            }
+
+
+            .footer {
+
+                left: 0;
+            }
+
+
+            .mobile-menu {
+
+                display: block;
+            }
+
+
+            .header {
+
+                height: 78px;
+
+                padding:
+                    0 15px;
+
+                justify-content:
+                    space-between;
+            }
+
+
+            .content {
+
+                padding:
+                    18px 12px 55px;
+            }
+
+
+            .profile-info,
+            .profile-arrow {
+
+                display: none;
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .notification-item {
+
+                padding:
+                    13px;
+            }
+
+
+            .notification-action {
+
+                align-self:
+                    flex-start;
+            }
+
+
+            .notification-title {
+
+                font-size: 12px;
+            }
+
+
+            .notification-message {
+
+                font-size: 10px;
+            }
+
+
+            .notification-icon {
+
+                width: 40px;
+
+                height: 40px;
+
+                min-width: 40px;
+
+                font-size: 18px;
+            }
+
+        }
+
+
+        @media (max-width: 500px) {
+
+            .notification-action {
+
+                display: none;
+            }
+
+
+            .page-title h1 {
+
+                font-size: 25px;
+            }
+
+        }
+
+
+        /* =========================================================
+           SIDEBAR SCROLLBAR
+        ========================================================= */
+
+        .sidebar::-webkit-scrollbar {
+
+            width: 5px;
+        }
+
+
+        .sidebar::-webkit-scrollbar-track {
+
+            background: transparent;
+        }
+
+
+        .sidebar::-webkit-scrollbar-thumb {
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.20
+                );
+
+            border-radius: 5px;
+        }
+
+    
+.consultation-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     SIDEBAR
+========================================================= -->
+
+<aside class="sidebar"
+       id="sidebar">
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+
+    <!-- SIDEBAR CONTENT -->
+
+    <div class="sidebar-content">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="expert-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                My Dashboard
+            </span>
+
+        </a>
+
+
+
+        <!-- CONSULTATIONS -->
+
+        <a
+            href="expert-consultations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                💬
+            </span>
+
+            <span class="nav-label">
+                Consultations
+            </span>
+
+            <span class="consultation-badge" id="consultationBadge" style="display:none;">0</span>
+
+        </a>
+
+
+
+        <!-- RESOURCES -->
+
+        <a
+            href="expert-resources.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                📖
+            </span>
+
+            <span class="nav-label">
+                Resources
+            </span>
+
+        </a>
+
+
+        <!-- REPORT ISSUES -->
+
+        <a
+            href="expert-report-issues.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚠️
+            </span>
+
+            <span class="nav-label">
+                Report Issues
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="expert-notifications.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="expert-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- =====================================================
+         SIDEBAR BOTTOM
+    ===================================================== -->
+
+    <div class="sidebar-bottom">
+
+
+        <div class="sidebar-divider"></div>
+
+
+
+        <!-- HELP & SUPPORT -->
+
+        <a
+            href="expert-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+
+        <!-- SETTINGS -->
+
+        <a
+            href="expert-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+
+        <!-- LOGOUT -->
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="logout(); return false;"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =========================================================
+     MAIN
+========================================================= -->
+
+<main class="main">
+
+
+    <!-- =====================================================
+         HEADER
+    ===================================================== -->
+
+    <header class="header">
+
+
+        <div class="header-right">
+
+
+            <!-- MOBILE MENU -->
+
+            <button
+                class="mobile-menu"
+                id="mobileMenu"
+                type="button"
+            >
+                ☰
+            </button>
+
+
+
+            <!-- NOTIFICATION -->
+
+            <div
+                class="header-notification"
+                id="notificationButton"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="header-badge"
+                    id="notificationCount"
+                >
+                    3
+                </span>
+
+            </div>
+
+
+
+            <!-- PROFILE -->
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+
+                <div
+                    class="profile-avatar"
+                    id="profileAvatar"
+                >
+                    DN
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div
+                        class="profile-name"
+                        id="profileName"
+                    >
+                        Dr. Nimal
+                    </div>
+
+
+                    <div
+                        class="profile-role"
+                        id="profileRole"
+                    >
+                        Agricultural Expert
+                    </div>
+
+                </div>
+
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+
+                <!-- PROFILE DROPDOWN -->
+
+                <div
+                    class="profile-dropdown"
+                    id="profileDropdown"
+                >
+
+
+                    <div class="dropdown-user">
+
+                        <div
+                            class="dropdown-user-name"
+                            id="dropdownUserName"
+                        >
+                            Dr. Nimal
+                        </div>
+
+
+                        <div
+                            class="dropdown-user-role"
+                            id="dropdownUserRole"
+                        >
+                            Agricultural Expert
+                        </div>
+
+                    </div>
+
+
+                    <div class="dropdown-title">
+                        Switch Role
+                    </div>
+
+
+                    <div id="roleOptions"></div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT
+    ===================================================== -->
+
+    <section class="content">
+
+
+        <!-- PAGE TITLE -->
+
+        <div class="page-title">
+
+            <h1>
+                Notifications
+            </h1>
+
+            <p>
+                Stay updated with new consultations, resolved issues and system updates.
+            </p>
+
+        </div>
+
+
+
+        <!-- =================================================
+             NOTIFICATION CARD
+        ================================================= -->
+
+        <div class="notification-card">
+
+
+            <!-- HEADER -->
+
+            <div class="notification-header">
+
+
+                <div class="notification-header-left">
+
+                    <div class="notification-header-icon">
+                        🔔
+                    </div>
+
+                    <h2>
+                        Recent Notifications
+                    </h2>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    class="mark-read"
+                    id="markAllRead"
+                >
+                    Mark all as read
+                </button>
+
+
+            </div>
+
+
+
+            <!-- FILTER -->
+
+            <div class="notification-filter">
+
+
+                <button
+                    type="button"
+                    class="filter-button active"
+                    data-filter="all"
+                >
+                    All
+                </button>
+
+
+                <button
+                    type="button"
+                    class="filter-button"
+                    data-filter="consultation"
+                >
+                    New Consultations
+                </button>
+
+
+                <button
+                    type="button"
+                    class="filter-button"
+                    data-filter="resolved"
+                >
+                    Resolved Issues
+                </button>
+
+
+                <button
+                    type="button"
+                    class="filter-button"
+                    data-filter="system"
+                >
+                    System Updates
+                </button>
+
+
+            </div>
+
+
+
+            <!-- =================================================
+                 NOTIFICATION LIST
+            ================================================= -->
+
+            <div
+                class="notification-list"
+                id="notificationList"
+            >
+
+
+                <!-- NOTIFICATION 1 -->
+
+                <div
+                    class="notification-item unread"
+                    data-type="consultation"
+                    data-read="false"
+                >
+
+
+                    <div class="notification-icon consultation">
+                        💬
+                    </div>
+
+
+                    <div class="notification-content">
+
+
+                        <div class="notification-title-row">
+
+                            <div class="notification-title">
+                                New Consultation Request
+                            </div>
+
+                            <span class="unread-dot"></span>
+
+                        </div>
+
+
+                        <div class="notification-message">
+                            Kumar A. has submitted a new consultation request about Tomato Disease.
+                        </div>
+
+
+                        <div class="notification-time">
+                            8 minutes ago
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="notification-action">
+
+                        <button
+                            type="button"
+                            class="view-button"
+                            onclick="viewNotification('consultation')"
+                        >
+                            View
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- NOTIFICATION 2 -->
+
+                <div
+                    class="notification-item unread"
+                    data-type="consultation"
+                    data-read="false"
+                >
+
+
+                    <div class="notification-icon consultation">
+                        💬
+                    </div>
+
+
+                    <div class="notification-content">
+
+
+                        <div class="notification-title-row">
+
+                            <div class="notification-title">
+                                New Consultation Request
+                            </div>
+
+                            <span class="unread-dot"></span>
+
+                        </div>
+
+
+                        <div class="notification-message">
+                            Manoj P. has requested advice regarding Potato Growth Issues.
+                        </div>
+
+
+                        <div class="notification-time">
+                            1 hour ago
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="notification-action">
+
+                        <button
+                            type="button"
+                            class="view-button"
+                            onclick="viewNotification('consultation')"
+                        >
+                            View
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- NOTIFICATION 3 -->
+
+                <div
+                    class="notification-item unread"
+                    data-type="resolved"
+                    data-read="false"
+                >
+
+
+                    <div class="notification-icon resolved">
+                        ✓
+                    </div>
+
+
+                    <div class="notification-content">
+
+
+                        <div class="notification-title-row">
+
+                            <div class="notification-title">
+                                Reported Issue Resolved
+                            </div>
+
+                            <span class="unread-dot"></span>
+
+                        </div>
+
+
+                        <div class="notification-message">
+                            Your reported issue regarding a consultation service has been reviewed and resolved by the administration.
+                        </div>
+
+
+                        <div class="notification-time">
+                            2 hours ago
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="notification-action">
+
+                        <button
+                            type="button"
+                            class="view-button"
+                            onclick="viewNotification('resolved')"
+                        >
+                            View
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- NOTIFICATION 4 -->
+
+                <div
+                    class="notification-item"
+                    data-type="system"
+                    data-read="true"
+                >
+
+
+                    <div class="notification-icon system">
+                        ⚙
+                    </div>
+
+
+                    <div class="notification-content">
+
+
+                        <div class="notification-title-row">
+
+                            <div class="notification-title">
+                                AgriConnect System Update
+                            </div>
+
+                        </div>
+
+
+                        <div class="notification-message">
+                            AgriConnect has been updated with improved consultation management and notification features.
+                        </div>
+
+
+                        <div class="notification-time">
+                            3 hours ago
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="notification-action">
+
+                        <button
+                            type="button"
+                            class="view-button"
+                            onclick="viewNotification('system')"
+                        >
+                            View
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- NOTIFICATION 5 -->
+
+                <div
+                    class="notification-item"
+                    data-type="system"
+                    data-read="true"
+                >
+
+
+                    <div class="notification-icon system">
+                        ⚙
+                    </div>
+
+
+                    <div class="notification-content">
+
+
+                        <div class="notification-title-row">
+
+                            <div class="notification-title">
+                                System Maintenance Completed
+                            </div>
+
+                        </div>
+
+
+                        <div class="notification-message">
+                            Scheduled AgriConnect system maintenance has been completed successfully. All services are operating normally.
+                        </div>
+
+
+                        <div class="notification-time">
+                            Yesterday
+                        </div>
+
+
+                    </div>
+
+
+                    <div class="notification-action">
+
+                        <button
+                            type="button"
+                            class="view-button"
+                            onclick="viewNotification('system')"
+                        >
+                            View
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- EMPTY STATE -->
+
+            <div
+                class="empty-state"
+                id="emptyState"
+            >
+
+                <div class="empty-icon">
+                    🔔
+                </div>
+
+                <h3>
+                    No Notifications
+                </h3>
+
+                <p>
+                    There are no notifications in this category.
+                </p>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+
+    <span>
+        🌱 © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+
+</footer>
+
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+
+/* =========================================================
+   USER
+========================================================= */
+
+let user = null;
+
+
+try {
+
+    user =
+        JSON.parse(
+            sessionStorage.getItem("user")
+        );
+
+}
+
+catch (error) {
+
+    user = null;
+
+}
+
+
+
+/* =========================================================
+   ROLE NAMES
+========================================================= */
+
+const roleNames = {
+
+    farmer:
+        "Farmer",
+
+    buyer:
+        "Buyer",
+
+    expert:
+        "Agricultural Expert",
+
+    equipment_provider:
+        "Equipment Provider"
+
+};
+
+
+
+/* =========================================================
+   ROLE ICONS
+========================================================= */
+
+const roleIcons = {
+
+    farmer:
+        "👨‍🌾",
+
+    buyer:
+        "🛒",
+
+    expert:
+        "🌱",
+
+    equipment_provider:
+        "🚜"
+
+};
+
+
+
+/* =========================================================
+   NORMALIZE ROLE
+========================================================= */
+
+function normalizeRole(role) {
+
+    if (!role) {
+
+        return "";
+
+    }
+
+
+    const value =
+        String(role)
+            .toLowerCase()
+            .trim();
+
+
+    if (value === "farmer") {
+
+        return "farmer";
+
+    }
+
+
+    if (value === "buyer") {
+
+        return "buyer";
+
+    }
+
+
+    if (
+        value === "expert" ||
+        value === "agricultural expert" ||
+        value === "agri expert"
+    ) {
+
+        return "expert";
+
+    }
+
+
+    if (
+        value === "equipment_provider" ||
+        value === "equipment provider" ||
+        value === "equipment-provider"
+    ) {
+
+        return "equipment_provider";
+
+    }
+
+
+    return "";
+
+}
+
+
+
+/* =========================================================
+   GET REGISTERED ROLE
+========================================================= */
+
+function getRegisteredRole() {
+
+    if (!user) {
+
+        return "";
+
+    }
+
+
+    const possibleRoles = [
+
+        user.registered_role,
+
+        user.registeredRole,
+
+        user.registration_role,
+
+        user.registrationRole,
+
+        user.account_role,
+
+        user.accountRole,
+
+        user.user_role,
+
+        user.userRole,
+
+        user.role
+
+    ];
+
+
+    for (
+        const role of possibleRoles
+    ) {
+
+        const normalized =
+            normalizeRole(role);
+
+
+        if (
+            normalized &&
+            roleNames[normalized]
+        ) {
+
+            return normalized;
+
+        }
+
+    }
+
+
+    return "";
+
+}
+
+
+
+/* =========================================================
+   GET ACCOUNT ROLES
+========================================================= */
+
+function getAccountRoles() {
+
+    const registeredRole =
+        getRegisteredRole();
+
+
+    if (registeredRole) {
+
+        if (
+            registeredRole === "buyer"
+        ) {
+
+            return [
+                "buyer"
+            ];
+
+        }
+
+
+        return [
+            registeredRole,
+            "buyer"
+        ];
+
+    }
+
+
+    if (
+        user &&
+        Array.isArray(user.roles)
+    ) {
+
+        const roles =
+            user.roles
+                .map(
+                    normalizeRole
+                )
+                .filter(
+                    role =>
+                        !!roleNames[role]
+                );
+
+
+        const uniqueRoles =
+            [
+                ...new Set(roles)
+            ];
+
+
+        if (
+            uniqueRoles.length > 0
+        ) {
+
+            const hasNonBuyerRole =
+                uniqueRoles.some(
+                    role =>
+                        role !== "buyer"
+                );
+
+
+            if (
+                hasNonBuyerRole &&
+                !uniqueRoles.includes("buyer")
+            ) {
+
+                uniqueRoles.push(
+                    "buyer"
+                );
+
+            }
+
+
+            return uniqueRoles;
+
+        }
+
+    }
+
+
+    return [
+        "expert",
+        "buyer"
+    ];
+
+}
+
+
+
+/* =========================================================
+   CURRENT ROLE
+========================================================= */
+
+let currentRole =
+    normalizeRole(
+        sessionStorage.getItem(
+            "selectedRole"
+        )
+    );
+
+
+const availableRoles =
+    getAccountRoles();
+
+
+if (
+    !currentRole ||
+    !availableRoles.includes(
+        currentRole
+    )
+) {
+
+    currentRole =
+        "expert";
+
+    sessionStorage.setItem(
+        "selectedRole",
+        "expert"
+    );
+
+}
+
+
+
+/* =========================================================
+   DISPLAY USER
+========================================================= */
+
+function displayUser() {
+
+    let fullName =
+        "Dr. Nimal";
+
+
+    if (user) {
+
+        const firstName =
+            user.first_name ||
+            user.firstName ||
+            "";
+
+
+        const lastName =
+            user.last_name ||
+            user.lastName ||
+            "";
+
+
+        fullName =
+            `${firstName} ${lastName}`.trim();
+
+
+        if (!fullName) {
+
+            fullName =
+                user.name ||
+                user.full_name ||
+                user.fullName ||
+                "Dr. Nimal";
+
+        }
+
+    }
+
+
+    document.getElementById(
+        "profileName"
+    ).textContent =
+        fullName;
+
+
+    document.getElementById(
+        "dropdownUserName"
+    ).textContent =
+        fullName;
+
+
+    document.getElementById(
+        "profileRole"
+    ).textContent =
+        roleNames[currentRole] ||
+        "Agricultural Expert";
+
+
+    document.getElementById(
+        "dropdownUserRole"
+    ).textContent =
+        roleNames[currentRole] ||
+        "Agricultural Expert";
+
+
+    const initials =
+        fullName
+            .split(" ")
+            .filter(Boolean)
+            .map(part => part.charAt(0))
+            .join("")
+            .toUpperCase()
+            .slice(0, 2) ||
+        "AE";
+
+    const avatarEl =
+        document.getElementById("profileAvatar");
+
+    if (avatarEl) {
+        avatarEl.textContent = initials;
+    }
+
+}
+
+
+
+/* =========================================================
+   LOAD ROLES
+========================================================= */
+
+function loadRoles() {
+
+    const roleOptions =
+        document.getElementById(
+            "roleOptions"
+        );
+
+
+    roleOptions.innerHTML =
+        "";
+
+
+    getAccountRoles().forEach(
+        function(role) {
+
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.type =
+                "button";
+
+
+            button.className =
+                "dropdown-role";
+
+
+            if (
+                role === currentRole
+            ) {
+
+                button.classList.add(
+                    "current"
+                );
+
+            }
+
+
+            button.innerHTML = `
+
+                <span
+                    class="dropdown-role-icon"
+                >
+                    ${roleIcons[role] || "👤"}
+                </span>
+
+                <span
+                    class="dropdown-role-name"
+                >
+                    ${roleNames[role] || role}
+                </span>
+
+                <span
+                    class="role-check"
+                >
+                    ${
+                        role === currentRole
+                            ? "✓"
+                            : ""
+                    }
+                </span>
+
+            `;
+
+
+            button.addEventListener(
+                "click",
+                function(event) {
+
+                    event.stopPropagation();
+
+                    switchRole(
+                        role
+                    );
+
+                }
+            );
+
+
+            roleOptions.appendChild(
+                button
+            );
+
+        }
+    );
+
+    moveCurrentRoleToFront(roleOptions);
+
+
+}
+
+
+
+/* =========================================================
+   SWITCH ROLE
+========================================================= */
+
+function switchRole(role) {
+
+    if (
+        !getAccountRoles().includes(
+            role
+        )
+    ) {
+
+        return;
+
+    }
+
+
+    sessionStorage.setItem(
+        "selectedRole",
+        role
+    );
+
+
+    if (
+        role === "buyer"
+    ) {
+
+        window.location.href =
+            "buyer-dashboard.html";
+
+    }
+
+    else if (
+        role === "farmer"
+    ) {
+
+        window.location.href =
+            "farmer-dashboard.html";
+
+    }
+
+    else if (
+        role === "expert"
+    ) {
+
+        window.location.href =
+            "expert-dashboard.html";
+
+    }
+
+    else if (
+        role === "equipment_provider"
+    ) {
+
+        window.location.href =
+            "rental-dashboard.html";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   PROFILE DROPDOWN
+========================================================= */
+
+const profile =
+    document.getElementById(
+        "profile"
+    );
+
+
+profile.addEventListener(
+    "click",
+    function(event) {
+
+        event.stopPropagation();
+
+
+        profile.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    function() {
+
+        profile.classList.remove(
+            "open"
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   NOTIFICATION BUTTON
+========================================================= */
+
+document
+    .getElementById(
+        "notificationButton"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            window.location.href =
+                "expert-notifications.html";
+
+        }
+    );
+
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+document
+    .getElementById(
+        "mobileMenu"
+    )
+    .addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            document
+                .getElementById(
+                    "sidebar"
+                )
+                .classList.toggle(
+                    "open"
+                );
+
+        }
+    );
+
+
+
+/* =========================================================
+   BACKEND NOTIFICATIONS
+========================================================= */
+
+function mapExpertNotificationType(type) {
+
+    // This page's tabs are: consultation / resolved / system.
+    if (type === "message") {
+        return "consultation";
+    }
+
+    if (type === "report") {
+        return "resolved";
+    }
+
+    if (type === "admin_warning") {
+        return "admin_warning";
+    }
+
+    // "registration", "account" and anything unrecognized.
+    return "system";
+
+}
+
+
+const notificationIcon = {
+    consultation: "💬",
+    resolved: "✓",
+    system: "⚙",
+    admin_warning: "🛡️"
+};
+
+
+function formatRelativeTime(isoString) {
+
+    const date = new Date(isoString);
+
+    if (isNaN(date)) {
+        return "";
+    }
+
+    const diffMs = Date.now() - date.getTime();
+    const diffMinutes = Math.floor(diffMs / 60000);
+
+    if (diffMinutes < 1) {
+        return "Just now";
+    }
+
+    if (diffMinutes < 60) {
+        return `${diffMinutes} minute${diffMinutes === 1 ? "" : "s"} ago`;
+    }
+
+    const diffHours = Math.floor(diffMinutes / 60);
+
+    if (diffHours < 24) {
+        return `${diffHours} hour${diffHours === 1 ? "" : "s"} ago`;
+    }
+
+    const diffDays = Math.floor(diffHours / 24);
+
+    if (diffDays === 1) {
+        return "Yesterday";
+    }
+
+    if (diffDays < 7) {
+        return `${diffDays} days ago`;
+    }
+
+    return date.toLocaleDateString();
+
+}
+
+
+function buildNotificationItemHtml(row) {
+
+    const type = mapExpertNotificationType(row.type);
+    const isUnread = !row.is_read;
+    const icon = notificationIcon[type] || "🔔";
+
+    return `
+        <div
+            class="notification-item${isUnread ? " unread" : ""}"
+            data-type="${type}"
+            data-read="${isUnread ? "false" : "true"}"
+            data-backend-id="${row.id}"
+        >
+            <div class="notification-icon ${type}">
+                ${icon}
+            </div>
+            <div class="notification-content">
+                <div class="notification-title-row">
+                    <div class="notification-title">
+                        ${escapeHtmlBasic(row.title)}
+                    </div>
+                    ${isUnread ? '<span class="unread-dot"></span>' : ""}
+                </div>
+                <div class="notification-message">
+                    ${escapeHtmlBasic(row.message)}
+                </div>
+                <div class="notification-time">
+                    ${formatRelativeTime(row.created_at)}
+                </div>
+            </div>
+            <div class="notification-action">
+                <button
+                    type="button"
+                    class="view-button"
+                    data-notif-title="${escapeHtmlBasic(row.title)}"
+                    data-notif-message="${escapeHtmlBasic(row.message)}"
+                    data-notif-time="${escapeHtmlBasic(formatRelativeTime(row.created_at))}"
+                    onclick="viewNotification('${type}', this)"
+                >
+                    View
+                </button>
+            </div>
+        </div>
+    `;
+
+}
+
+
+function escapeHtmlBasic(value) {
+
+    const div = document.createElement("div");
+    div.textContent = value == null ? "" : String(value);
+    return div.innerHTML;
+
+}
+
+
+async function fetchAndRenderNotifications() {
+
+    const notificationList =
+        document.getElementById("notificationList");
+
+    const userId = user && user.id;
+
+    if (!userId) {
+
+        notificationList.innerHTML = "";
+        return;
+
+    }
+
+    try {
+
+        const response =
+            await fetch(`/api/notifications?user_id=${userId}`);
+
+        const data =
+            await response.json();
+
+        if (data && data.success && Array.isArray(data.notifications)) {
+
+            notificationList.innerHTML =
+                data.notifications.map(buildNotificationItemHtml).join("");
+
+        } else {
+
+            notificationList.innerHTML = "";
+
+        }
+
+    } catch (error) {
+
+        console.error("Unable to load notifications:", error);
+        notificationList.innerHTML = "";
+
+    }
+
+}
+
+
+function markNotificationReadOnBackend(backendId) {
+
+    const userId = user && user.id;
+
+    if (!backendId || !userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/${backendId}/read`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: userId })
+    }).catch(error => console.error("Failed to sync read status:", error));
+
+}
+
+
+/* =========================================================
+   FILTER BUTTONS
+========================================================= */
+
+async function setUpNotificationsPage() {
+
+await fetchAndRenderNotifications();
+
+const filterButtons =
+    document.querySelectorAll(
+        ".filter-button"
+    );
+
+
+const notificationItems =
+    document.querySelectorAll(
+        ".notification-item"
+    );
+
+
+const emptyState =
+    document.getElementById(
+        "emptyState"
+    );
+
+
+if (notificationItems.length === 0) {
+
+    emptyState.style.display = "block";
+
+}
+
+
+filterButtons.forEach(
+    function(button) {
+
+        button.addEventListener(
+            "click",
+            function() {
+
+                filterButtons.forEach(
+                    item =>
+                        item.classList.remove(
+                            "active"
+                        )
+                );
+
+
+                this.classList.add(
+                    "active"
+                );
+
+
+                const filter =
+                    this.dataset.filter;
+
+
+                let visibleCount =
+                    0;
+
+
+                notificationItems.forEach(
+                    function(item) {
+
+                        const type =
+                            item.dataset.type;
+
+
+                        if (
+                            filter === "all" ||
+                            type === filter ||
+                            (filter === "system" && type === "admin_warning")
+                        ) {
+
+                            item.style.display =
+                                "flex";
+
+                            visibleCount++;
+
+                        }
+
+                        else {
+
+                            item.style.display =
+                                "none";
+
+                        }
+
+                    }
+                );
+
+
+                if (
+                    visibleCount === 0
+                ) {
+
+                    emptyState.style.display =
+                        "block";
+
+                }
+
+                else {
+
+                    emptyState.style.display =
+                        "none";
+
+                }
+
+            }
+        );
+
+    }
+);
+
+
+
+/* =========================================================
+   MARK ALL AS READ
+========================================================= */
+
+document
+    .getElementById(
+        "markAllRead"
+    )
+    .addEventListener(
+        "click",
+        function() {
+
+            const userId = user && user.id;
+
+            notificationItems.forEach(
+                function(item) {
+
+                    item.classList.remove(
+                        "unread"
+                    );
+
+
+                    item.dataset.read =
+                        "true";
+
+
+                    const dot =
+                        item.querySelector(
+                            ".unread-dot"
+                        );
+
+
+                    if (dot) {
+
+                        dot.remove();
+
+                    }
+
+                }
+            );
+
+
+            updateNotificationCount();
+
+
+            if (userId) {
+
+                fetch(`/api/notifications/read-all`, {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: userId })
+                }).catch(error => console.error("Failed to sync mark-all-read:", error));
+
+            }
+
+        }
+    );
+
+
+
+/* =========================================================
+   SINGLE NOTIFICATION READ
+========================================================= */
+
+notificationItems.forEach(
+    function(item) {
+
+        item.addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target.closest(
+                        ".view-button"
+                    )
+                ) {
+
+                    return;
+
+                }
+
+
+                markNotificationRead(
+                    item
+                );
+
+
+                markNotificationReadOnBackend(
+                    item.dataset.backendId
+                );
+
+            }
+        );
+
+    }
+);
+
+
+updateNotificationCount();
+
+
+/*
+ * Opening this page counts as having seen the
+ * notifications - clear the unread badge everywhere
+ * without requiring the user to click each item.
+ */
+
+const markAllReadButton =
+    document.getElementById("markAllRead");
+
+if (markAllReadButton) {
+
+    markAllReadButton.click();
+
+}
+
+
+}
+
+
+
+/* =========================================================
+   MARK NOTIFICATION READ
+========================================================= */
+
+function markNotificationRead(item) {
+
+    item.classList.remove(
+        "unread"
+    );
+
+
+    item.dataset.read =
+        "true";
+
+
+    const dot =
+        item.querySelector(
+            ".unread-dot"
+        );
+
+
+    if (dot) {
+
+        dot.remove();
+
+    }
+
+
+    updateNotificationCount();
+
+}
+
+
+
+/* =========================================================
+   UPDATE NOTIFICATION COUNT
+========================================================= */
+
+function updateNotificationCount() {
+
+    const unread =
+        document.querySelectorAll(
+            ".notification-item.unread"
+        ).length;
+
+
+    const badge =
+        document.getElementById(
+            "notificationCount"
+        );
+
+
+    badge.textContent =
+        unread;
+
+
+    if (
+        unread === 0
+    ) {
+
+        badge.style.display =
+            "none";
+
+    }
+
+    else {
+
+        badge.style.display =
+            "flex";
+
+    }
+
+}
+
+
+
+/* =========================================================
+   VIEW NOTIFICATION
+========================================================= */
+
+function viewNotification(type, el) {
+
+
+    if (
+        type === "admin_warning"
+    ) {
+
+        const subject =
+            el ? el.dataset.notifTitle : "Message from Admin";
+
+        const body =
+            el ? el.dataset.notifMessage : "";
+
+        const time =
+            el ? el.dataset.notifTime : "";
+
+        document.getElementById(
+            "adminMessageSubject"
+        ).textContent = subject || "Message from Admin";
+
+        document.getElementById(
+            "adminMessageBody"
+        ).textContent = body || "";
+
+        document.getElementById(
+            "adminMessageDate"
+        ).textContent = time || "";
+
+        document.getElementById(
+            "adminMessageOverlay"
+        ).style.display = "flex";
+
+        return;
+
+    }
+
+
+    if (
+        type === "consultation"
+    ) {
+
+        window.location.href =
+            "expert-consultations.html";
+
+        return;
+
+    }
+
+
+    if (
+        type === "resolved"
+    ) {
+
+        window.location.href =
+            "expert-report-issues.html";
+
+        return;
+
+    }
+
+
+    if (
+        type === "system"
+    ) {
+
+        alert(
+            "System Update\n\n" +
+            "AgriConnect has been updated successfully. " +
+            "All system services are operating normally."
+        );
+
+    }
+
+}
+
+
+
+/* =========================================================
+   LOGOUT
+========================================================= */
+
+function logout() {
+
+
+    const confirmed =
+        confirm(
+            "Are you sure you want to logout?"
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+
+    localStorage.removeItem(
+        "expertLoggedIn"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+
+/* =========================================================
+   INITIALIZE
+========================================================= */
+
+displayUser();
+
+loadRoles();
+
+setUpNotificationsPage();
+
+
+
+
+function updateConsultationBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}&context_type=consultation`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(c => c.unread_count > 0).length;
+
+            const badgeEl =
+                document.getElementById("consultationBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load consultation badge count:", error);
+        });
+
+}
+
+updateConsultationBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+
+
+<!-- ================= ADMIN MESSAGE MODAL ================= -->
+
+<div
+    id="adminMessageOverlay"
+    style="display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;"
+>
+
+    <div
+        style="background:#fff;border-radius:16px;padding:26px 28px;max-width:440px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);"
+    >
+
+        <div
+            style="width:46px;height:46px;border-radius:50%;background:#fdeceb;color:#c0392b;display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:16px;"
+        >
+            🛡️
+        </div>
+
+        <div
+            id="adminMessageSubject"
+            style="font-size:17px;font-weight:700;color:#172033;margin-bottom:6px;"
+        >
+        </div>
+
+        <div
+            id="adminMessageDate"
+            style="font-size:12px;color:#8a94a6;margin-bottom:16px;"
+        >
+        </div>
+
+        <div
+            id="adminMessageBody"
+            style="font-size:13px;color:#3f4a58;line-height:1.6;white-space:pre-line;background:#f7f8fa;border-radius:10px;padding:14px 16px;margin-bottom:22px;"
+        >
+        </div>
+
+        <div style="display:flex;justify-content:flex-end;">
+
+            <button
+                type="button"
+                onclick="document.getElementById('adminMessageOverlay').style.display='none';"
+                style="padding:10px 22px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

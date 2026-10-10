@@ -1,0 +1,2305 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+  <title>
+   AgriConnect - My Equipments
+  </title>
+  <style>
+   *{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f6f8f7;color:#263238}
+.dashboard{min-height:100vh;display:flex}
+.sidebar{
+    min-width: 255px;
+position:fixed;left:0;top:0;bottom:0;width:255px;background:linear-gradient(180deg,#ef6800,#d95500);color:#fff;z-index:1000;display:flex;flex-direction:column;overflow-y:auto}
+.sidebar-logo{height:86px;display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.15)
+    padding: 0 20px;
+}
+.sidebar-logo img{width:160px;max-height:62px;object-fit:contain;}
+.sidebar-nav{padding:13px 10px;flex:1}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 12px;margin-bottom:4px;border-radius:8px;color:#fff;text-decoration:none;font-size:15px;min-height:45px}
+.nav-item:hover{background:rgba(255,255,255,.14)}
+.nav-item.active{background:rgba(255,255,255,.2);box-shadow:inset 3px 0 #fff}
+.nav-icon{width:22px;min-width:22px;text-align:center;font-size:18px}
+.nav-text{flex:1}
+.badge-count{background:#fff;color:#d95500;border-radius:20px;min-width:21px;height:21px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold}
+.sidebar-divider{height:1px;background:rgba(255,255,255,.22);margin:5px 12px 10px}
+.sidebar-bottom{padding:0 10px 14px}
+
+.main{margin-left:255px;width:calc(100% - 255px);min-height:100vh}
+.header{min-height:78px;background:#fff;border-bottom:1px solid #e8ece9;display:flex;align-items:center;justify-content:space-between;padding:20px 30px}
+.header-left{display:flex;align-items:center;gap:15px}
+.header-title h1{font-size:29px;color:#172033}
+.header-title p{font-size:13px;color:#6b7683;margin-top:6px}
+.mobile-menu{display:none;border:0;background:#ef6800;color:#fff;width:40px;height:40px;border-radius:8px;font-size:20px}
+.header-right{display:flex;align-items:center;gap:18px}
+.notification{
+    height: 40px;
+
+    width: 40px;
+position:relative;font-size:22px;cursor:pointer}
+.notification .badge{position:absolute;right:-8px;top:-7px;background:#d95500;color:#fff;border-radius:50%;min-width:18px;height:18px;font-size:9px;display:flex;align-items:center;justify-content:center}
+.profile-area{position:relative;display:flex;align-items:center;gap:9px;cursor:pointer}
+.avatar{width:43px;height:43px;border-radius:50%;background:#edf7ef;color:#17833c;border:2px solid #ef6800;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:17px}
+.profile-name{font-size:13px;font-weight:bold}
+.profile-role{font-size:10px;color:#6b7683;margin-top:3px}
+.profile-arrow{font-size:10px;color:#6b7683}
+.profile-dropdown{position:absolute;right:0;top:55px;width:285px;background:#fff;border:1px solid #e4e9e5;border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.14);padding:14px;display:none;z-index:1200}
+.profile-area.open .profile-dropdown{display:block}
+.dropdown-user{padding-bottom:12px;border-bottom:1px solid #edf0ee}
+.dropdown-user-name{font-size:13px;font-weight:bold}
+.dropdown-user-role{font-size:10px;color:#6b7683;margin-top:3px}
+.dropdown-title{text-transform:uppercase;font-size:10px;font-weight:bold;color:#6b7683;margin:12px 2px 7px}
+.role-button{width:100%;border:0;background:#fff;padding:10px;border-radius:8px;display:flex;gap:9px;align-items:center;text-align:left;cursor:pointer;font-size:12px}
+.role-button:hover{background:#f5f7f6}
+.role-button.current{background:#fff2e8;color:#d95500;font-weight:bold}
+.role-check{margin-left:auto}
+
+.content{padding:25px 30px 65px}
+.page-heading{display:flex;align-items:center;justify-content:space-between;gap:20px;margin-bottom:20px}
+.page-heading h2{font-size:20px;color:#172033}
+.page-heading p{font-size:12px;color:#6b7683;margin-top:5px}
+.add-btn{border:0;background:#ef6800;color:#fff;border-radius:8px;padding:11px 17px;font-size:12px;font-weight:bold;cursor:pointer}
+.add-btn:hover{background:#d95500}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:17px;margin-bottom:22px}
+.stat{background:#fff;border-radius:13px;padding:18px;display:flex;align-items:center;gap:13px;box-shadow:0 3px 14px rgba(0,0,0,.055)}
+.stat-icon{width:52px;height:52px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:23px}
+.orange-bg{background:#fff0e5;color:#e86600}.green-bg{background:#eaf7ed;color:#20823d}.blue-bg{background:#edf4ff;color:#3771c9}.purple-bg{background:#f1edff;color:#7356b8}
+.stat-label{font-size:11px;color:#6b7683;margin-bottom:6px}.stat-number{font-size:25px;font-weight:bold;color:#172033}.stat-note{font-size:9px;font-weight:bold;margin-top:5px}.orange-text{color:#e86600}.green-text{color:#20823d}.blue-text{color:#3771c9}.purple-text{color:#7356b8}
+
+.panel{background:#fff;border-radius:13px;box-shadow:0 3px 14px rgba(0,0,0,.055);overflow:hidden}
+.panel-top{padding:17px;border-bottom:1px solid #edf0ee}
+.panel-title{font-size:16px;font-weight:bold;color:#172033;margin-bottom:15px}
+.toolbar{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.tabs{display:flex;gap:4px;flex-wrap:wrap;flex:1}
+.tab{border:0;background:transparent;padding:9px 11px;color:#687585;font-size:10px;font-weight:bold;cursor:pointer;border-radius:7px}
+.tab:hover{background:#f5f7f6}
+.tab.active{background:#fff2e8;color:#e86600}
+.dot{display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:5px}.dot-green{background:#20823d}.dot-blue{background:#3771c9}.dot-purple{background:#7356b8}
+.search-wrap{position:relative}.search{height:36px;width:190px;border:1px solid #dfe5e1;border-radius:7px;padding:0 10px 0 31px;outline:0;font-size:11px}.search:focus{border-color:#ef6800}.search-icon{position:absolute;left:10px;top:10px;color:#6b7683;font-size:13px}
+.control{height:36px;border:1px solid #dfe5e1;background:#fff;border-radius:7px;padding:0 11px;font-size:10px;color:#536274;cursor:pointer}
+.control:hover{border-color:#ef6800}
+
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:1000px}
+th,td{padding:13px 14px;border-bottom:1px solid #edf0ee;text-align:left;font-size:10px;vertical-align:middle}
+th{background:#f8faf9;color:#687585;font-size:9px;white-space:nowrap}
+.equipment{display:flex;align-items:center;gap:9px;min-width:210px}
+.equipment-image{width:42px;height:42px;border-radius:8px;background:#fff0e5;display:flex;align-items:center;justify-content:center;font-size:20px;overflow:hidden;flex-shrink:0}
+.equipment-image img{width:100%;height:100%;object-fit:cover}
+.equipment-name{font-size:11px;font-weight:bold;color:#263238}.equipment-desc{font-size:9px;color:#6b7683;margin-top:4px}
+.category{display:inline-block;background:#fff0e5;color:#d95b00;padding:5px 8px;border-radius:12px;font-size:9px;font-weight:bold}
+.number{text-align:center;font-weight:bold}.blue-number{color:#3771c9}.green-number{color:#20823d}.purple-number{color:#7356b8}
+.status{display:inline-block;border-radius:15px;padding:6px 9px;font-size:9px;font-weight:bold}
+.status.available{background:#eaf7ed;color:#20823d}.status.rent{background:#edf4ff;color:#3771c9}.status.garage{background:#f1edff;color:#7356b8}.status.unavailable{background:#f1f1f1;color:#777}
+.action{width:32px;height:32px;border:1px solid #e4e9e5;background:#fff;border-radius:7px;cursor:pointer;font-size:17px;color:#536274}.action:hover{background:#f7f8f8}
+.empty{padding:45px 20px;text-align:center;color:#6b7683;font-size:12px}
+.loading{padding:35px;text-align:center;color:#6b7683;font-size:11px}
+
+.pagination{padding:13px 17px;display:flex;justify-content:space-between;align-items:center;color:#6b7683;font-size:10px}
+.page-buttons{display:flex;gap:5px}.page-btn{border:1px solid #dfe5e1;background:#fff;border-radius:6px;padding:6px 9px;font-size:10px;cursor:pointer}.page-btn.active{background:#ef6800;color:#fff;border-color:#ef6800}
+
+.footer{position:fixed;bottom:0;left:255px;right:0;min-height:43px;background:#075e31;color:#fff;display:flex;align-items:center;justify-content:center;gap:11px;font-size:10px;z-index:900}
+.footer a{color:#fff;text-decoration:none}
+
+.toast{position:fixed;right:25px;bottom:65px;background:#172033;color:#fff;padding:12px 16px;border-radius:8px;font-size:11px;display:none;z-index:1500;box-shadow:0 5px 20px rgba(0,0,0,.2)}
+
+
+/* =====================================================
+   ADD EQUIPMENT MODAL
+===================================================== */
+.add-equipment-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(20,32,51,.45);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    z-index:1400;
+    overflow-y:auto;
+}
+.add-equipment-modal.show{display:flex}
+.add-equipment-card{
+    width:min(900px,100%);
+    max-height:calc(100vh - 48px);
+    overflow-y:auto;
+    background:#fff;
+    border-radius:14px;
+    box-shadow:0 18px 50px rgba(0,0,0,.20);
+}
+.add-equipment-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 24px;
+    border-bottom:1px solid #edf0ee;
+}
+.add-equipment-header h3{
+    font-size:21px;
+    color:#172033;
+}
+.add-equipment-header p{
+    margin-top:5px;
+    font-size:12px;
+    color:#6b7683;
+}
+.add-equipment-close{
+    width:34px;
+    height:34px;
+    border:1px solid #dfe5e1;
+    background:#fff;
+    border-radius:8px;
+    color:#536274;
+    font-size:20px;
+    cursor:pointer;
+}
+.add-equipment-form{padding:22px 24px}
+.add-equipment-grid{
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:18px;
+}
+.add-form-group{display:flex;flex-direction:column;gap:7px}
+.add-form-label{
+    font-size:11px;
+    font-weight:700;
+    color:#263238;
+}
+.add-required{color:#e33b32}
+.add-form-control{
+    width:100%;
+    height:42px;
+    border:1px solid #dfe5e1;
+    border-radius:8px;
+    padding:0 12px;
+    outline:none;
+    color:#263238;
+    background:#fff;
+    font-size:11px;
+}
+.add-form-control:focus{border-color:#ef6800;box-shadow:0 0 0 2px rgba(239,104,0,.08)}
+.add-textarea{
+    min-height:86px;
+    padding:11px 12px;
+    resize:vertical;
+}
+.add-price-wrap{position:relative}
+.add-price-wrap .add-form-control{padding-right:52px}
+.add-currency{
+    position:absolute;
+    top:1px;
+    right:1px;
+    height:40px;
+    width:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-left:1px solid #dfe5e1;
+    border-radius:0 7px 7px 0;
+    background:#f8faf9;
+    color:#687585;
+    font-size:10px;
+    font-weight:700;
+}
+.add-image-section{margin-top:20px}
+.add-upload-grid{
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:15px;
+}
+.add-upload-area{
+    min-height:180px;
+    border:2px dashed #dfe5e1;
+    border-radius:10px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:18px;
+    cursor:pointer;
+    transition:.2s ease;
+}
+.add-upload-area:hover{border-color:#ef6800;background:#fffaf6}
+.add-upload-icon{font-size:30px;color:#ef6800;margin-bottom:8px}
+.add-upload-title{font-size:12px;font-weight:700;color:#ef6800}
+.add-upload-help{font-size:10px;color:#6b7683;margin-top:5px}
+.add-upload-file{font-size:9px;color:#536274;margin-top:8px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.add-preview{
+    min-height:180px;
+    border-radius:10px;
+    background:#fff4eb;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    position:relative;
+}
+.add-preview img{width:100%;height:100%;min-height:180px;object-fit:cover;display:none}
+.add-preview-placeholder{text-align:center;color:#ef6800;font-size:11px;font-weight:700}
+.add-preview-placeholder span{display:block;font-size:32px;margin-bottom:8px}
+.add-equipment-actions{
+    display:flex;
+    justify-content:flex-end;
+    gap:10px;
+    padding-top:22px;
+}
+.add-cancel-btn,.add-save-btn{
+    min-width:110px;
+    height:40px;
+    border-radius:8px;
+    padding:0 16px;
+    font-size:11px;
+    font-weight:700;
+    cursor:pointer;
+}
+.add-cancel-btn{border:1px solid #dfe5e1;background:#fff;color:#536274}
+.add-save-btn{border:0;background:#ef6800;color:#fff}
+.add-save-btn:hover{background:#d95500}
+.add-save-btn:disabled{opacity:.65;cursor:not-allowed}
+.add-form-note{
+    margin-top:15px;
+    padding:10px 12px;
+    border-radius:8px;
+    background:#f8faf9;
+    color:#6b7683;
+    font-size:9px;
+    line-height:1.5;
+}
+
+@media(max-width:1150px){.stats{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:800px){
+.sidebar{left:-255px;transition:left .25s}.sidebar.open{left:0}.main{margin-left:0;width:100%}.footer{left:0}.mobile-menu{display:block}.header{padding:15px 18px}.profile-info,.profile-arrow{display:none}.content{padding:20px 15px 65px}
+}
+@media(max-width:550px){
+.add-equipment-modal{padding:10px}.add-equipment-card{max-height:calc(100vh - 20px)}.add-equipment-grid,.add-upload-grid{grid-template-columns:1fr}.add-equipment-header{padding:16px 18px}.add-equipment-form{padding:18px}.add-equipment-actions{flex-direction:column-reverse}.add-cancel-btn,.add-save-btn{width:100%}.stats{grid-template-columns:1fr}.page-heading{align-items:flex-start;flex-direction:column}.header-title h1{font-size:23px}.header-title p{font-size:11px}.toolbar{display:block}.tabs{margin-bottom:10px}.search{width:100%}.search-wrap{width:100%;margin-bottom:8px}.control{margin-right:5px}}
+.success-toast {
+    position: fixed;
+    top: 25px;
+    right: 30px;
+    min-width: 320px;
+    background: white;
+    border-left: 5px solid #2e8b3a;
+    border-radius: 10px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    padding: 15px 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    z-index: 2000;
+    opacity: 0;
+    transform: translateX(120%);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.success-toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.success-toast-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #e7f6eb;
+    color: #23863a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.success-toast-content {
+    flex: 1;
+}
+
+.success-toast-title {
+    font-size: 14px;
+    font-weight: bold;
+    color: #222;
+    margin-bottom: 3px;
+}
+
+.success-toast-message {
+    font-size: 12px;
+    color: #707070;
+}
+
+.success-toast-close {
+    border: none;
+    background: transparent;
+    color: #999;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.success-toast-close:hover {
+    color: #333;
+}
+
+@media (max-width: 600px) {
+    .success-toast {
+        left: 15px;
+        right: 15px;
+        min-width: 0;
+    }
+}
+
+.equip-action-menu{
+    position:fixed;
+    display:none;
+    flex-direction:column;
+    background:#fff;
+    border:1px solid #e1e6eb;
+    border-radius:10px;
+    box-shadow:0 8px 25px rgba(0,0,0,.15);
+    padding:6px;
+    z-index:1500;
+    min-width:150px;
+}
+.equip-action-menu.show{display:flex}
+.equip-action-menu button{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 12px;
+    border:none;
+    background:transparent;
+    border-radius:7px;
+    text-align:left;
+    cursor:pointer;
+    font-size:13px;
+    color:#333;
+}
+.equip-action-menu button:hover{background:#f1f7f3}
+.equip-action-menu button[data-action="delete"]:hover{background:#fdecea;color:#c0392b}
+.equip-form-group{display:flex;flex-direction:column;gap:7px;margin-bottom:16px}
+.equip-form-label{font-size:11px;font-weight:700;color:#263238}
+.equip-form-control{
+    padding:10px 12px;
+    border:1px solid #dfe5e1;
+    border-radius:8px;
+    font-size:13px;
+    color:#172033;
+}
+.equip-info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:9px 0;
+    border-bottom:1px solid #f0f2f1;
+    font-size:13px;
+}
+.equip-info-row span:first-child{color:#6b7683}
+.equip-info-row span:last-child{font-weight:600;color:#172033}
+
+  
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+ </head>
+ <body>
+  <div class="dashboard">
+   <aside class="sidebar" id="sidebar">
+    <div class="sidebar-logo">
+     <img alt="AgriConnect" src="assets/agriconnect-logo-white.png"/>
+    </div>
+    <nav class="sidebar-nav">
+     <a class="nav-item" href="rental-dashboard.html">
+      <span class="nav-icon">
+       ▦
+      </span>
+      <span class="nav-text">
+       My Dashboard
+      </span>
+     </a>
+     <a class="nav-item active" href="rental-equipment.html">
+      <span class="nav-icon">
+       🚜
+      </span>
+      <span class="nav-text">
+       My Equipments
+      </span>
+     </a>
+     <a class="nav-item" href="rental-orders.html">
+      <span class="nav-icon">
+       📋
+      </span>
+      <span class="nav-text">
+       Rental Orders
+      </span>
+     </a>
+     <a class="nav-item" href="rental-messages.html">
+      <span class="nav-icon">
+       💬
+      </span>
+      <span class="nav-text">
+       Messages
+      </span>
+                <span
+                    id="sidebarMessagesBadge"
+                    style="display:none;margin-left:auto;background:#e0433c;color:#fff;font-size:11px;font-weight:bold;min-width:20px;height:20px;border-radius:50%;align-items:center;justify-content:center;"
+                >
+                    0
+                </span>
+     </a>
+     <a class="nav-item" href="rental-notifications.html">
+      <span class="nav-icon">
+       🔔
+      </span>
+      <span class="nav-text">
+       Notifications
+      </span>
+      <span class="badge-count" id="sideBadge" style="display:none">
+       0
+      </span>
+     </a>
+     <a class="nav-item" href="rental-report-issues.html">
+      <span class="nav-icon">
+       ⚠️
+      </span>
+      <span class="nav-text">
+       Report Issues
+      </span>
+     </a>
+     <a class="nav-item" href="rental-history.html">
+      <span class="nav-icon">
+       ◷
+      </span>
+      <span class="nav-text">
+       History
+      </span>
+     </a>
+    </nav>
+    <div class="sidebar-bottom">
+     <div class="sidebar-divider">
+     </div>
+     <a class="nav-item" href="rental-help-support.html">
+      <span class="nav-icon">
+       ?
+      </span>
+      <span class="nav-text">
+       Help &amp; Support
+      </span>
+     </a>
+     <a class="nav-item" href="rental-settings.html">
+      <span class="nav-icon">
+       ⚙
+      </span>
+      <span class="nav-text">
+       Settings
+      </span>
+     </a>
+     <a class="nav-item" href="index.html" id="logoutButton">
+      <span class="nav-icon">
+       ↪
+      </span>
+      <span class="nav-text">
+       Logout
+      </span>
+     </a>
+    </div>
+   </aside>
+   <main class="main">
+    <header class="header">
+     <div class="header-left">
+      <button class="mobile-menu" id="mobileMenu">
+       ☰
+      </button>
+      <div class="header-title">
+       <h1>
+        Welcome back, <span id="userName">User</span>!
+       </h1>
+       <p>
+        Manage your equipment and availability.
+       </p>
+      </div>
+     </div>
+     <div class="header-right">
+      <div class="notification" id="notificationButton">
+       🔔
+       <span class="badge" id="notificationBadge" style="display:none">
+        0
+       </span>
+      </div>
+      <div class="profile-area" id="profileArea">
+       <div class="avatar" id="profileAvatar">
+        EP
+       </div>
+       <div class="profile-info">
+        <div class="profile-name" id="profileName">
+         Equipment Provider
+        </div>
+        <div class="profile-role">
+         Equipment Provider
+        </div>
+       </div>
+       <span class="profile-arrow">
+        ▼
+       </span>
+       <div class="profile-dropdown">
+        <div class="dropdown-user">
+         <div class="dropdown-user-name" id="dropdownUserName">
+          Equipment Provider
+         </div>
+         <div class="dropdown-user-role">
+          Equipment Provider
+         </div>
+        </div>
+        <div class="dropdown-title">
+         Switch Role
+        </div>
+        <div id="rolesContainer">
+        </div>
+       </div>
+      </div>
+     </div>
+    </header>
+    <section class="content">
+     <div class="page-heading">
+      <div>
+       <h2>
+        My Equipments
+       </h2>
+       <p>
+        Manage your equipments and machinery and track their availability.
+       </p>
+      </div>
+      <button class="add-btn" id="addEquipmentButton">
+       ＋ Add Equipment
+      </button>
+     </div>
+     <div class="stats">
+      <div class="stat">
+       <div class="stat-icon orange-bg">
+        🚜
+       </div>
+       <div>
+        <div class="stat-label">
+         Total Equipments
+        </div>
+        <div class="stat-number" id="totalCount">
+         0
+        </div>
+        <div class="stat-note orange-text">
+         All Equipments
+        </div>
+       </div>
+      </div>
+      <div class="stat">
+       <div class="stat-icon green-bg">
+        ✓
+       </div>
+       <div>
+        <div class="stat-label">
+         Available Now
+        </div>
+        <div class="stat-number" id="availableCount">
+         0
+        </div>
+        <div class="stat-note green-text">
+         Ready to Rent
+        </div>
+       </div>
+      </div>
+      <div class="stat">
+       <div class="stat-icon blue-bg">
+        👤
+       </div>
+       <div>
+        <div class="stat-label">
+         In Rent
+        </div>
+        <div class="stat-number" id="rentCount">
+         0
+        </div>
+        <div class="stat-note blue-text">
+         Currently Rented
+        </div>
+       </div>
+      </div>
+      <div class="stat">
+       <div class="stat-icon purple-bg">
+        🔧
+       </div>
+       <div>
+        <div class="stat-label">
+         In Garage / Maintenance Shop
+        </div>
+        <div class="stat-number" id="garageCount">
+         0
+        </div>
+        <div class="stat-note purple-text">
+         Under Maintenance
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="panel">
+      <div class="panel-top">
+       <div class="panel-title">
+        Equipments by Status
+       </div>
+       <div class="toolbar">
+        <div class="tabs">
+         <button class="tab active" data-filter="all">
+          All Equipments
+          <span id="allTabCount">
+          </span>
+         </button>
+         <button class="tab" data-filter="available">
+          <span class="dot dot-green">
+          </span>
+          Available Now
+          <span id="availableTabCount">
+          </span>
+         </button>
+         <button class="tab" data-filter="rent">
+          <span class="dot dot-blue">
+          </span>
+          In Rent
+          <span id="rentTabCount">
+          </span>
+         </button>
+         <button class="tab" data-filter="garage">
+          <span class="dot dot-purple">
+          </span>
+          In Garage / Mechanic Shop
+          <span id="garageTabCount">
+          </span>
+         </button>
+        </div>
+        <div class="search-wrap">
+         <span class="search-icon">
+          ⌕
+         </span>
+         <input class="search" id="searchInput" placeholder="Search equipment..."/>
+        </div>
+        <button class="control" id="filterButton">
+         ⚱ Filter
+        </button>
+        <select class="control" id="sortSelect">
+         <option value="newest">
+          Newest First
+         </option>
+         <option value="oldest">
+          Oldest First
+         </option>
+         <option value="name">
+          Name A-Z
+         </option>
+        </select>
+       </div>
+      </div>
+      <div class="table-wrap">
+       <table>
+        <thead>
+         <tr>
+          <th>
+           Equipment / Machinery
+          </th>
+          <th>
+           Category
+          </th>
+          <th>
+           Total Quantity
+          </th>
+          <th>
+           In Rent
+          </th>
+          <th>
+           In Garage /
+           <br/>
+           Mechanic Shop
+          </th>
+          <th>
+           Available Now
+          </th>
+          <th>
+           Status
+          </th>
+          <th>
+           Action
+          </th>
+         </tr>
+        </thead>
+        <tbody id="equipmentTableBody">
+         <tr>
+          <td colspan="8">
+           <div class="loading">
+            Loading your equipments...
+           </div>
+          </td>
+         </tr>
+        </tbody>
+       </table>
+      </div>
+      <div class="pagination">
+       <span id="resultInfo">
+        Loading...
+       </span>
+       <div class="page-buttons" id="pagination">
+       </div>
+      </div>
+     </div>
+    </section>
+   </main>
+  </div>
+  <footer class="footer">
+   <span>
+    🌱 © 2026 AgriConnect. All Rights Reserved
+   </span>
+   <span>
+    |
+   </span>
+   <a href="#">
+    Privacy Policy
+   </a>
+   <span>
+    |
+   </span>
+   <a href="#">
+    Terms of Service
+   </a>
+  </footer>
+  <div aria-hidden="true" class="add-equipment-modal" id="addEquipmentModal">
+   <div aria-labelledby="addEquipmentTitle" aria-modal="true" class="add-equipment-card" role="dialog">
+    <div class="add-equipment-header">
+     <div>
+      <h3 id="addEquipmentTitle">
+       Add New Equipment
+      </h3>
+      <p>
+       Fill in the details to add a new equipment or machinery to your inventory.
+      </p>
+     </div>
+     <button aria-label="Close" class="add-equipment-close" id="closeAddEquipment" type="button">
+      ×
+     </button>
+    </div>
+    <form class="add-equipment-form" id="addEquipmentForm">
+     <div class="add-equipment-grid">
+      <div class="add-form-group">
+       <label class="add-form-label" for="equipmentNameInput">
+        Equipment / Machinery Name
+        <span class="add-required">
+         *
+        </span>
+       </label>
+       <input class="add-form-control" id="equipmentNameInput" name="equipment_name" placeholder="Enter equipment or machinery name" required="" type="text"/>
+      </div>
+      <div class="add-form-group">
+       <label class="add-form-label" for="equipmentCategoryInput">
+        Category
+        <span class="add-required">
+         *
+        </span>
+       </label>
+       <select class="add-form-control" id="equipmentCategoryInput" name="category" required="">
+        <option value="">
+         Select category
+        </option>
+        <option value="Tractor">
+         Tractor
+        </option>
+        <option value="Tiller">
+         Tiller
+        </option>
+        <option value="Rotavator">
+         Rotavator
+        </option>
+        <option value="Power Weeder">
+         Power Weeder
+        </option>
+        <option value="Thresher">
+         Thresher
+        </option>
+        <option value="Water Pump">
+         Water Pump
+        </option>
+        <option value="Seed Drill">
+         Seed Drill
+        </option>
+        <option value="Harvester">
+         Harvester
+        </option>
+        <option value="Other">
+         Other
+        </option>
+       </select>
+      </div>
+      <div class="add-form-group">
+       <label class="add-form-label" for="equipmentBrandInput">
+        Brand / Model
+       </label>
+       <input class="add-form-control" id="equipmentBrandInput" name="brand_model" placeholder="Enter brand or model (optional)" type="text"/>
+      </div>
+      <div class="add-form-group">
+       <label class="add-form-label" for="equipmentQuantityInput">
+        Quantity (Total)
+        <span class="add-required">
+         *
+        </span>
+       </label>
+       <input class="add-form-control" id="equipmentQuantityInput" min="1" name="quantity" placeholder="Enter total quantity available" required="" step="1" type="number"/>
+      </div>
+      <div class="add-form-group">
+       <label class="add-form-label" for="equipmentPriceInput">
+        Price per Day (LKR)
+        <span class="add-required">
+         *
+        </span>
+       </label>
+       <div class="add-price-wrap">
+        <input class="add-form-control" id="equipmentPriceInput" min="0" name="rental_price" placeholder="Enter price per day" required="" step="0.01" type="number"/>
+        <span class="add-currency">
+         LKR
+        </span>
+       </div>
+      </div>
+      <div class="add-form-group">
+       <label class="add-form-label" for="equipmentYearInput">
+        Year of Purchase
+        <span class="add-required">
+         *
+        </span>
+       </label>
+       <input class="add-form-control" id="equipmentYearInput" name="year_of_purchase" required="" type="date"/>
+      </div>
+     </div>
+     <div class="add-image-section">
+      <div class="add-form-group">
+       <label class="add-form-label" for="equipmentImageInput">
+        Equipment Image
+        <span class="add-required">
+         *
+        </span>
+       </label>
+       <div class="add-upload-grid">
+        <label class="add-upload-area" for="equipmentImageInput">
+         <div class="add-upload-icon">
+          ☁️
+         </div>
+         <div class="add-upload-title">
+          Click to upload image
+         </div>
+         <div class="add-upload-help">
+          or drag and drop
+         </div>
+         <div class="add-upload-help">
+          JPG, PNG or WEBP (Max. 5MB)
+         </div>
+         <div class="add-upload-file" id="equipmentImageName">
+          No image selected
+         </div>
+        </label>
+        <div class="add-preview" id="equipmentImagePreview">
+         <div class="add-preview-placeholder" id="equipmentPreviewPlaceholder">
+          <span>
+           🖼️
+          </span>
+          Image Preview
+         </div>
+         <img alt="Equipment preview" id="equipmentPreviewImage"/>
+        </div>
+       </div>
+       <input accept="image/jpeg,image/png,image/webp" hidden="" id="equipmentImageInput" name="equipment_image" required="" type="file"/>
+      </div>
+     </div>
+     <div class="add-form-group" style="margin-top:20px;">
+      <label class="add-form-label" for="equipmentDescriptionInput">
+       Description
+      </label>
+      <textarea class="add-form-control add-textarea" id="equipmentDescriptionInput" maxlength="500" name="description" placeholder="Enter equipment description..."></textarea>
+     </div>
+     <div class="add-form-note">
+      The equipment will be associated with the currently logged-in Equipment Provider account. Existing equipment data and the database are not modified until you submit this form.
+     </div>
+     <div class="add-equipment-actions">
+      <button class="add-cancel-btn" id="cancelAddEquipment" type="button">
+       Cancel
+      </button>
+      <button class="add-save-btn" id="saveEquipmentButton" type="submit">
+       💾 Save Equipment
+      </button>
+     </div>
+    </form>
+   </div>
+  </div>
+  <div
+      class="success-toast"
+      id="successToast"
+  >
+      <div class="success-toast-icon">✓</div>
+      <div class="success-toast-content">
+          <div class="success-toast-title">Success</div>
+          <div class="success-toast-message" id="successToastMessage"></div>
+      </div>
+      <button class="success-toast-close" onclick="hideSuccessToast()" type="button" aria-label="Close notification">×</button>
+  </div>
+  <div class="toast" id="toast">
+  </div>
+
+  <!-- EQUIPMENT ACTION DROPDOWN -->
+  <div id="equipActionMenu" class="equip-action-menu">
+      <button type="button" data-action="edit">✏️ Edit</button>
+      <button type="button" data-action="garage">🔧 Garage</button>
+      <button type="button" data-action="delete">🗑️ Delete</button>
+      <button type="button" data-action="info">ℹ️ Info</button>
+  </div>
+
+  <!-- GENERIC ACTION MODAL -->
+  <div class="add-equipment-modal" id="equipActionModal">
+      <div class="add-equipment-card" id="equipActionCard" style="width:min(520px,100%);">
+          <!-- populated by JS -->
+      </div>
+  </div>
+
+  <!-- CONFIRMATION MODAL -->
+  <div class="add-equipment-modal" id="equipConfirmModal" style="z-index:1600;">
+      <div class="add-equipment-card" style="width:min(400px,100%);">
+          <div class="add-equipment-header">
+              <h3 id="equipConfirmTitle">Are you sure?</h3>
+          </div>
+          <div style="padding:22px 24px;">
+              <p id="equipConfirmMessage" style="font-size:13px;color:#536274;line-height:1.6;"></p>
+              <div style="display:flex;gap:10px;margin-top:22px;justify-content:flex-end;">
+                  <button type="button" id="equipConfirmCancel" style="padding:10px 18px;border:1px solid #dfe5e1;background:#fff;border-radius:8px;cursor:pointer;font-size:13px;">Cancel</button>
+                  <button type="button" id="equipConfirmOk" style="padding:10px 18px;border:none;background:#e0433c;color:#fff;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">Confirm</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <script>
+   /* =====================================================
+   RENTAL EQUIPMENT PAGE
+   Important:
+   - All navigation stays inside the Equipment Provider
+     dashboard.
+   - No Farmer role is invented.
+   - Equipment is loaded for the logged-in provider.
+===================================================== */
+
+const API_BASE_URL =
+    window.API_BASE_URL ||
+    localStorage.getItem("API_BASE_URL") ||
+    "http://localhost:5000/api";
+
+let currentUser = null;
+let allEquipments = [];
+let activeFilter = "all";
+let currentPage = 1;
+const pageSize = 8;
+
+function safeJSON(value){
+    try{return JSON.parse(value)}catch(e){return null}
+}
+
+currentUser =
+    safeJSON(sessionStorage.getItem("user")) ||
+    safeJSON(sessionStorage.getItem("loggedInUser")) ||
+    null;
+
+function userId(){
+    if(!currentUser)return null;
+    return currentUser.id ||
+           currentUser.user_id ||
+           currentUser.userId ||
+           null;
+}
+
+function userName(){
+    if(!currentUser)return "Equipment Provider";
+    const full =
+        `${currentUser.first_name || currentUser.firstName || ""} ${currentUser.last_name || currentUser.lastName || ""}`.trim();
+    return full ||
+        currentUser.name ||
+        currentUser.full_name ||
+        currentUser.fullName ||
+        "Equipment Provider";
+}
+
+function initials(name){
+    const p = String(name).trim().split(/\s+/).filter(Boolean);
+    if(!p.length)return "EP";
+    if(p.length===1)return p[0].slice(0,2).toUpperCase();
+    return (p[0][0]+p[p.length-1][0]).toUpperCase();
+}
+
+function normalizeRole(role){
+    const r=String(role||"").trim().toLowerCase();
+    if(r==="buyer" || r==="buyer/user")return "buyer";
+    if(r==="farmer")return "farmer";
+    if(r==="expert" || r==="agricultural expert" || r==="agriculture expert")return "expert";
+    if(r==="equipment provider" || r==="equipment_provider" || r==="equipment-provider" || r==="equipmentprovider" || r==="provider")return "equipment_provider";
+    return "";
+}
+
+function accountRoles(){
+    let roles=[];
+    if(currentUser && Array.isArray(currentUser.roles)) roles=currentUser.roles;
+    else if(currentUser && Array.isArray(currentUser.registeredRoles)) roles=currentUser.registeredRoles;
+    else if(currentUser && currentUser.role) roles=Array.isArray(currentUser.role)?currentUser.role:[currentUser.role];
+
+    roles=roles.map(normalizeRole).filter(Boolean);
+    roles=[...new Set(roles)];
+
+    /* Buyer is automatic for a registered non-admin role. */
+    if(roles.some(r=>r!=="buyer") && !roles.includes("buyer"))roles.push("buyer");
+
+    return roles;
+}
+
+function roleLabel(r){
+    return {buyer:"Buyer",farmer:"Farmer",expert:"Agricultural Expert",equipment_provider:"Equipment Provider"}[r]||r;
+}
+
+function roleIcon(r){
+    return {buyer:"🛒",farmer:"🧑‍🌾",expert:"🧑‍🔬",equipment_provider:"🚜"}[r]||"👤";
+}
+
+function renderProfile(){
+    const name=userName();
+    document.getElementById("profileName").textContent=name;
+
+    const welcomeNameEl=document.getElementById("userName");
+    if(welcomeNameEl) welcomeNameEl.textContent=name;
+
+    document.getElementById("dropdownUserName").textContent=name;
+    document.getElementById("profileAvatar").textContent=initials(name);
+
+    const container=document.getElementById("rolesContainer");
+    container.innerHTML="";
+
+    let roles=accountRoles();
+
+    /*
+     * Do NOT add Farmer/Expert/Provider just because those
+     * pages exist. Only roles belonging to this account appear.
+     */
+    if(!roles.length)roles=["equipment_provider"];
+
+    if(roles.includes("equipment_provider")){
+        roles=["equipment_provider",...roles.filter(r=>r!=="equipment_provider")];
+    }
+
+    roles.forEach(role=>{
+        const b=document.createElement("button");
+        b.className="role-button"+(role==="equipment_provider"?" current":"");
+        b.innerHTML=`<span>${roleIcon(role)}</span><span>${roleLabel(role)}</span><span class="role-check">${role==="equipment_provider"?"✓":""}</span>`;
+        b.onclick=e=>{
+            e.stopPropagation();
+            switchRole(role);
+        };
+        container.appendChild(b);
+    });
+}
+
+function switchRole(role){
+    if(!accountRoles().includes(role) && role!=="equipment_provider")return;
+
+    sessionStorage.setItem("selectedRole",role);
+    sessionStorage.setItem("currentRole",role);
+
+    if(role==="equipment_provider")location.href="rental-dashboard.html";
+    else if(role==="buyer")location.href="buyer-dashboard.html";
+    else if(role==="farmer")location.href="farmer-dashboard.html";
+    else if(role==="expert")location.href="expert-dashboard.html";
+}
+
+document.getElementById("profileArea").onclick=e=>{
+    e.stopPropagation();
+    document.getElementById("profileArea").classList.toggle("open");
+};
+document.addEventListener("click",()=>document.getElementById("profileArea").classList.remove("open"));
+
+document.getElementById("mobileMenu").onclick=e=>{
+    e.stopPropagation();
+    document.getElementById("sidebar").classList.toggle("open");
+};
+
+document.getElementById("notificationButton").onclick=()=>{
+    location.href="rental-notifications.html";
+};
+
+/* =====================================================
+   ADD EQUIPMENT
+   The form is kept inside rental-equipment.html.
+   No separate add-equipment.html page is required.
+===================================================== */
+const addEquipmentModal = document.getElementById("addEquipmentModal");
+const addEquipmentForm = document.getElementById("addEquipmentForm");
+const equipmentImageInput = document.getElementById("equipmentImageInput");
+const equipmentPreviewImage = document.getElementById("equipmentPreviewImage");
+const equipmentPreviewPlaceholder = document.getElementById("equipmentPreviewPlaceholder");
+const equipmentImageName = document.getElementById("equipmentImageName");
+
+function openAddEquipmentModal(){
+    addEquipmentModal.classList.add("show");
+    addEquipmentModal.setAttribute("aria-hidden","false");
+    document.body.style.overflow="hidden";
+    document.getElementById("equipmentNameInput").focus();
+}
+
+function closeAddEquipmentModal(){
+    addEquipmentModal.classList.remove("show");
+    addEquipmentModal.setAttribute("aria-hidden","true");
+    document.body.style.overflow="";
+}
+
+document.getElementById("addEquipmentButton").onclick=openAddEquipmentModal;
+document.getElementById("closeAddEquipment").onclick=closeAddEquipmentModal;
+document.getElementById("cancelAddEquipment").onclick=()=>{
+    addEquipmentForm.reset();
+    equipmentPreviewImage.style.display="none";
+    equipmentPreviewPlaceholder.style.display="block";
+    equipmentImageName.textContent="No image selected";
+    closeAddEquipmentModal();
+};
+
+addEquipmentModal.addEventListener("click",event=>{
+    if(event.target===addEquipmentModal)closeAddEquipmentModal();
+});
+
+document.addEventListener("keydown",event=>{
+    if(event.key==="Escape" && addEquipmentModal.classList.contains("show")){
+        closeAddEquipmentModal();
+    }
+});
+
+equipmentImageInput.addEventListener("change",()=>{
+    const file=equipmentImageInput.files[0];
+    if(!file){
+        equipmentPreviewImage.style.display="none";
+        equipmentPreviewPlaceholder.style.display="block";
+        equipmentImageName.textContent="No image selected";
+        return;
+    }
+
+    equipmentImageName.textContent=file.name;
+
+    if(file.size>5*1024*1024){
+        toast("Image must be 5MB or smaller.");
+        equipmentImageInput.value="";
+        equipmentPreviewImage.style.display="none";
+        equipmentPreviewPlaceholder.style.display="block";
+        equipmentImageName.textContent="No image selected";
+        return;
+    }
+
+    const reader=new FileReader();
+    reader.onload=event=>{
+        equipmentPreviewImage.src=event.target.result;
+        equipmentPreviewImage.style.display="block";
+        equipmentPreviewPlaceholder.style.display="none";
+    };
+    reader.readAsDataURL(file);
+});
+
+addEquipmentForm.addEventListener("submit",async event=>{
+    event.preventDefault();
+
+    const saveButton=document.getElementById("saveEquipmentButton");
+    const imageFile=equipmentImageInput.files[0];
+    const name=document.getElementById("equipmentNameInput").value.trim();
+    const category=document.getElementById("equipmentCategoryInput").value;
+    const quantity=Number(document.getElementById("equipmentQuantityInput").value);
+    const price=Number(document.getElementById("equipmentPriceInput").value);
+    const year=document.getElementById("equipmentYearInput").value;
+    const brand=document.getElementById("equipmentBrandInput").value.trim();
+    const description=document.getElementById("equipmentDescriptionInput").value.trim();
+
+    if(!name || !category || !Number.isFinite(price) || price<0 || !imageFile){
+        toast("Please complete all required equipment fields.");
+        return;
+    }
+
+    if(!["image/jpeg","image/png","image/webp"].includes(imageFile.type)){
+        toast("Please upload a JPG, PNG or WEBP image.");
+        return;
+    }
+
+    if(imageFile.size>5*1024*1024){
+        toast("Image must be 5MB or smaller.");
+        return;
+    }
+
+    const providerUserId=userId();
+    if(!providerUserId){
+        toast("Your login session does not contain a user ID.");
+        return;
+    }
+
+    saveButton.disabled=true;
+    saveButton.textContent="Saving...";
+
+    try{
+        /*
+         * Resolve the Equipment Provider profile ID from the
+         * current user's ID. The equipment table uses the
+         * provider profile ID as provider_id.
+         */
+        const providersResponse=await fetch(`${API_BASE_URL}/rentals/providers`);
+        const providersData=await providersResponse.json();
+
+        if(!providersResponse.ok || !providersData.success){
+            throw new Error(providersData.message || "Unable to find your Equipment Provider profile.");
+        }
+
+        const provider=(providersData.providers || []).find(item=>String(item.user_id)===String(providerUserId));
+        if(!provider){
+            throw new Error("No approved Equipment Provider profile was found for this account.");
+        }
+
+        /*
+         * Use multipart/form-data so the image can be sent with
+         * the equipment data. If your backend already exposes
+         * POST /api/equipment, this submits directly to it.
+         */
+        const formData=new FormData();
+        formData.append("provider_id",provider.provider_id);
+        formData.append("equipment_name",name);
+        formData.append("category",category);
+        // Brand / Model is currently not stored by the backend.
+        formData.append("quantity",quantity);
+        formData.append("rental_price",price);
+        formData.append("price_unit","day");
+        // Year of Purchase is currently not stored by the backend.
+        formData.append("description",description);
+        formData.append("availability_status","available");
+        formData.append("equipment_image",imageFile);
+
+        const response=await fetch(`${API_BASE_URL}/rentals/equipment`,{
+            method:"POST",
+            body:formData
+        });
+
+        let data={};
+        try{data=await response.json()}catch(error){data={}}
+
+        if(!response.ok){
+            throw new Error(data.message || "Failed to save equipment. Please check the equipment API route.");
+        }
+
+        closeAddEquipmentModal();
+        addEquipmentForm.reset();
+        equipmentPreviewImage.style.display="none";
+        equipmentPreviewPlaceholder.style.display="block";
+        equipmentImageName.textContent="No image selected";
+
+        showSuccessToast(data.message || "Equipment added successfully.");
+        await fetchEquipments();
+
+    }catch(error){
+        console.error("Add equipment error:",error);
+        toast(error.message || "Unable to add equipment.");
+    }finally{
+        saveButton.disabled=false;
+        saveButton.textContent="💾 Save Equipment";
+    }
+});
+
+document.getElementById("logoutButton").onclick=e=>{
+    e.preventDefault();
+    if(!confirm("Are you sure you want to logout?"))return;
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("loggedInUser");
+    sessionStorage.removeItem("selectedRole");
+    sessionStorage.removeItem("currentRole");
+    location.href="index.html";
+};
+
+let successToastTimer;
+
+function showSuccessToast(message){
+    const toast = document.getElementById("successToast");
+    const messageElement = document.getElementById("successToastMessage");
+    if (!toast || !messageElement) return;
+    messageElement.textContent = message;
+    toast.classList.add("show");
+    clearTimeout(successToastTimer);
+    successToastTimer = setTimeout(function(){ hideSuccessToast(); }, 3500);
+}
+
+function hideSuccessToast(){
+    const toast = document.getElementById("successToast");
+    if (toast) toast.classList.remove("show");
+}
+
+function toast(message){
+    const t=document.getElementById("toast");
+    t.textContent=message;
+    t.style.display="block";
+    clearTimeout(window.toastTimer);
+    window.toastTimer=setTimeout(()=>t.style.display="none",2500);
+}
+
+function number(v){
+    const n=Number(v);
+    return Number.isFinite(n)?n:0;
+}
+
+function equipmentName(e){
+    return e.equipment_name ||
+           e.equipmentName ||
+           e.name ||
+           e.machine_name ||
+           e.machinery_name ||
+           "Equipment";
+}
+
+function equipmentCategory(e){
+    return e.category ||
+           e.equipment_category ||
+           e.type ||
+           "Equipment";
+}
+
+function totalQuantity(e){
+    return number(
+        e.total_quantity ??
+        e.quantity ??
+        e.available_quantity ??
+        e.stock_quantity
+    ) || 1;
+}
+
+function rentQuantity(e){
+    const explicit = number(
+        e.rented_quantity ??
+        e.in_rent ??
+        e.rent_quantity ??
+        e.rented
+    );
+
+    if (explicit > 0) return explicit;
+
+    const status = String(e.status||e.availability_status||"").toLowerCase();
+    return status.includes("rent") ? totalQuantity(e) : 0;
+}
+
+function garageQuantity(e){
+    const explicit = number(
+        e.garage_quantity ??
+        e.maintenance_quantity ??
+        e.in_garage ??
+        e.in_maintenance ??
+        e.under_maintenance
+    );
+
+    if (explicit > 0) return explicit;
+
+    const status = String(e.status||e.availability_status||"").toLowerCase();
+    return (status.includes("maintenance") || status.includes("garage")) ? totalQuantity(e) : 0;
+}
+
+function availableQuantity(e){
+    if(e.available_quantity!==undefined && e.available_quantity!==null)
+        return number(e.available_quantity);
+
+    return Math.max(
+        0,
+        totalQuantity(e)-rentQuantity(e)-garageQuantity(e)
+    );
+}
+
+function statusType(e){
+    const raw=String(e.status||e.availability_status||"").toLowerCase();
+
+    if(raw.includes("maintenance") || raw.includes("garage"))return "garage";
+    if(raw.includes("rent") || rentQuantity(e)>0 && availableQuantity(e)===0)return "rent";
+    if(raw.includes("unavailable") || raw.includes("inactive"))return "unavailable";
+    if(availableQuantity(e)>0)return "available";
+    if(rentQuantity(e)>0)return "rent";
+    return "unavailable";
+}
+
+function statusLabel(type){
+    if(type==="garage")return "In Garage";
+    if(type==="rent")return "In Rent";
+    if(type==="available")return "Available";
+    return "Unavailable";
+}
+
+function imageValue(e){
+    return e.image_url ||
+           e.image ||
+           e.image_path ||
+           e.photo ||
+           e.equipment_image ||
+           "";
+}
+
+function renderImage(e){
+    const src=imageValue(e);
+    if(src){
+        let fixed=src;
+        if(!src.startsWith("http://") && !src.startsWith("https://") && !src.startsWith("/")){
+            fixed=`http://localhost:5000/${src.replace(/^\.\//,"")}`;
+        }
+        return `<img src="${fixed}" alt="" onerror="this.parentElement.innerHTML='🚜'">`;
+    }
+    return "🚜";
+}
+
+async function fetchEquipments(){
+
+    const currentUserId = userId();
+
+    if(!currentUserId){
+        allEquipments=[];
+        renderTable();
+        console.error("No logged-in user ID was found.");
+        return;
+    }
+
+    const authHeaders = {};
+    const token = sessionStorage.getItem("token");
+
+    if(token){
+        authHeaders.Authorization = "Bearer " + token;
+    }
+
+    try{
+        /*
+         * STEP 1
+         * Find the approved Equipment Provider profile belonging
+         * to the currently logged-in user.
+         *
+         * /providers returns:
+         *   provider_id = equipment_provider_profiles.id
+         *   user_id     = users.id
+         */
+        const providersResponse = await fetch(
+            `${API_BASE_URL}/rentals/providers`,
+            {
+                headers: authHeaders
+            }
+        );
+
+        let providersData = {};
+
+        try{
+            providersData = await providersResponse.json();
+        }catch(error){
+            providersData = {};
+        }
+
+        if(!providersResponse.ok || !providersData.success){
+            throw new Error(
+                providersData.message ||
+                "Unable to load Equipment Provider profiles."
+            );
+        }
+
+        const providers = Array.isArray(providersData.providers)
+            ? providersData.providers
+            : [];
+
+        const provider = providers.find(item =>
+            String(item.user_id) === String(currentUserId)
+        );
+
+        if(!provider){
+            throw new Error(
+                "No approved Equipment Provider profile was found for this account."
+            );
+        }
+
+        const providerId = provider.provider_id;
+
+        /*
+         * STEP 2
+         * Load equipment using the provider PROFILE ID.
+         *
+         * Correct backend route:
+         * GET /api/rentals/providers/:providerId
+         */
+        const equipmentResponse = await fetch(
+            `${API_BASE_URL}/rentals/providers/${encodeURIComponent(providerId)}`,
+            {
+                headers: authHeaders
+            }
+        );
+
+        let equipmentData = {};
+
+        try{
+            equipmentData = await equipmentResponse.json();
+        }catch(error){
+            equipmentData = {};
+        }
+
+        if(!equipmentResponse.ok || !equipmentData.success){
+            throw new Error(
+                equipmentData.message ||
+                "Unable to load your equipment."
+            );
+        }
+
+        /*
+         * The provider-details endpoint returns:
+         *
+         * {
+         *   success: true,
+         *   provider: {...},
+         *   equipment: [...]
+         * }
+         */
+        allEquipments = Array.isArray(equipmentData.equipment)
+            ? equipmentData.equipment
+            : [];
+
+        console.log("Equipment Provider profile ID:", providerId);
+        console.log("Loaded equipment:", allEquipments);
+
+        currentPage = 1;
+        renderTable();
+
+    }catch(error){
+
+        console.error(
+            "Fetch equipment error:",
+            error
+        );
+
+        allEquipments=[];
+        currentPage=1;
+        renderTable();
+
+        toast(
+            error.message ||
+            "Unable to load your equipment."
+        );
+    }
+}
+
+function updateStats(){
+    let total=0,available=0,rent=0,garage=0;
+
+    allEquipments.forEach(e=>{
+        total+=totalQuantity(e);
+        available+=availableQuantity(e);
+        rent+=rentQuantity(e);
+        garage+=garageQuantity(e);
+    });
+
+    /*
+     * If backend stores each equipment as one record and does not
+     * expose quantity, the count still works correctly.
+     */
+    if(allEquipments.length && total===0)total=allEquipments.length;
+
+    document.getElementById("totalCount").textContent=total;
+    document.getElementById("availableCount").textContent=available;
+    document.getElementById("rentCount").textContent=rent;
+    document.getElementById("garageCount").textContent=garage;
+
+    document.getElementById("allTabCount").textContent=` (${allEquipments.length})`;
+    document.getElementById("availableTabCount").textContent=` (${allEquipments.filter(e=>statusType(e)==="available").length})`;
+    document.getElementById("rentTabCount").textContent=` (${allEquipments.filter(e=>statusType(e)==="rent").length})`;
+    document.getElementById("garageTabCount").textContent=` (${allEquipments.filter(e=>statusType(e)==="garage").length})`;
+}
+
+function filteredEquipments(){
+    const q=document.getElementById("searchInput").value.trim().toLowerCase();
+
+    let list=allEquipments.filter(e=>{
+        const type=statusType(e);
+
+        const matchesFilter=
+            activeFilter==="all" ||
+            (activeFilter==="available" && type==="available") ||
+            (activeFilter==="rent" && type==="rent") ||
+            (activeFilter==="garage" && type==="garage");
+
+        const text=[
+            equipmentName(e),
+            equipmentCategory(e),
+            e.description,
+            e.specification,
+            e.model,
+            e.brand
+        ].filter(Boolean).join(" ").toLowerCase();
+
+        return matchesFilter && (!q || text.includes(q));
+    });
+
+    const sort=document.getElementById("sortSelect").value;
+
+    if(sort==="name"){
+        list.sort((a,b)=>equipmentName(a).localeCompare(equipmentName(b)));
+    }else{
+        list.sort((a,b)=>{
+            const ad=new Date(a.created_at||a.createdAt||a.added_at||0).getTime();
+            const bd=new Date(b.created_at||b.createdAt||b.added_at||0).getTime();
+            return sort==="oldest"?ad-bd:bd-ad;
+        });
+    }
+
+    return list;
+}
+
+function renderTable(){
+    updateStats();
+
+    const list=filteredEquipments();
+    const body=document.getElementById("equipmentTableBody");
+    const totalPages=Math.max(1,Math.ceil(list.length/pageSize));
+
+    if(currentPage>totalPages)currentPage=totalPages;
+
+    const start=(currentPage-1)*pageSize;
+    const rows=list.slice(start,start+pageSize);
+
+    if(!rows.length){
+        body.innerHTML=`<tr><td colspan="8"><div class="empty">No equipments found for this Equipment Provider account.</div></td></tr>`;
+    }else{
+        body.innerHTML=rows.map((e,index)=>{
+            const total=totalQuantity(e);
+            const rent=rentQuantity(e);
+            const garage=garageQuantity(e);
+            const available=availableQuantity(e);
+            const type=statusType(e);
+            const id=e.id||e.equipment_id||e.equipmentId||"";
+
+            return `
+            <tr>
+                <td>
+                    <div class="equipment">
+                        <div class="equipment-image">${renderImage(e)}</div>
+                        <div>
+                            <div class="equipment-name">${escapeHtml(equipmentName(e))}</div>
+                            <div class="equipment-desc">${escapeHtml(e.description||e.specification||e.model||"Equipment / Machinery")}</div>
+                        </div>
+                    </div>
+                </td>
+                <td><span class="category">${escapeHtml(equipmentCategory(e))}</span></td>
+                <td class="number">${total}</td>
+                <td class="number blue-number">${rent}</td>
+                <td class="number purple-number">${garage}</td>
+                <td class="number green-number">${available}</td>
+                <td><span class="status ${type}">${statusLabel(type)}</span></td>
+                <td><button class="action" data-id="${escapeHtml(id)}" title="Equipment actions">⋮</button></td>
+            </tr>`;
+        }).join("");
+
+        body.querySelectorAll(".action").forEach(btn=>{
+            btn.onclick=(event)=>equipmentAction(btn.dataset.id,event);
+        });
+    }
+
+    document.getElementById("resultInfo").textContent=
+        list.length ? `Showing ${start+1}-${Math.min(start+pageSize,list.length)} of ${list.length} equipments` : "0 equipments";
+
+    renderPagination(totalPages);
+}
+
+function renderPagination(totalPages){
+    const p=document.getElementById("pagination");
+    p.innerHTML="";
+
+    if(totalPages<=1)return;
+
+    for(let i=1;i<=totalPages;i++){
+        const b=document.createElement("button");
+        b.className="page-btn"+(i===currentPage?" active":"");
+        b.textContent=i;
+        b.onclick=()=>{currentPage=i;renderTable()};
+        p.appendChild(b);
+    }
+}
+
+let equipActionTargetId=null;
+
+function equipmentAction(id,event){
+    if(!id){
+        toast("Equipment details are not available.");
+        return;
+    }
+
+    event.stopPropagation();
+    equipActionTargetId=id;
+
+    const menu=document.getElementById("equipActionMenu");
+    const rect=event.currentTarget.getBoundingClientRect();
+
+    menu.style.top=(rect.bottom+6)+"px";
+    menu.style.left=Math.max(10,rect.right-160)+"px";
+    menu.classList.add("show");
+}
+
+document.addEventListener("click",(event)=>{
+    const menu=document.getElementById("equipActionMenu");
+    if(!menu.contains(event.target)){
+        menu.classList.remove("show");
+    }
+});
+
+document.getElementById("equipActionMenu").addEventListener("click",(event)=>{
+    const btn=event.target.closest("button[data-action]");
+    if(!btn)return;
+    document.getElementById("equipActionMenu").classList.remove("show");
+    const action=btn.dataset.action;
+    if(action==="edit")openEditCard(equipActionTargetId);
+    if(action==="garage")openGarageCard(equipActionTargetId);
+    if(action==="delete")openDeleteCard(equipActionTargetId);
+    if(action==="info")openInfoCard(equipActionTargetId);
+});
+
+function closeEquipActionModal(){
+    document.getElementById("equipActionModal").classList.remove("show");
+    document.getElementById("equipActionCard").innerHTML="";
+}
+
+function showEquipConfirm(title,message,onConfirm){
+    const modal=document.getElementById("equipConfirmModal");
+    document.getElementById("equipConfirmTitle").textContent=title;
+    document.getElementById("equipConfirmMessage").textContent=message;
+    modal.classList.add("show");
+
+    const okBtn=document.getElementById("equipConfirmOk");
+    const cancelBtn=document.getElementById("equipConfirmCancel");
+
+    const newOkBtn=okBtn.cloneNode(true);
+    okBtn.parentNode.replaceChild(newOkBtn,okBtn);
+
+    newOkBtn.onclick=()=>{
+        modal.classList.remove("show");
+        onConfirm();
+    };
+
+    cancelBtn.onclick=()=>{
+        modal.classList.remove("show");
+    };
+}
+
+async function fetchEquipmentById(id){
+    const response=await fetch(`${API_BASE_URL}/rentals/equipment/${encodeURIComponent(id)}`);
+    const data=await response.json();
+    if(!response.ok||!data.success)throw new Error(data.message||"Unable to load equipment.");
+    return data.equipment;
+}
+
+/* ================= EDIT ================= */
+
+async function openEditCard(id){
+    let equip;
+    try{
+        equip=await fetchEquipmentById(id);
+    }catch(error){
+        toast(error.message);
+        return;
+    }
+
+    const card=document.getElementById("equipActionCard");
+    card.innerHTML=`
+        <div class="add-equipment-header">
+            <h3>Edit Equipment</h3>
+            <button class="add-equipment-close" type="button" onclick="closeEquipActionModal()">×</button>
+        </div>
+        <div style="padding:22px 24px;">
+            <div class="equip-form-group">
+                <label for="editName" class="equip-form-label">Equipment Name</label>
+                <input class="equip-form-control" id="editName" type="text" value="${escapeHtml(equip.equipment_name)}">
+            </div>
+            <div class="equip-form-group">
+                <label for="editCategory" class="equip-form-label">Category</label>
+                <input class="equip-form-control" id="editCategory" type="text" value="${escapeHtml(equip.category||"")}">
+            </div>
+            <div class="equip-form-group">
+                <label for="editQuantity" class="equip-form-label">Total Quantity</label>
+                <input class="equip-form-control" id="editQuantity" type="number" min="1" step="1" value="${equip.quantity||1}">
+            </div>
+            <div class="equip-form-group">
+                <label for="editPrice" class="equip-form-label">Price per Day (LKR)</label>
+                <input class="equip-form-control" id="editPrice" type="number" min="0" step="0.01" value="${equip.rental_price}">
+            </div>
+            <div class="equip-form-group">
+                <label for="editDescription" class="equip-form-label">Description</label>
+                <input class="equip-form-control" id="editDescription" type="text" value="${escapeHtml(equip.description||"")}">
+            </div>
+            <div class="equip-form-group">
+                <label for="editImage" class="equip-form-label">Replace Image (optional)</label>
+                <input class="equip-form-control" id="editImage" type="file" accept="image/jpeg,image/png,image/webp">
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px;">
+                <button type="button" onclick="closeEquipActionModal()" style="padding:10px 18px;border:1px solid #dfe5e1;background:#fff;border-radius:8px;cursor:pointer;font-size:13px;">Cancel</button>
+                <button type="button" id="editSaveBtn" style="padding:10px 18px;border:none;background:#17833c;color:#fff;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">Save Changes</button>
+            </div>
+        </div>
+    `;
+
+    document.getElementById("equipActionModal").classList.add("show");
+
+    document.getElementById("editSaveBtn").onclick=()=>{
+        showEquipConfirm(
+            "Save changes?",
+            "This will update the equipment details for all providers and farmers viewing it.",
+            async ()=>{
+                const formData=new FormData();
+                formData.append("equipment_name",document.getElementById("editName").value.trim());
+                formData.append("category",document.getElementById("editCategory").value.trim());
+                formData.append("quantity",document.getElementById("editQuantity").value);
+                formData.append("rental_price",document.getElementById("editPrice").value);
+                formData.append("price_unit",equip.price_unit||"day");
+                formData.append("description",document.getElementById("editDescription").value.trim());
+
+                const imageFile=document.getElementById("editImage").files[0];
+                if(imageFile)formData.append("equipment_image",imageFile);
+
+                try{
+                    const response=await fetch(`${API_BASE_URL}/rentals/equipment/${id}`,{method:"PUT",body:formData});
+                    const data=await response.json();
+                    if(!response.ok||!data.success)throw new Error(data.message||"Unable to update equipment.");
+                    closeEquipActionModal();
+                    showSuccessToast("Equipment updated successfully.");
+                    await fetchEquipments();
+                }catch(error){
+                    toast(error.message);
+                }
+            }
+        );
+    };
+}
+
+/* ================= GARAGE ================= */
+
+async function openGarageCard(id){
+    let equip;
+    try{
+        equip=await fetchEquipmentById(id);
+    }catch(error){
+        toast(error.message);
+        return;
+    }
+
+    const card=document.getElementById("equipActionCard");
+    card.innerHTML=`
+        <div class="add-equipment-header">
+            <h3>Garage / Maintenance</h3>
+            <button class="add-equipment-close" type="button" onclick="closeEquipActionModal()">×</button>
+        </div>
+        <div style="padding:22px 24px;">
+            <div class="equip-info-row"><span>Equipment</span><span>${escapeHtml(equip.equipment_name)}</span></div>
+            <div class="equip-info-row"><span>Category</span><span>${escapeHtml(equip.category||"-")}</span></div>
+            <div class="equip-info-row"><span>Total Quantity</span><span>${equip.quantity||1}</span></div>
+            <div class="equip-form-group" style="margin-top:16px;">
+                <label for="garageQtyInput" class="equip-form-label">Units in Garage / Maintenance</label>
+                <input class="equip-form-control" id="garageQtyInput" type="number" min="0" max="${equip.quantity||1}" step="1" value="${equip.garage_quantity||0}">
+                <span style="font-size:11px;color:#6b7683;">Cannot exceed total quantity (${equip.quantity||1}).</span>
+            </div>
+            <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:6px;">
+                <button type="button" onclick="closeEquipActionModal()" style="padding:10px 18px;border:1px solid #dfe5e1;background:#fff;border-radius:8px;cursor:pointer;font-size:13px;">Cancel</button>
+                <button type="button" id="garageSaveBtn" style="padding:10px 18px;border:none;background:#17833c;color:#fff;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">Save</button>
+            </div>
+        </div>
+    `;
+
+    document.getElementById("equipActionModal").classList.add("show");
+
+    const garageInput=document.getElementById("garageQtyInput");
+    const maxAllowed=equip.quantity||1;
+
+    garageInput.addEventListener("input",()=>{
+        const raw=Number(garageInput.value);
+        if(Number.isFinite(raw)&&raw>maxAllowed){
+            garageInput.value=maxAllowed;
+        }
+    });
+
+    document.getElementById("garageSaveBtn").onclick=()=>{
+        let value=Number(garageInput.value);
+
+        if(!Number.isFinite(value)||value<0){
+            toast("Please enter a valid quantity.");
+            return;
+        }
+
+        if(value>maxAllowed){
+            value=maxAllowed;
+            garageInput.value=maxAllowed;
+        }
+
+        showEquipConfirm(
+            "Update garage quantity?",
+            `${value} of ${maxAllowed} units will be marked as in garage / maintenance.`,
+            async ()=>{
+                try{
+                    const response=await fetch(`${API_BASE_URL}/rentals/equipment/${id}/garage`,{
+                        method:"PUT",
+                        headers:{"Content-Type":"application/json"},
+                        body:JSON.stringify({garage_quantity:value})
+                    });
+                    const data=await response.json();
+                    if(!response.ok||!data.success)throw new Error(data.message||"Unable to update garage quantity.");
+                    closeEquipActionModal();
+                    showSuccessToast("Garage quantity updated successfully.");
+                    await fetchEquipments();
+                }catch(error){
+                    toast(error.message);
+                }
+            }
+        );
+    };
+}
+
+/* ================= DELETE ================= */
+
+async function openDeleteCard(id){
+    let equip;
+    try{
+        equip=await fetchEquipmentById(id);
+    }catch(error){
+        toast(error.message);
+        return;
+    }
+
+    const card=document.getElementById("equipActionCard");
+    card.innerHTML=`
+        <div class="add-equipment-header">
+            <h3>Delete Equipment</h3>
+            <button class="add-equipment-close" type="button" onclick="closeEquipActionModal()">×</button>
+        </div>
+        <div style="padding:22px 24px;">
+            <p style="font-size:13px;color:#536274;margin-bottom:18px;">
+                "${escapeHtml(equip.equipment_name)}" currently has ${equip.quantity||1} unit(s).
+                What would you like to remove?
+            </p>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+                <button type="button" id="deleteAllBtn" style="padding:12px;border:1px solid #f4c7c3;background:#fdecea;color:#c0392b;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;text-align:left;">
+                    🗑️ Delete All Units (removes this listing entirely)
+                </button>
+                <button type="button" id="deleteSomeBtn" style="padding:12px;border:1px solid #dfe5e1;background:#fff;color:#172033;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;text-align:left;">
+                    ➖ Remove Specific Quantity
+                </button>
+            </div>
+            <div id="deleteQtySection" style="display:none;margin-top:16px;">
+                <div class="equip-form-group">
+                    <label for="deleteQtyInput" class="equip-form-label">Quantity to Remove</label>
+                    <input class="equip-form-control" id="deleteQtyInput" type="number" min="1" max="${equip.quantity||1}" step="1" value="1">
+                    <span style="font-size:11px;color:#6b7683;">Cannot exceed ${equip.quantity||1}.</span>
+                </div>
+                <div style="display:flex;gap:10px;justify-content:flex-end;">
+                    <button type="button" onclick="closeEquipActionModal()" style="padding:10px 18px;border:1px solid #dfe5e1;background:#fff;border-radius:8px;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="deleteQtyConfirmBtn" style="padding:10px 18px;border:none;background:#c0392b;color:#fff;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;">Remove</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.getElementById("equipActionModal").classList.add("show");
+
+    document.getElementById("deleteAllBtn").onclick=()=>{
+        showEquipConfirm(
+            "Delete all units?",
+            `This will permanently remove "${equip.equipment_name}" and all ${equip.quantity||1} unit(s). This cannot be undone.`,
+            async ()=>{
+                try{
+                    const response=await fetch(`${API_BASE_URL}/rentals/equipment/${id}`,{method:"DELETE"});
+                    const data=await response.json();
+                    if(!response.ok||!data.success)throw new Error(data.message||"Unable to delete equipment.");
+                    closeEquipActionModal();
+                    showSuccessToast("Equipment deleted successfully.");
+                    await fetchEquipments();
+                }catch(error){
+                    toast(error.message);
+                }
+            }
+        );
+    };
+
+    document.getElementById("deleteSomeBtn").onclick=()=>{
+        document.getElementById("deleteQtySection").style.display="block";
+    };
+
+    const deleteQtyInput=document.getElementById("deleteQtyInput");
+    const maxDeleteAllowed=equip.quantity||1;
+
+    deleteQtyInput.addEventListener("input",()=>{
+        const raw=Number(deleteQtyInput.value);
+        if(Number.isFinite(raw)&&raw>maxDeleteAllowed){
+            deleteQtyInput.value=maxDeleteAllowed;
+        }
+    });
+
+    document.getElementById("deleteQtyConfirmBtn").onclick=()=>{
+        let value=Number(deleteQtyInput.value);
+
+        if(!Number.isFinite(value)||value<1){
+            toast("Please enter a valid quantity.");
+            return;
+        }
+
+        if(value>maxDeleteAllowed){
+            value=maxDeleteAllowed;
+            deleteQtyInput.value=maxDeleteAllowed;
+        }
+
+        showEquipConfirm(
+            "Remove this quantity?",
+            `${value} unit(s) will be removed from "${equip.equipment_name}".${value>=maxDeleteAllowed?" This will delete the listing entirely since no units will remain.":""}`,
+            async ()=>{
+                try{
+                    const response=await fetch(`${API_BASE_URL}/rentals/equipment/${id}/reduce`,{
+                        method:"PATCH",
+                        headers:{"Content-Type":"application/json"},
+                        body:JSON.stringify({reduce_by:value})
+                    });
+                    const data=await response.json();
+                    if(!response.ok||!data.success)throw new Error(data.message||"Unable to update equipment.");
+                    closeEquipActionModal();
+                    showSuccessToast(data.deleted?"All units removed - listing deleted.":"Quantity updated successfully.");
+                    await fetchEquipments();
+                }catch(error){
+                    toast(error.message);
+                }
+            }
+        );
+    };
+}
+
+/* ================= INFO ================= */
+
+async function openInfoCard(id){
+    let equip;
+    try{
+        equip=await fetchEquipmentById(id);
+    }catch(error){
+        toast(error.message);
+        return;
+    }
+
+    const total=equip.quantity||1;
+    const garage=equip.garage_quantity||0;
+    const rented=rentQuantity(equip);
+    const available=Math.max(0,total-garage-rented);
+
+    const card=document.getElementById("equipActionCard");
+    card.innerHTML=`
+        <div class="add-equipment-header">
+            <h3>Equipment Info</h3>
+            <button class="add-equipment-close" type="button" onclick="closeEquipActionModal()">×</button>
+        </div>
+        <div style="padding:22px 24px;">
+            <div class="equip-info-row"><span>Equipment Name</span><span>${escapeHtml(equip.equipment_name)}</span></div>
+            <div class="equip-info-row"><span>Category</span><span>${escapeHtml(equip.category||"-")}</span></div>
+            <div class="equip-info-row"><span>Description</span><span>${escapeHtml(equip.description||"-")}</span></div>
+            <div class="equip-info-row"><span>Price</span><span>Rs. ${Number(equip.rental_price).toLocaleString("en-LK")} / ${escapeHtml(equip.price_unit||"day")}</span></div>
+            <div class="equip-info-row" style="margin-top:10px;border-top:2px solid #eef1ef;padding-top:14px;"><span>Total Quantity</span><span>${total}</span></div>
+            <div class="equip-info-row"><span>In Garage / Maintenance</span><span>${garage}</span></div>
+            <div class="equip-info-row"><span>In Rent</span><span>${rented}</span></div>
+            <div class="equip-info-row"><span>Available Now</span><span>${available}</span></div>
+            <div style="margin-top:14px;">
+                <button type="button" onclick="closeEquipActionModal()" style="width:100%;padding:10px 18px;border:1px solid #dfe5e1;background:#fff;border-radius:8px;cursor:pointer;font-size:13px;">Close</button>
+            </div>
+        </div>
+    `;
+
+    document.getElementById("equipActionModal").classList.add("show");
+}
+
+function escapeHtml(v){
+    return String(v??"")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+}
+
+document.querySelectorAll(".tab").forEach(tab=>{
+    tab.onclick=()=>{
+        document.querySelectorAll(".tab").forEach(x=>x.classList.remove("active"));
+        tab.classList.add("active");
+        activeFilter=tab.dataset.filter;
+        currentPage=1;
+        renderTable();
+    };
+});
+
+document.getElementById("searchInput").addEventListener("input",()=>{
+    currentPage=1;
+    renderTable();
+});
+
+document.getElementById("sortSelect").addEventListener("change",()=>{
+    currentPage=1;
+    renderTable();
+});
+
+document.getElementById("filterButton").onclick=()=>{
+    toast("Use the status tabs to filter equipments.");
+};
+
+function updateNotifications() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const header = document.getElementById("headerNotificationCount");
+            const side = document.getElementById("sideNotificationCount");
+            const sidebarCount = document.getElementById("notificationCount");
+            const badge = document.getElementById("notificationBadge");
+
+            if (header) {
+                header.textContent = unread;
+                header.style.display = unread > 0 ? "flex" : "none";
+            }
+
+            if (side) {
+                side.textContent = unread;
+                side.style.display = unread > 0 ? "flex" : "none";
+            }
+
+            if (sidebarCount) {
+                sidebarCount.textContent = unread;
+            }
+
+            if (badge) {
+                badge.textContent = unread;
+                badge.style.display = unread > 0 ? "inline-flex" : "none";
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+renderProfile();
+updateNotifications();
+fetchEquipments();
+  
+
+/* =========================================================
+   SIDEBAR MESSAGES BADGE (unread conversation count)
+========================================================= */
+
+function updateSidebarMessagesBadgeGlobal() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) return;
+
+    fetch(`/api/messages/conversations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const badge = document.getElementById("sidebarMessagesBadge");
+
+            if (!badge) return;
+
+            const unreadCount = (Array.isArray(data.conversations) ? data.conversations : [])
+                .filter(c => c.unread_count > 0).length;
+
+            if (unreadCount > 0) {
+                badge.textContent = unreadCount;
+                badge.style.display = "flex";
+            } else {
+                badge.style.display = "none";
+            }
+
+        })
+        .catch(error => console.error("Unable to load sidebar messages badge:", error));
+
+}
+
+updateSidebarMessagesBadgeGlobal();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+ </body>
+</html>

@@ -1,0 +1,4586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AgriConnect - Orders</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f7f5;
+            color: #1f2937;
+            min-height: 100vh;
+        }
+
+        button,
+        input,
+        select {
+            font-family: inherit;
+        }
+
+        .dashboard {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+            width: 255px;
+            min-width: 255px;
+            background: linear-gradient(180deg, #087b38 0%, #05652f 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .sidebar-logo {
+             height: 86px;
+             display: flex;
+             align-items: center;
+             padding: 0 20px;
+             border-bottom: 1px solid rgba(255,255,255,0.10);
+        }
+
+        .sidebar-logo img {
+             width: 160px;
+             height: auto;
+             max-height: 62px;
+             object-fit: contain;
+             display: block;
+        }
+
+        .nav-item {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 11px 13px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.2s, transform 0.15s;
+        }
+
+        .nav-item:hover {
+            background: rgba(255,255,255,0.12);
+        }
+
+        .nav-item.active {
+            background: rgba(0,70,30,0.55);
+            box-shadow: inset 3px 0 0 white;
+        }
+
+        .nav-icon {
+            width: 22px;
+            min-width: 22px;
+            text-align: center;
+            font-size: 17px;
+        }
+
+        .nav-text {
+            flex: 1;
+        }
+
+        .notification-count {
+            min-width: 23px;
+            height: 23px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: #25b94b;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .sidebar-bottom {
+            padding: 10px 12px 15px;
+        }
+
+        .sidebar-divider {
+            height: 1px;
+            background: rgba(255,255,255,0.20);
+            margin: 5px 15px 12px;
+        }
+
+        /* =====================================================
+           MAIN
+        ===================================================== */
+
+        .main-content {
+            margin-left: 255px;
+            width: calc(100% - 255px);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            min-height: 78px;
+            background: white;
+            border-bottom: 1px solid #e8ece9;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 28px;
+        }
+
+        .welcome-section h1 {
+            font-size: 24px;
+            color: #10233f;
+            margin-bottom: 4px;
+        }
+
+        .welcome-section h1 span {
+            color: #17833c;
+        }
+
+        .welcome-section p {
+            color: #77828d;
+            font-size: 13px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 22px;
+        }
+
+        .header-notification {
+    height: 40px;
+
+    width: 40px;
+
+            position: relative;
+            font-size: 22px;
+            cursor: pointer;
+        }
+
+        .header-badge {
+            position: absolute;
+            top: -7px;
+            right: -9px;
+            min-width: 17px;
+            height: 17px;
+            padding: 0 4px;
+            border-radius: 50%;
+            background: #25b94b;
+            color: white;
+            font-size: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 8px;
+        }
+
+        .profile:hover {
+            background: #f5f8f6;
+        }
+
+        .profile-picture {
+    font-size: 17px;
+
+            width: 43px;
+            height: 43px;
+            border-radius: 50%;
+        }
+
+        .profile-name {
+            font-size: 13px;
+            font-weight: bold;
+            color: #1f2937;
+        }
+
+        .profile-role {
+            font-size: 11px;
+            color: #78828d;
+            margin-top: 2px;
+        }
+
+        .profile-arrow {
+            font-size: 10px;
+            color: #555;
+        }
+
+        .profile-dropdown {
+            display: none;
+            position: absolute;
+            top: 55px;
+            right: 0;
+            width: 215px;
+            background: white;
+            border: 1px solid #e2e8e4;
+            border-radius: 10px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.15);
+            padding: 10px;
+            z-index: 3000;
+        }
+
+        .profile.open .profile-dropdown {
+            display: block;
+        }
+
+        .dropdown-title {
+            font-size: 12px;
+            font-weight: bold;
+            color: #777;
+            padding: 7px 9px 10px;
+            border-bottom: 1px solid #edf0ee;
+            margin-bottom: 5px;
+        }
+
+        .dropdown-role {
+            width: 100%;
+            border: none;
+            background: white;
+            padding: 9px;
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #333;
+            text-align: left;
+        }
+
+        .dropdown-role:hover {
+            background: #f2f7f3;
+        }
+
+        .dropdown-role.current {
+            background: #eaf6ed;
+            color: #17833c;
+            font-weight: bold;
+        }
+
+        .role-check {
+            margin-left: auto;
+            font-weight: bold;
+        }
+
+        .mobile-menu {
+            display: none;
+            border: none;
+            background: #eef5ef;
+            color: #176e35;
+            border-radius: 7px;
+            padding: 8px 10px;
+            font-size: 18px;
+            cursor: pointer;
+        }
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .page-content {
+            padding: 28px;
+            flex: 1;
+        }
+
+        .page-heading {
+            margin-bottom: 22px;
+        }
+
+        .page-heading h2 {
+            font-size: 28px;
+            color: #10233f;
+            margin-bottom: 5px;
+        }
+
+        .page-heading p {
+            color: #77828d;
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           SUMMARY
+        ===================================================== */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .summary-card {
+            background: white;
+            border: 1px solid #e3e9e5;
+            border-radius: 12px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.04);
+        }
+
+        .summary-icon {
+            width: 43px;
+            height: 43px;
+            border-radius: 10px;
+            background: #eaf6ed;
+            color: #17833c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 21px;
+        }
+
+        .summary-label {
+            color: #77828d;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            color: #16243a;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        /* =====================================================
+           FILTER
+        ===================================================== */
+
+        .filter-bar {
+            background: white;
+            border: 1px solid #e3e9e5;
+            border-radius: 12px;
+            padding: 13px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            flex: 1;
+            height: 44px;
+            border: 1px solid #d7ded9;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0 13px;
+        }
+
+        .search-icon {
+            font-size: 18px;
+        }
+
+        .search-box input {
+            border: none;
+            outline: none;
+            width: 100%;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .status-filter {
+            height: 44px;
+            min-width: 155px;
+            border: 1px solid #d7ded9;
+            border-radius: 8px;
+            padding: 0 12px;
+            background: white;
+            outline: none;
+            color: #333;
+            font-size: 13px;
+        }
+
+        /* =====================================================
+           ORDERS TABLE
+        ===================================================== */
+
+        .orders-container {
+            background: white;
+            border: 1px solid #e3e9e5;
+            border-radius: 13px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+            overflow: hidden;
+        }
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1050px;
+        }
+
+        .orders-table th {
+            background: #f7faf8;
+            padding: 15px 12px;
+            text-align: left;
+            font-size: 10px;
+            color: #67716b;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+            border-bottom: 1px solid #e5ebe7;
+        }
+
+        .orders-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #edf0ee;
+            font-size: 12px;
+            color: #333;
+            vertical-align: middle;
+        }
+
+        .orders-table tbody tr:hover {
+            background: #fbfdfb;
+        }
+
+        .order-id {
+            color: #17833c;
+            font-weight: bold;
+        }
+
+        .crop-cell {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 165px;
+        }
+
+        .crop-thumb {
+            width: 45px;
+            height: 45px;
+            border-radius: 7px;
+            object-fit: cover;
+            background: #edf4ef;
+            flex-shrink: 0;
+        }
+
+        .crop-cell-name {
+            font-size: 12px;
+            font-weight: bold;
+            color: #202b3a;
+            margin-bottom: 3px;
+        }
+
+        .crop-cell-specific {
+            font-size: 10px;
+            color: #7c8781;
+        }
+
+        .buyer-name {
+            font-weight: bold;
+            color: #202b3a;
+        }
+
+        .quantity {
+            font-weight: bold;
+        }
+
+        .price {
+            color: #444;
+        }
+
+        .total {
+            font-weight: bold;
+            color: #15803b;
+        }
+
+        /* =====================================================
+           STATUS
+        ===================================================== */
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .status::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: currentColor;
+        }
+
+        .status-pending {
+            background: #fff6df;
+            color: #986600;
+        }
+
+        .status-accepted {
+            background: #e8f7ec;
+            color: #1f7f39;
+        }
+
+        .status-delivered {
+            background: #e8f7ec;
+            color: #15803b;
+        }
+
+        .status-rejected {
+            background: #fff0f0;
+            color: #c04545;
+        }
+
+        .status-completed {
+            background: #e9f1ff;
+            color: #416ca5;
+        }
+
+        .status-cancelled {
+            background: #f1f1f1;
+            color: #6d6d6d;
+        }
+
+        /* =====================================================
+           ACTIONS
+        ===================================================== */
+
+        .actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .view-button,
+        .accept-button,
+        .reject-button,
+        .deliver-button,
+        .complete-button {
+            border-radius: 6px;
+            padding: 7px 9px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .view-button {
+            border: 1px solid #cfd8d1;
+            background: white;
+            color: #555;
+        }
+
+        .view-button:hover {
+            background: #f5f8f6;
+        }
+
+        .accept-button {
+            border: none;
+            background: #2e8b3a;
+            color: white;
+        }
+
+        .accept-button:hover {
+            background: #256d2e;
+        }
+
+        .reject-button {
+            border: 1px solid #e0aaaa;
+            background: white;
+            color: #c54c4c;
+        }
+
+        .reject-button:hover {
+            background: #fff5f5;
+        }
+
+        .complete-button {
+            border: none;
+            background: #4c78ad;
+            color: white;
+        }
+
+        .complete-button:hover {
+            background: #3c628f;
+        }
+
+        /* =====================================================
+           EMPTY STATE
+        ===================================================== */
+
+        .empty-state {
+            padding: 80px 20px;
+            text-align: center;
+            display: none;
+        }
+
+        .empty-state-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        .empty-state h3 {
+            font-size: 22px;
+            color: #1f2937;
+            margin-bottom: 7px;
+        }
+
+        .empty-state p {
+            font-size: 13px;
+            color: #78828d;
+        }
+
+        /* =====================================================
+           ORDER DETAILS MODAL
+        ===================================================== */
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.40);
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            width: 100%;
+            max-width: 650px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background: white;
+            border-radius: 13px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.22);
+        }
+
+        .modal-header {
+            padding: 17px 20px;
+            border-bottom: 1px solid #e7ebe8;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h3 {
+            font-size: 18px;
+            color: #1f2937;
+        }
+
+        .modal-close {
+            border: none;
+            background: transparent;
+            font-size: 24px;
+            color: #777;
+            cursor: pointer;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .detail-box {
+            border: 1px solid #e4e9e5;
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .detail-box-label {
+            font-size: 9px;
+            color: #8a9490;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .detail-box-value {
+            font-size: 13px;
+            color: #222;
+            font-weight: 600;
+        }
+
+        .order-summary {
+            margin-top: 15px;
+            border-top: 1px solid #e5e9e6;
+            padding-top: 15px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 7px 0;
+            font-size: 13px;
+        }
+
+        .total-row {
+            font-size: 15px;
+            color: #15803b;
+            font-weight: bold;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #e7ebe8;
+            padding: 13px 20px;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .modal-button {
+            border: none;
+            border-radius: 7px;
+            padding: 9px 18px;
+            background: #2e8b3a;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* =====================================================
+           CUSTOM CONFIRMATION MODAL
+           ===================================================== */
+
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.40);
+            align-items: center;
+            justify-content: center;
+            z-index: 4000;
+            padding: 20px;
+        }
+
+        .confirm-modal.show {
+            display: flex;
+        }
+
+        .confirm-box {
+            width: 100%;
+            max-width: 390px;
+            background: white;
+            border-radius: 13px;
+            box-shadow: 0 15px 45px rgba(0,0,0,0.22);
+            overflow: hidden;
+            animation: confirmAppear 0.18s ease-out;
+        }
+
+        @keyframes confirmAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.96) translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .confirm-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e7ebe8;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .confirm-header h3 {
+            font-size: 18px;
+            color: #1f2937;
+        }
+
+        .confirm-close {
+            border: none;
+            background: transparent;
+            font-size: 23px;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .confirm-body {
+            padding: 23px 20px 20px;
+            text-align: center;
+        }
+
+        .confirm-icon {
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 13px;
+            border-radius: 50%;
+            background: #eaf6ed;
+            color: #2e8b3a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            font-weight: bold;
+        }
+
+        .confirm-question {
+            font-size: 15px;
+            font-weight: 600;
+            color: #27313d;
+            line-height: 1.5;
+        }
+
+        .confirm-subtext {
+            margin-top: 6px;
+            font-size: 12px;
+            color: #7b8580;
+        }
+
+        .confirm-footer {
+            border-top: 1px solid #e7ebe8;
+            padding: 13px 20px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 9px;
+        }
+
+        .confirm-cancel,
+        .confirm-action {
+            border-radius: 7px;
+            padding: 9px 17px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .confirm-cancel {
+            border: 1px solid #d3dad5;
+            background: white;
+            color: #4f5a54;
+        }
+
+        .confirm-cancel:hover {
+            background: #f6f8f7;
+        }
+
+        .confirm-action {
+            border: none;
+            background: #2e8b3a;
+            color: white;
+        }
+
+        .confirm-action.reject {
+            background: #c04545;
+        }
+
+        .confirm-action:hover {
+            opacity: 0.92;
+        }
+
+        /* =====================================================
+           TOAST
+        ===================================================== */
+
+        .toast {
+            position: fixed;
+            top: 25px;
+            right: 30px;
+            min-width: 320px;
+            background: white;
+            border-left: 5px solid #2e8b3a;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            padding: 15px 18px;
+            z-index: 5000;
+            opacity: 0;
+            transform: translateX(120%);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .toast.error {
+            border-left-color: #c04545;
+        }
+
+        .toast-title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #222;
+            margin-bottom: 3px;
+        }
+
+        .toast-message {
+            font-size: 12px;
+            color: #707070;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+    left: 255px;
+
+            padding: 15px 28px;
+            background: white;
+            border-top: 1px solid #e4e9e5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            color: #78828d;
+            font-size: 11px;
+        }
+
+        .footer a {
+            color: #4d789e;
+            text-decoration: none;
+        }
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 900px) {
+
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.25s ease;
+            }
+
+            .sidebar.open {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .header {
+                padding: 14px 18px;
+            }
+
+            .header-right {
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .page-content {
+                padding: 18px 15px;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .status-filter {
+                width: 100%;
+            }
+
+            .profile-info,
+            .profile-arrow {
+                display: none;
+            }
+
+            .footer {
+                flex-wrap: wrap;
+            }
+
+            .toast {
+                left: 15px;
+                right: 15px;
+                min-width: auto;
+            }
+
+            .detail-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+    
+.messages-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+.tabs-card {
+    background: white;
+    border: 1px solid #e5e9ef;
+    border-radius: 9px 9px 0 0;
+    padding: 0 16px;
+    margin-bottom: 16px;
+}
+
+.order-tabs {
+    display: flex;
+    gap: 30px;
+    height: 54px;
+    align-items: flex-end;
+}
+
+.order-tab {
+    height: 54px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: bold;
+    color: #606979;
+    position: relative;
+    padding: 0 2px 15px;
+}
+
+.order-tab.active {
+    color: #17833c;
+}
+
+.order-tab.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 2px;
+    background: #17833c;
+    border-radius: 2px 2px 0 0;
+}
+
+.order-tab-count {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 19px;
+    height: 19px;
+    padding: 0 5px;
+    margin-left: 5px;
+    border-radius: 20px;
+    background: #eaf5ec;
+    color: #17833c;
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
+    <aside class="sidebar" id="sidebar">
+
+        <div class="sidebar-logo">
+
+            <img
+                src="assets/agriconnect-logo-white.png"
+                alt="AgriConnect"
+            >
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="farmer-dashboard.html" class="nav-item">
+
+                <span class="nav-icon">▦</span>
+
+                <span class="nav-text">
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a href="my-crops.html" class="nav-item">
+
+                <span class="nav-icon">🌿</span>
+
+                <span class="nav-text">
+                    My Crops
+                </span>
+
+            </a>
+
+
+            <a href="orders.html" class="nav-item active">
+
+                <span class="nav-icon">🛒</span>
+
+                <span class="nav-text">
+                    Orders
+                </span>
+
+            </a>
+
+
+            <a href="equipment-rental.html" class="nav-item">
+
+                <span class="nav-icon">🚜</span>
+
+                <span class="nav-text">
+                    Equipment Rental
+                </span>
+
+            </a>
+
+
+            <a href="consultations.html" class="nav-item">
+
+                <span class="nav-icon">👨‍🌾</span>
+
+                <span class="nav-text">
+                    Consultations
+                </span>
+
+            </a>
+
+
+            <a href="messages.html" class="nav-item">
+
+                <span class="nav-icon">💬</span>
+
+                <span class="nav-text">
+                    Messages
+                </span>
+
+                <span class="messages-badge" id="messagesBadge" style="display:none;">0</span>
+
+            </a>
+
+
+            <a href="report-issues.html" class="nav-item">
+
+                <span class="nav-icon">⚠️</span>
+
+                <span class="nav-text">
+                    Report Issues
+                </span>
+
+            </a>
+
+
+            <a href="calendar.html" class="nav-item">
+
+                <span class="nav-icon">📅</span>
+
+                <span class="nav-text">
+                    Calendar
+                </span>
+
+            </a>
+
+
+            <a href="notifications.html" class="nav-item">
+
+                <span class="nav-icon">🔔</span>
+
+                <span class="nav-text">
+                    Notifications
+                </span>
+
+                <span
+                    class="notification-count"
+                    id="notificationCount"
+                >
+                    0
+                </span>
+
+            </a>
+
+
+            <a href="history.html" class="nav-item">
+
+                <span class="nav-icon">◷</span>
+
+                <span class="nav-text">
+                    History
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <div class="sidebar-divider"></div>
+
+
+            <a href="help-support.html" class="nav-item">
+
+                <span class="nav-icon">?</span>
+
+                <span class="nav-text">
+                    Help &amp; Support
+                </span>
+
+            </a>
+
+
+            <a href="settings.html" class="nav-item">
+
+                <span class="nav-icon">⚙</span>
+
+                <span class="nav-text">
+                    Settings
+                </span>
+
+            </a>
+
+
+            <a
+                href="login.html"
+                class="nav-item"
+                onclick="logout(event)"
+            >
+
+                <span class="nav-icon">↪</span>
+
+                <span class="nav-text">
+                    Logout
+                </span>
+
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="main-content">
+
+
+        <header class="header">
+
+            <div style="display:flex;align-items:center;gap:14px;">
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                    type="button"
+                >
+                    ☰
+                </button>
+
+
+                <div class="welcome-section">
+
+                    <h1>
+                        Welcome back,
+                        <span id="userName">User</span>!
+                    </h1>
+
+                    <p>
+                        Manage your crop orders.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="header-right">
+
+                <div
+                    class="header-notification"
+                    onclick="openNotifications()"
+                    title="Notifications"
+                >
+
+                    🔔
+
+                    <span
+                        class="header-badge"
+                        id="headerNotificationCount"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <div class="profile" id="profile">
+
+                    <img
+                        src="https://ui-avatars.com/api/?name=User&background=e9f4ec&color=17833c"
+                        alt="Profile"
+                        class="profile-picture"
+                        id="profilePicture"
+                    >
+
+                    <div class="profile-info">
+
+                        <div
+                            class="profile-name"
+                            id="profileName"
+                        >
+                            User Name
+                        </div>
+
+                        <div
+                            class="profile-role"
+                            id="profileRole"
+                        >
+                            Farmer
+                        </div>
+
+                    </div>
+
+                    <span class="profile-arrow">
+                        ▼
+                    </span>
+
+
+                    <div class="profile-dropdown">
+
+                        <div class="dropdown-title">
+                            Switch Role
+                        </div>
+
+                        <div id="roleOptions"></div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <section class="page-content">
+
+
+            <div class="page-heading">
+
+                <h2>
+                    Orders
+                </h2>
+
+                <p>
+                    View and manage orders received
+                    from buyers.
+                </p>
+
+            </div>
+
+
+            <!-- =================================================
+                 SUMMARY
+            ================================================= -->
+
+            <div class="summary-grid">
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        🛒
+                    </div>
+
+                    <div>
+
+                        <div class="summary-label">
+                            Total Orders
+                        </div>
+
+                        <div
+                            class="summary-value"
+                            id="totalOrders"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        ⏳
+                    </div>
+
+                    <div>
+
+                        <div class="summary-label">
+                            Pending Orders
+                        </div>
+
+                        <div
+                            class="summary-value"
+                            id="pendingOrders"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        ✓
+                    </div>
+
+                    <div>
+
+                        <div class="summary-label">
+                            Accepted Orders
+                        </div>
+
+                        <div
+                            class="summary-value"
+                            id="acceptedOrders"
+                        >
+                            0
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="summary-card">
+
+                    <div class="summary-icon">
+                        💰
+                    </div>
+
+                    <div>
+
+                        <div class="summary-label">
+                            Total Sales
+                        </div>
+
+                        <div
+                            class="summary-value"
+                            id="totalSales"
+                        >
+                            Rs. 0.00
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- =================================================
+                 FILTER
+            ================================================= -->
+
+            <div class="filter-bar">
+
+                <div class="search-box">
+
+                    <span class="search-icon">
+                        🔍
+                    </span>
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search by order ID, crop or buyer..."
+                    >
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ORDERS TABLE
+            ================================================= -->
+
+            <div class="tabs-card">
+
+                <div class="order-tabs" id="orderTabs">
+
+                    <button class="order-tab active" data-status="pending">
+                        Pending Orders
+                        <span class="order-tab-count" id="pendingTabCount">0</span>
+                    </button>
+
+                    <button class="order-tab" data-status="accepted">
+                        Accepted Orders
+                        <span class="order-tab-count" id="acceptedTabCount">0</span>
+                    </button>
+
+                    <button class="order-tab" data-status="delivered">
+                        Delivered Orders
+                        <span class="order-tab-count" id="deliveredTabCount">0</span>
+                    </button>
+
+                </div>
+
+            </div>
+
+
+            <div class="orders-container">
+
+                <div class="table-wrapper">
+
+                    <table class="orders-table">
+
+                        <thead>
+
+                            <tr>
+
+                                <th>Order ID</th>
+                                <th>Crop</th>
+                                <th>Buyer</th>
+                                <th>Quantity</th>
+                                <th>Price / kg</th>
+                                <th>Total</th>
+                                <th>Order Date</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody id="ordersTableBody"></tbody>
+
+                    </table>
+
+
+                    <div
+                        class="empty-state"
+                        id="emptyState"
+                    >
+
+                        <div class="empty-state-icon">
+                            📦
+                        </div>
+
+                        <h3>
+                            No orders found
+                        </h3>
+
+                        <p id="emptyStateMessage">
+                            You have not received any orders yet.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </section>
+
+
+        <footer class="footer">
+
+            <span>
+                © 2026 AgriConnect. All Rights Reserved
+            </span>
+
+            <span>|</span>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <span>|</span>
+
+            <a href="#">
+                Terms of Service
+            </a>
+
+        </footer>
+
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     ORDER DETAILS MODAL
+===================================================== -->
+
+<div
+    class="modal"
+    id="orderModal"
+>
+
+    <div class="modal-content">
+
+        <div class="modal-header">
+
+            <h3>
+                Order Details
+            </h3>
+
+            <button
+                class="modal-close"
+                onclick="closeOrderModal()"
+                type="button"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div
+            class="modal-body"
+            id="orderModalBody"
+        ></div>
+
+
+        <div class="modal-footer">
+
+            <button
+                class="modal-button"
+                onclick="closeOrderModal()"
+                type="button"
+            >
+                Close
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     CUSTOM ORDER CONFIRMATION MODAL
+
+     This replaces the browser confirm()
+     for Accept / Reject / Complete.
+===================================================== -->
+
+<div
+    class="confirm-modal"
+    id="orderConfirmModal"
+>
+
+    <div class="confirm-box">
+
+        <div class="confirm-header">
+
+            <h3 id="confirmTitle">
+                Confirm Action
+            </h3>
+
+            <button
+                class="confirm-close"
+                id="confirmCloseButton"
+                type="button"
+                aria-label="Close"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+        <div class="confirm-body">
+
+            <div class="confirm-icon" id="confirmIcon">
+                ?
+            </div>
+
+            <div
+                class="confirm-question"
+                id="confirmQuestion"
+            >
+                Are you sure?
+            </div>
+
+            <div
+                class="confirm-subtext"
+                id="confirmSubtext"
+            >
+                Please confirm this action.
+            </div>
+
+        </div>
+
+
+        <div class="confirm-footer">
+
+            <button
+                class="confirm-cancel"
+                id="confirmCancelButton"
+                type="button"
+            >
+                Cancel
+            </button>
+
+            <button
+                class="confirm-action"
+                id="confirmActionButton"
+                type="button"
+            >
+                Confirm
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div
+    class="toast"
+    id="toast"
+>
+
+    <div
+        class="toast-title"
+        id="toastTitle"
+    >
+        Success
+    </div>
+
+    <div
+        class="toast-message"
+        id="toastMessage"
+    >
+        Order updated successfully.
+    </div>
+
+</div>
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+    /* =====================================================
+       API
+    ===================================================== */
+
+    const API_BASE_URL =
+        "http://localhost:5000/api";
+
+
+    /* =====================================================
+       USER
+    ===================================================== */
+
+    let user = null;
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem("user") || "null"
+            );
+
+    }
+
+    catch (error) {
+
+        user = null;
+
+    }
+
+
+    if (!user) {
+
+        try {
+
+            user =
+                JSON.parse(
+                    sessionStorage.getItem("loggedInUser") || "null"
+                );
+
+        }
+
+        catch (error) {
+
+            user = null;
+
+        }
+
+    }
+
+
+    let orders = [];
+
+
+    /* =====================================================
+       USER NAME
+    ===================================================== */
+
+    function getUserName() {
+
+        if (!user) {
+            return "User";
+        }
+
+        const fullName =
+            `${user.first_name || user.firstName || ""} ${user.last_name || user.lastName || ""}`
+                .trim();
+
+        return (
+            fullName ||
+            user.name ||
+            user.username ||
+            "User"
+        );
+
+    }
+
+
+    /* =====================================================
+       FARMER ID
+    ===================================================== */
+
+    function getFarmerId() {
+
+        if (!user) {
+            return null;
+        }
+
+        return (
+            user.id ||
+            user.user_id ||
+            user.userId ||
+            null
+        );
+
+    }
+
+
+    /* =====================================================
+       USER DISPLAY
+    ===================================================== */
+
+    function displayUser() {
+
+        const name =
+            getUserName();
+
+        document.getElementById(
+            "userName"
+        ).textContent =
+            name;
+
+        document.getElementById(
+            "profileName"
+        ).textContent =
+            name;
+
+        document.getElementById(
+            "profilePicture"
+        ).src =
+            `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=e9f4ec&color=17833c`;
+
+    }
+
+
+    /* =====================================================
+       ROLE SYSTEM
+    ===================================================== */
+
+    const roleNames = {
+
+        farmer:
+            "Farmer",
+
+        buyer:
+            "Buyer",
+
+        expert:
+            "Agricultural Expert",
+
+        equipment_provider:
+            "Equipment Provider"
+
+    };
+
+
+    const roleIcons = {
+
+        farmer:
+            "🌱",
+
+        buyer:
+            "🛒",
+
+        expert:
+            "🧑‍🔬",
+
+        equipment_provider:
+            "🚜"
+
+    };
+
+
+    function normalizeRole(role) {
+
+        const value =
+            String(role || "")
+                .trim()
+                .toLowerCase();
+
+        if (value === "farmer") {
+            return "farmer";
+        }
+
+        if (
+            value === "buyer" ||
+            value === "buyer/user"
+        ) {
+            return "buyer";
+        }
+
+        if (
+            value === "expert" ||
+            value === "agricultural expert" ||
+            value === "agriculture expert" ||
+            value === "agri expert"
+        ) {
+            return "expert";
+        }
+
+        if (
+            value === "equipment provider" ||
+            value === "equipment_provider" ||
+            value === "equipmentprovider" ||
+            value === "provider"
+        ) {
+            return "equipment_provider";
+        }
+
+        return value;
+
+    }
+
+
+    function getAccountRoles() {
+
+        let roles = [];
+
+
+        if (
+            user &&
+            Array.isArray(user.roles)
+        ) {
+
+            roles =
+                [...user.roles];
+
+        }
+
+
+        if (
+            roles.length === 0 &&
+            user &&
+            Array.isArray(user.registeredRoles)
+        ) {
+
+            roles =
+                [...user.registeredRoles];
+
+        }
+
+
+        if (
+            roles.length === 0 &&
+            user &&
+            user.role
+        ) {
+
+            roles =
+                Array.isArray(user.role)
+                    ? [...user.role]
+                    : [user.role];
+
+        }
+
+
+        roles =
+            roles
+                .map(normalizeRole)
+                .filter(Boolean);
+
+
+        roles =
+            [...new Set(roles)];
+
+
+        const hasBuyer =
+            roles.includes("buyer");
+
+        const hasNonBuyer =
+            roles.some(
+                role =>
+                    role !== "buyer"
+            );
+
+
+        if (
+            hasNonBuyer &&
+            !hasBuyer
+        ) {
+
+            roles.push("buyer");
+
+        }
+
+
+        if (roles.length === 0) {
+
+            roles =
+                ["farmer"];
+
+        }
+
+
+        return roles;
+
+    }
+
+
+    const accountRoles =
+        getAccountRoles();
+
+
+    const currentRole =
+        "farmer";
+
+
+    function renderRoles() {
+
+        const container =
+            document.getElementById(
+                "roleOptions"
+            );
+
+        container.innerHTML =
+            "";
+
+
+        accountRoles.forEach(
+            function(role) {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+                button.type =
+                    "button";
+
+                button.className =
+                    "dropdown-role";
+
+
+                if (
+                    role ===
+                    currentRole
+                ) {
+
+                    button.classList.add(
+                        "current"
+                    );
+
+                }
+
+
+                button.innerHTML = `
+
+                    <span>
+                        ${
+                            roleIcons[role] ||
+                            "👤"
+                        }
+                    </span>
+
+                    <span>
+                        ${
+                            roleNames[role] ||
+                            role
+                        }
+                    </span>
+
+                    ${
+                        role === currentRole
+                            ? '<span class="role-check">✓</span>'
+                            : ''
+                    }
+
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(event) {
+
+                        event.stopPropagation();
+
+                        switchRole(
+                            role
+                        );
+
+                    }
+                );
+
+
+                container.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    moveCurrentRoleToFront(container);
+
+
+    }
+
+
+    function switchRole(role) {
+
+        if (
+            !accountRoles.includes(
+                role
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        sessionStorage.setItem(
+            "currentRole",
+            role
+        );
+
+        sessionStorage.setItem(
+            "selectedRole",
+            role
+        );
+
+
+        if (
+            role === "farmer"
+        ) {
+
+            window.location.href =
+                "farmer-dashboard.html";
+
+        }
+
+        else if (
+            role === "buyer"
+        ) {
+
+            window.location.href =
+                "buyer-dashboard.html";
+
+        }
+
+        else if (
+            role === "expert"
+        ) {
+
+            window.location.href =
+                "expert-dashboard.html";
+
+        }
+
+        else if (
+            role === "equipment_provider"
+        ) {
+
+            window.location.href =
+                "rental-dashboard.html";
+
+        }
+
+    }
+
+
+    /* =====================================================
+       PROFILE
+    ===================================================== */
+
+    document
+        .getElementById("profile")
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+                this.classList.toggle(
+                    "open"
+                );
+
+            }
+        );
+
+
+    document.addEventListener(
+        "click",
+        function() {
+
+            document
+                .getElementById("profile")
+                .classList.remove(
+                    "open"
+                );
+
+        }
+    );
+
+
+    /* =====================================================
+       SAMPLE ORDERS
+    ===================================================== */
+
+    const sampleOrders = [
+
+        {
+            order_id: "20260012",
+            crop_name: "Tomato",
+            specific_name: "Fresh Tomato",
+            buyer_first_name: "Kumar",
+            buyer_last_name: "Perera",
+            buyer_phone: "077 123 4567",
+            delivery_address: "Jaffna",
+            quantity: 25,
+            price_per_kg: 120,
+            total_amount: 3000,
+            created_at: "2026-09-01T10:30:00",
+            status: "pending",
+            image: "https://images.unsplash.com/photo-1546094096-0df4bcaaa337?auto=format&fit=crop&w=100&q=80"
+        },
+
+        {
+            order_id: "20260011",
+            crop_name: "Potato",
+            specific_name: "Common Potato",
+            buyer_first_name: "Nadeesha",
+            buyer_last_name: "Fernando",
+            buyer_phone: "071 234 5678",
+            delivery_address: "Anuradhapura",
+            quantity: 40,
+            price_per_kg: 100,
+            total_amount: 4000,
+            created_at: "2026-08-30T14:15:00",
+            status: "accepted",
+            image: "https://images.unsplash.com/photo-1518977676601-b53f82aba655?auto=format&fit=crop&w=100&q=80"
+        },
+
+        {
+            order_id: "20260010",
+            crop_name: "Brinjal",
+            specific_name: "Fresh Brinjal",
+            buyer_first_name: "Suresh",
+            buyer_last_name: "Kumar",
+            buyer_phone: "075 345 6789",
+            delivery_address: "Jaffna",
+            quantity: 20,
+            price_per_kg: 85,
+            total_amount: 1700,
+            created_at: "2026-08-28T09:20:00",
+            status: "completed",
+            image: "https://images.unsplash.com/photo-1604247706167-9a1e2c7f9c8d?auto=format&fit=crop&w=100&q=80"
+        },
+
+        {
+            order_id: "20260009",
+            crop_name: "Bean",
+            specific_name: "Green Bean",
+            buyer_first_name: "Kavindu",
+            buyer_last_name: "Silva",
+            buyer_phone: "076 456 7890",
+            delivery_address: "Kilinochchi",
+            quantity: 15,
+            price_per_kg: 100,
+            total_amount: 1500,
+            created_at: "2026-08-26T11:45:00",
+            status: "accepted",
+            image: "https://images.unsplash.com/photo-1567375698348-5d9d5ae99de0?auto=format&fit=crop&w=100&q=80"
+        },
+
+        {
+            order_id: "20260008",
+            crop_name: "Rice",
+            specific_name: "White Rice",
+            buyer_first_name: "Green",
+            buyer_last_name: "Mart",
+            buyer_phone: "078 567 8901",
+            delivery_address: "Colombo",
+            quantity: 50,
+            price_per_kg: 280,
+            total_amount: 14000,
+            created_at: "2026-08-24T15:30:00",
+            status: "cancelled",
+            image: "https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=100&q=80"
+        }
+
+    ];
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHtml(value) {
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+        div.textContent =
+            value == null
+                ? ""
+                : String(value);
+
+        return div.innerHTML;
+
+    }
+
+
+    /* =====================================================
+       FORMAT CURRENCY
+    ===================================================== */
+
+    function formatCurrency(value) {
+
+        return "Rs. " +
+            Number(
+                value || 0
+            ).toLocaleString(
+                "en-LK",
+                {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                }
+            );
+
+    }
+
+
+    /* =====================================================
+       FORMAT DATE
+    ===================================================== */
+
+    function formatDate(value) {
+
+        if (!value) {
+            return "-";
+        }
+
+        const date =
+            new Date(value);
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return String(value);
+
+        }
+
+        return date.toLocaleDateString(
+            "en-GB",
+            {
+                day: "2-digit",
+                month: "short",
+                year: "numeric"
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       STATUS TEXT
+    ===================================================== */
+
+    function getStatusText(status) {
+
+        const names = {
+
+            pending:
+                "Pending",
+
+            accepted:
+                "Accepted",
+
+            delivered:
+                "Delivered",
+
+            rejected:
+                "Rejected",
+
+            completed:
+                "Delivered Successfully",
+
+            cancelled:
+                "Cancelled"
+
+        };
+
+        return (
+            names[
+                String(status || "")
+                    .toLowerCase()
+            ] ||
+            status ||
+            "Pending"
+        );
+
+    }
+
+
+    /* =====================================================
+       SUMMARY
+    ===================================================== */
+
+    function updateSummary() {
+
+        const total =
+            orders.length;
+
+
+        const pending =
+            orders.filter(
+                order =>
+                    String(
+                        order.status || ""
+                    ).toLowerCase() ===
+                    "pending"
+            ).length;
+
+
+        const accepted =
+            orders.filter(
+                order =>
+                    String(
+                        order.status || ""
+                    ).toLowerCase() ===
+                    "accepted"
+            ).length;
+
+
+        const sales =
+            orders
+                .filter(
+                    order => {
+
+                        const status =
+                            String(
+                                order.status || ""
+                            ).toLowerCase();
+
+                        return (
+                            status === "accepted" ||
+                            status === "completed"
+                        );
+
+                    }
+                )
+                .reduce(
+                    function(sum, order) {
+
+                        return sum +
+                            Number(
+                                order.total_amount ||
+                                order.total ||
+                                0
+                            );
+
+                    },
+                    0
+                );
+
+
+        document.getElementById(
+            "totalOrders"
+        ).textContent =
+            total;
+
+
+        document.getElementById(
+            "pendingOrders"
+        ).textContent =
+            pending;
+
+
+        document.getElementById(
+            "acceptedOrders"
+        ).textContent =
+            accepted;
+
+
+        document.getElementById(
+            "totalSales"
+        ).textContent =
+            formatCurrency(
+                sales
+            );
+
+    }
+
+
+    /* =====================================================
+       RENDER ORDERS
+    ===================================================== */
+
+    function renderOrders() {
+
+        const tableBody =
+            document.getElementById(
+                "ordersTableBody"
+            );
+
+        const emptyState =
+            document.getElementById(
+                "emptyState"
+            );
+
+        const emptyStateMessage =
+            document.getElementById(
+                "emptyStateMessage"
+            );
+
+        const search =
+            document.getElementById(
+                "searchInput"
+            )
+            .value
+            .toLowerCase()
+            .trim();
+
+        const selectedStatus =
+            window.activeOrderStatusTab || "pending";
+
+
+        const filteredOrders =
+            orders.filter(
+                function(order) {
+
+                    const cropName =
+                        String(
+                            order.crop_name ||
+                            ""
+                        ).toLowerCase();
+
+                    const specificName =
+                        String(
+                            order.specific_name ||
+                            ""
+                        ).toLowerCase();
+
+                    const buyerName =
+                        `${order.buyer_first_name || ""} ${order.buyer_last_name || ""}`
+                            .toLowerCase();
+
+                    const orderId =
+                        String(
+                            order.order_id ||
+                            order.id ||
+                            ""
+                        ).toLowerCase();
+
+                    const orderStatus =
+                        String(
+                            order.status ||
+                            "pending"
+                        ).toLowerCase();
+
+                    const searchMatch =
+                        !search ||
+                        orderId.includes(search) ||
+                        cropName.includes(search) ||
+                        specificName.includes(search) ||
+                        buyerName.includes(search);
+
+                    const statusMatch =
+                        selectedStatus === "accepted"
+                            ? (orderStatus === "accepted" || orderStatus === "confirmed")
+                            : orderStatus === selectedStatus;
+
+                    /*
+                     * Completed orders move to History once the
+                     * farmer marks them complete, so they never
+                     * appear on this page at all.
+                     */
+
+                    const notCompleted =
+                        orderStatus !== "completed";
+
+                    return (
+                        searchMatch &&
+                        statusMatch &&
+                        notCompleted
+                    );
+
+                }
+            );
+
+
+            const countByStatus = function (statusValue) {
+                return orders.filter(function (o) {
+                    const s = String(o.status || "pending").toLowerCase();
+                    if (statusValue === "accepted") {
+                        return s === "accepted" || s === "confirmed";
+                    }
+                    return s === statusValue;
+                }).length;
+            };
+
+            const setTabCount = function (id, value) {
+                const el = document.getElementById(id);
+                if (el) el.textContent = value;
+            };
+
+            setTabCount("pendingTabCount", countByStatus("pending"));
+            setTabCount("acceptedTabCount", countByStatus("accepted"));
+            setTabCount("deliveredTabCount", countByStatus("delivered"));
+
+
+        tableBody.innerHTML =
+            "";
+
+
+        if (
+            filteredOrders.length === 0
+        ) {
+
+            emptyState.style.display =
+                "block";
+
+            emptyStateMessage.textContent =
+                orders.length === 0
+                    ? "You have not received any orders yet."
+                    : "There are no orders matching your search.";
+
+            return;
+
+        }
+
+
+        emptyState.style.display =
+            "none";
+
+
+        filteredOrders.forEach(
+            function(order) {
+
+                const row =
+                    document.createElement(
+                        "tr"
+                    );
+
+
+                const orderId =
+                    order.order_id ||
+                    order.id ||
+                    "-";
+
+
+                const buyerName =
+                    `${order.buyer_first_name || ""} ${order.buyer_last_name || ""}`
+                        .trim() ||
+                    order.buyer ||
+                    "Buyer";
+
+
+                const quantity =
+                    Number(
+                        order.quantity ||
+                        0
+                    );
+
+
+                const price =
+                    Number(
+                        order.price_per_kg ||
+                        order.pricePerKg ||
+                        0
+                    );
+
+
+                const total =
+                    Number(
+                        order.total_amount ||
+                        order.total ||
+                        quantity * price
+                    );
+
+
+                const status =
+                    String(
+                        order.status ||
+                        "pending"
+                    ).toLowerCase();
+
+
+                let actionHTML =
+                    `
+                        <button
+                            class="view-button"
+                            onclick="viewOrder('${escapeHtml(orderId)}')"
+                            type="button"
+                        >
+                            View
+                        </button>
+                    `;
+
+
+                if (
+                    status ===
+                    "pending"
+                ) {
+
+                    actionHTML +=
+                        `
+                            <button
+                                class="accept-button"
+                                onclick="updateOrderStatus('${escapeHtml(orderId)}','accepted')"
+                                type="button"
+                            >
+                                Accept
+                            </button>
+
+                            <button
+                                class="reject-button"
+                                onclick="updateOrderStatus('${escapeHtml(orderId)}','rejected')"
+                                type="button"
+                            >
+                                Reject
+                            </button>
+                        `;
+
+                }
+
+                else if (
+                    status ===
+                    "accepted"
+                ) {
+
+                    actionHTML +=
+                        `
+                            <button
+                                class="deliver-button"
+                                onclick="updateOrderStatus('${escapeHtml(orderId)}','delivered')"
+                                type="button"
+                            >
+                                Deliver
+                            </button>
+
+                            <button
+                                class="message-button"
+                                onclick="messageBuyer('${escapeHtml(orderId)}')"
+                                type="button"
+                            >
+                                💬 Message
+                            </button>
+                        `;
+
+                }
+
+                else if (
+                    status ===
+                    "delivered"
+                ) {
+
+                    actionHTML +=
+                        `
+                            <span
+                                class="status-note"
+                                style="
+                                    font-size:12px;
+                                    color:#6b7683;
+                                "
+                            >
+                                Awaiting buyer confirmation
+                            </span>
+
+                            <button
+                                class="message-button"
+                                onclick="messageBuyer('${escapeHtml(orderId)}')"
+                                type="button"
+                            >
+                                💬 Message
+                            </button>
+                        `;
+
+                }
+
+
+                const image =
+                    order.image ||
+                    (
+                        Array.isArray(
+                            order.images
+                        )
+                            ? order.images[0]
+                            : ""
+                    );
+
+
+                row.innerHTML = `
+
+                    <td>
+                        <span class="order-id">
+                            ${escapeHtml(String(orderId))}
+                        </span>
+                    </td>
+
+
+                    <td>
+
+                        <div class="crop-cell">
+
+                            ${
+                                image
+                                    ? `
+                                        <img
+                                            class="crop-thumb"
+                                            src="${escapeHtml(image)}"
+                                            alt="${escapeHtml(order.crop_name || "Crop")}"
+                                            onerror="this.style.display='none';"
+                                        >
+                                      `
+                                    : `
+                                        <div
+                                            class="crop-thumb"
+                                            style="
+                                                display:flex;
+                                                align-items:center;
+                                                justify-content:center;
+                                                font-size:18px;
+                                            "
+                                        >
+                                            🌱
+                                        </div>
+                                      `
+                            }
+
+
+                            <div>
+
+                                <div class="crop-cell-name">
+                                    ${escapeHtml(
+                                        order.crop_name ||
+                                        "Crop"
+                                    )}
+                                </div>
+
+                                <div class="crop-cell-specific">
+                                    ${escapeHtml(
+                                        order.specific_name ||
+                                        ""
+                                    )}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+                        <span class="buyer-name">
+                            ${escapeHtml(buyerName)}
+                        </span>
+                    </td>
+
+
+                    <td>
+                        <span class="quantity">
+                            ${quantity} kg
+                        </span>
+                    </td>
+
+
+                    <td>
+                        <span class="price">
+                            ${formatCurrency(price)}
+                        </span>
+                    </td>
+
+
+                    <td>
+                        <span class="total">
+                            ${formatCurrency(total)}
+                        </span>
+                    </td>
+
+
+                    <td>
+                        ${escapeHtml(
+                            formatDate(
+                                order.created_at ||
+                                order.orderedDate
+                            )
+                        )}
+                    </td>
+
+
+                    <td>
+
+                        <span
+                            class="status status-${escapeHtml(status)}"
+                        >
+                            ${escapeHtml(
+                                getStatusText(status)
+                            )}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+                            ${actionHTML}
+                        </div>
+
+                    </td>
+
+                `;
+
+
+                tableBody.appendChild(
+                    row
+                );
+
+            }
+        );
+
+    }
+
+
+    /* =====================================================
+       LOAD FARMER ORDERS
+    ===================================================== */
+
+    async function loadFarmerOrders() {
+
+        const farmerId =
+            getFarmerId();
+
+
+        try {
+
+            if (!farmerId) {
+
+                throw new Error(
+                    "Farmer information could not be found."
+                );
+
+            }
+
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/orders/farmer/${encodeURIComponent(farmerId)}`
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Unable to load orders from the server."
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            const serverOrders =
+                Array.isArray(
+                    data.orders
+                )
+                    ? data.orders
+                    : [];
+
+
+            orders =
+                serverOrders;
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Failed to load farmer orders:",
+                error
+            );
+
+            orders =
+                [];
+
+        }
+
+
+        orders.sort(
+            function(a, b) {
+
+                const dateA =
+                    new Date(
+                        a.created_at ||
+                        a.orderedDate ||
+                        0
+                    ).getTime();
+
+                const dateB =
+                    new Date(
+                        b.created_at ||
+                        b.orderedDate ||
+                        0
+                    ).getTime();
+
+                return dateB - dateA;
+
+            }
+        );
+
+
+        updateSummary();
+
+        renderOrders();
+
+    }
+
+
+    /* =====================================================
+       VIEW ORDER
+    ===================================================== */
+
+    function viewOrder(orderId) {
+
+        const order =
+            orders.find(
+                item =>
+                    String(
+                        item.order_id ||
+                        item.id
+                    ) ===
+                    String(orderId)
+            );
+
+
+        if (!order) {
+
+            showToast(
+                "Error",
+                "Order details could not be found.",
+                true
+            );
+
+            return;
+
+        }
+
+
+        const buyerName =
+            `${order.buyer_first_name || ""} ${order.buyer_last_name || ""}`
+                .trim() ||
+            order.buyer ||
+            "Buyer";
+
+
+        const quantity =
+            Number(
+                order.quantity ||
+                0
+            );
+
+
+        const price =
+            Number(
+                order.price_per_kg ||
+                order.pricePerKg ||
+                0
+            );
+
+
+        const total =
+            Number(
+                order.total_amount ||
+                order.total ||
+                quantity * price
+            );
+
+
+        document.getElementById(
+            "orderModalBody"
+        ).innerHTML = `
+
+            <div class="detail-grid">
+
+                <div class="detail-box">
+
+                    <div class="detail-box-label">
+                        ORDER ID
+                    </div>
+
+                    <div class="detail-box-value">
+                        ${escapeHtml(
+                            String(
+                                order.order_id ||
+                                order.id ||
+                                "-"
+                            )
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-box-label">
+                        ORDER DATE
+                    </div>
+
+                    <div class="detail-box-value">
+                        ${escapeHtml(
+                            formatDate(
+                                order.created_at ||
+                                order.orderedDate
+                            )
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-box-label">
+                        CROP
+                    </div>
+
+                    <div class="detail-box-value">
+                        ${escapeHtml(
+                            order.crop_name ||
+                            "Crop"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-box-label">
+                        SPECIFIC NAME
+                    </div>
+
+                    <div class="detail-box-value">
+                        ${escapeHtml(
+                            order.specific_name ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-box-label">
+                        BUYER
+                    </div>
+
+                    <div class="detail-box-value">
+                        ${escapeHtml(
+                            buyerName
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-box-label">
+                        BUYER ID
+                    </div>
+
+                    <div class="detail-box-value">
+                        ${escapeHtml(
+                            String(
+                                order.buyer_id ||
+                                "-"
+                            )
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-box-label">
+                        BUYER PHONE
+                    </div>
+
+                    <div class="detail-box-value">
+                        ${escapeHtml(
+                            order.buyer_phone ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-box-label">
+                        DELIVERY ADDRESS
+                    </div>
+
+                    <div class="detail-box-value">
+                        ${escapeHtml(
+                            order.delivery_address ||
+                            "-"
+                        )}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="detail-box-label">
+                        STATUS
+                    </div>
+
+                    <div class="detail-box-value">
+
+                        <span
+                            class="status status-${escapeHtml(
+                                String(
+                                    order.status ||
+                                    "pending"
+                                ).toLowerCase()
+                            )}"
+                        >
+                            ${escapeHtml(
+                                getStatusText(
+                                    order.status
+                                )
+                            )}
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="order-summary">
+
+                <div class="summary-row">
+
+                    <span>
+                        Quantity
+                    </span>
+
+                    <strong>
+                        ${quantity} kg
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Price per kg
+                    </span>
+
+                    <strong>
+                        ${formatCurrency(price)}
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row total-row">
+
+                    <span>
+                        Total Amount
+                    </span>
+
+                    <span>
+                        ${formatCurrency(total)}
+                    </span>
+
+                </div>
+
+            </div>
+
+        `;
+
+
+        document
+            .getElementById(
+                "orderModal"
+            )
+            .classList.add(
+                "show"
+            );
+
+    }
+
+
+    /* =====================================================
+       CLOSE ORDER DETAILS MODAL
+    ===================================================== */
+
+    function closeOrderModal() {
+
+        document
+            .getElementById(
+                "orderModal"
+            )
+            .classList.remove(
+                "show"
+            );
+
+    }
+
+
+    /* =====================================================
+       CUSTOM CONFIRMATION MODAL
+    ===================================================== */
+
+    let pendingOrderAction = null;
+
+
+    function openOrderConfirmation(
+        orderId,
+        newStatus
+    ) {
+
+        const modal =
+            document.getElementById(
+                "orderConfirmModal"
+            );
+
+        const title =
+            document.getElementById(
+                "confirmTitle"
+            );
+
+        const question =
+            document.getElementById(
+                "confirmQuestion"
+            );
+
+        const subtext =
+            document.getElementById(
+                "confirmSubtext"
+            );
+
+        const icon =
+            document.getElementById(
+                "confirmIcon"
+            );
+
+        const actionButton =
+            document.getElementById(
+                "confirmActionButton"
+            );
+
+
+        pendingOrderAction = {
+
+            orderId:
+                orderId,
+
+            newStatus:
+                newStatus
+
+        };
+
+
+        if (
+            newStatus ===
+            "accepted"
+        ) {
+
+            title.textContent =
+                "Accept Order";
+
+            question.textContent =
+                "Are you sure you want to accept this order?";
+
+            subtext.textContent =
+                "The buyer will be notified that the order has been accepted.";
+
+            icon.textContent =
+                "✓";
+
+            actionButton.textContent =
+                "Accept Order";
+
+            actionButton.classList.remove(
+                "reject"
+            );
+
+        }
+
+        else if (
+            newStatus ===
+            "rejected"
+        ) {
+
+            title.textContent =
+                "Reject Order";
+
+            question.textContent =
+                "Are you sure you want to reject this order?";
+
+            subtext.textContent =
+                "The buyer will be notified that the order has been rejected.";
+
+            icon.textContent =
+                "×";
+
+            actionButton.textContent =
+                "Reject Order";
+
+            actionButton.classList.add(
+                "reject"
+            );
+
+        }
+
+        else if (
+            newStatus ===
+            "delivered"
+        ) {
+
+            title.textContent =
+                "Deliver Order";
+
+            question.textContent =
+                "Are you sure you want to mark this order as delivered?";
+
+            subtext.textContent =
+                "The buyer will be notified that the order has been delivered.";
+
+            icon.textContent =
+                "✓";
+
+            actionButton.textContent =
+                "Deliver Order";
+
+            actionButton.classList.remove(
+                "reject"
+            );
+
+        }
+
+        else if (
+            newStatus ===
+            "completed"
+        ) {
+
+            title.textContent =
+                "Complete Order";
+
+            question.textContent =
+                "Are you sure you want to mark this order as completed?";
+
+            subtext.textContent =
+                "This will update the order status to completed.";
+
+            icon.textContent =
+                "✓";
+
+            actionButton.textContent =
+                "Complete Order";
+
+            actionButton.classList.remove(
+                "reject"
+            );
+
+        }
+
+
+        modal.classList.add(
+            "show"
+        );
+
+    }
+
+
+    function closeOrderConfirmation() {
+
+        document
+            .getElementById(
+                "orderConfirmModal"
+            )
+            .classList.remove(
+                "show"
+            );
+
+        pendingOrderAction =
+            null;
+
+    }
+
+
+    /* =====================================================
+       MESSAGE BUYER
+    ===================================================== */
+
+    async function messageBuyer(
+        orderId
+    ) {
+
+        const order =
+            orders.find(
+                item =>
+                    String(
+                        item.order_id ||
+                        item.id
+                    ) ===
+                    String(orderId)
+            );
+
+
+        if (!order) {
+
+            alert(
+                "Order information could not be found."
+            );
+
+            return;
+
+        }
+
+
+        const farmerId =
+            getFarmerId();
+
+
+        if (!farmerId) {
+
+            alert(
+                "Unable to identify your account. Please log in again."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/messages/conversations/start`,
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            user_id: farmerId,
+                            other_user_id: order.buyer_id,
+                            context_type: "order",
+                            context_id: Number(orderId)
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (!response.ok || !data.success) {
+
+                throw new Error(
+                    data.message ||
+                    "Failed to start conversation."
+                );
+
+            }
+
+
+            localStorage.setItem(
+
+                "selectedFarmerConversation",
+
+                JSON.stringify({
+                    conversationId: data.conversation.id
+                })
+
+            );
+
+
+            window.location.href =
+                "messages.html";
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Message buyer error:",
+                error
+            );
+
+            alert(
+                error.message ||
+                "Failed to open conversation."
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       UPDATE ORDER STATUS
+
+       IMPORTANT:
+       No browser confirm() is used here.
+       The custom modal above is used instead.
+    ===================================================== */
+
+    async function updateOrderStatus(
+        orderId,
+        newStatus
+    ) {
+
+        const order =
+            orders.find(
+                item =>
+                    String(
+                        item.order_id ||
+                        item.id
+                    ) ===
+                    String(orderId)
+            );
+
+
+        if (!order) {
+
+            showToast(
+                "Error",
+                "Order could not be found.",
+                true
+            );
+
+            return;
+
+        }
+
+
+        openOrderConfirmation(
+            orderId,
+            newStatus
+        );
+
+    }
+
+
+    async function confirmOrderStatus() {
+
+        if (
+            !pendingOrderAction
+        ) {
+
+            return;
+
+        }
+
+
+        const {
+            orderId,
+            newStatus
+        } =
+            pendingOrderAction;
+
+
+        closeOrderConfirmation();
+
+
+        const order =
+            orders.find(
+                item =>
+                    String(
+                        item.order_id ||
+                        item.id
+                    ) ===
+                    String(orderId)
+            );
+
+
+        if (!order) {
+
+            showToast(
+                "Error",
+                "Order could not be found.",
+                true
+            );
+
+            return;
+
+        }
+
+
+        /*
+           Sample order:
+           Update locally.
+        */
+
+        const isSample =
+            sampleOrders.some(
+                item =>
+                    String(
+                        item.order_id
+                    ) ===
+                    String(orderId)
+            );
+
+
+        if (
+            isSample
+        ) {
+
+            order.status =
+                newStatus;
+
+            updateSummary();
+
+            renderOrders();
+
+            showToast(
+                "Success",
+                `Order ${getStatusText(newStatus).toLowerCase()} successfully.`
+            );
+
+            return;
+
+        }
+
+
+        const farmerId =
+            getFarmerId();
+
+
+        if (!farmerId) {
+
+            showToast(
+                "Error",
+                "Farmer information could not be found. Please login again.",
+                true
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${API_BASE_URL}/orders/${encodeURIComponent(orderId)}/status`,
+                    {
+
+                        method:
+                            "PUT",
+
+                        headers: {
+
+                            "Content-Type":
+                                "application/json"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                status:
+                                    newStatus,
+
+                                farmer_id:
+                                    farmerId
+
+                            })
+
+                    }
+                );
+
+
+            const responseText =
+                await response.text();
+
+
+            let data = {};
+
+
+            try {
+
+                data =
+                    responseText
+                        ? JSON.parse(
+                            responseText
+                        )
+                        : {};
+
+            }
+
+            catch (jsonError) {
+
+                throw new Error(
+                    `Server returned an invalid response (${response.status}).`
+                );
+
+            }
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    data.message ||
+                    "Failed to update order."
+                );
+
+            }
+
+
+            if (
+                newStatus ===
+                "accepted"
+            ) {
+
+                showToast(
+                    "Success",
+                    "Order accepted successfully!"
+                );
+
+            }
+
+            else if (
+                newStatus ===
+                "rejected"
+            ) {
+
+                showToast(
+                    "Success",
+                    "Order rejected successfully!"
+                );
+
+            }
+
+            else if (
+                newStatus ===
+                "delivered"
+            ) {
+
+                showToast(
+                    "Success",
+                    "Order marked as delivered!"
+                );
+
+            }
+
+            else if (
+                newStatus ===
+                "completed"
+            ) {
+
+                showToast(
+                    "Success",
+                    "Order marked as completed!"
+                );
+
+            }
+
+
+            await loadFarmerOrders();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Update order error:",
+                error
+            );
+
+            showToast(
+                "Error",
+                error.message ||
+                "Unable to update order.",
+                true
+            );
+
+        }
+
+    }
+
+
+    /* =====================================================
+       TOAST
+    ===================================================== */
+
+    let toastTimer = null;
+
+
+    function showToast(
+        title,
+        message,
+        error = false
+    ) {
+
+        const toast =
+            document.getElementById(
+                "toast"
+            );
+
+
+        document.getElementById(
+            "toastTitle"
+        ).textContent =
+            title;
+
+
+        document.getElementById(
+            "toastMessage"
+        ).textContent =
+            message;
+
+
+        toast.classList.toggle(
+            "error",
+            error
+        );
+
+
+        toast.classList.add(
+            "show"
+        );
+
+
+        clearTimeout(
+            toastTimer
+        );
+
+
+        toastTimer =
+            setTimeout(
+                function() {
+
+                    toast.classList.remove(
+                        "show"
+                    );
+
+                },
+                3000
+            );
+
+    }
+
+
+    /* =====================================================
+       NOTIFICATIONS
+    ===================================================== */
+
+    function updateNotificationCount() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            const sidebarCount = document.getElementById("notificationCount");
+            const headerCount = document.getElementById("headerNotificationCount");
+            const badgeCount = document.getElementById("notificationBadge");
+
+            if (sidebarCount) sidebarCount.textContent = unread;
+            if (headerCount) headerCount.textContent = unread;
+            if (badgeCount) badgeCount.textContent = unread;
+
+        })
+        .catch(error => {
+            console.error("Unable to load notification count:", error);
+        });
+
+}
+
+
+    function openNotifications() {
+
+        window.location.href =
+            "notifications.html";
+
+    }
+
+
+    /* =====================================================
+       LOGOUT
+
+       Kept separate from the Accept/Reject modal.
+    ===================================================== */
+
+    async function logout(event) {
+
+        if (event) {
+
+            event.preventDefault();
+
+        }
+
+
+        const confirmed =
+            await customConfirm(
+                "Are you sure you want to logout?"
+            );
+
+        if (
+            !confirmed
+        ) {
+
+            return;
+
+        }
+
+
+        sessionStorage.removeItem(
+            "token"
+        );
+
+        sessionStorage.removeItem(
+            "user"
+        );
+
+        sessionStorage.removeItem(
+            "loggedInUser"
+        );
+
+        sessionStorage.removeItem(
+            "selectedRole"
+        );
+
+        sessionStorage.removeItem(
+            "currentRole"
+        );
+
+
+        window.location.href =
+            "index.html";
+
+    }
+
+
+    /* =====================================================
+       SEARCH / FILTER
+    ===================================================== */
+
+    document
+        .getElementById(
+            "searchInput"
+        )
+        .addEventListener(
+            "input",
+            renderOrders
+        );
+
+
+    window.activeOrderStatusTab = "pending";
+
+    document.querySelectorAll("#orderTabs .order-tab").forEach(function (tabButton) {
+
+        tabButton.addEventListener("click", function () {
+
+            document.querySelectorAll("#orderTabs .order-tab").forEach(function (t) {
+                t.classList.remove("active");
+            });
+
+            tabButton.classList.add("active");
+
+            window.activeOrderStatusTab = tabButton.dataset.status;
+
+            renderOrders();
+
+        });
+
+    });
+
+
+    /* =====================================================
+       ORDER DETAILS MODAL OUTSIDE CLICK
+    ===================================================== */
+
+    document
+        .getElementById(
+            "orderModal"
+        )
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target ===
+                    this
+                ) {
+
+                    closeOrderModal();
+
+                }
+
+            }
+        );
+
+
+    /* =====================================================
+       CONFIRMATION MODAL BUTTONS
+    ===================================================== */
+
+    document
+        .getElementById(
+            "confirmCancelButton"
+        )
+        .addEventListener(
+            "click",
+            closeOrderConfirmation
+        );
+
+
+    document
+        .getElementById(
+            "confirmCloseButton"
+        )
+        .addEventListener(
+            "click",
+            closeOrderConfirmation
+        );
+
+
+    document
+        .getElementById(
+            "confirmActionButton"
+        )
+        .addEventListener(
+            "click",
+            confirmOrderStatus
+        );
+
+
+    document
+        .getElementById(
+            "orderConfirmModal"
+        )
+        .addEventListener(
+            "click",
+            function(event) {
+
+                if (
+                    event.target ===
+                    this
+                ) {
+
+                    closeOrderConfirmation();
+
+                }
+
+            }
+        );
+
+
+    /* =====================================================
+       ESCAPE KEY
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function(event) {
+
+            if (
+                event.key ===
+                "Escape"
+            ) {
+
+                closeOrderModal();
+
+                closeOrderConfirmation();
+
+                document
+                    .getElementById(
+                        "profile"
+                    )
+                    .classList.remove(
+                        "open"
+                    );
+
+            }
+
+        }
+    );
+
+
+    /* =====================================================
+       MOBILE MENU
+    ===================================================== */
+
+    document
+        .getElementById(
+            "mobileMenu"
+        )
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+                document
+                    .getElementById(
+                        "sidebar"
+                    )
+                    .classList.toggle(
+                        "open"
+                    );
+
+            }
+        );
+
+
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+    displayUser();
+
+    renderRoles();
+
+    updateNotificationCount();
+
+    loadFarmerOrders();
+
+
+
+function updateMessagesBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(
+                    c => (c.context_type === "order" || c.context_type === "rental" || c.context_type === "consultation")
+                        && c.unread_count > 0
+                ).length;
+
+            const badgeEl =
+                document.getElementById("messagesBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load messages badge count:", error);
+        });
+
+}
+
+updateMessagesBadge();
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

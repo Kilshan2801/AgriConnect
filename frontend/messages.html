@@ -1,0 +1,6501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>AgriConnect - Messages</title>
+
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+
+        /* =====================================================
+           BODY
+        ===================================================== */
+
+        body {
+
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background:
+                #f4f7f5;
+
+            color:
+                #172033;
+
+            min-height:
+                100vh;
+
+        }
+
+
+        /* =====================================================
+           DASHBOARD
+        ===================================================== */
+
+        .dashboard {
+
+            display:
+                flex;
+
+            min-height:
+                100vh;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR
+        ===================================================== */
+
+        .sidebar {
+
+            width:
+                255px;
+
+            min-width:
+                255px;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #087b38 0%,
+                    #05652f 100%
+                );
+
+            color:
+                white;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            position:
+                fixed;
+
+            left:
+                0;
+
+            top:
+                0;
+
+            bottom:
+                0;
+
+            z-index:
+                1000;
+
+            overflow-y:
+                auto;
+
+        }
+
+
+        .sidebar::-webkit-scrollbar {
+
+            width:
+                7px;
+
+        }
+
+
+        .sidebar::-webkit-scrollbar-track {
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.06
+                );
+
+        }
+
+
+        .sidebar::-webkit-scrollbar-thumb {
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.30
+                );
+
+            border-radius:
+                10px;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR LOGO
+        ===================================================== */
+
+        .sidebar-logo {
+
+            height:
+                86px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            padding: 0 20px;
+
+            border-bottom:
+                1px solid
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.12
+                );
+
+            flex-shrink:
+                0;
+
+        }
+
+
+        .sidebar-logo img {
+    max-height: 62px;
+
+
+            width:
+                160px;
+
+            max-width:
+                80%;
+
+            height:
+                auto;
+
+            display:
+                block;
+
+            object-fit:
+                contain;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR NAV
+        ===================================================== */
+
+        .sidebar-nav {
+
+            padding:
+                15px 12px;
+
+            flex:
+                1;
+
+        }
+
+
+        .nav-item {
+
+            width:
+                100%;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                11px 12px;
+
+            margin-bottom:
+                4px;
+
+            border-radius:
+                8px;
+
+            color:
+                white;
+
+            text-decoration:
+                none;
+
+            font-size:
+                15px;
+
+            transition:
+                background 0.2s,
+                transform 0.15s;
+
+        }
+
+
+        .nav-item:hover {
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.12
+                );
+
+        }
+
+
+        .nav-item.active {
+
+            background:
+                rgba(
+                    0,
+                    70,
+                    30,
+                    0.55
+                );
+
+            box-shadow:
+                inset 3px 0 0 white;
+
+        }
+
+
+        .nav-icon {
+
+            width:
+                22px;
+
+            min-width:
+                22px;
+
+            text-align:
+                center;
+
+            font-size:
+                18px;
+
+        }
+
+
+        .nav-text {
+
+            flex:
+                1;
+
+        }
+
+
+        /* =====================================================
+           SIDEBAR BOTTOM
+        ===================================================== */
+
+        .sidebar-bottom {
+
+            padding:
+                10px 12px 15px;
+
+            flex-shrink:
+                0;
+
+        }
+
+
+        .sidebar-divider {
+
+            height:
+                1px;
+
+            background:
+                rgba(
+                    255,
+                    255,
+                    255,
+                    0.20
+                );
+
+            margin:
+                5px 15px 12px;
+
+        }
+
+
+        .sidebar-logout:hover {
+
+            background:
+                rgba(
+                    255,
+                    80,
+                    80,
+                    0.15
+                );
+
+        }
+
+
+        /* =====================================================
+           MAIN CONTENT
+        ===================================================== */
+
+        .main-content {
+
+            margin-left:
+                255px;
+
+            min-height:
+                100vh;
+
+            width:
+                calc(100% - 255px);
+
+            padding-bottom:
+                48px;
+
+        }
+
+
+        /* =====================================================
+           HEADER
+        ===================================================== */
+
+        .header {
+
+            height:78px;
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid
+                #e3e8e4;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            padding:
+                0 34px;
+
+            position:
+                relative;
+
+            z-index:
+                2000;
+
+        }
+
+
+        .welcome-section h1 {
+
+            font-size:
+                28px;
+
+            color:
+                #172033;
+
+            margin-bottom:
+                5px;
+
+            font-weight:
+                700;
+
+        }
+
+
+        .welcome-section p {
+
+            color:
+                #667085;
+
+            font-size:
+                15px;
+
+        }
+
+
+        /* =====================================================
+           HEADER RIGHT
+        ===================================================== */
+
+        .header-right {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                22px;
+
+        }
+
+
+        /* =====================================================
+           HEADER NOTIFICATION
+        ===================================================== */
+
+        .header-notification {
+
+            position:
+                relative;
+
+            width:
+                40px;
+
+            height:
+                40px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            cursor:
+                pointer;
+
+            font-size:
+                23px;
+
+        }
+
+
+        .header-badge {
+
+            position:
+                absolute;
+
+            top:
+                -3px;
+
+            right:
+                -2px;
+
+            min-width:
+                20px;
+
+            height:
+                20px;
+
+            padding:
+                0 5px;
+
+            border-radius:
+                50%;
+
+            background:
+                #25b94b;
+
+            color:
+                white;
+
+            font-size:
+                10px;
+
+            font-weight:
+                bold;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+        }
+
+
+        /* =====================================================
+           PROFILE
+        ===================================================== */
+
+        .profile {
+
+            position:
+                relative;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                11px;
+
+            cursor:
+                pointer;
+
+            user-select:
+                none;
+
+        }
+
+
+        .profile-picture {
+    font-size: 17px;
+
+
+            width:
+                43px;
+
+            height:
+                43px;
+
+            border-radius:
+                50%;
+
+            object-fit:
+                cover;
+
+            border:
+                1px solid
+                #cce2d2;
+
+            background:
+                #e9f4ec;
+
+        }
+
+
+        .profile-info {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            justify-content:
+                center;
+
+            min-width:
+                75px;
+
+        }
+
+
+        .profile-name {
+
+            font-size:
+                15px;
+
+            font-weight:
+                bold;
+
+            color:
+                #172033;
+
+            line-height:
+                20px;
+
+        }
+
+
+        .profile-role {
+
+            font-size:
+                13px;
+
+            color:
+                #17833c;
+
+            line-height:
+                18px;
+
+        }
+
+
+        .profile-arrow {
+
+            font-size:
+                12px;
+
+            color:
+                #667085;
+
+            margin-left:
+                2px;
+
+            transition:
+                transform 0.2s;
+
+        }
+
+
+        .profile.open .profile-arrow {
+
+            transform:
+                rotate(180deg);
+
+        }
+
+
+        /* =====================================================
+           PROFILE DROPDOWN
+           
+           ONLY SWITCH ROLE.
+           
+           Settings / Help / Logout are NOT here.
+        ===================================================== */
+
+        .profile-dropdown {
+
+            position:
+                absolute;
+
+            top:
+                calc(
+                    100% + 14px
+                );
+
+            right:
+                0;
+
+            width:
+                280px;
+
+            background:
+                white;
+
+            border:
+                1px solid
+                #e1e7e3;
+
+            border-radius:
+                13px;
+
+            box-shadow:
+                0 10px 28px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.14
+                );
+
+            padding:
+                10px;
+
+            display:
+                none;
+
+            z-index:
+                9999;
+
+        }
+
+
+        .profile.open .profile-dropdown {
+
+            display:
+                block;
+
+        }
+
+
+        .dropdown-user {
+
+            padding:
+                10px 14px 12px;
+
+            border-bottom:
+                1px solid
+                #e8ece9;
+
+            margin-bottom:
+                6px;
+
+        }
+
+
+        .dropdown-user-name {
+
+            font-size:
+                16px;
+
+            font-weight:
+                bold;
+
+            color:
+                #172033;
+
+        }
+
+
+        .dropdown-user-role {
+
+            margin-top:
+                3px;
+
+            font-size:
+                13px;
+
+            color:
+                #17833c;
+
+        }
+
+
+        .dropdown-title {
+
+            padding:
+                8px 14px 9px;
+
+            color:
+                #687385;
+
+            font-size:
+                12px;
+
+            font-weight:
+                bold;
+
+            letter-spacing:
+                0.4px;
+
+            text-transform:
+                uppercase;
+
+        }
+
+
+        #roleOptions {
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                4px;
+
+        }
+
+
+        .dropdown-role {
+
+            width:
+                100%;
+
+            min-height:
+                49px;
+
+            border:
+                none;
+
+            background:
+                white;
+
+            border-radius:
+                8px;
+
+            padding:
+                0 13px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            cursor:
+                pointer;
+
+            text-align:
+                left;
+
+            color:
+                #344054;
+
+            font-family:
+                inherit;
+
+            font-size:
+                15px;
+
+            transition:
+                background 0.18s ease;
+
+        }
+
+
+        .dropdown-role:hover {
+
+            background:
+                #f3f8f4;
+
+        }
+
+
+        .dropdown-role.current {
+
+            background:
+                #e5f5e9;
+
+            color:
+                #087f3f;
+
+            font-weight:
+                bold;
+
+        }
+
+
+        .dropdown-role-icon {
+
+            width:
+                25px;
+
+            min-width:
+                25px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                18px;
+
+        }
+
+
+        .dropdown-role-name {
+
+            flex:
+                1;
+
+        }
+
+
+        .role-check {
+
+            width:
+                20px;
+
+            min-width:
+                20px;
+
+            text-align:
+                center;
+
+            font-size:
+                20px;
+
+            color:
+                #087f3f;
+
+            font-weight:
+                bold;
+
+        }
+
+
+        /* =====================================================
+           PAGE CONTENT
+        ===================================================== */
+
+        .content {
+
+            padding:
+                28px 34px 70px;
+
+            height:
+                calc(
+                    100vh - 125px - 48px
+                );
+
+            min-height:
+                650px;
+
+        }
+
+
+        /* =====================================================
+           PAGE TITLE
+        ===================================================== */
+
+        .page-title {
+
+            margin-bottom:
+                20px;
+
+        }
+
+
+        .page-title h2 {
+
+            font-size:
+                31px;
+
+            line-height:
+                38px;
+
+            margin-bottom:
+                6px;
+
+            color:
+                #172033;
+
+        }
+
+
+        .page-title p {
+
+            color:
+                #64748b;
+
+            font-size:
+                15px;
+
+        }
+
+
+        /* =====================================================
+           MESSAGES CONTAINER
+        ===================================================== */
+
+        .messages-container {
+
+            height:
+                calc(
+                    100% - 82px
+                );
+
+            min-height:
+                560px;
+
+            background:
+                white;
+
+            border:
+                1px solid
+                #dfe6e1;
+
+            border-radius:
+                14px;
+
+            box-shadow:
+                0 3px 12px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.04
+                );
+
+            display:
+                flex;
+
+            overflow:
+                hidden;
+
+        }
+
+
+        /* =====================================================
+           CONVERSATION SIDE
+        ===================================================== */
+
+        .conversation-panel {
+
+            width:
+                370px;
+
+            min-width:
+                370px;
+
+            border-right:
+                1px solid
+                #e1e7e3;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            background:
+                #ffffff;
+
+        }
+
+
+        /* =====================================================
+           CATEGORY TABS
+        ===================================================== */
+
+        .message-tabs {
+
+            display:
+                grid;
+
+            grid-template-columns:
+                repeat(
+                    3,
+                    1fr
+                );
+
+            border-bottom:
+                1px solid
+                #e5eae7;
+
+            padding:
+                8px 8px 0;
+
+        }
+
+
+        .message-tab {
+
+            border:
+                none;
+
+            background:
+                white;
+
+            padding:
+                13px 5px;
+
+            cursor:
+                pointer;
+
+            color:
+                #697586;
+
+            font-family:
+                inherit;
+
+            font-size:
+                13px;
+
+            font-weight:
+                bold;
+
+            border-bottom:
+                3px solid
+                transparent;
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .message-tab:hover {
+
+            color:
+                #17833c;
+
+        }
+
+
+        .message-tab.active {
+
+            color:
+                #087f3f;
+
+            border-bottom-color:
+                #17833c;
+
+        }
+
+
+        .tab-unread-badge {
+
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 18px;
+            height: 18px;
+            padding: 0 5px;
+            margin-left: 6px;
+            border-radius: 50%;
+            background: #e0433c;
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+
+        }
+
+
+        /* =====================================================
+           SEARCH
+        ===================================================== */
+
+        .search-wrapper {
+
+            padding:
+                13px;
+
+            border-bottom:
+                1px solid
+                #e8ece9;
+
+        }
+
+
+        .search-box {
+
+            height:
+                42px;
+
+            border:
+                1px solid
+                #d9e0dc;
+
+            border-radius:
+                9px;
+
+            background:
+                #f8faf9;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            padding:
+                0 12px;
+
+            gap:
+                8px;
+
+        }
+
+
+        .search-box span {
+
+            color:
+                #7b8794;
+
+            font-size:
+                17px;
+
+        }
+
+
+        .search-box input {
+
+            border:
+                none;
+
+            outline:
+                none;
+
+            background:
+                transparent;
+
+            width:
+                100%;
+
+            font-family:
+                inherit;
+
+            font-size:
+                13px;
+
+            color:
+                #172033;
+
+        }
+
+
+        /* =====================================================
+           CONVERSATION LIST
+        ===================================================== */
+
+        .conversation-list {
+
+            flex:
+                1;
+
+            overflow-y:
+                auto;
+
+        }
+
+
+        .conversation-list::-webkit-scrollbar {
+
+            width:
+                6px;
+
+        }
+
+
+        .conversation-list::-webkit-scrollbar-thumb {
+
+            background:
+                #cbd5cf;
+
+            border-radius:
+                10px;
+
+        }
+
+
+        /* =====================================================
+           CONVERSATION ITEM
+        ===================================================== */
+
+        .conversation-item {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                12px;
+
+            padding:
+                13px 15px;
+
+            border-bottom:
+                1px solid
+                #edf0ee;
+
+            cursor:
+                pointer;
+
+            transition:
+                background 0.15s;
+
+        }
+
+
+        .conversation-item:hover {
+
+            background:
+                #f7faf8;
+
+        }
+
+
+        .conversation-item.active {
+
+            background:
+                #eaf6ed;
+
+        }
+
+
+        /* =====================================================
+           AVATAR
+        ===================================================== */
+
+        .conversation-avatar {
+
+            position:
+                relative;
+
+            width:
+                48px;
+
+            height:
+                48px;
+
+            min-width:
+                48px;
+
+            border-radius:
+                50%;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                22px;
+
+            background:
+                #e6f3e9;
+
+        }
+
+
+        .online-dot {
+
+            position:
+                absolute;
+
+            width:
+                11px;
+
+            height:
+                11px;
+
+            border-radius:
+                50%;
+
+            background:
+                #25b94b;
+
+            border:
+                2px solid
+                white;
+
+            right:
+                0;
+
+            bottom:
+                1px;
+
+        }
+
+
+        /* =====================================================
+           CONVERSATION DETAILS
+        ===================================================== */
+
+        .conversation-details {
+
+            flex:
+                1;
+
+            min-width:
+                0;
+
+        }
+
+
+        .conversation-top {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                space-between;
+
+            gap:
+                5px;
+
+        }
+
+
+        .conversation-name {
+
+            font-size:
+                14px;
+
+            font-weight:
+                bold;
+
+            color:
+                #172033;
+
+            overflow:
+                hidden;
+
+            white-space:
+                nowrap;
+
+            text-overflow:
+                ellipsis;
+
+        }
+
+
+        .conversation-time {
+
+            font-size:
+                10px;
+
+            color:
+                #89939e;
+
+            white-space:
+                nowrap;
+
+        }
+
+
+        .conversation-preview-row {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                5px;
+
+            margin-top:
+                5px;
+
+        }
+
+
+        .conversation-preview {
+
+            flex:
+                1;
+
+            min-width:
+                0;
+
+            font-size:
+                12px;
+
+            color:
+                #778291;
+
+            overflow:
+                hidden;
+
+            white-space:
+                nowrap;
+
+            text-overflow:
+                ellipsis;
+
+        }
+
+
+        .unread-badge {
+
+            min-width:
+                20px;
+
+            height:
+                20px;
+
+            padding:
+                0 5px;
+
+            border-radius:
+                50%;
+
+            background:
+                #25b94b;
+
+            color:
+                white;
+
+            font-size:
+                10px;
+
+            font-weight:
+                bold;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+        }
+
+
+        /* =====================================================
+           TRANSACTION LABEL
+        ===================================================== */
+
+        .conversation-context {
+
+            margin-top:
+                5px;
+
+            display:
+                inline-block;
+
+            font-size:
+                9px;
+
+            padding:
+                3px 6px;
+
+            border-radius:
+                4px;
+
+            background:
+                #eef6f0;
+
+            color:
+                #43805a;
+
+        }
+
+
+        /* =====================================================
+           EMPTY CONVERSATION
+        ===================================================== */
+
+        .empty-conversations {
+
+            height:
+                100%;
+
+            min-height:
+                350px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            text-align:
+                center;
+
+            padding:
+                30px;
+
+            color:
+                #6b7683;
+
+        }
+
+
+        .empty-conversations-icon {
+
+            font-size:
+                40px;
+
+            margin-bottom:
+                12px;
+
+        }
+
+
+        .empty-conversations h3 {
+
+            color:
+                #344054;
+
+            font-size:
+                15px;
+
+            margin-bottom:
+                6px;
+
+        }
+
+
+        .empty-conversations p {
+
+            font-size:
+                12px;
+
+            line-height:
+                18px;
+
+        }
+
+
+        /* =====================================================
+           CHAT PANEL
+        ===================================================== */
+
+        .chat-panel {
+
+            flex:
+                1;
+
+            min-width:
+                0;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            background:
+                #f7faf8;
+
+        }
+
+
+        /* =====================================================
+           CHAT HEADER
+        ===================================================== */
+
+        .chat-header {
+
+            min-height:
+                76px;
+
+            background:
+                white;
+
+            border-bottom:
+                1px solid
+                #e1e7e3;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            padding:
+                0 20px;
+
+            gap:
+                12px;
+
+        }
+
+
+        .chat-header-avatar {
+
+            width:
+                45px;
+
+            height:
+                45px;
+
+            border-radius:
+                50%;
+
+            background:
+                #e6f3e9;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                21px;
+
+        }
+
+
+        .chat-header-info {
+
+            flex:
+                1;
+
+        }
+
+
+        .chat-header-name {
+
+            font-size:
+                16px;
+
+            font-weight:
+                bold;
+
+            color:
+                #172033;
+
+        }
+
+
+        .chat-header-status {
+
+            margin-top:
+                3px;
+
+            font-size:
+                11px;
+
+            color:
+                #17833c;
+
+        }
+
+
+        .chat-header-actions {
+
+            display:
+                flex;
+
+            gap:
+                7px;
+
+        }
+
+
+        .chat-header-button {
+
+            width:
+                36px;
+
+            height:
+                36px;
+
+            border:
+                none;
+
+            background:
+                #f1f6f2;
+
+            border-radius:
+                8px;
+
+            cursor:
+                pointer;
+
+            font-size:
+                17px;
+
+        }
+
+
+        .chat-header-button:hover {
+
+            background:
+                #e2eee5;
+
+        }
+
+
+        /* =====================================================
+           COMPLETED CONSULTATION BUTTON
+        ===================================================== */
+
+        .completed-chat-button {
+
+            min-width:
+                92px;
+
+            height:
+                36px;
+
+            padding:
+                0 12px;
+
+            border:
+                1px solid
+                #4d0cff;
+
+            background:
+                #4d0cff;
+
+            color:
+                #eaefec;
+
+            border-radius:
+                8px;
+
+            cursor:
+                pointer;
+
+            font-family:
+                inherit;
+
+            font-size:
+                12px;
+
+            font-weight:
+                bold;
+
+            transition:
+                0.2s;
+
+        }
+
+
+        .completed-chat-button:hover:not(:disabled) {
+
+            background:
+                #4d0cff;
+
+            border-color:
+                #ecf3ef;
+
+        }
+
+
+        .completed-chat-button:disabled {
+
+            background:
+                #dff1e4;
+
+            color:
+                #17833c;
+
+            cursor:
+                default;
+
+            opacity:
+                1;
+
+        }
+
+
+        /* =====================================================
+           TRANSACTION INFO
+        ===================================================== */
+
+        .transaction-bar {
+
+            min-height:
+                42px;
+
+            background:
+                #f0f8f2;
+
+            border-bottom:
+                1px solid
+                #dce9df;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            padding:
+                0 20px;
+
+            gap:
+                8px;
+
+            color:
+                #4a6d55;
+
+            font-size:
+                11px;
+
+        }
+
+
+        .transaction-bar strong {
+
+            color:
+                #087f3f;
+
+        }
+
+
+        /* =====================================================
+           CHAT MESSAGES
+        ===================================================== */
+
+        .chat-messages {
+
+            flex:
+                1;
+
+            overflow-y:
+                auto;
+
+            padding:
+                22px 25px;
+
+            display:
+                flex;
+
+            flex-direction:
+                column;
+
+            gap:
+                8px;
+
+        }
+
+
+        .chat-messages::-webkit-scrollbar {
+
+            width:
+                7px;
+
+        }
+
+
+        .chat-messages::-webkit-scrollbar-thumb {
+
+            background:
+                #cbd5cf;
+
+            border-radius:
+                10px;
+
+        }
+
+
+        /* =====================================================
+           DATE DIVIDER
+        ===================================================== */
+
+        .date-divider {
+
+            align-self:
+                center;
+
+            background:
+                #e5ece7;
+
+            color:
+                #738079;
+
+            padding:
+                5px 11px;
+
+            border-radius:
+                7px;
+
+            font-size:
+                10px;
+
+            margin:
+                6px 0 10px;
+
+        }
+
+
+        /* =====================================================
+           MESSAGE ROW
+        ===================================================== */
+
+        .message-row {
+
+            display:
+                flex;
+
+            width:
+                100%;
+
+        }
+
+
+        .message-row.received {
+
+            justify-content:
+                flex-start;
+
+        }
+
+
+        .message-row.sent {
+
+            justify-content:
+                flex-end;
+
+        }
+
+
+        /* =====================================================
+           MESSAGE BUBBLE
+        ===================================================== */
+
+        .message-bubble {
+
+            max-width:
+                68%;
+
+            padding:
+                9px 12px 6px;
+
+            border-radius:
+                10px;
+
+            position:
+                relative;
+
+            box-shadow:
+                0 1px 2px
+                rgba(
+                    0,
+                    0,
+                    0,
+                    0.05
+                );
+
+        }
+
+
+        .received .message-bubble {
+
+            background:
+                white;
+
+            border-top-left-radius:
+                3px;
+
+        }
+
+
+        .sent .message-bubble {
+
+            background:
+                #dff3e5;
+
+            border-top-right-radius:
+                3px;
+
+        }
+
+
+        .message-text {
+
+            font-size:
+                13px;
+
+            line-height:
+                19px;
+
+            color:
+                #273142;
+
+            word-break:
+                break-word;
+
+        }
+
+
+        .message-meta {
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                flex-end;
+
+            gap:
+                4px;
+
+            margin-top:
+                3px;
+
+        }
+
+
+        .message-time {
+
+            font-size:
+                9px;
+
+            color:
+                #89939e;
+
+        }
+
+
+        .message-check {
+
+            color:
+                #17833c;
+
+            font-size:
+                11px;
+
+        }
+
+
+        /* =====================================================
+           ATTACHMENT
+        ===================================================== */
+
+        .message-attachment {
+
+            border:
+                1px solid
+                #dbe5de;
+
+            background:
+                #f8fbf9;
+
+            padding:
+                8px;
+
+            border-radius:
+                7px;
+
+            margin-bottom:
+                4px;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            gap:
+                8px;
+
+            font-size:
+                11px;
+
+        }
+
+
+        /* =====================================================
+           CHAT INPUT
+        ===================================================== */
+
+        .chat-input-area {
+
+            background:
+                white;
+
+            border-top:
+                1px solid
+                #e1e7e3;
+
+            padding:
+                12px 15px;
+
+        }
+
+
+        .chat-input-wrapper {
+
+            display:
+                flex;
+
+            align-items:
+                flex-end;
+
+            gap:
+                8px;
+
+        }
+
+
+        .attach-button {
+
+            width:
+                42px;
+
+            height:
+                42px;
+
+            min-width:
+                42px;
+
+            border:
+                none;
+
+            background:
+                #f0f5f1;
+
+            border-radius:
+                9px;
+
+            cursor:
+                pointer;
+
+            font-size:
+                18px;
+
+        }
+
+
+        .attach-button:hover {
+
+            background:
+                #e3ece5;
+
+        }
+
+
+        .message-input {
+
+            flex:
+                1;
+
+            min-height:
+                42px;
+
+            max-height:
+                110px;
+
+            border:
+                1px solid
+                #d5ddd8;
+
+            border-radius:
+                9px;
+
+            padding:
+                11px 13px;
+
+            resize:
+                none;
+
+            outline:
+                none;
+
+            font-family:
+                inherit;
+
+            font-size:
+                13px;
+
+            line-height:
+                19px;
+
+        }
+
+
+        .message-input:focus {
+
+            border-color:
+                #17833c;
+
+            box-shadow:
+                0 0 0 3px
+                rgba(
+                    23,
+                    131,
+                    60,
+                    0.08
+                );
+
+        }
+
+
+        .send-button {
+
+            width:
+                45px;
+
+            height:
+                42px;
+
+            min-width:
+                45px;
+
+            border:
+                none;
+
+            background:
+                #159447;
+
+            color:
+                white;
+
+            border-radius:
+                9px;
+
+            cursor:
+                pointer;
+
+            font-size:
+                18px;
+
+        }
+
+
+        .send-button:hover {
+
+            background:
+                #087f3f;
+
+        }
+
+
+        .input-note {
+
+            margin-top:
+                5px;
+
+            padding-left:
+                50px;
+
+            color:
+                #9aa4ae;
+
+            font-size:
+                9px;
+
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        .footer {
+
+            position:
+                fixed;
+
+            left:
+                255px;
+
+            right:
+                0;
+
+            bottom:
+                0;
+
+            height:
+                48px;
+
+            background:
+                #075b2e;
+
+            color:
+                white;
+
+            display:
+                flex;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            gap:
+                12px;
+
+            font-size:
+                12px;
+
+            z-index:
+                900;
+
+        }
+
+
+        .footer a {
+
+            color:
+                white;
+
+            text-decoration:
+                none;
+
+        }
+
+
+        .footer a:hover {
+
+            text-decoration:
+                underline;
+
+        }
+
+
+        /* =====================================================
+           MOBILE MENU
+        ===================================================== */
+
+        .mobile-menu {
+
+            display:
+                none;
+
+            width:
+                38px;
+
+            height:
+                38px;
+
+            border:
+                1px solid
+                #d5ddd8;
+
+            background:
+                white;
+
+            border-radius:
+                8px;
+
+            cursor:
+                pointer;
+
+            font-size:
+                20px;
+
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 1000px) {
+
+            .sidebar {
+
+                width:
+                    220px;
+
+                min-width:
+                    220px;
+
+            }
+
+
+            .main-content {
+
+                margin-left:
+                    220px;
+
+                width:
+                    calc(
+                        100% - 220px
+                    );
+
+            }
+
+
+            .footer {
+
+                left:
+                    220px;
+
+            }
+
+
+            .conversation-panel {
+
+                width:
+                    320px;
+
+                min-width:
+                    320px;
+
+            }
+
+        }
+
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+
+                position:
+                    fixed;
+
+                left:
+                    -250px;
+
+                width:
+                    245px;
+
+                min-width:
+                    245px;
+
+                transition:
+                    left 0.25s ease;
+
+            }
+
+
+            .sidebar.open {
+
+                left:
+                    0;
+
+            }
+
+
+            .main-content {
+
+                margin-left:
+                    0;
+
+                width:
+                    100%;
+
+            }
+
+
+            .footer {
+
+                left:
+                    0;
+
+            }
+
+
+            .mobile-menu {
+
+                display:
+                    block;
+
+            }
+
+
+            .header {
+
+                min-height:
+                    95px;
+
+                height:
+                    auto;
+
+                padding:
+                    15px 18px;
+
+            }
+
+
+            .welcome-section h1 {
+
+                font-size:
+                    22px;
+
+            }
+
+
+            .welcome-section p {
+
+                font-size:
+                    13px;
+
+            }
+
+
+            .content {
+
+                height:
+                    calc(
+                        100vh - 95px - 48px
+                    );
+
+                min-height:
+                    580px;
+
+                padding:
+                    20px 15px 60px;
+
+            }
+
+
+            .messages-container {
+
+                min-height:
+                    500px;
+
+            }
+
+
+            .conversation-panel {
+
+                width:
+                    310px;
+
+                min-width:
+                    310px;
+
+            }
+
+
+            .profile-info {
+
+                display:
+                    none;
+
+            }
+
+
+            .profile-arrow {
+
+                display:
+                    none;
+
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .conversation-panel {
+
+                width:
+                    100%;
+
+                min-width:
+                    100%;
+
+            }
+
+
+            .chat-panel {
+
+                display:
+                    none;
+
+            }
+
+
+            .messages-container.chat-open
+            .conversation-panel {
+
+                display:
+                    none;
+
+            }
+
+
+            .messages-container.chat-open
+            .chat-panel {
+
+                display:
+                    flex;
+
+                width:
+                    100%;
+
+            }
+
+
+            .chat-back {
+
+                display:
+                    flex !important;
+
+            }
+
+
+            .page-title h2 {
+
+                font-size:
+                    27px;
+
+            }
+
+        }
+
+
+        .chat-back {
+
+            display:
+                none;
+
+            width:
+                34px;
+
+            height:
+                34px;
+
+            border:
+                none;
+
+            background:
+                #f0f5f1;
+
+            border-radius:
+                8px;
+
+            cursor:
+                pointer;
+
+            align-items:
+                center;
+
+            justify-content:
+                center;
+
+            font-size:
+                17px;
+
+        }
+
+
+    
+.messages-badge {
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #e0433c;
+    color: white;
+    font-size: 11px;
+    font-weight: bold;
+    margin-left: auto;
+    padding: 0 5px;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+    <!-- =====================================================
+         SIDEBAR
+    ===================================================== -->
+
+    <aside
+        class="sidebar"
+        id="sidebar"
+    >
+
+
+        <div class="sidebar-logo">
+
+            <img
+                src="assets/agriconnect-logo-white.png"
+                alt="AgriConnect"
+            >
+
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+
+            <a
+                href="farmer-dashboard.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">▦</span>
+
+                <span class="nav-text">
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <a
+                href="my-crops.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">🌿</span>
+
+                <span class="nav-text">
+                    My Crops
+                </span>
+
+            </a>
+
+
+            <a
+                href="orders.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">🛒</span>
+
+                <span class="nav-text">
+                    Orders
+                </span>
+
+            </a>
+
+
+            <a
+                href="equipment-rental.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">🚜</span>
+
+                <span class="nav-text">
+                    Equipment Rental
+                </span>
+
+            </a>
+
+
+            <a
+                href="consultations.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">👨‍🌾</span>
+
+                <span class="nav-text">
+                    Consultations
+                </span>
+
+            </a>
+
+
+            <!-- ACTIVE -->
+
+            <a
+                href="messages.html"
+                class="nav-item active"
+            >
+
+                <span class="nav-icon">💬</span>
+
+                <span class="nav-text">
+                    Messages
+                </span>
+
+                <span class="messages-badge" id="messagesBadge" style="display:none;">0</span>
+
+            </a>
+
+
+            <a
+                href="report-issues.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">⚠️</span>
+
+                <span class="nav-text">
+                    Report Issues
+                </span>
+
+            </a>
+
+
+            <a
+                href="calendar.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">📅</span>
+
+                <span class="nav-text">
+                    Calendar
+                </span>
+
+            </a>
+
+
+            <a
+                href="notifications.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">🔔</span>
+
+                <span class="nav-text">
+                    Notifications
+                </span>
+
+            </a>
+
+
+            <a
+                href="history.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">◷</span>
+
+                <span class="nav-text">
+                    History
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- =================================================
+             SIDEBAR BOTTOM
+        ================================================= -->
+
+        <div class="sidebar-bottom">
+
+
+            <div class="sidebar-divider"></div>
+
+
+            <a
+                href="help-support.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">?</span>
+
+                <span class="nav-text">
+                    Help &amp; Support
+                </span>
+
+            </a>
+
+
+            <a
+                href="settings.html"
+                class="nav-item"
+            >
+
+                <span class="nav-icon">⚙</span>
+
+                <span class="nav-text">
+                    Settings
+                </span>
+
+            </a>
+
+
+            <a
+                href="index.html"
+                class="nav-item sidebar-logout"
+                id="sidebarLogoutButton"
+            >
+
+                <span class="nav-icon">↪</span>
+
+                <span class="nav-text">
+                    Logout
+                </span>
+
+            </a>
+
+
+        </div>
+
+
+    </aside>
+
+
+
+    <!-- =====================================================
+         MAIN
+    ===================================================== -->
+
+    <main class="main-content">
+
+
+        <!-- =================================================
+             HEADER
+        ================================================= -->
+
+        <header class="header">
+
+
+            <div
+                style="
+                    display:flex;
+                    align-items:center;
+                    gap:14px;
+                "
+            >
+
+
+                <button
+                    class="mobile-menu"
+                    id="mobileMenu"
+                    type="button"
+                >
+                    ☰
+                </button>
+
+
+                <div class="welcome-section">
+
+                    <h1>
+                        Welcome back,
+                        <span id="userName">User</span>!
+                    </h1>
+
+                    <p>
+                        Chat with buyers, rentals and experts.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- HEADER RIGHT -->
+
+            <div class="header-right">
+
+
+                <div
+                    class="header-notification"
+                    id="notificationButton"
+                    title="Notifications"
+                >
+
+                    🔔
+
+                    <span
+                        class="header-badge"
+                    >
+                        0
+                    </span>
+
+                </div>
+
+
+                <!-- PROFILE -->
+
+                <div
+                    class="profile"
+                    id="profile"
+                >
+
+
+                    <img
+                        src="https://ui-avatars.com/api/?name=User&background=e9f4ec&color=17833c"
+                        alt="Profile"
+                        class="profile-picture"
+                        id="profilePicture"
+                    >
+
+
+                    <div class="profile-info">
+
+                        <div
+                            class="profile-name"
+                            id="profileName"
+                        >
+                            User
+                        </div>
+
+
+                        <div
+                            class="profile-role"
+                            id="profileRole"
+                        >
+                            Farmer
+                        </div>
+
+                    </div>
+
+
+                    <span class="profile-arrow">
+                        ▼
+                    </span>
+
+
+                    <!-- PROFILE DROPDOWN -->
+
+                    <div
+                        class="profile-dropdown"
+                        id="profileDropdown"
+                    >
+
+
+                        <div class="dropdown-user">
+
+                            <div
+                                class="dropdown-user-name"
+                                id="dropdownUserName"
+                            >
+                                User
+                            </div>
+
+
+                            <div
+                                class="dropdown-user-role"
+                                id="dropdownUserRole"
+                            >
+                                Farmer
+                            </div>
+
+                        </div>
+
+
+                        <div class="dropdown-title">
+                            SWITCH ROLE
+                        </div>
+
+
+                        <div
+                            id="roleOptions"
+                        ></div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </header>
+
+
+
+        <!-- =================================================
+             CONTENT
+        ================================================= -->
+
+        <section class="content">
+
+
+            <div class="page-title">
+
+                <h2>
+                    Messages
+                </h2>
+
+                <p>
+                    Your conversations are organized by buyers, rentals and agricultural experts.
+                </p>
+
+            </div>
+
+
+
+            <!-- =================================================
+                 MESSAGES CONTAINER
+            ================================================= -->
+
+            <div
+                class="messages-container"
+                id="messagesContainer"
+            >
+
+
+                <!-- =================================================
+                     CONVERSATION PANEL
+                ================================================= -->
+
+                <div class="conversation-panel">
+
+
+                    <!-- TABS -->
+
+                    <div class="message-tabs">
+
+
+                        <button
+                            class="message-tab active"
+                            data-category="buyers"
+                        >
+                            🛒 Buyers
+                            <span
+                                class="tab-unread-badge"
+                                id="buyersTabBadge"
+                                style="display:none;"
+                            >0</span>
+                        </button>
+
+
+                        <button
+                            class="message-tab"
+                            data-category="rentals"
+                        >
+                            🚜 Rentals
+                            <span
+                                class="tab-unread-badge"
+                                id="rentalsTabBadge"
+                                style="display:none;"
+                            >0</span>
+                        </button>
+
+
+                        <button
+                            class="message-tab"
+                            data-category="experts"
+                        >
+                            👨‍🌾 Experts
+                            <span
+                                class="tab-unread-badge"
+                                id="expertsTabBadge"
+                                style="display:none;"
+                            >0</span>
+                        </button>
+
+
+                    </div>
+
+
+                    <!-- SEARCH -->
+
+                    <div class="search-wrapper">
+
+
+                        <div class="search-box">
+
+                            <span>
+                                🔍
+                            </span>
+
+
+                            <input
+                                type="text"
+                                id="searchInput"
+                                placeholder="Search conversations..."
+                            >
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- CONVERSATIONS -->
+
+                    <div
+                        class="conversation-list"
+                        id="conversationList"
+                    ></div>
+
+
+                </div>
+
+
+
+                <!-- =================================================
+                     CHAT PANEL
+                ================================================= -->
+
+                <div class="chat-panel">
+
+
+                    <!-- CHAT HEADER -->
+
+                    <div class="chat-header">
+
+
+                        <button
+                            class="chat-back"
+                            id="chatBack"
+                            type="button"
+                        >
+                            ←
+                        </button>
+
+
+                        <div
+                            class="chat-header-avatar"
+                            id="chatAvatar"
+                        >
+                            👤
+                        </div>
+
+
+                        <div class="chat-header-info">
+
+
+                            <div
+                                class="chat-header-name"
+                                id="chatName"
+                            >
+                                Select a conversation
+                            </div>
+
+
+                            <div
+                                class="chat-header-status"
+                                id="chatStatus"
+                            >
+                                Choose a conversation to start messaging
+                            </div>
+
+
+                        </div>
+
+
+                        <div class="chat-header-actions">
+
+
+                            <button
+                                class="chat-header-button"
+                                title="Search messages"
+                                type="button"
+                            >
+                                🔍
+                            </button>
+
+
+                            <button
+                                class="completed-chat-button"
+                                id="completedButton"
+                                title="Mark consultation as completed"
+                                type="button"
+                                style="display:none;"
+                            >
+                                ✓ Completed
+                            </button>
+
+
+                            <button
+                                class="chat-header-button"
+                                title="Conversation information"
+                                type="button"
+                            >
+                                ℹ️
+                            </button>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- TRANSACTION BAR -->
+
+                    <div
+                        class="transaction-bar"
+                        id="transactionBar"
+                        style="display:none;"
+                    >
+
+                        <span>
+                            📋
+                        </span>
+
+                        <span id="transactionText">
+                        </span>
+
+                    </div>
+
+
+                    <!-- CHAT MESSAGES -->
+
+                    <div
+                        class="chat-messages"
+                        id="chatMessages"
+                    >
+
+
+                        <div
+                            class="empty-conversations"
+                            id="emptyChat"
+                        >
+
+                            <div class="empty-conversations-icon">
+                                💬
+                            </div>
+
+                            <h3>
+                                Select a conversation
+                            </h3>
+
+                            <p>
+                                Choose a buyer, rental user or agricultural expert from the list to view the conversation.
+                            </p>
+
+                        </div>
+
+
+                    </div>
+
+
+                    <!-- ATTACHMENT PREVIEW -->
+
+                    <div
+                        id="attachmentPreview"
+                        style="
+                            display:none;
+                            align-items:center;
+                            gap:10px;
+                            padding:10px 16px;
+                            background:#f1f7f3;
+                            border-top:1px solid #e1e6eb;
+                        "
+                    >
+                        <img
+                            id="attachmentPreviewImage"
+                            style="width:56px;height:56px;object-fit:cover;border-radius:8px;"
+                        >
+                        <span
+                            id="attachmentPreviewName"
+                            style="flex:1;font-size:12px;color:#536274;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"
+                        ></span>
+                        <button
+                            type="button"
+                            id="attachmentPreviewCancel"
+                            style="border:none;background:transparent;font-size:18px;cursor:pointer;color:#536274;"
+                            title="Remove"
+                        >
+                            ×
+                        </button>
+                    </div>
+
+
+                    <!-- INPUT -->
+
+                    <div class="chat-input-area">
+
+
+                        <div class="chat-input-wrapper">
+
+
+                            <button
+                                class="attach-button"
+                                type="button"
+                                id="attachButton"
+                                title="Attach file"
+                            >
+                                📎
+                            </button>
+
+
+                            <input
+                                type="file"
+                                id="fileInput"
+                                hidden
+                            >
+
+
+                            <textarea
+                                class="message-input"
+                                id="messageInput"
+                                rows="1"
+                                placeholder="Type a message..."
+                                disabled
+                            ></textarea>
+
+
+                            <button
+                                class="send-button"
+                                id="sendButton"
+                                type="button"
+                                disabled
+                                title="Send"
+                            >
+                                ➤
+                            </button>
+
+
+                        </div>
+
+
+                        <div class="input-note">
+                            Press Enter to send • Shift + Enter for new line
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <span>
+        © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+
+<script>
+
+function moveCurrentRoleToFront(container) {
+
+    if (!container) return;
+
+    const currentBtn =
+        container.querySelector(".dropdown-role.current, .role-option.selected");
+
+    if (currentBtn && container.firstElementChild !== currentBtn) {
+        container.insertBefore(currentBtn, container.firstElementChild);
+    }
+
+}
+
+
+
+
+    /* =====================================================
+       USER / ROLE SYSTEM
+    ===================================================== */
+
+    let user = null;
+
+
+    try {
+
+        user =
+            JSON.parse(
+                sessionStorage.getItem("user")
+            );
+
+    }
+
+    catch (error) {
+
+        user = null;
+
+    }
+
+
+
+    const roleNames = {
+
+        farmer:
+            "Farmer",
+
+        buyer:
+            "Buyer",
+
+        expert:
+            "Agricultural Expert",
+
+        equipment_provider:
+            "Equipment Provider"
+
+    };
+
+
+    const roleIcons = {
+
+        farmer:
+            "👨‍🌾",
+
+        buyer:
+            "🛒",
+
+        expert:
+            "👨‍🌾",
+
+        equipment_provider:
+            "🚜"
+
+    };
+
+
+
+    function normalizeRole(role) {
+
+        if (!role) {
+            return "";
+        }
+
+
+        const value =
+            String(role)
+                .toLowerCase()
+                .trim();
+
+
+        if (
+            value === "farmer"
+        ) {
+
+            return "farmer";
+
+        }
+
+
+        if (
+            value === "buyer"
+        ) {
+
+            return "buyer";
+
+        }
+
+
+        if (
+            value === "expert" ||
+            value === "agricultural expert" ||
+            value === "agri expert"
+        ) {
+
+            return "expert";
+
+        }
+
+
+        if (
+            value === "equipment_provider" ||
+            value === "equipment provider" ||
+            value === "equipment-provider"
+        ) {
+
+            return "equipment_provider";
+
+        }
+
+
+        return "";
+
+    }
+
+
+
+    function getRegisteredRole() {
+
+        if (!user) {
+            return "";
+        }
+
+
+        const possibleRoles = [
+
+            user.registered_role,
+
+            user.registeredRole,
+
+            user.registration_role,
+
+            user.registrationRole,
+
+            user.account_role,
+
+            user.accountRole,
+
+            user.user_role,
+
+            user.userRole,
+
+            user.role
+
+        ];
+
+
+        for (
+            const role of possibleRoles
+        ) {
+
+            const normalized =
+                normalizeRole(role);
+
+
+            if (
+                normalized &&
+                roleNames[normalized]
+            ) {
+
+                return normalized;
+
+            }
+
+        }
+
+
+        return "";
+
+    }
+
+
+
+    function getAccountRoles() {
+
+        const registeredRole =
+            getRegisteredRole();
+
+
+        /*
+         * Buyer-only account
+         */
+
+        if (
+            registeredRole === "buyer"
+        ) {
+
+            return [
+                "buyer"
+            ];
+
+        }
+
+
+        /*
+         * Any other registered account
+         * also has Buyer access.
+         */
+
+        if (
+            registeredRole
+        ) {
+
+            return [
+                registeredRole,
+                "buyer"
+            ];
+
+        }
+
+
+        /*
+         * Fallback to roles array.
+         */
+
+        if (
+            user &&
+            Array.isArray(user.roles)
+        ) {
+
+            const roles =
+                user.roles
+                    .map(normalizeRole)
+                    .filter(
+                        role =>
+                            !!roleNames[role]
+                    );
+
+
+            const uniqueRoles =
+                [
+                    ...new Set(roles)
+                ];
+
+
+            if (
+                uniqueRoles.length > 0
+            ) {
+
+                if (
+                    uniqueRoles.some(
+                        role =>
+                            role !== "buyer"
+                    ) &&
+                    !uniqueRoles.includes("buyer")
+                ) {
+
+                    uniqueRoles.push(
+                        "buyer"
+                    );
+
+                }
+
+
+                return uniqueRoles;
+
+            }
+
+        }
+
+
+        return [
+            "farmer",
+            "buyer"
+        ];
+
+    }
+
+
+
+    let currentRole =
+        normalizeRole(
+            sessionStorage.getItem(
+                "selectedRole"
+            )
+        );
+
+
+    const availableRoles =
+        getAccountRoles();
+
+
+    if (
+        !currentRole ||
+        !availableRoles.includes(
+            currentRole
+        )
+    ) {
+
+        currentRole =
+            availableRoles[0];
+
+        sessionStorage.setItem(
+            "selectedRole",
+            currentRole
+        );
+
+    }
+
+
+
+    /* =====================================================
+       DISPLAY USER
+    ===================================================== */
+
+    function displayUser() {
+
+        let fullName =
+            "User";
+
+
+        if (user) {
+
+            const firstName =
+                user.first_name ||
+                user.firstName ||
+                "";
+
+
+            const lastName =
+                user.last_name ||
+                user.lastName ||
+                "";
+
+
+            fullName =
+                `${firstName} ${lastName}`.trim();
+
+
+            if (!fullName) {
+
+                fullName =
+                    user.name ||
+                    user.full_name ||
+                    user.fullName ||
+                    "User";
+
+            }
+
+        }
+
+
+        document
+            .getElementById(
+                "profileName"
+            )
+            .textContent =
+                fullName;
+
+
+        const userNameEl =
+            document.getElementById(
+                "userName"
+            );
+
+        if (userNameEl) {
+            userNameEl.textContent =
+                fullName;
+        }
+
+
+        document
+            .getElementById(
+                "dropdownUserName"
+            )
+            .textContent =
+                fullName;
+
+
+        document
+            .getElementById(
+                "profilePicture"
+            )
+            .src =
+                `https://ui-avatars.com/api/?name=${encodeURIComponent(fullName)}&background=e9f4ec&color=17833c`;
+
+
+        const roleName =
+            roleNames[currentRole] ||
+            "Farmer";
+
+
+        document
+            .getElementById(
+                "profileRole"
+            )
+            .textContent =
+                roleName;
+
+
+        document
+            .getElementById(
+                "dropdownUserRole"
+            )
+            .textContent =
+                roleName;
+
+    }
+
+
+
+    /* =====================================================
+       ROLE OPTIONS
+    ===================================================== */
+
+    function loadRoles() {
+
+        const container =
+            document.getElementById(
+                "roleOptions"
+            );
+
+
+        container.innerHTML =
+            "";
+
+
+        getAccountRoles().forEach(
+            function(role) {
+
+                const button =
+                    document.createElement(
+                        "button"
+                    );
+
+
+                button.type =
+                    "button";
+
+
+                button.className =
+                    "dropdown-role";
+
+
+                if (
+                    role === currentRole
+                ) {
+
+                    button.classList.add(
+                        "current"
+                    );
+
+                }
+
+
+                button.innerHTML = `
+
+                    <span class="dropdown-role-icon">
+                        ${roleIcons[role]}
+                    </span>
+
+                    <span class="dropdown-role-name">
+                        ${roleNames[role]}
+                    </span>
+
+                    <span class="role-check">
+                        ${role === currentRole ? "✓" : ""}
+                    </span>
+
+                `;
+
+
+                button.addEventListener(
+                    "click",
+                    function(event) {
+
+                        event.stopPropagation();
+
+                        switchRole(role);
+
+                    }
+                );
+
+
+                container.appendChild(
+                    button
+                );
+
+            }
+        );
+
+    moveCurrentRoleToFront(container);
+
+
+    }
+
+
+
+    /* =====================================================
+       SWITCH ROLE
+    ===================================================== */
+
+    function switchRole(role) {
+
+        if (
+            !getAccountRoles().includes(role)
+        ) {
+
+            return;
+
+        }
+
+
+        currentRole =
+            role;
+
+
+        sessionStorage.setItem(
+            "selectedRole",
+            role
+        );
+
+
+        switch (role) {
+
+
+            case "farmer":
+
+                window.location.href =
+                    "farmer-dashboard.html";
+
+                break;
+
+
+            case "buyer":
+
+                window.location.href =
+                    "buyer-dashboard.html";
+
+                break;
+
+
+            case "expert":
+
+                window.location.href =
+                    "expert-dashboard.html";
+
+                break;
+
+
+            case "equipment_provider":
+
+                window.location.href =
+                    "rental-dashboard.html";
+
+                break;
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       PROFILE
+    ===================================================== */
+
+    const profile =
+        document.getElementById(
+            "profile"
+        );
+
+
+    profile.addEventListener(
+        "click",
+        function(event) {
+
+            event.stopPropagation();
+
+
+            profile.classList.toggle(
+                "open"
+            );
+
+        }
+    );
+
+
+    document.addEventListener(
+        "click",
+        function() {
+
+            profile.classList.remove(
+                "open"
+            );
+
+        }
+    );
+
+
+
+    /* =====================================================
+       SIDEBAR LOGOUT
+    ===================================================== */
+
+    document
+        .getElementById(
+            "sidebarLogoutButton"
+        )
+        .addEventListener(
+            "click",
+            async function(event) {
+
+                event.preventDefault();
+
+
+                const confirmed =
+                    await customConfirm(
+                        "Are you sure you want to logout?"
+                    );
+
+                if (
+                    !confirmed
+                ) {
+
+                    return;
+
+                }
+
+
+                sessionStorage.removeItem(
+                    "token"
+                );
+
+
+                sessionStorage.removeItem(
+                    "user"
+                );
+
+
+                sessionStorage.removeItem(
+                    "selectedRole"
+                );
+
+
+                window.location.href =
+                    "index.html";
+
+            }
+        );
+
+
+
+    /* =====================================================
+       NOTIFICATIONS
+    ===================================================== */
+
+    document
+        .getElementById(
+            "notificationButton"
+        )
+        .addEventListener(
+            "click",
+            function() {
+
+                window.location.href =
+                    "notifications.html";
+
+            }
+        );
+
+
+
+    /* =====================================================
+       MOBILE SIDEBAR
+    ===================================================== */
+
+    document
+        .getElementById(
+            "mobileMenu"
+        )
+        .addEventListener(
+            "click",
+            function(event) {
+
+                event.stopPropagation();
+
+
+                document
+                    .getElementById(
+                        "sidebar"
+                    )
+                    .classList.toggle(
+                        "open"
+                    );
+
+            }
+        );
+
+
+
+    /* =====================================================
+       SAMPLE CONVERSATIONS
+       
+       In the real system these will come from:
+       
+       Buyers:
+       - users involved in orders
+
+       Rentals:
+       - users involved in rentals
+
+       Experts:
+       - experts with whom a consultation was started
+    ===================================================== */
+
+    /* =====================================================
+       CONVERSATIONS (loaded from the backend)
+
+       Buckets match the three message tabs:
+         order        -> buyers
+         rental       -> rentals
+         consultation -> experts
+    ===================================================== */
+
+    let conversations = {
+
+        buyers: [],
+        rentals: [],
+        experts: []
+
+    };
+
+
+    function formatConversationTime(isoString) {
+
+        if (!isoString) {
+            return "";
+        }
+
+        return new Date(isoString).toLocaleTimeString(
+            [],
+            { hour: "numeric", minute: "2-digit" }
+        );
+
+    }
+
+
+    function conversationContextLabel(row) {
+
+        if (row.context_type === "order") {
+            return row.context_id ? `Order #${row.context_id}` : "Order";
+        }
+
+        if (row.context_type === "rental") {
+            return row.context_id ? `Rental #${row.context_id}` : "Rental";
+        }
+
+        if (row.context_type === "consultation") {
+            return "Consultation";
+        }
+
+        return "";
+
+    }
+
+
+    function mapConversationRow(row) {
+
+        return {
+
+            id: row.id,
+            context_type: row.context_type,
+            context_id: row.context_id,
+            otherUserId: row.other_user_id,
+            name: `${row.first_name || ""} ${row.last_name || ""}`.trim() || "User",
+            avatar: "🧑",
+            online: false,
+            context: conversationContextLabel(row),
+            lastMessage: row.last_message_text || "No messages yet.",
+            time: formatConversationTime(row.last_message_at || row.created_at),
+            unread: row.unread_count || 0,
+            completed: !!row.completed_at,
+            completedAt: row.completed_at || null,
+            myCompletedAt: row.my_completed_at || null,
+            otherCompletedAt: row.other_completed_at || null,
+            bothCompleted: !!row.completed_at,
+            messages: []
+
+        };
+
+    }
+
+
+    async function loadConversations() {
+
+        const userId = user && user.id;
+
+        if (!userId) {
+            return;
+        }
+
+        const buckets = { buyers: [], rentals: [], experts: [] };
+
+        try {
+
+            const response =
+                await fetch(`/api/messages/conversations?user_id=${userId}`);
+
+            const data =
+                await response.json();
+
+            if (data && data.success && Array.isArray(data.conversations)) {
+
+                data.conversations.forEach(row => {
+
+                    const mapped = mapConversationRow(row);
+
+                    if (row.context_type === "order") {
+                        buckets.buyers.push(mapped);
+                    } else if (row.context_type === "rental") {
+                        buckets.rentals.push(mapped);
+                    } else if (row.context_type === "consultation") {
+                        buckets.experts.push(mapped);
+                    }
+
+                });
+
+            }
+
+        } catch (error) {
+
+            console.error("Unable to load conversations:", error);
+
+        }
+
+
+        /*
+         * The Buyers/Rentals tabs should show every buyer or
+         * provider this farmer actually has a relationship
+         * with, not only the ones a conversation was already
+         * started with. Add a "virtual" (not yet created)
+         * entry for any order/rental that isn't already
+         * represented above - the real conversation is only
+         * created once the farmer actually opens it.
+         */
+
+        try {
+
+            const ordersResponse =
+                await fetch(`/api/orders/farmer/${userId}`);
+
+            const ordersData =
+                await ordersResponse.json();
+
+            if (ordersData && ordersData.success && Array.isArray(ordersData.orders)) {
+
+                ordersData.orders.forEach(order => {
+
+                    const alreadyShown =
+                        buckets.buyers.some(
+                            item => Number(item.otherUserId) === Number(order.buyer_id)
+                        );
+
+                    if (!alreadyShown) {
+
+                        buckets.buyers.push({
+                            id: null,
+                            context_type: "order",
+                            context_id: order.order_id,
+                            otherUserId: order.buyer_id,
+                            name: `${order.buyer_first_name || ""} ${order.buyer_last_name || ""}`.trim() || "Buyer",
+                            avatar: "🧑",
+                            online: false,
+                            context: `Order #${order.order_id}`,
+                            lastMessage: "No messages yet.",
+                            time: "",
+                            unread: 0,
+                            completed: false,
+                            completedAt: null,
+                            messages: []
+                        });
+
+                    }
+
+                });
+
+            }
+
+        } catch (error) {
+
+            console.error("Unable to load orders for the Buyers tab:", error);
+
+        }
+
+        try {
+
+            const rentalsResponse =
+                await fetch(`/api/rentals/my/${userId}`);
+
+            const rentalsData =
+                await rentalsResponse.json();
+
+            if (rentalsData && rentalsData.success && Array.isArray(rentalsData.rentals)) {
+
+                rentalsData.rentals.forEach(rental => {
+
+                    if (!rental.provider_user_id) {
+                        return;
+                    }
+
+                    const alreadyShown =
+                        buckets.rentals.some(
+                            item => Number(item.otherUserId) === Number(rental.provider_user_id)
+                        );
+
+                    if (!alreadyShown) {
+
+                        buckets.rentals.push({
+                            id: null,
+                            context_type: "rental",
+                            context_id: rental.rental_id,
+                            otherUserId: rental.provider_user_id,
+                            name: rental.business_name || "Provider",
+                            avatar: "🧑‍🌾",
+                            online: false,
+                            context: `Rental #${rental.rental_id}`,
+                            lastMessage: "No messages yet.",
+                            time: "",
+                            unread: 0,
+                            completed: false,
+                            completedAt: null,
+                            messages: []
+                        });
+
+                    }
+
+                });
+
+            }
+
+        } catch (error) {
+
+            console.error("Unable to load rentals for the Rentals tab:", error);
+
+        }
+
+
+        conversations = buckets;
+
+        updateTabBadges();
+
+    }
+
+
+    function updateTabBadges() {
+
+        const setBadge = function(id, count) {
+
+            const el = document.getElementById(id);
+
+            if (!el) {
+                return;
+            }
+
+            if (count > 0) {
+                el.textContent = count;
+                el.style.display = "inline-flex";
+            } else {
+                el.style.display = "none";
+            }
+
+        };
+
+        setBadge(
+            "buyersTabBadge",
+            conversations.buyers.filter(c => c.unread > 0).length
+        );
+
+        setBadge(
+            "rentalsTabBadge",
+            conversations.rentals.filter(c => c.unread > 0).length
+        );
+
+        setBadge(
+            "expertsTabBadge",
+            conversations.experts.filter(c => c.unread > 0).length
+        );
+
+    }
+
+
+
+
+
+    /* =====================================================
+       MESSAGE STATE
+    ===================================================== */
+
+    let activeCategory =
+        "buyers";
+
+
+    let activeConversation =
+        null;
+
+    let pendingAttachment =
+        null;
+
+
+
+    /* =====================================================
+       SORT CONVERSATIONS
+       
+       Newest conversation first.
+       
+       For sample data we use a numeric timestamp
+       generated from the display time.
+    ===================================================== */
+
+    function sortConversations(list) {
+
+        return [...list].sort(
+            function(a, b) {
+
+                return getTimeRank(b.time)
+                     - getTimeRank(a.time);
+
+            }
+        );
+
+    }
+
+
+
+    function getTimeRank(time) {
+
+        if (!time) {
+            return 0;
+        }
+
+
+        if (
+            time === "Today"
+        ) {
+
+            return 100000;
+
+        }
+
+
+        if (
+            time === "Yesterday"
+        ) {
+
+            return 50000;
+
+        }
+
+
+        if (
+            time.includes("AM") ||
+            time.includes("PM")
+        ) {
+
+            const parts =
+                time
+                    .replace(
+                        "AM",
+                        ""
+                    )
+                    .replace(
+                        "PM",
+                        ""
+                    )
+                    .trim()
+                    .split(":");
+
+
+            let hour =
+                parseInt(
+                    parts[0]
+                );
+
+
+            const minute =
+                parseInt(
+                    parts[1]
+                ) || 0;
+
+
+            if (
+                time.includes("PM") &&
+                hour !== 12
+            ) {
+
+                hour += 12;
+
+            }
+
+
+            if (
+                time.includes("AM") &&
+                hour === 12
+            ) {
+
+                hour = 0;
+
+            }
+
+
+            return (
+                10000 +
+                hour * 60 +
+                minute
+            );
+
+        }
+
+
+        return 0;
+
+    }
+
+
+
+    /* =====================================================
+       RENDER CONVERSATIONS
+    ===================================================== */
+
+    function renderConversations() {
+
+        const listElement =
+            document.getElementById(
+                "conversationList"
+            );
+
+
+        const searchValue =
+            document
+                .getElementById(
+                    "searchInput"
+                )
+                .value
+                .toLowerCase()
+                .trim();
+
+
+        let list =
+            sortConversations(
+                conversations[activeCategory]
+            );
+
+
+        if (searchValue) {
+
+            list =
+                list.filter(
+                    function(conversation) {
+
+                        return (
+
+                            conversation.name
+                                .toLowerCase()
+                                .includes(
+                                    searchValue
+                                )
+
+                            ||
+
+                            conversation.lastMessage
+                                .toLowerCase()
+                                .includes(
+                                    searchValue
+                                )
+
+                            ||
+
+                            conversation.context
+                                .toLowerCase()
+                                .includes(
+                                    searchValue
+                                )
+
+                        );
+
+                    }
+                );
+
+        }
+
+
+        listElement.innerHTML =
+            "";
+
+
+        if (
+            list.length === 0
+        ) {
+
+            listElement.innerHTML = `
+
+                <div class="empty-conversations">
+
+                    <div class="empty-conversations-icon">
+                        💬
+                    </div>
+
+                    <h3>
+                        No conversations found
+                    </h3>
+
+                    <p>
+                        Conversations related to this section will appear here.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        list.forEach(
+            function(conversation) {
+
+                const item =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                item.className =
+                    "conversation-item";
+
+
+                if (
+                    activeConversation &&
+                    activeConversation.id ===
+                        conversation.id
+                ) {
+
+                    item.classList.add(
+                        "active"
+                    );
+
+                }
+
+
+                item.dataset.id =
+                    conversation.id;
+
+
+                item.innerHTML = `
+
+                    <div class="conversation-avatar">
+
+                        ${conversation.avatar}
+
+                        ${
+                            conversation.online
+                                ? '<span class="online-dot"></span>'
+                                : ''
+                        }
+
+                    </div>
+
+
+                    <div class="conversation-details">
+
+
+                        <div class="conversation-top">
+
+                            <div class="conversation-name">
+                                ${escapeHtml(conversation.name)}
+                            </div>
+
+                            <div class="conversation-time">
+                                ${escapeHtml(conversation.time)}
+                            </div>
+
+                        </div>
+
+
+                        <div class="conversation-preview-row">
+
+                            <div class="conversation-preview">
+                                ${escapeHtml(conversation.lastMessage)}
+                            </div>
+
+                            ${
+                                conversation.unread > 0
+                                    ? `
+                                        <div class="unread-badge">
+                                            ${conversation.unread}
+                                        </div>
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+
+                        <span class="conversation-context">
+                            ${escapeHtml(conversation.context)}
+                        </span>
+
+
+                    </div>
+
+                `;
+
+
+                item.addEventListener(
+                    "click",
+                    function() {
+
+                        openConversation(
+                            conversation
+                        );
+
+                    }
+                );
+
+
+                listElement.appendChild(
+                    item
+                );
+
+            }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       COMPLETED CONSULTATION BUTTON
+    ===================================================== */
+
+    function updateCompletedButton() {
+
+        const button =
+            document.getElementById(
+                "completedButton"
+            );
+
+
+        if (!button) {
+
+            return;
+
+        }
+
+
+        /*
+         * The Completed action belongs only to
+         * agricultural expert consultations.
+         * It is shown only when an expert chat is open.
+         */
+
+        if (
+            activeCategory !== "experts" ||
+            !activeConversation
+        ) {
+
+            button.style.display = "none";
+
+            button.disabled = true;
+
+            button.textContent = "✓ Completed";
+
+            button.onclick = markConsultationCompleted;
+
+            return;
+
+        }
+
+
+        button.style.display = "inline-flex";
+
+        button.style.alignItems = "center";
+
+        button.style.justifyContent = "center";
+
+
+        if (activeConversation.bothCompleted) {
+
+            button.disabled = false;
+
+            button.textContent = "🔄 New Consultation";
+
+            button.onclick = startNewConsultation;
+
+            return;
+
+        }
+
+
+        const isCompleted =
+            !!activeConversation.myCompletedAt;
+
+
+        button.disabled = isCompleted;
+
+        button.textContent =
+            isCompleted
+                ? "✓ Completed"
+                : "Completed";
+
+        button.onclick = markConsultationCompleted;
+
+    }
+
+
+    async function markConsultationCompleted() {
+
+        /* Only expert conversations can be completed here. */
+
+        if (
+            activeCategory !== "experts" ||
+            !activeConversation
+        ) {
+
+            return;
+
+        }
+
+
+        if (
+            activeConversation.myCompletedAt
+        ) {
+
+            return;
+
+        }
+
+
+        const userId = user && user.id;
+
+        if (userId) {
+
+            try {
+
+                const response = await fetch(
+                    `/api/messages/conversations/${activeConversation.id}/complete`,
+                    {
+                        method: "PUT",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ user_id: userId })
+                    }
+                );
+
+                const data = await response.json();
+
+                activeConversation.myCompletedAt = new Date().toISOString();
+                activeConversation.bothCompleted = !!(data && data.bothCompleted);
+
+            } catch (error) {
+
+                console.error("Failed to sync consultation completion:", error);
+
+            }
+
+        }
+
+
+        updateCompletedButton();
+
+        renderConversations();
+
+        renderMessages();
+
+    }
+
+
+    async function startNewConsultation() {
+
+        if (
+            activeCategory !== "experts" ||
+            !activeConversation ||
+            !activeConversation.bothCompleted
+        ) {
+
+            return;
+
+        }
+
+
+        const userId = user && user.id;
+
+        if (!userId) {
+            return;
+        }
+
+        try {
+
+            const response = await fetch(
+                `/api/messages/conversations/${activeConversation.id}/reopen`,
+                {
+                    method: "PUT",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ user_id: userId })
+                }
+            );
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                showToast(data.message || "Unable to start a new consultation.");
+                return;
+            }
+
+            activeConversation.myCompletedAt = null;
+            activeConversation.otherCompletedAt = null;
+            activeConversation.bothCompleted = false;
+            activeConversation.completed = false;
+
+            updateCompletedButton();
+            renderConversations();
+            renderMessages();
+
+            showToast("You can now message this expert again.");
+
+        } catch (error) {
+
+            console.error("Failed to reopen consultation:", error);
+            showToast("Unable to start a new consultation.");
+
+        }
+
+    }
+
+
+    /* =====================================================
+       OPEN CONVERSATION
+    ===================================================== */
+
+    async function openConversation(
+        conversation
+    ) {
+
+        activeConversation =
+            conversation;
+
+
+        /*
+         * Check whether the other participant is currently online,
+         * so sent messages can show the right tick state.
+         */
+
+        if (conversation.otherUserId) {
+
+            try {
+
+                const statusResponse =
+                    await fetch(`/api/auth/online-status/${conversation.otherUserId}`);
+
+                const statusData =
+                    await statusResponse.json();
+
+                conversation.otherUserOnline =
+                    !!(statusData && statusData.success && statusData.online);
+
+            } catch (statusError) {
+
+                console.error("Unable to check online status:", statusError);
+                conversation.otherUserOnline = false;
+
+            }
+
+        }
+
+
+        /*
+         * Virtual entry (real conversation not created yet) -
+         * create it now that the farmer is actually opening it.
+         */
+
+        if (!conversation.id) {
+
+            const userId = user && user.id;
+
+            try {
+
+                const startResponse =
+                    await fetch(
+                        "/api/messages/conversations/start",
+                        {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                user_id: userId,
+                                other_user_id: conversation.otherUserId,
+                                context_type: conversation.context_type,
+                                context_id: conversation.context_id
+                            })
+                        }
+                    );
+
+                const startData =
+                    await startResponse.json();
+
+                if (startResponse.ok && startData.success) {
+
+                    conversation.id =
+                        startData.conversation.id;
+
+                }
+
+            } catch (error) {
+
+                console.error("Unable to start conversation:", error);
+
+            }
+
+        }
+
+
+        /*
+         * Mark unread messages as read (server-side too -
+         * fetching a conversation's messages marks them read
+         * for this user).
+         */
+
+        conversation.unread =
+            0;
+
+
+        document
+            .getElementById(
+                "messagesContainer"
+            )
+            .classList.add(
+                "chat-open"
+            );
+
+
+        /*
+         * Header.
+         */
+
+        document
+            .getElementById(
+                "chatAvatar"
+            )
+            .textContent =
+                conversation.avatar;
+
+
+        document
+            .getElementById(
+                "chatName"
+            )
+            .textContent =
+                conversation.name;
+
+
+        document
+            .getElementById(
+                "chatStatus"
+            )
+            .textContent =
+                conversation.online
+                    ? "🟢 Online"
+                    : "Offline";
+
+
+        /*
+         * Transaction information.
+         */
+
+        const transactionBar =
+            document.getElementById(
+                "transactionBar"
+            );
+
+
+        transactionBar.style.display =
+            "flex";
+
+
+        document
+            .getElementById(
+                "transactionText"
+            )
+            .innerHTML =
+                `<strong>${escapeHtml(conversation.context)}</strong>`;
+
+
+        /*
+         * Enable input.
+         */
+
+        document
+            .getElementById(
+                "messageInput"
+            )
+            .disabled =
+                false;
+
+
+        document
+            .getElementById(
+                "sendButton"
+            )
+            .disabled =
+                false;
+
+
+        updateCompletedButton();
+
+
+        await loadMessagesForConversation(
+            conversation
+        );
+
+
+        renderMessages();
+
+
+        renderConversations();
+
+    }
+
+
+    async function loadMessagesForConversation(
+        conversation
+    ) {
+
+        const userId = user && user.id;
+
+        if (!userId || !conversation.id) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(
+                    `/api/messages/conversations/${conversation.id}/messages?user_id=${userId}`
+                );
+
+            const data =
+                await response.json();
+
+            if (
+                data && data.success && Array.isArray(data.messages)
+            ) {
+
+                conversation.messages =
+                    data.messages.map(
+                        row => ({
+                            type: Number(row.sender_id) === Number(userId) ? "sent" : "received",
+                            text: row.message_text,
+                            time: formatConversationTime(row.created_at),
+                            attachment: row.attachment || null,
+                            isRead: !!row.is_read
+                        })
+                    );
+
+
+                /*
+                 * Fetching messages marks them as read on the
+                 * server - refresh the sidebar badge now so it
+                 * reflects that immediately.
+                 */
+
+                if (typeof updateMessagesBadge === "function") {
+                    updateMessagesBadge();
+                }
+
+                if (typeof updateTabBadges === "function") {
+                    updateTabBadges();
+                }
+
+            }
+
+        } catch (error) {
+
+            console.error("Unable to load messages:", error);
+
+        }
+
+    }
+
+
+
+    /* =====================================================
+       RENDER MESSAGES
+    ===================================================== */
+
+    function renderMessages() {
+
+        const container =
+            document.getElementById(
+                "chatMessages"
+            );
+
+
+        container.innerHTML =
+            "";
+
+
+        if (
+            !activeConversation
+        ) {
+
+            container.innerHTML = `
+
+                <div
+                    class="empty-conversations"
+                    id="emptyChat"
+                >
+
+                    <div class="empty-conversations-icon">
+                        💬
+                    </div>
+
+                    <h3>
+                        Select a conversation
+                    </h3>
+
+                    <p>
+                        Choose a conversation from the list.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        activeConversation.messages.forEach(
+            function(message) {
+
+                /*
+                 * Date divider.
+                 */
+
+                if (
+                    message.type ===
+                    "date"
+                ) {
+
+                    const divider =
+                        document.createElement(
+                            "div"
+                        );
+
+
+                    divider.className =
+                        "date-divider";
+
+
+                    divider.textContent =
+                        message.text;
+
+
+                    container.appendChild(
+                        divider
+                    );
+
+
+                    return;
+
+                }
+
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                row.className =
+                    `message-row ${message.type}`;
+
+
+                const bubble =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                bubble.className =
+                    "message-bubble";
+
+
+                bubble.innerHTML = `
+
+                    ${
+                        message.attachment
+                            ? (
+                                /\.(png|jpe?g|gif|webp)$/i.test(message.attachment)
+                                    ? `
+                                        <a href="${escapeHtml(message.attachment)}" target="_blank" rel="noopener noreferrer">
+                                            <img src="${escapeHtml(message.attachment)}" alt="Attachment" style="max-width:220px;max-height:220px;border-radius:8px;display:block;margin-bottom:6px;">
+                                        </a>
+                                      `
+                                    : /\.pdf$/i.test(message.attachment)
+                                        ? `
+                                            <a href="${escapeHtml(message.attachment)}" target="_blank" rel="noopener noreferrer" style="display:flex;align-items:center;gap:10px;background:#fff;border:1px solid #e1e6eb;border-radius:8px;padding:10px 12px;margin-bottom:6px;text-decoration:none;max-width:220px;">
+                                                <span style="flex-shrink:0;width:34px;height:34px;border-radius:6px;background:#e0433c;color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:bold;">PDF</span>
+                                                <span style="font-size:12px;color:#172033;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(message.attachment.split("/").pop())}</span>
+                                            </a>
+                                          `
+                                        : `
+                                            <div class="message-attachment">
+                                                📎
+                                                <a href="${escapeHtml(message.attachment)}" target="_blank" rel="noopener noreferrer">
+                                                    ${escapeHtml(message.attachment.split("/").pop())}
+                                                </a>
+                                            </div>
+                                          `
+                              )
+                            : ""
+                    }
+
+
+                    <div class="message-text">
+                        ${escapeHtml(message.text)}
+                    </div>
+
+
+                    <div class="message-meta">
+
+                        <span class="message-time">
+                            ${escapeHtml(message.time || "")}
+                        </span>
+
+
+                        ${
+                            message.type === "sent"
+                                ? `
+                                    <span class="message-check" style="color:${message.isRead ? '#4fc3f7' : '#aab5c0'};">
+                                        ${message.isRead || (activeConversation && activeConversation.otherUserOnline) ? "✓✓" : "✓"}
+                                    </span>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+                `;
+
+
+                row.appendChild(
+                    bubble
+                );
+
+
+                container.appendChild(
+                    row
+                );
+
+            }
+        );
+
+
+        /*
+         * Scroll to latest message.
+         */
+
+        container.scrollTop =
+            container.scrollHeight;
+
+    }
+
+
+
+    /* =====================================================
+       SEND MESSAGE
+    ===================================================== */
+
+    async function sendMessage() {
+
+        if (
+            !activeConversation
+        ) {
+
+            return;
+
+        }
+
+
+        const input =
+            document.getElementById(
+                "messageInput"
+            );
+
+
+        const text =
+            input.value.trim();
+
+
+        if (!text && !pendingAttachment) {
+
+            return;
+
+        }
+
+
+        const userId = user && user.id;
+
+        if (!userId) {
+
+            return;
+
+        }
+
+
+        /*
+         * Clear input immediately for a responsive feel.
+         */
+
+        input.value =
+            "";
+
+
+        autoResizeTextarea();
+
+        const attachmentToSend = pendingAttachment;
+
+        pendingAttachment = null;
+        document.getElementById("attachmentPreview").style.display = "none";
+        document.getElementById("attachmentPreviewImage").src = "";
+
+
+        try {
+
+            let response;
+
+            if (attachmentToSend) {
+
+                const formData = new FormData();
+                formData.append("sender_id", userId);
+                if (text) formData.append("message_text", text);
+                formData.append("attachment", attachmentToSend);
+
+                response = await fetch(
+                    `/api/messages/conversations/${activeConversation.id}/messages`,
+                    { method: "POST", body: formData }
+                );
+
+            } else {
+
+                response = await fetch(
+                    `/api/messages/conversations/${activeConversation.id}/messages`,
+                    {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({
+                            sender_id: userId,
+                            message_text: text
+                        })
+                    }
+                );
+
+            }
+
+            const data =
+                await response.json();
+
+            if (!response.ok || !data || !data.success) {
+
+                console.error("Failed to send message:", data);
+                showToast((data && data.message) || "Unable to send message.");
+                return;
+
+            }
+
+            activeConversation.messages.push({
+
+                type:
+                    "sent",
+
+                text:
+                    data.message.message_text || "",
+
+                attachment:
+                    data.message.attachment || null,
+
+                time:
+                    formatConversationTime(data.message.created_at),
+
+                isRead:
+                    false
+
+            });
+
+
+            /*
+             * Update conversation preview.
+             */
+
+            activeConversation.lastMessage =
+                text || (data.message.attachment ? "📎 Attachment" : "");
+
+
+            activeConversation.time =
+                formatConversationTime(data.message.created_at);
+
+        } catch (error) {
+
+            console.error("Failed to send message:", error);
+            return;
+
+        }
+
+
+        /*
+         * Render.
+         */
+
+        renderMessages();
+
+        renderConversations();
+
+    }
+
+
+
+    /* =====================================================
+       CURRENT TIME
+    ===================================================== */
+
+    function getCurrentTime() {
+
+        const now =
+            new Date();
+
+
+        return now.toLocaleTimeString(
+            [],
+            {
+                hour:
+                    "numeric",
+
+                minute:
+                    "2-digit"
+            }
+        );
+
+    }
+
+
+
+    /* =====================================================
+       TEXTAREA AUTO RESIZE
+    ===================================================== */
+
+    function autoResizeTextarea() {
+
+        const input =
+            document.getElementById(
+                "messageInput"
+            );
+
+
+        input.style.height =
+            "42px";
+
+
+        input.style.height =
+            Math.min(
+                input.scrollHeight,
+                110
+            ) + "px";
+
+    }
+
+
+
+    /* =====================================================
+       SEARCH
+    ===================================================== */
+
+    document
+        .getElementById(
+            "searchInput"
+        )
+        .addEventListener(
+            "input",
+            function() {
+
+                renderConversations();
+
+            }
+        );
+
+
+
+    /* =====================================================
+       TABS
+    ===================================================== */
+
+    document
+        .querySelectorAll(
+            ".message-tab"
+        )
+        .forEach(
+            function(tab) {
+
+                tab.addEventListener(
+                    "click",
+                    function() {
+
+                        document
+                            .querySelectorAll(
+                                ".message-tab"
+                            )
+                            .forEach(
+                                item =>
+                                    item.classList.remove(
+                                        "active"
+                                    )
+                            );
+
+
+                        this.classList.add(
+                            "active"
+                        );
+
+
+                        activeCategory =
+                            this.dataset.category;
+
+
+                        activeConversation =
+                            null;
+
+
+                        document
+                            .getElementById(
+                                "messagesContainer"
+                            )
+                            .classList.remove(
+                                "chat-open"
+                            );
+
+
+                        document
+                            .getElementById(
+                                "chatName"
+                            )
+                            .textContent =
+                                "Select a conversation";
+
+
+                        document
+                            .getElementById(
+                                "chatStatus"
+                            )
+                            .textContent =
+                                "Choose a conversation to start messaging";
+
+
+                        document
+                            .getElementById(
+                                "transactionBar"
+                            )
+                            .style.display =
+                                "none";
+
+
+                        document
+                            .getElementById(
+                                "messageInput"
+                            )
+                            .disabled =
+                                true;
+
+
+                        document
+                            .getElementById(
+                                "sendButton"
+                            )
+                            .disabled =
+                                true;
+
+
+                        updateCompletedButton();
+
+
+                        renderConversations();
+
+                        renderMessages();
+
+                    }
+                );
+
+            }
+        );
+
+
+
+    /* =====================================================
+       COMPLETED BUTTON
+    ===================================================== */
+
+    document
+        .getElementById(
+            "completedButton"
+        )
+        .addEventListener(
+            "click",
+            markConsultationCompleted
+        );
+
+
+
+    /* =====================================================
+       SEND BUTTON
+    ===================================================== */
+
+    document
+        .getElementById(
+            "sendButton"
+        )
+        .addEventListener(
+            "click",
+            sendMessage
+        );
+
+
+
+    /* =====================================================
+       ENTER TO SEND
+    ===================================================== */
+
+    document
+        .getElementById(
+            "messageInput"
+        )
+        .addEventListener(
+            "keydown",
+            function(event) {
+
+                if (
+                    event.key ===
+                    "Enter" &&
+                    !event.shiftKey
+                ) {
+
+                    event.preventDefault();
+
+                    sendMessage();
+
+                }
+
+            }
+        );
+
+
+
+    /* =====================================================
+       AUTO RESIZE
+    ===================================================== */
+
+    document
+        .getElementById(
+            "messageInput"
+        )
+        .addEventListener(
+            "input",
+            autoResizeTextarea
+        );
+
+
+
+    /* =====================================================
+       ATTACHMENT
+    ===================================================== */
+
+    document
+        .getElementById(
+            "attachButton"
+        )
+        .addEventListener(
+            "click",
+            function() {
+
+                if (
+                    !activeConversation
+                ) {
+
+                    return;
+
+                }
+
+
+                document
+                    .getElementById(
+                        "fileInput"
+                    )
+                    .click();
+
+            }
+        );
+
+
+    document
+        .getElementById(
+            "fileInput"
+        )
+        .addEventListener(
+            "change",
+            function() {
+
+                if (
+                    !this.files.length ||
+                    !activeConversation
+                ) {
+
+                    return;
+
+                }
+
+
+                pendingAttachment =
+                    this.files[0];
+
+                this.value = "";
+
+                const previewBox =
+                    document.getElementById("attachmentPreview");
+
+                const previewImage =
+                    document.getElementById("attachmentPreviewImage");
+
+                const previewName =
+                    document.getElementById("attachmentPreviewName");
+
+                previewName.textContent =
+                    pendingAttachment.name;
+
+                if (/^image\//.test(pendingAttachment.type)) {
+
+                    const reader = new FileReader();
+
+                    reader.onload = function(event) {
+                        previewImage.src = event.target.result;
+                        previewImage.style.display = "block";
+                    };
+
+                    reader.readAsDataURL(pendingAttachment);
+
+                } else {
+
+                    previewImage.style.display = "none";
+
+                }
+
+                previewBox.style.display = "flex";
+
+            }
+        );
+
+
+    document
+        .getElementById("attachmentPreviewCancel")
+        .addEventListener("click", function() {
+
+            pendingAttachment = null;
+
+            document.getElementById("attachmentPreview").style.display = "none";
+            document.getElementById("attachmentPreviewImage").src = "";
+
+        });
+
+
+
+    /* =====================================================
+       MOBILE CHAT BACK
+    ===================================================== */
+
+    document
+        .getElementById(
+            "chatBack"
+        )
+        .addEventListener(
+            "click",
+            function() {
+
+                document
+                    .getElementById(
+                        "messagesContainer"
+                    )
+                    .classList.remove(
+                        "chat-open"
+                    );
+
+
+                updateCompletedButton();
+
+            }
+        );
+
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHtml(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+
+        }
+
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+
+    /* =====================================================
+       INITIALIZE
+    ===================================================== */
+
+    displayUser();
+
+    loadRoles();
+
+    loadConversations().then(function() {
+
+        renderConversations();
+
+        renderMessages();
+
+
+        /*
+         * Automatically open the conversation selected
+         * from the Orders page ("Message" button).
+         */
+
+        let deepLink = null;
+
+        try {
+
+            deepLink =
+                JSON.parse(
+                    localStorage.getItem(
+                        "selectedFarmerConversation"
+                    ) || "null"
+                );
+
+        } catch (error) {
+
+            deepLink = null;
+
+        }
+
+        if (deepLink && deepLink.conversationId) {
+
+            localStorage.removeItem(
+                "selectedFarmerConversation"
+            );
+
+            const categories =
+                ["buyers", "rentals", "experts"];
+
+            for (const category of categories) {
+
+                const match =
+                    conversations[category].find(
+                        item =>
+                            Number(item.id) ===
+                            Number(deepLink.conversationId)
+                    );
+
+                if (match) {
+
+                    document
+                        .querySelectorAll(
+                            ".message-tab"
+                        )
+                        .forEach(
+                            item =>
+                                item.classList.toggle(
+                                    "active",
+                                    item.dataset.category === category
+                                )
+                        );
+
+                    activeCategory =
+                        category;
+
+                    renderConversations();
+
+                    openConversation(
+                        match
+                    );
+
+                    break;
+
+                }
+
+            }
+
+        }
+
+    });
+
+
+
+
+function updateMessagesBadge() {
+
+    let userId = null;
+
+    try {
+        const rawUser = sessionStorage.getItem("user");
+        const parsedUser = rawUser ? JSON.parse(rawUser) : null;
+        userId = parsedUser && parsedUser.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) {
+        return;
+    }
+
+    fetch(`/api/messages/conversations?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const conversations =
+                (data && data.success && Array.isArray(data.conversations))
+                    ? data.conversations
+                    : [];
+
+            const chatsWithNewMessages =
+                conversations.filter(
+                    c => (c.context_type === "order" || c.context_type === "rental" || c.context_type === "consultation")
+                        && c.unread_count > 0
+                ).length;
+
+            const badgeEl =
+                document.getElementById("messagesBadge");
+
+            if (badgeEl) {
+
+                if (chatsWithNewMessages > 0) {
+                    badgeEl.textContent = chatsWithNewMessages;
+                    badgeEl.style.display = "flex";
+                } else {
+                    badgeEl.style.display = "none";
+                }
+
+            }
+
+        })
+        .catch(error => {
+            console.error("Unable to load messages badge count:", error);
+        });
+
+}
+
+updateMessagesBadge();
+
+
+/* =========================================================
+   ONLINE PRESENCE HEARTBEAT
+========================================================= */
+
+function sendHeartbeat() {
+
+    const userId = user && user.id;
+
+    if (!userId) return;
+
+    fetch("/api/auth/heartbeat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ user_id: userId })
+    }).catch(error => console.error("Heartbeat failed:", error));
+
+}
+
+sendHeartbeat();
+setInterval(sendHeartbeat, 60000);
+
+
+/* =========================================================
+   LIVE REFRESH FOR THE OPEN CONVERSATION
+   (picks up read-receipt and online-status changes without
+   needing a manual page reload)
+========================================================= */
+
+async function refreshActiveConversationLiveState() {
+
+    if (!activeConversation || !activeConversation.id) {
+        return;
+    }
+
+    if (activeConversation.otherUserId) {
+
+        try {
+
+            const statusResponse =
+                await fetch(`/api/auth/online-status/${activeConversation.otherUserId}`);
+
+            const statusData =
+                await statusResponse.json();
+
+            activeConversation.otherUserOnline =
+                !!(statusData && statusData.success && statusData.online);
+
+        } catch (statusError) {
+
+            console.error("Unable to refresh online status:", statusError);
+
+        }
+
+    }
+
+    try {
+
+        const userId = user && user.id;
+
+        if (!userId) return;
+
+        const response =
+            await fetch(`/api/messages/conversations/${activeConversation.id}/messages?user_id=${userId}`);
+
+        const data =
+            await response.json();
+
+        if (data && data.success && Array.isArray(data.messages)) {
+
+            activeConversation.messages =
+                data.messages.map(
+                    row => ({
+                        type: Number(row.sender_id) === Number(userId) ? "sent" : "received",
+                        text: row.message_text,
+                        time: formatConversationTime(row.created_at),
+                        attachment: row.attachment || null,
+                        isRead: !!row.is_read
+                    })
+                );
+
+            renderMessages();
+
+        }
+
+    } catch (error) {
+
+        console.error("Unable to refresh conversation:", error);
+
+    }
+
+}
+
+setInterval(refreshActiveConversationLiveState, 10000);
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

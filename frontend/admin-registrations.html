@@ -1,0 +1,5982 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    AgriConnect - Inspect Registration
+</title>
+
+<style>
+
+/* =====================================================
+   GENERAL
+===================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    background: #f5f7fb;
+
+    color: #182033;
+
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   MAIN LAYOUT
+===================================================== */
+
+.dashboard {
+
+    min-height: 100vh;
+
+    display: flex;
+}
+
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    min-width: 255px;
+
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+    bottom: 0;
+
+    width: 255px;
+
+    background:
+        linear-gradient(
+            180deg,
+            #281064 0%,
+            #170a45 100%
+        );
+
+    color: white;
+
+    display: flex;
+
+    flex-direction: column;
+
+    z-index: 1000;
+
+    overflow-y: auto;
+}
+
+
+/* =====================================================
+   SIDEBAR LOGO
+===================================================== */
+
+.sidebar-logo {
+
+    height: 86px;
+
+    display: flex;
+
+    align-items: center;
+
+    padding: 0 20px;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,0.10);
+}
+
+
+.sidebar-logo img {
+
+    width: 160px;
+
+    height: auto;
+
+    max-height: 62px;
+
+    object-fit: contain;
+
+    display: block;
+}
+
+
+/* =====================================================
+   SIDEBAR CONTENT
+===================================================== */
+
+.sidebar-content {
+
+    flex: 1;
+
+    padding:
+        13px 10px;
+}
+
+
+.nav-section-title {
+
+    font-size: 11px;
+
+    font-weight: bold;
+
+    color:
+        rgba(255,255,255,0.75);
+
+    padding:
+        14px 12px 10px;
+
+    text-transform:
+        uppercase;
+
+    letter-spacing:
+        0.4px;
+}
+
+
+.nav-item {
+
+    width: 100%;
+
+    min-height: 45px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding:
+        11px 12px;
+
+    margin-bottom: 4px;
+
+    border-radius: 8px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s;
+}
+
+
+.nav-item:hover {
+
+    background:
+        rgba(255,255,255,0.08);
+}
+
+
+.nav-item.active {
+
+    background:
+        linear-gradient(
+            90deg,
+            #7131c8,
+            #5520a7
+        );
+}
+
+
+.nav-icon {
+
+    width: 22px;
+
+    min-width: 22px;
+
+    text-align: center;
+
+    font-size: 18px;
+}
+
+
+.nav-label {
+
+    flex: 1;
+}
+
+
+.nav-arrow {
+
+    font-size: 12px;
+
+    transition:
+        transform 0.2s;
+}
+
+
+.nav-item.expanded
+.nav-arrow {
+
+    transform:
+        rotate(180deg);
+}
+
+
+/* =====================================================
+   SUBMENU
+===================================================== */
+
+.submenu {
+
+    display: none;
+
+    padding-left: 35px;
+
+    margin-bottom: 5px;
+
+    position: relative;
+}
+
+
+.submenu.show {
+
+    display: block;
+}
+
+
+.submenu::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 24px;
+
+    top: 4px;
+
+    bottom: 6px;
+
+    width: 1px;
+
+    background:
+        rgba(255,255,255,0.25);
+}
+
+
+.submenu a {
+
+    display: block;
+
+    color:
+        rgba(255,255,255,0.9);
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    padding:
+        10px;
+
+    border-radius: 6px;
+
+    position: relative;
+}
+
+
+.submenu a::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: -14px;
+
+    top: 15px;
+
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #7353b9;
+}
+
+
+.submenu a:hover {
+
+    background:
+        rgba(255,255,255,0.08);
+}
+
+
+/* =====================================================
+   SIDEBAR BOTTOM
+===================================================== */
+
+.sidebar-bottom {
+
+    padding:
+        8px 10px 15px;
+}
+
+
+.sidebar-divider {
+
+    height: 1px;
+
+    background:
+        rgba(255,255,255,0.13);
+
+    margin:
+        5px 12px 12px;
+}
+
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.main {
+
+    margin-left: 255px;
+
+    width:
+        calc(100% - 255px);
+
+    min-height: 100vh;
+
+    padding-bottom: 50px;
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.header {
+
+    height: 78px;
+
+    background: white;
+
+    border-bottom:
+        1px solid #e5e8ee;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    padding:
+        0 27px;
+}
+
+
+.mobile-menu {
+
+    display: none;
+
+    border: none;
+
+    background: transparent;
+
+    font-size: 22px;
+
+    cursor: pointer;
+}
+
+
+.header-right {
+
+    margin-left: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 22px;
+}
+
+
+/* =====================================================
+   HEADER NOTIFICATION
+===================================================== */
+
+.notification {
+
+    position: relative;
+
+    width: 40px;
+
+    height: 40px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 23px;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s;
+}
+
+
+.notification:hover {
+
+    transform:
+        scale(1.06);
+}
+
+
+.notification-badge {
+
+    position: absolute;
+
+    top: 0;
+
+    right: -2px;
+
+    min-width: 18px;
+
+    height: 18px;
+
+    padding:
+        0 4px;
+
+    border-radius: 50%;
+
+    background: #ff3b30;
+
+    color: white;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+
+/* =====================================================
+   PROFILE
+===================================================== */
+
+.profile {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+
+    cursor: pointer;
+
+    position: relative;
+}
+
+
+.profile-avatar {
+
+    width: 43px;
+
+    height: 43px;
+
+    border-radius: 50%;
+
+    border:
+        2px solid #6429c1;
+
+    color: #6429c1;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    background: white;
+}
+
+
+.profile-info {
+
+    line-height: 17px;
+}
+
+
+.profile-name {
+
+    font-size: 13px;
+
+    font-weight: bold;
+}
+
+
+.profile-role {
+
+    font-size: 10px;
+
+    color: #6429c1;
+}
+
+
+.profile-arrow {
+
+    font-size: 11px;
+
+    margin-left: 5px;
+}
+
+
+.profile-dropdown {
+
+    position: absolute;
+
+    right: 0;
+
+    top: 53px;
+
+    width: 190px;
+
+    background: white;
+
+    border:
+        1px solid #e2e5ea;
+
+    border-radius: 8px;
+
+    box-shadow:
+        0 10px 25px
+        rgba(0,0,0,0.14);
+
+    padding: 7px;
+
+    display: none;
+
+    z-index: 2000;
+}
+
+
+.profile.open
+.profile-dropdown {
+
+    display: block;
+}
+
+
+.profile-dropdown a {
+
+    display: block;
+
+    text-decoration: none;
+
+    color: #333;
+
+    font-size: 12px;
+
+    padding: 10px;
+
+    border-radius: 5px;
+}
+
+
+.profile-dropdown a:hover {
+
+    background: #f5f1fb;
+}
+
+
+/* =====================================================
+   CONTENT
+===================================================== */
+
+.content {
+
+    padding:
+        22px 16px 28px;
+}
+
+
+.page-heading {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: flex-start;
+
+    margin-bottom: 19px;
+}
+
+
+.page-heading h1 {
+
+    font-size: 29px;
+
+    color: #151b27;
+
+    margin-bottom: 6px;
+
+    font-weight: 700;
+}
+
+
+.page-heading p {
+
+    font-size: 13px;
+
+    color: #687180;
+}
+
+
+/* =====================================================
+   SUMMARY CARDS
+===================================================== */
+
+.summary-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+
+.summary-card {
+
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius: 9px;
+
+    min-height: 101px;
+
+    padding: 14px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0,0,0,0.025);
+}
+
+
+.summary-icon {
+
+    width: 50px;
+
+    height: 50px;
+
+    min-width: 50px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 24px;
+}
+
+
+.summary-icon.yellow {
+
+    background: #fff2d8;
+
+    color: #dc8a00;
+}
+
+
+.summary-icon.green {
+
+    background: #e2f6e8;
+
+    color: #188b3e;
+}
+
+
+.summary-icon.red {
+
+    background: #ffe3e3;
+
+    color: #e83232;
+}
+
+
+.summary-icon.blue {
+
+    background: #e4edff;
+
+    color: #2867c7;
+}
+
+
+.summary-title {
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #59616e;
+
+    margin-bottom: 4px;
+}
+
+
+.summary-value {
+
+    font-size: 23px;
+
+    font-weight: bold;
+
+    color: #161c28;
+
+    margin-bottom: 4px;
+}
+
+
+.summary-sub {
+
+    font-size: 10px;
+
+    color: #6c7480;
+}
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+.tabs-card {
+
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-radius:
+        9px 9px 0 0;
+
+    padding:
+        0 16px;
+}
+
+
+.tabs {
+
+    display: flex;
+
+    gap: 30px;
+
+    height: 54px;
+
+    align-items: flex-end;
+}
+
+
+.tab {
+
+    height: 54px;
+
+    border: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #606979;
+
+    position: relative;
+
+    padding:
+        0 2px 15px;
+}
+
+
+.tab.active {
+
+    color: #6320bd;
+}
+
+
+.tab.active::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    right: 0;
+
+    bottom: 0;
+
+    height: 2px;
+
+    background: #7025c5;
+
+    border-radius:
+        2px 2px 0 0;
+}
+
+
+.tab-count {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-width: 19px;
+
+    height: 19px;
+
+    padding:
+        0 5px;
+
+    margin-left: 5px;
+
+    border-radius: 20px;
+
+    background: #f0e7fc;
+
+    color: #7025c5;
+
+    font-size: 10px;
+}
+
+
+/* =====================================================
+   FILTER AREA
+===================================================== */
+
+.filter-card {
+
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-top: none;
+
+    padding:
+        12px 16px;
+
+    display: flex;
+
+    gap: 9px;
+
+    align-items: center;
+}
+
+
+.search-box {
+
+    flex: 1;
+
+    position: relative;
+}
+
+
+.search-box span {
+
+    position: absolute;
+
+    left: 12px;
+
+    top: 50%;
+
+    transform:
+        translateY(-50%);
+
+    font-size: 15px;
+
+    color: #77808d;
+}
+
+
+.search-box input {
+
+    width: 100%;
+
+    height: 41px;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 7px;
+
+    outline: none;
+
+    padding:
+        0 13px 0 37px;
+
+    font-size: 12px;
+}
+
+
+.search-box input:focus {
+
+    border-color: #7541bb;
+}
+
+
+.filter-select {
+
+    height: 41px;
+
+    min-width: 150px;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 7px;
+
+    background: white;
+
+    padding:
+        0 11px;
+
+    font-size: 12px;
+
+    outline: none;
+
+    color: #444;
+}
+
+
+.filter-button {
+
+    height: 41px;
+
+    border:
+        1px solid #dfe4ea;
+
+    border-radius: 7px;
+
+    background: white;
+
+    padding:
+        0 15px;
+
+    font-size: 12px;
+
+    cursor: pointer;
+
+    color: #3e4653;
+
+    font-weight: bold;
+}
+
+
+.filter-button:hover {
+
+    background: #f7f4fb;
+}
+
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.registrations-card {
+
+    background: white;
+
+    border:
+        1px solid #e5e9ef;
+
+    border-top: none;
+
+    border-radius:
+        0 0 9px 9px;
+
+    overflow: hidden;
+}
+
+
+.table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 1000px;
+}
+
+
+th {
+
+    text-align: left;
+
+    padding:
+        13px 11px;
+
+    background: #fafbfc;
+
+    border-top:
+        1px solid #edf0f3;
+
+    border-bottom:
+        1px solid #edf0f3;
+
+    font-size: 12px;
+
+    color: #454d59;
+
+    white-space: nowrap;
+}
+
+
+td {
+
+    padding:
+        13px 11px;
+
+    border-bottom:
+        1px solid #eef1f4;
+
+    font-size: 12px;
+
+    color: #353c48;
+
+    vertical-align: middle;
+}
+
+
+tr:last-child td {
+
+    border-bottom: none;
+}
+
+
+/* =====================================================
+   USER
+===================================================== */
+
+.user-cell {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+}
+
+
+.user-avatar {
+
+    width: 38px;
+
+    height: 38px;
+
+    min-width: 38px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 11px;
+
+    font-weight: bold;
+}
+
+
+.avatar-expert {
+
+    background: #eee3ff;
+
+    color: #6c24c0;
+}
+
+
+.avatar-provider {
+
+    background: #ffe7d8;
+
+    color: #d95700;
+}
+
+
+.user-name {
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    color: #242b36;
+
+    margin-bottom: 3px;
+}
+
+
+.user-email {
+
+    font-size: 10px;
+
+    color: #727b88;
+}
+
+
+/* =====================================================
+   ROLE
+===================================================== */
+
+.role-badge {
+
+    display: inline-block;
+
+    padding:
+        5px 8px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+.role-expert {
+
+    background: #eee4ff;
+
+    color: #6922bd;
+}
+
+
+.role-provider {
+
+    background: #fff0e4;
+
+    color: #d85b05;
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+.status {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    padding:
+        6px 8px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+}
+
+
+.status.pending {
+
+    background: #fff1d8;
+
+    color: #c97600;
+}
+
+
+/* =====================================================
+   ACTIONS
+===================================================== */
+
+.actions {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+
+.view-button {
+
+    border:
+        1px solid #d9dce2;
+
+    background: white;
+
+    color: #4e5663;
+
+    padding:
+        7px 10px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+
+.view-button:hover {
+
+    background: #f6f7f9;
+}
+
+
+.approve-button {
+
+    border: none;
+
+    background: #e2f6e8;
+
+    color: #16833c;
+
+    padding:
+        7px 10px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.approve-button:hover {
+
+    background: #ccefd6;
+}
+
+
+.reject-button {
+
+    border: none;
+
+    background: #ffe3e3;
+
+    color: #d72b2b;
+
+    padding:
+        7px 10px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.reject-button:hover {
+
+    background: #ffd1d1;
+}
+
+
+/* =====================================================
+   EMPTY STATE
+===================================================== */
+
+.empty-state {
+
+    text-align: center;
+
+    padding: 55px 20px;
+
+    color: #707987;
+}
+
+
+.empty-icon {
+
+    font-size: 35px;
+
+    margin-bottom: 12px;
+}
+
+
+.empty-title {
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+    color: #353c48;
+
+    margin-bottom: 6px;
+}
+
+
+.empty-text {
+
+    font-size: 10px;
+
+    color: #7b8490;
+}
+
+
+/* =====================================================
+   PAGINATION
+===================================================== */
+
+.pagination {
+
+    height: 55px;
+
+    padding:
+        0 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-top:
+        1px solid #edf0f3;
+}
+
+
+.pagination-text {
+
+    font-size: 10px;
+
+    color: #707987;
+}
+
+
+.page-buttons {
+
+    display: flex;
+
+    gap: 5px;
+}
+
+
+.page-button {
+
+    width: 29px;
+
+    height: 29px;
+
+    border:
+        1px solid #dfe3e8;
+
+    background: white;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+
+    cursor: pointer;
+}
+
+
+.page-button.active {
+
+    background: #7025c5;
+
+    border-color: #7025c5;
+
+    color: white;
+}
+
+
+/* =====================================================
+   MODAL
+===================================================== */
+
+.modal-overlay {
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        rgba(13, 10, 25, 0.52);
+
+    display: none;
+
+    align-items: center;
+
+    justify-content: center;
+
+    z-index: 3000;
+
+    padding: 20px;
+}
+
+
+.modal-overlay.show {
+
+    display: flex;
+}
+
+
+.modal {
+
+    width: 100%;
+
+    max-width: 650px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    background: white;
+
+    border-radius: 12px;
+
+    box-shadow:
+        0 20px 50px
+        rgba(0,0,0,0.25);
+}
+
+
+.modal-header {
+
+    padding:
+        17px 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+
+.modal-title {
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+    color: #202633;
+}
+
+
+.close-button {
+
+    width: 31px;
+
+    height: 31px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: #f1f2f4;
+
+    cursor: pointer;
+
+    font-size: 18px;
+
+    color: #555;
+}
+
+
+.modal-body {
+
+    padding: 20px;
+}
+
+
+.applicant-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+
+    margin-bottom: 20px;
+
+    padding-bottom: 16px;
+
+    border-bottom:
+        1px solid #edf0f3;
+}
+
+
+.large-avatar {
+
+    width: 62px;
+
+    height: 62px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+
+.large-avatar.expert {
+
+    background: #eee3ff;
+
+    color: #6c24c0;
+}
+
+
+.large-avatar.provider {
+
+    background: #ffe7d8;
+
+    color: #d95700;
+}
+
+
+.applicant-name {
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    color: #202633;
+
+    margin-bottom: 5px;
+}
+
+
+.applicant-role {
+
+    font-size: 10px;
+
+    color: #6e7581;
+}
+
+
+/* =====================================================
+   DETAILS
+===================================================== */
+
+.details-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 13px;
+
+    margin-bottom: 19px;
+}
+
+
+.detail-box {
+
+    background: #f8f9fb;
+
+    border-radius: 7px;
+
+    padding:
+        12px;
+}
+
+
+.detail-label {
+
+    display: block;
+
+    font-size: 10px;
+
+    color: #78808c;
+
+    margin-bottom: 6px;
+
+    font-weight: bold;
+
+    text-transform: uppercase;
+}
+
+
+.detail-value {
+
+    font-size: 12px;
+
+    color: #262d39;
+
+    font-weight: bold;
+
+    word-break: break-word;
+}
+
+
+/* =====================================================
+   DOCUMENTS
+===================================================== */
+
+.document-section {
+
+    margin-top: 5px;
+}
+
+
+.document-title {
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+}
+
+
+.document-list {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 9px;
+}
+
+
+.document {
+
+    border:
+        1px solid #e1e5ea;
+
+    border-radius: 7px;
+
+    padding:
+        10px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 9px;
+}
+
+
+.document-icon {
+
+    width: 34px;
+
+    height: 34px;
+
+    border-radius: 6px;
+
+    background: #eee5ff;
+
+    color: #7025c5;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 14px;
+}
+
+
+.document-name {
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    color: #333;
+
+    word-break: break-word;
+}
+
+
+.document-type {
+
+    font-size: 9px;
+
+    color: #7b8490;
+
+    margin-top: 3px;
+}
+
+
+/* =====================================================
+   MODAL FOOTER
+===================================================== */
+
+.modal-footer {
+
+    padding:
+        14px 20px;
+
+    border-top:
+        1px solid #edf0f3;
+
+    display: flex;
+
+    justify-content: flex-end;
+
+    gap: 8px;
+}
+
+
+.modal-button {
+
+    padding:
+        10px 16px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.modal-cancel {
+
+    background: white;
+
+    border:
+        1px solid #d9dde3;
+
+    color: #4e5662;
+}
+
+
+.modal-approve {
+
+    background: #2f9e52;
+
+    border:
+        1px solid #2f9e52;
+
+    color: white;
+}
+
+
+.modal-reject {
+
+    background: #e83c3c;
+
+    border:
+        1px solid #e83c3c;
+
+    color: white;
+}
+
+
+/* =====================================================
+   REJECTION MODAL
+===================================================== */
+
+.reason-title {
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    margin-bottom: 8px;
+}
+
+
+.reason-textarea {
+
+    width: 100%;
+
+    min-height: 100px;
+
+    resize: vertical;
+
+    border:
+        1px solid #dfe3e8;
+
+    border-radius: 7px;
+
+    padding: 11px;
+
+    outline: none;
+
+    font-family: inherit;
+
+    font-size: 12px;
+}
+
+
+.reason-textarea:focus {
+
+    border-color: #7025c5;
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+
+    position: fixed;
+
+    left: 255px;
+
+    right: 0;
+
+    bottom: 0;
+
+    height: 42px;
+
+    background: #004d2b;
+
+    color: white;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 13px;
+
+    font-size: 10px;
+
+    z-index: 800;
+}
+
+
+.footer a {
+
+    color: white;
+
+    text-decoration: none;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 1100px) {
+
+    .summary-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 900px) {
+
+    .sidebar {
+
+        transform:
+            translateX(-100%);
+
+        transition:
+            transform 0.25s;
+    }
+
+
+    .sidebar.open {
+
+        transform:
+            translateX(0);
+    }
+
+
+    .main {
+
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+
+    .footer {
+
+        left: 0;
+    }
+
+
+    .mobile-menu {
+
+        display: block;
+    }
+
+}
+
+
+@media (max-width: 650px) {
+
+    .summary-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .filter-card {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+
+    .filter-select,
+    .filter-button {
+
+        width: 100%;
+    }
+
+
+    .details-grid,
+    .document-list {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .profile-info {
+
+        display: none;
+    }
+
+
+    .content {
+
+        padding:
+            16px 10px 55px;
+    }
+
+}
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="dashboard">
+
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside
+    class="sidebar"
+    id="sidebar"
+>
+
+
+    <!-- LOGO -->
+
+    <div class="sidebar-logo">
+
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+
+        <!-- DASHBOARD -->
+
+        <a
+            href="admin-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ▦
+            </span>
+
+            <span class="nav-label">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <!-- MANAGEMENT -->
+
+        <div class="nav-section-title">
+            MANAGEMENT
+        </div>
+
+
+        <!-- MANAGE USERS -->
+
+        <div
+            class="nav-item"
+            id="manageUsersButton"
+        >
+
+            <span class="nav-icon">
+                ♙
+            </span>
+
+            <span class="nav-label">
+                Manage Users
+            </span>
+
+            <span class="nav-arrow">
+                ▼
+            </span>
+
+        </div>
+
+
+        <!-- USER SUBMENU -->
+
+        <div
+            class="submenu"
+            id="userSubmenu"
+        >
+
+            <a href="admin-manage-users.html?type=farmer">
+                Farmers
+            </a>
+
+            <a href="admin-manage-users.html?type=buyer">
+                Buyers
+            </a>
+
+            <a href="admin-manage-users.html?type=expert">
+                Agri Experts
+            </a>
+
+            <a href="admin-manage-users.html?type=provider">
+                Equipment Providers
+            </a>
+
+        </div>
+
+
+        <!-- INSPECT REGISTRATION -->
+
+        <a
+            href="admin-registrations.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">
+                ▤
+            </span>
+
+            <span class="nav-label">
+                Inspect Registration
+            </span>
+
+        </a>
+
+
+        <!-- REPORTED CONFLICTS -->
+
+        <a
+            href="admin-conflicts.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚿
+            </span>
+
+            <span class="nav-label">
+                Reported Conflicts
+            </span>
+
+        </a>
+
+
+        <!-- NOTIFICATIONS -->
+
+        <a
+            href="admin-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                🔔
+            </span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- HISTORY -->
+
+        <a
+            href="admin-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ◷
+            </span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+
+    </div>
+
+
+    <!-- SIDEBAR BOTTOM -->
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="admin-help-support.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ?
+            </span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="admin-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">
+                ⚙
+            </span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+            id="logoutButton"
+        >
+
+            <span class="nav-icon">
+                ↪
+            </span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+
+</aside>
+
+
+
+<!-- =====================================================
+     MAIN
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+
+        <button
+            class="mobile-menu"
+            id="mobileMenu"
+        >
+            ☰
+        </button>
+
+
+        <div class="header-right">
+
+
+            <!-- HEADER NOTIFICATION -->
+
+            <div
+                class="notification"
+                onclick="openNotifications()"
+                title="Notifications"
+            >
+
+                🔔
+
+                <span
+                    class="notification-badge"
+                    id="notificationBadge"
+                    style="display:none;"
+                >
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- PROFILE -->
+
+            <div
+                class="profile"
+                id="profile"
+            >
+
+
+                <div class="profile-avatar">
+                    AI
+                </div>
+
+
+                <div class="profile-info">
+
+                    <div class="profile-name">
+                        Admin
+                    </div>
+
+                    <div class="profile-role">
+                        Super Admin
+                    </div>
+
+                </div>
+
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+
+                <div class="profile-dropdown">
+
+
+                    <a href="#">
+                        👤 My Profile
+                    </a>
+
+
+                    <a href="settings.html">
+                        ⚙ Settings
+                    </a>
+
+
+                    <a
+                        href="#"
+                        onclick="logout(); return false;"
+                    >
+                        ↪ Logout
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </header>
+
+
+
+    <!-- =====================================================
+         CONTENT
+    ===================================================== -->
+
+    <section class="content">
+
+
+        <!-- PAGE HEADING -->
+
+        <div class="page-heading">
+
+            <div>
+
+                <h1>
+                    Inspect Registration
+                </h1>
+
+                <p>
+                    Review and verify registration requests
+                    from Agricultural Experts and Equipment Providers.
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================================
+             SUMMARY CARDS
+        ================================================= -->
+
+        <div class="summary-grid">
+
+
+            <!-- PENDING -->
+
+            <div class="summary-card">
+
+                <div
+                    class="summary-icon yellow"
+                >
+                    🕐
+                </div>
+
+
+                <div>
+
+                    <div class="summary-title">
+                        Pending Registrations
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="pendingCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="summary-sub">
+                        Requires review
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- APPROVED -->
+
+            <div class="summary-card">
+
+                <div
+                    class="summary-icon green"
+                >
+                    ✓
+                </div>
+
+
+                <div>
+
+                    <div class="summary-title">
+                        Approved This Month
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="approvedCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="summary-sub">
+                        Successfully verified
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- REJECTED -->
+
+            <div class="summary-card">
+
+                <div
+                    class="summary-icon red"
+                >
+                    ✕
+                </div>
+
+
+                <div>
+
+                    <div class="summary-title">
+                        Rejected This Month
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="rejectedCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="summary-sub">
+                        Registration rejected
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- REVIEWED -->
+
+            <div class="summary-card">
+
+                <div
+                    class="summary-icon blue"
+                >
+                    📋
+                </div>
+
+
+                <div>
+
+                    <div class="summary-title">
+                        Total Reviewed
+                    </div>
+
+                    <div
+                        class="summary-value"
+                        id="reviewedCount"
+                    >
+                        0
+                    </div>
+
+                    <div class="summary-sub">
+                        Reviewed applications
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             TABS
+        ================================================= -->
+
+        <div class="tabs-card">
+
+
+            <div class="tabs">
+
+
+                <!-- ALL -->
+
+                <button
+                    class="tab active"
+                    data-type="all"
+                >
+
+                    All Pending
+
+                    <span
+                        class="tab-count"
+                        id="allCount"
+                    >
+                        0
+                    </span>
+
+                </button>
+
+
+                <!-- EXPERTS -->
+
+                <button
+                    class="tab"
+                    data-type="expert"
+                >
+
+                    Agricultural Experts
+
+                    <span
+                        class="tab-count"
+                        id="expertCount"
+                    >
+                        0
+                    </span>
+
+                </button>
+
+
+                <!-- PROVIDERS -->
+
+                <button
+                    class="tab"
+                    data-type="provider"
+                >
+
+                    Equipment Providers
+
+                    <span
+                        class="tab-count"
+                        id="providerCount"
+                    >
+                        0
+                    </span>
+
+                </button>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             FILTERS
+        ================================================= -->
+
+        <div class="filter-card">
+
+
+            <!-- SEARCH -->
+
+            <div class="search-box">
+
+                <span>
+                    🔍
+                </span>
+
+                <input
+                    type="text"
+                    id="searchInput"
+                    placeholder="Search by applicant name, email or phone..."
+                >
+
+            </div>
+
+            <!-- SORT -->
+
+            <select
+                class="filter-select"
+                id="dateFilter"
+            >
+
+                <option value="newest">
+                    Newest First
+                </option>
+
+                <option value="oldest">
+                    Oldest First
+                </option>
+
+            </select>
+
+
+        </div>
+
+
+
+        <!-- =================================================
+             REGISTRATION TABLE
+        ================================================= -->
+
+        <div class="registrations-card">
+
+
+            <div class="table-wrapper">
+
+
+                <table>
+
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                APPLICANT
+                            </th>
+
+                            <th>
+                                ROLE
+                            </th>
+
+                            <th>
+                                ORGANIZATION / SPECIALIZATION
+                            </th>
+
+                            <th>
+                                CONTACT
+                            </th>
+
+                            <th>
+                                SUBMITTED
+                            </th>
+
+                            <th>
+                                STATUS
+                            </th>
+
+                            <th>
+                                ACTION
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody
+                        id="registrationTable"
+                    >
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+            <!-- PAGINATION -->
+
+            <div class="pagination">
+
+
+                <span
+                    class="pagination-text"
+                    id="paginationText"
+                >
+                    Showing 0 of 0 registrations
+                </span>
+
+
+                <div class="page-buttons">
+
+
+                    <button
+                        class="page-button"
+                        disabled
+                    >
+                        ‹
+                    </button>
+
+
+                    <button
+                        class="page-button active"
+                    >
+                        1
+                    </button>
+
+
+                    <button
+                        class="page-button"
+                        disabled
+                    >
+                        ›
+                    </button>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</main>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     VIEW REGISTRATION MODAL
+===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="viewModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+
+            <div class="modal-title">
+                Registration Details
+            </div>
+
+
+            <button
+                class="close-button"
+                onclick="closeModal('viewModal')"
+            >
+                ×
+            </button>
+
+
+        </div>
+
+
+
+        <div class="modal-body">
+
+
+            <!-- APPLICANT -->
+
+            <div class="applicant-header">
+
+
+                <div
+                    class="large-avatar expert"
+                    id="modalAvatar"
+                >
+                    U
+                </div>
+
+
+                <div>
+
+                    <div
+                        class="applicant-name"
+                        id="modalName"
+                    >
+                        Applicant
+                    </div>
+
+
+                    <div
+                        class="applicant-role"
+                        id="modalRole"
+                    >
+                        Registration
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DETAILS -->
+
+            <div class="details-grid">
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Email
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalEmail"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Phone
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalPhone"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        District
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalDistrict"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box" id="modalSpecializationBox">
+
+                    <span class="detail-label">
+                        Specialization
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalSpecialization"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box" id="modalBusinessNameBox">
+
+                    <span class="detail-label">
+                        Organization / Company
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalBusinessName"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Submitted Date
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalDate"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Registration ID
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalId"
+                    >
+                        —
+                    </span>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <span class="detail-label">
+                        Status
+                    </span>
+
+                    <span
+                        class="detail-value"
+                        id="modalStatus"
+                    >
+                        Pending
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- DOCUMENTS -->
+
+            <div class="document-section">
+
+
+                <div class="document-title">
+                    Submitted Documents
+                </div>
+
+
+                <div
+                    class="document-list"
+                    id="documentList"
+                >
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <!-- MODAL FOOTER -->
+
+        <div class="modal-footer">
+
+
+            <button
+                class="modal-button modal-cancel"
+                onclick="closeModal('viewModal')"
+            >
+                Close
+            </button>
+
+
+            <button
+                class="modal-button modal-reject"
+                id="modalRejectButton"
+            >
+                Reject
+            </button>
+
+
+            <button
+                class="modal-button modal-approve"
+                id="modalApproveButton"
+            >
+                Approve Registration
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     REJECTION MODAL
+===================================================== -->
+
+<div
+    class="modal-overlay"
+    id="rejectModal"
+>
+
+
+    <div class="modal">
+
+
+        <div class="modal-header">
+
+
+            <div class="modal-title">
+                Reject Registration
+            </div>
+
+
+            <button
+                class="close-button"
+                onclick="closeModal('rejectModal')"
+            >
+                ×
+            </button>
+
+
+        </div>
+
+
+
+        <div class="modal-body">
+
+
+            <p
+                style="
+                    font-size:12px;
+                    color:#59616d;
+                    margin-bottom:15px;
+                    line-height:18px;
+                "
+            >
+
+                Please provide a reason for rejecting
+                this registration. The applicant will be
+                informed about the decision.
+
+            </p>
+
+
+            <div class="reason-title">
+                Reason for Rejection
+            </div>
+
+
+            <textarea
+                class="reason-textarea"
+                id="rejectionReason"
+                placeholder="Enter the reason for rejection..."
+            ></textarea>
+
+
+        </div>
+
+
+
+        <div class="modal-footer">
+
+
+            <button
+                class="modal-button modal-cancel"
+                onclick="closeModal('rejectModal')"
+            >
+                Cancel
+            </button>
+
+
+            <button
+                class="modal-button modal-reject"
+                onclick="confirmReject()"
+            >
+                Reject Registration
+            </button>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+
+    <span>
+        🌱 © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+
+    <span>
+        |
+    </span>
+
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+
+</footer>
+
+
+
+
+<script>
+
+/* =====================================================
+   GLOBAL VARIABLES
+===================================================== */
+
+let currentRegistrationId = null;
+
+let activeType = "all";
+
+let adminRegistrations = [];
+
+let isLoadingRegistrations = false;
+
+
+/* =====================================================
+   NORMALIZE STATUS
+===================================================== */
+
+function normalizeStatus(status) {
+
+    const value =
+        String(status || "")
+            .trim()
+            .toLowerCase();
+
+    if (value === "approved") {
+        return "Approved";
+    }
+
+    if (value === "rejected") {
+        return "Rejected";
+    }
+
+    return "Pending";
+
+}
+
+
+/* =====================================================
+   NORMALIZE ROLE
+===================================================== */
+
+function normalizeRole(type) {
+
+    const value =
+        String(type || "")
+            .trim()
+            .toLowerCase()
+            .replace(/-/g, "_");
+
+    if (
+        value === "equipment_provider" ||
+        value === "equipment provider" ||
+        value === "provider"
+    ) {
+
+        return "provider";
+
+    }
+
+    if (
+        value === "expert" ||
+        value === "agricultural_expert" ||
+        value === "agricultural expert"
+    ) {
+
+        return "expert";
+
+    }
+
+    return value;
+
+}
+
+
+/* =====================================================
+   GET REGISTRATIONS
+===================================================== */
+
+function getRegistrations() {
+
+    return Array.isArray(adminRegistrations)
+        ? adminRegistrations
+        : [];
+
+}
+
+
+/* =====================================================
+   SAVE REGISTRATIONS
+===================================================== */
+
+function saveRegistrations(registrations) {
+
+    /*
+     * The database is now the source of truth.
+     *
+     * Keep localStorage only as a compatibility cache
+     * for the existing frontend/login functionality.
+     */
+
+    try {
+
+        localStorage.setItem(
+            "agriConnectRegistrations",
+            JSON.stringify(registrations)
+        );
+
+    }
+
+    catch (error) {
+
+        console.warn(
+            "Could not save local registration cache:",
+            error
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   LOAD REGISTRATIONS FROM DATABASE
+===================================================== */
+
+async function loadRegistrations() {
+
+    if (isLoadingRegistrations) {
+
+        return;
+
+    }
+
+    isLoadingRegistrations = true;
+
+
+    const table =
+        document.getElementById(
+            "registrationTable"
+        );
+
+
+    if (table) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    style="
+                        padding:35px;
+                        text-align:center;
+                        color:#777;
+                        font-size:12px;
+                    "
+                >
+                    Loading registrations...
+
+                </td>
+
+            </tr>
+
+        `;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                "/api/admin/registrations",
+                {
+                    method: "GET",
+                    headers: {
+                        "Accept": "application/json"
+                    },
+                    cache: "no-store"
+                }
+            );
+
+
+        let result = {};
+
+        try {
+
+            result =
+                await response.json();
+
+        }
+
+        catch (jsonError) {
+
+            result = {};
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                "Unable to load registrations from the server."
+            );
+
+        }
+
+
+        const rows =
+            Array.isArray(result.registrations)
+                ? result.registrations
+                : (
+                    Array.isArray(result.data)
+                        ? result.data
+                        : []
+                );
+
+
+        /*
+         * Normalize the database response so the rest of
+         * the existing page can continue using its original
+         * field names.
+         */
+
+        adminRegistrations =
+            rows.map(
+                registration => {
+
+                    const type =
+                        normalizeRole(
+                            registration.registration_type ||
+                            registration.type ||
+                            registration.role
+                        );
+
+
+                    const firstName =
+                        registration.first_name ||
+                        "";
+
+
+                    const lastName =
+                        registration.last_name ||
+                        "";
+
+
+                    const databaseName =
+                        `${firstName} ${lastName}`
+                            .trim();
+
+
+                    const name =
+                        registration.name ||
+                        databaseName ||
+                        "Unknown Applicant";
+
+
+                    return {
+
+                        ...registration,
+
+                        id:
+                            registration.id,
+
+                        user_id:
+                            registration.user_id,
+
+                        name:
+                            name,
+
+                        first_name:
+                            firstName,
+
+                        last_name:
+                            lastName,
+
+                        email:
+                            registration.email ||
+                            "",
+
+                        phone:
+                            registration.phone ||
+                            "",
+
+                        address:
+                            registration.address ||
+                            "",
+
+                        type:
+                            type,
+
+                        role:
+                            type === "provider"
+                                ? "Equipment Provider"
+                                : type === "expert"
+                                    ? "Agricultural Expert"
+                                    : (
+                                        registration.role ||
+                                        registration.registration_type ||
+                                        "Registration"
+                                    ),
+
+                        registration_type:
+                            registration.registration_type,
+
+                        businessName:
+                            registration.business_name ||
+                            registration.organization ||
+                            "",
+
+                        business_name:
+                            registration.business_name ||
+                            "",
+
+                        organization:
+                            registration.organization ||
+                            registration.business_name ||
+                            "",
+
+                        district:
+                            registration.district ||
+                            "",
+
+                        specialization:
+                            registration.specialization ||
+                            "",
+
+                        status:
+                            normalizeStatus(
+                                registration.status ||
+                                registration.approval_status
+                            ),
+
+                        approval_status:
+                            registration.approval_status,
+
+                        review_note:
+                            registration.review_note ||
+                            "",
+
+                        rejectionReason:
+                            registration.review_note ||
+                            "",
+
+                        submittedAt:
+                            registration.created_at ||
+                            registration.submitted_at ||
+                            "",
+
+                        submittedDate:
+                            registration.created_at ||
+                            registration.submitted_at ||
+                            "",
+
+                        reviewedAt:
+                            registration.reviewed_at ||
+                            "",
+
+                        reviewed_by:
+                            registration.reviewed_by,
+
+                        /*
+                         * Preserve document field names if the
+                         * backend supplies them.
+                         */
+
+                        nicFront:
+                            registration.nicFront ||
+                            registration.nic_front ||
+                            "",
+
+                        nicBack:
+                            registration.nicBack ||
+                            registration.nic_back ||
+                            "",
+
+                        certificationDocument:
+                            registration.certificationDocument ||
+                            registration.certification_document ||
+                            "",
+
+                        proofDocument:
+                            registration.proofDocument ||
+                            registration.proof_document ||
+                            ""
+
+                    };
+
+                }
+            );
+
+
+        /*
+         * Keep a compatibility copy for other existing
+         * frontend pages, but do not use it as the source
+         * for this Admin page.
+         */
+
+        saveRegistrations(
+            adminRegistrations
+        );
+
+
+        updateSummary();
+
+        renderRegistrations();
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Load registrations error:",
+            error
+        );
+
+
+        adminRegistrations = [];
+
+
+        updateSummary();
+
+        renderRegistrations();
+
+
+        if (table) {
+
+            table.innerHTML = `
+
+                <tr>
+
+                    <td
+                        colspan="7"
+                        style="
+                            padding:35px;
+                            text-align:center;
+                            color:#b42318;
+                            font-size:12px;
+                        "
+                    >
+
+                        Unable to load registrations.
+                        Please make sure the backend server
+                        is running and try again.
+
+                        <br><br>
+
+                        <span
+                            style="
+                                color:#777;
+                                font-size:11px;
+                            "
+                        >
+                            ${escapeHTML(
+                                error.message ||
+                                "Server connection failed."
+                            )}
+                        </span>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+
+    }
+
+    finally {
+
+        isLoadingRegistrations = false;
+
+    }
+
+}
+
+
+/* =====================================================
+   GET ADMIN REGISTRATIONS
+===================================================== */
+
+function getAdminRegistrations() {
+
+    return getRegistrations().filter(
+        registration => {
+
+            const type =
+                normalizeRole(
+                    registration.type ||
+                    registration.registration_type ||
+                    registration.role
+                );
+
+            return (
+                type === "expert" ||
+                type === "provider"
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+async function initializePage() {
+
+    await loadRegistrations();
+
+}
+
+
+/* =====================================================
+   UPDATE SUMMARY
+===================================================== */
+
+function updateSummary() {
+
+    const registrations =
+        getAdminRegistrations();
+
+
+    const pending =
+        registrations.filter(
+            registration =>
+                normalizeStatus(
+                    registration.status
+                ) === "Pending"
+        );
+
+
+    const approved =
+        registrations.filter(
+            registration =>
+                normalizeStatus(
+                    registration.status
+                ) === "Approved"
+        );
+
+
+    const rejected =
+        registrations.filter(
+            registration =>
+                normalizeStatus(
+                    registration.status
+                ) === "Rejected"
+        );
+
+
+    document
+        .getElementById(
+            "pendingCount"
+        )
+        .textContent =
+        pending.length;
+
+
+    document
+        .getElementById(
+            "approvedCount"
+        )
+        .textContent =
+        approved.length;
+
+
+    document
+        .getElementById(
+            "rejectedCount"
+        )
+        .textContent =
+        rejected.length;
+
+
+    document
+        .getElementById(
+            "reviewedCount"
+        )
+        .textContent =
+        approved.length +
+        rejected.length;
+
+
+    const experts =
+        pending.filter(
+            registration =>
+                normalizeRole(
+                    registration.type ||
+                    registration.registration_type
+                ) === "expert"
+        ).length;
+
+
+    const providers =
+        pending.filter(
+            registration =>
+                normalizeRole(
+                    registration.type ||
+                    registration.registration_type
+                ) === "provider"
+        ).length;
+
+
+    document
+        .getElementById(
+            "allCount"
+        )
+        .textContent =
+        pending.length;
+
+
+    document
+        .getElementById(
+            "expertCount"
+        )
+        .textContent =
+        experts;
+
+
+    document
+        .getElementById(
+            "providerCount"
+        )
+        .textContent =
+        providers;
+
+}
+
+
+/* =====================================================
+   GET INITIALS
+===================================================== */
+
+function getInitials(name) {
+
+    if (!name) {
+
+        return "U";
+
+    }
+
+
+    const words =
+        String(name)
+            .trim()
+            .split(/\s+/);
+
+
+    if (words.length === 1) {
+
+        return words[0]
+            .substring(0, 2)
+            .toUpperCase();
+
+    }
+
+
+    return (
+        words[0][0] +
+        words[words.length - 1][0]
+    ).toUpperCase();
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    if (
+        value === null ||
+        value === undefined
+    ) {
+
+        return "";
+
+    }
+
+
+    const div =
+        document.createElement(
+            "div"
+        );
+
+
+    div.textContent =
+        String(value);
+
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================================
+   FORMAT DATE
+===================================================== */
+
+function formatSubmittedDate(
+    registration
+) {
+
+    const dateValue =
+        registration.submittedDate ||
+        registration.submittedAt ||
+        registration.created_at;
+
+
+    if (!dateValue) {
+
+        return "—";
+
+    }
+
+
+    const date =
+        new Date(dateValue);
+
+
+    if (
+        Number.isNaN(
+            date.getTime()
+        )
+    ) {
+
+        return "—";
+
+    }
+
+
+    return date.toLocaleDateString(
+        "en-GB",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+/* =====================================================
+   ORGANIZATION / SPECIALIZATION
+===================================================== */
+
+function getOrganizationText(
+    registration
+) {
+
+    const type =
+        normalizeRole(
+            registration.type ||
+            registration.registration_type
+        );
+
+
+    if (type === "provider") {
+
+        return (
+            registration.businessName ||
+            registration.business_name ||
+            registration.organization ||
+            "Not provided"
+        );
+
+    }
+
+
+    return (
+        registration.specialization ||
+        registration.organization ||
+        "Not provided"
+    );
+
+}
+
+
+/* =====================================================
+   RENDER REGISTRATIONS
+===================================================== */
+
+function renderRegistrations() {
+
+    const table =
+        document.getElementById(
+            "registrationTable"
+        );
+
+
+    if (!table) {
+
+        return;
+
+    }
+
+
+    const registrations =
+        getAdminRegistrations();
+
+
+    /*
+     * Only pending registrations are displayed.
+     */
+
+    let pending =
+        registrations.filter(
+            registration =>
+                normalizeStatus(
+                    registration.status
+                ) === "Pending"
+        );
+
+
+    /*
+     * Category filter.
+     */
+
+    if (
+        activeType !== "all"
+    ) {
+
+        pending =
+            pending.filter(
+                registration =>
+                    normalizeRole(
+                        registration.type ||
+                        registration.registration_type
+                    ) === activeType
+            );
+
+    }
+
+
+    /*
+     * Search filter.
+     */
+
+    const searchInput =
+        document.getElementById(
+            "searchInput"
+        );
+
+
+    const searchTerm =
+        searchInput
+            ? searchInput.value
+                .trim()
+                .toLowerCase()
+            : "";
+
+
+    if (searchTerm) {
+
+        pending =
+            pending.filter(
+                registration => {
+
+                    const searchableFields = [
+                        registration.name,
+                        registration.email,
+                        registration.phone
+                    ];
+
+
+                    if (activeType === "provider") {
+
+                        searchableFields.push(
+                            getOrganizationText(registration)
+                        );
+
+                    } else if (activeType === "expert") {
+
+                        searchableFields.push(
+                            registration.specialization ||
+                            registration.organization ||
+                            ""
+                        );
+
+                    }
+
+
+                    const searchableText =
+                        searchableFields
+                            .filter(Boolean)
+                            .join(" ")
+                            .toLowerCase();
+
+
+                    return searchableText.includes(
+                        searchTerm
+                    );
+
+                }
+            );
+
+    }
+
+
+    /*
+     * Sort.
+     */
+
+    const dateFilter =
+        document.getElementById(
+            "dateFilter"
+        );
+
+
+    const sortOrder =
+        dateFilter
+            ? dateFilter.value
+            : "newest";
+
+
+    pending.sort(
+        (a, b) => {
+
+            const dateA =
+                new Date(
+                    a.created_at ||
+                    a.submittedAt ||
+                    a.submittedDate ||
+                    0
+                ).getTime();
+
+
+            const dateB =
+                new Date(
+                    b.created_at ||
+                    b.submittedAt ||
+                    b.submittedDate ||
+                    0
+                ).getTime();
+
+
+            return sortOrder === "oldest"
+                ? dateA - dateB
+                : dateB - dateA;
+
+        }
+    );
+
+
+    table.innerHTML = "";
+
+
+    if (
+        pending.length === 0
+    ) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="7"
+                    style="
+                        padding:35px;
+                        text-align:center;
+                        color:#777;
+                        font-size:12px;
+                    "
+                >
+
+                    <div
+                        style="
+                            font-size:24px;
+                            margin-bottom:8px;
+                        "
+                    >
+                        ✓
+                    </div>
+
+                    <div
+                        style="
+                            font-weight:bold;
+                            color:#555;
+                            margin-bottom:4px;
+                        "
+                    >
+                        No pending registrations
+                    </div>
+
+                    <div class="empty-text">
+                        New Agricultural Expert and
+                        Equipment Provider applications
+                        will appear here.
+                    </div>
+
+                </td>
+
+            </tr>
+
+        `;
+
+
+        const allPending =
+            registrations.filter(
+                registration =>
+                    normalizeStatus(
+                        registration.status
+                    ) === "Pending"
+            );
+
+
+        updatePagination(
+            0,
+            allPending.length
+        );
+
+
+        return;
+
+    }
+
+
+    /*
+     * Generate table rows.
+     */
+
+    pending.forEach(
+        registration => {
+
+            const row =
+                document.createElement(
+                    "tr"
+                );
+
+
+            const initials =
+                getInitials(
+                    registration.name
+                );
+
+
+            const type =
+                normalizeRole(
+                    registration.type ||
+                    registration.registration_type
+                );
+
+
+            const avatarClass =
+                type === "expert"
+                    ? "avatar-expert"
+                    : "avatar-provider";
+
+
+            const roleClass =
+                type === "expert"
+                    ? "role-expert"
+                    : "role-provider";
+
+
+            const roleLabel =
+                type === "expert"
+                    ? "Agricultural Expert"
+                    : "Equipment Provider";
+
+
+            row.innerHTML = `
+
+                <td>
+
+                    <div class="user-cell">
+
+                        <div
+                            class="user-avatar ${avatarClass}"
+                        >
+                            ${escapeHTML(
+                                initials
+                            )}
+                        </div>
+
+                        <div>
+
+                            <div class="user-name">
+                                ${escapeHTML(
+                                    registration.name ||
+                                    "Unknown Applicant"
+                                )}
+                            </div>
+
+                            <div class="user-email">
+                                ${escapeHTML(
+                                    registration.email ||
+                                    "Email not provided"
+                                )}
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="role-badge ${roleClass}"
+                    >
+                        ${escapeHTML(
+                            roleLabel
+                        )}
+                    </span>
+
+                </td>
+
+
+                <td>
+                    ${escapeHTML(
+                        getOrganizationText(
+                            registration
+                        )
+                    )}
+                </td>
+
+
+                <td>
+                    ${escapeHTML(
+                        registration.phone ||
+                        "Not provided"
+                    )}
+                </td>
+
+
+                <td>
+                    ${escapeHTML(
+                        formatSubmittedDate(
+                            registration
+                        )
+                    )}
+                </td>
+
+
+                <td>
+
+                    <span
+                        class="status pending"
+                    >
+                        ● Pending
+                    </span>
+
+                </td>
+
+
+                <td>
+
+                    <div class="actions">
+
+
+                        <button
+                            class="view-button"
+                            onclick="
+                                viewRegistration(
+                                    '${escapeHTML(
+                                        String(
+                                            registration.id
+                                        )
+                                    )}'
+                                )
+                            "
+                        >
+                            View
+                        </button>
+
+
+                        <button
+                            class="approve-button"
+                            onclick="
+                                approveRegistration(
+                                    '${escapeHTML(
+                                        String(
+                                            registration.id
+                                        )
+                                    )}'
+                                )
+                            "
+                        >
+                            Approve
+                        </button>
+
+
+                        <button
+                            class="reject-button"
+                            onclick="
+                                openRejectModal(
+                                    '${escapeHTML(
+                                        String(
+                                            registration.id
+                                        )
+                                    )}'
+                                )
+                            "
+                        >
+                            Reject
+                        </button>
+
+
+                    </div>
+
+                </td>
+
+            `;
+
+
+            table.appendChild(
+                row
+            );
+
+        }
+    );
+
+
+    const allPending =
+        registrations.filter(
+            registration =>
+                normalizeStatus(
+                    registration.status
+                ) === "Pending"
+        );
+
+
+    updatePagination(
+        pending.length,
+        allPending.length
+    );
+
+}
+
+
+/* =====================================================
+   PAGINATION
+===================================================== */
+
+function updatePagination(
+    visible,
+    total
+) {
+
+    const element =
+        document.getElementById(
+            "paginationText"
+        );
+
+
+    if (!element) {
+
+        return;
+
+    }
+
+
+    element.textContent =
+        `Showing ${visible} of ${total} registrations`;
+
+}
+
+
+/* =====================================================
+   FIND REGISTRATION
+===================================================== */
+
+function findRegistrationById(id) {
+
+    return getRegistrations().find(
+        registration =>
+            String(registration.id) ===
+            String(id)
+    );
+
+}
+
+
+/* =====================================================
+   VIEW REGISTRATION
+===================================================== */
+
+function viewRegistration(id) {
+
+    const registration =
+        findRegistrationById(id);
+
+
+    if (!registration) {
+
+        customAlert(
+            "Registration could not be found."
+        );
+
+        return;
+
+    }
+
+
+    currentRegistrationId =
+        id;
+
+
+    document
+        .getElementById(
+            "modalName"
+        )
+        .textContent =
+        registration.name ||
+        "Applicant";
+
+
+    document
+        .getElementById(
+            "modalRole"
+        )
+        .textContent =
+        registration.role ||
+        "Registration";
+
+
+    document
+        .getElementById(
+            "modalEmail"
+        )
+        .textContent =
+        registration.email ||
+        "Not provided";
+
+
+    document
+        .getElementById(
+            "modalPhone"
+        )
+        .textContent =
+        registration.phone ||
+        "Not provided";
+
+
+    document
+        .getElementById(
+            "modalDistrict"
+        )
+        .textContent =
+        registration.district ||
+        "Not provided";
+
+
+    const regType =
+        normalizeRole(
+            registration.type ||
+            registration.registration_type
+        );
+
+    const specBox =
+        document.getElementById("modalSpecializationBox");
+
+    const orgBox =
+        document.getElementById("modalBusinessNameBox");
+
+    if (regType === "provider") {
+
+        specBox.style.display = "none";
+        orgBox.style.display = "";
+
+    } else if (regType === "expert") {
+
+        orgBox.style.display = "none";
+        specBox.style.display = "";
+
+    } else {
+
+        specBox.style.display = "";
+        orgBox.style.display = "";
+
+    }
+
+
+    document
+        .getElementById(
+            "modalSpecialization"
+        )
+        .textContent =
+        registration.specialization ||
+        "Not provided";
+
+
+    document
+        .getElementById(
+            "modalBusinessName"
+        )
+        .textContent =
+        registration.businessName ||
+        registration.business_name ||
+        registration.organization ||
+        "Not provided";
+
+
+    document
+        .getElementById(
+            "modalDate"
+        )
+        .textContent =
+        formatSubmittedDate(
+            registration
+        );
+
+
+    document
+        .getElementById(
+            "modalId"
+        )
+        .textContent =
+        registration.id ||
+        "—";
+
+
+    document
+        .getElementById(
+            "modalStatus"
+        )
+        .textContent =
+        registration.status ||
+        "Pending";
+
+
+    /*
+     * Avatar.
+     */
+
+    const avatar =
+        document.getElementById(
+            "modalAvatar"
+        );
+
+
+    avatar.textContent =
+        getInitials(
+            registration.name
+        );
+
+
+    avatar.className =
+        "large-avatar " +
+        (
+            normalizeRole(
+                registration.type ||
+                registration.registration_type
+            ) === "expert"
+                ? "expert"
+                : "provider"
+        );
+
+
+    /*
+     * Documents.
+     */
+
+    renderDocuments(
+        registration
+    );
+
+
+    /*
+     * Approve button.
+     */
+
+    const approveButton =
+        document.getElementById(
+            "modalApproveButton"
+        );
+
+
+    approveButton.onclick =
+        function () {
+
+            approveRegistration(
+                id
+            );
+
+        };
+
+
+    /*
+     * Reject button.
+     */
+
+    const rejectButton =
+        document.getElementById(
+            "modalRejectButton"
+        );
+
+
+    rejectButton.onclick =
+        function () {
+
+            closeModal(
+                "viewModal"
+            );
+
+            openRejectModal(
+                id
+            );
+
+        };
+
+
+    /*
+     * Hide action buttons for already reviewed
+     * registrations if the modal is opened in future.
+     */
+
+    const isPending =
+        normalizeStatus(
+            registration.status
+        ) === "Pending";
+
+
+    approveButton.style.display =
+        isPending
+            ? ""
+            : "none";
+
+
+    rejectButton.style.display =
+        isPending
+            ? ""
+            : "none";
+
+
+    /*
+     * Open modal.
+     */
+
+    document
+        .getElementById(
+            "viewModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   DOCUMENTS
+===================================================== */
+
+function renderDocuments(
+    registration
+) {
+
+    const list =
+        document.getElementById(
+            "documentList"
+        );
+
+
+    list.innerHTML = "";
+
+
+    const documents = [];
+
+
+    if (
+        registration.nicFront
+    ) {
+
+        documents.push({
+
+            title:
+                "NIC Front",
+
+            file:
+                registration.nicFront,
+
+            type:
+                "Identity Document"
+
+        });
+
+    }
+
+
+    if (
+        registration.nicBack
+    ) {
+
+        documents.push({
+
+            title:
+                "NIC Back",
+
+            file:
+                registration.nicBack,
+
+            type:
+                "Identity Document"
+
+        });
+
+    }
+
+
+    if (
+        registration.certificationDocument
+    ) {
+
+        documents.push({
+
+            title:
+                "Certification Document",
+
+            file:
+                registration.certificationDocument,
+
+            type:
+                "Professional Certificate"
+
+        });
+
+    }
+
+
+    if (
+        registration.proofDocument
+    ) {
+
+        documents.push({
+
+            title:
+                "Proof Document",
+
+            file:
+                registration.proofDocument,
+
+            type:
+                "Business Proof"
+
+        });
+
+    }
+
+
+    if (
+        documents.length === 0
+    ) {
+
+        list.innerHTML = `
+
+            <div
+                style="
+                    grid-column:1 / -1;
+                    padding:18px;
+                    text-align:center;
+                    color:#777;
+                    font-size:10px;
+                "
+            >
+                No document information available.
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    documents.forEach(
+        documentData => {
+
+            const item =
+                document.createElement(
+                    "a"
+                );
+
+            item.href = `/uploads/${documentData.file}`;
+            item.target = "_blank";
+            item.rel = "noopener noreferrer";
+
+            item.className =
+                "document";
+
+            item.style.textDecoration = "none";
+            item.style.color = "inherit";
+
+            const isImage =
+                /\.(png|jpe?g|gif|webp)$/i.test(documentData.file);
+
+            item.innerHTML = `
+
+                ${
+                    isImage
+                        ? `<img src="/uploads/${escapeHTML(documentData.file)}" alt="${escapeHTML(documentData.title)}" style="width:44px;height:44px;object-fit:cover;border-radius:8px;flex-shrink:0;">`
+                        : `<div class="document-icon">📄</div>`
+                }
+
+                <div>
+
+                    <div class="document-name">
+                        ${escapeHTML(
+                            documentData.title
+                        )}
+                    </div>
+
+                    <div class="document-type">
+                        ${escapeHTML(
+                            documentData.type
+                        )} — click to view
+                    </div>
+
+                </div>
+
+            `;
+
+
+            list.appendChild(
+                item
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   APPROVE REGISTRATION
+===================================================== */
+
+async function approveRegistration(id) {
+
+    const registration =
+        findRegistrationById(id);
+
+
+    if (!registration) {
+
+        customAlert(
+            "Registration not found."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        normalizeStatus(
+            registration.status
+        ) !== "Pending"
+    ) {
+
+        customAlert(
+            "This registration has already been reviewed."
+        );
+
+        return;
+
+    }
+
+
+    const confirmed =
+        await customConfirm(
+            `Approve registration for ${registration.name}?`
+        );
+
+
+    if (!confirmed) {
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/registrations/${encodeURIComponent(
+                    registration.id
+                )}/status`,
+                {
+
+                    method:
+                        "PUT",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            status:
+                                "approved",
+
+                            registration_id:
+                                registration.id,
+
+                            user_id:
+                                registration.user_id ||
+                                null
+
+                        })
+
+                }
+            );
+
+
+        let result =
+            {};
+
+        try {
+
+            result =
+                await response.json();
+
+        }
+
+        catch (jsonError) {
+
+            result =
+                {};
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                "The server could not approve this registration."
+            );
+
+        }
+
+
+        closeModal(
+            "viewModal"
+        );
+
+
+        /*
+         * Reload from MySQL.
+         */
+
+        await loadRegistrations();
+
+
+        customAlert(
+            result.message ||
+            `${registration.name} has been approved successfully.`
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Approve registration error:",
+            error
+        );
+
+
+        customAlert(
+            error.message ||
+            "Unable to approve the registration. Please make sure the backend server is running."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   OPEN REJECT MODAL
+===================================================== */
+
+function openRejectModal(id) {
+
+    const registration =
+        findRegistrationById(id);
+
+
+    if (!registration) {
+
+        customAlert(
+            "Registration not found."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        normalizeStatus(
+            registration.status
+        ) !== "Pending"
+    ) {
+
+        customAlert(
+            "This registration has already been reviewed."
+        );
+
+        return;
+
+    }
+
+
+    currentRegistrationId =
+        id;
+
+
+    document
+        .getElementById(
+            "rejectionReason"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "rejectModal"
+        )
+        .classList.add(
+            "show"
+        );
+
+}
+
+
+/* =====================================================
+   CONFIRM REJECTION
+===================================================== */
+
+async function confirmReject() {
+
+    if (
+        !currentRegistrationId
+    ) {
+
+        return;
+
+    }
+
+
+    const reason =
+        document
+            .getElementById(
+                "rejectionReason"
+            )
+            .value
+            .trim();
+
+
+    if (!reason) {
+
+        customAlert(
+            "Please provide a reason for rejection."
+        );
+
+        return;
+
+    }
+
+
+    const registration =
+        findRegistrationById(
+            currentRegistrationId
+        );
+
+
+    if (!registration) {
+
+        customAlert(
+            "Registration not found."
+        );
+
+        return;
+
+    }
+
+
+    if (
+        normalizeStatus(
+            registration.status
+        ) !== "Pending"
+    ) {
+
+        customAlert(
+            "This registration has already been reviewed."
+        );
+
+        closeModal(
+            "rejectModal"
+        );
+
+        return;
+
+    }
+
+
+    try {
+
+        const response =
+            await fetch(
+                `/api/admin/registrations/${encodeURIComponent(
+                    registration.id
+                )}/status`,
+                {
+
+                    method:
+                        "PUT",
+
+                    headers: {
+
+                        "Content-Type":
+                            "application/json",
+
+                        "Accept":
+                            "application/json"
+
+                    },
+
+                    body:
+                        JSON.stringify({
+
+                            status:
+                                "rejected",
+
+                            registration_id:
+                                registration.id,
+
+                            user_id:
+                                registration.user_id ||
+                                null,
+
+                            rejection_reason:
+                                reason,
+
+                            review_note:
+                                reason
+
+                        })
+
+                }
+            );
+
+
+        let result =
+            {};
+
+        try {
+
+            result =
+                await response.json();
+
+        }
+
+        catch (jsonError) {
+
+            result =
+                {};
+
+        }
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                result.message ||
+                "The server could not reject this registration."
+            );
+
+        }
+
+
+        closeModal(
+            "rejectModal"
+        );
+
+
+        currentRegistrationId =
+            null;
+
+
+        /*
+         * Reload from MySQL.
+         */
+
+        await loadRegistrations();
+
+
+        customAlert(
+            result.message ||
+            `${registration.name}'s registration has been rejected.`
+        );
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Reject registration error:",
+            error
+        );
+
+
+        customAlert(
+            error.message ||
+            "Unable to reject the registration. Please make sure the backend server is running."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal(id) {
+
+    const modal =
+        document.getElementById(id);
+
+
+    if (modal) {
+
+        modal.classList.remove(
+            "show"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+document
+    .getElementById(
+        "searchInput"
+    )
+    .addEventListener(
+        "input",
+        function () {
+
+            renderRegistrations();
+
+        }
+    );
+
+
+/* =====================================================
+   SORT
+===================================================== */
+
+document
+    .getElementById(
+        "dateFilter"
+    )
+    .addEventListener(
+        "change",
+        function () {
+
+            renderRegistrations();
+
+        }
+    );
+
+
+/* =====================================================
+   TABS
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".tab"
+    )
+    .forEach(
+        tab => {
+
+            tab.addEventListener(
+                "click",
+                function () {
+
+                    activeType =
+                        this.dataset.type;
+
+
+                    updateActiveTab(
+                        activeType
+                    );
+
+
+                    renderRegistrations();
+
+                }
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   UPDATE ACTIVE TAB
+===================================================== */
+
+function updateActiveTab(
+    type
+) {
+
+    document
+        .querySelectorAll(
+            ".tab"
+        )
+        .forEach(
+            tab => {
+
+                tab.classList.remove(
+                    "active"
+                );
+
+
+                if (
+                    tab.dataset.type ===
+                    type
+                ) {
+
+                    tab.classList.add(
+                        "active"
+                    );
+
+                }
+
+            }
+        );
+
+
+    const searchInput =
+        document.getElementById("searchInput");
+
+    if (searchInput) {
+
+        if (type === "provider") {
+
+            searchInput.placeholder =
+                "Search by applicant name, email, phone or company name...";
+
+        } else if (type === "expert") {
+
+            searchInput.placeholder =
+                "Search by applicant name, email, phone or specialization...";
+
+        } else {
+
+            searchInput.placeholder =
+                "Search by applicant name, email or phone...";
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   RESET FILTERS
+===================================================== */
+
+function resetFilters() {
+
+    document
+        .getElementById(
+            "searchInput"
+        )
+        .value = "";
+
+
+    document
+        .getElementById(
+            "dateFilter"
+        )
+        .value = "newest";
+
+
+    activeType =
+        "all";
+
+
+    updateActiveTab(
+        "all"
+    );
+
+
+    renderRegistrations();
+
+}
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+document
+    .getElementById(
+        "mobileMenu"
+    )
+    .addEventListener(
+        "click",
+        function () {
+
+            document
+                .getElementById(
+                    "sidebar"
+                )
+                .classList.toggle(
+                    "open"
+                );
+
+        }
+    );
+
+
+/* =====================================================
+   MANAGE USERS SUBMENU
+===================================================== */
+
+document
+    .getElementById(
+        "manageUsersButton"
+    )
+    .addEventListener(
+        "click",
+        function () {
+
+            document
+                .getElementById(
+                    "userSubmenu"
+                )
+                .classList.toggle(
+                    "show"
+                );
+
+
+            this.classList.toggle(
+                "expanded"
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   PROFILE DROPDOWN
+===================================================== */
+
+const profile =
+    document.getElementById(
+        "profile"
+    );
+
+
+profile.addEventListener(
+    "click",
+    function (event) {
+
+        event.stopPropagation();
+
+        profile.classList.toggle(
+            "open"
+        );
+
+    }
+);
+
+
+document.addEventListener(
+    "click",
+    function () {
+
+        profile.classList.remove(
+            "open"
+        );
+
+    }
+);
+
+
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
+
+function openNotifications() {
+
+    window.location.href =
+        "admin-notifications.html";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+function logout() {
+
+    sessionStorage.removeItem(
+        "token"
+    );
+
+
+    sessionStorage.removeItem(
+        "user"
+    );
+
+
+    sessionStorage.removeItem(
+        "selectedRole"
+    );
+
+
+    localStorage.removeItem(
+        "adminLoggedIn"
+    );
+
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+document
+    .getElementById(
+        "logoutButton"
+    )
+    .addEventListener(
+        "click",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            if (
+                await customConfirm(
+                    "Are you sure you want to logout?"
+                )
+            ) {
+
+                logout();
+
+            }
+
+        }
+    );
+
+
+/* =====================================================
+   CLOSE MODALS OUTSIDE CLICK
+===================================================== */
+
+document
+    .querySelectorAll(
+        ".modal-overlay"
+    )
+    .forEach(
+        overlay => {
+
+            overlay.addEventListener(
+                "click",
+                function (event) {
+
+                    if (
+                        event.target ===
+                        overlay
+                    ) {
+
+                        overlay.classList.remove(
+                            "show"
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+    );
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
+
+initializePage();
+
+
+function updateHeaderNotificationBadge() {
+
+    let userId = null;
+
+    try {
+        const raw = sessionStorage.getItem("user");
+        const parsed = raw ? JSON.parse(raw) : null;
+        userId = parsed && parsed.id;
+    } catch (error) {
+        userId = null;
+    }
+
+    if (!userId) return;
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const badge = document.getElementById("notificationBadge");
+            if (!badge) return;
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = "flex";
+            } else {
+                badge.style.display = "none";
+            }
+
+        })
+        .catch(error => console.error("Unable to load notification count:", error));
+
+}
+
+updateHeaderNotificationBadge();
+
+</script>
+
+
+
+
+<!-- =========================================================
+     CUSTOM CONFIRM / ALERT DIALOG
+     Replaces the native browser confirm()/alert() popups with
+     a styled in-app dialog consistent with the rest of the UI.
+========================================================= -->
+
+<div
+    id="customDialogOverlay"
+    style="display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;"
+>
+
+    <div
+        style="background:#fff;border-radius:16px;padding:26px 28px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);"
+    >
+
+        <div
+            id="customDialogIcon"
+            style="width:46px;height:46px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:700;margin-bottom:16px;"
+        >
+            !
+        </div>
+
+        <div
+            id="customDialogTitle"
+            style="font-size:16px;font-weight:700;color:#172033;margin-bottom:8px;"
+        >
+        </div>
+
+        <div
+            id="customDialogMessage"
+            style="font-size:13px;color:#536274;line-height:1.55;margin-bottom:22px;white-space:pre-line;"
+        >
+        </div>
+
+        <div
+            id="customDialogButtons"
+            style="display:flex;gap:10px;justify-content:flex-end;"
+        >
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+/* =========================================================
+   CUSTOM CONFIRM / ALERT (replaces window.confirm / window.alert)
+========================================================= */
+
+function customConfirm(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Please Confirm";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "?";
+        icon.style.background = "#fff0e5";
+        icon.style.color = "#e86600";
+
+        buttons.innerHTML = "";
+
+        const cancelBtn = document.createElement("button");
+        cancelBtn.textContent = "Cancel";
+        cancelBtn.type = "button";
+        cancelBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:1px solid #dde3e0;background:#fff;color:#536274;font-weight:600;cursor:pointer;font-size:13px;";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 20px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish(result) {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") finish(false);
+            if (e.key === "Enter") finish(true);
+        }
+
+        cancelBtn.onclick = () => finish(false);
+        okBtn.onclick = () => finish(true);
+
+        buttons.appendChild(cancelBtn);
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+function customAlert(message, title) {
+
+    return new Promise(resolve => {
+
+        const overlay = document.getElementById("customDialogOverlay");
+        const icon = document.getElementById("customDialogIcon");
+        const buttons = document.getElementById("customDialogButtons");
+
+        document.getElementById("customDialogTitle").textContent = title || "Notice";
+        document.getElementById("customDialogMessage").textContent = message || "";
+
+        icon.textContent = "i";
+        icon.style.background = "#eaf1ff";
+        icon.style.color = "#2469e9";
+
+        buttons.innerHTML = "";
+
+        const okBtn = document.createElement("button");
+        okBtn.textContent = "OK";
+        okBtn.type = "button";
+        okBtn.style.cssText =
+            "padding:10px 22px;border-radius:9px;border:0;background:#2e8b3a;color:#fff;font-weight:700;cursor:pointer;font-size:13px;";
+
+        function finish() {
+            overlay.style.display = "none";
+            document.removeEventListener("keydown", onKey);
+            resolve();
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape" || e.key === "Enter") finish();
+        }
+
+        okBtn.onclick = finish;
+
+        buttons.appendChild(okBtn);
+
+        overlay.style.display = "flex";
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+</script>
+
+</body>
+
+</html>

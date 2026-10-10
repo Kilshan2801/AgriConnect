@@ -1,0 +1,2000 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AgriConnect - Help & Support</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f5f7fb;
+    color: #182033;
+    min-height: 100vh;
+}
+
+/* ================= SIDEBAR ================= */
+
+.sidebar {
+    min-width: 255px;
+
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 255px;
+    background: linear-gradient(180deg, #281064 0%, #170a45 100%);
+    color: white;
+    z-index: 1000;
+    overflow-y: auto;
+}
+
+.sidebar-logo {
+    height: 86px;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+}
+
+.sidebar-logo img {
+    width: 160px;
+    height: auto;
+    max-height: 62px;
+    object-fit: contain;
+    display: block;
+}
+
+/* ================= NAVIGATION ================= */
+
+.sidebar-content {
+    padding: 13px 10px;
+}
+
+.nav-section-title {
+    font-size: 11px;
+    font-weight: bold;
+    color: rgba(255,255,255,0.75);
+    padding: 14px 12px 10px;
+    text-transform: uppercase;
+}
+
+.nav-item {
+    width: 100%;
+    min-height: 45px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 12px;
+    margin-bottom: 4px;
+    border-radius: 8px;
+    color: white;
+    text-decoration: none;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+.nav-item.active {
+    background: linear-gradient(90deg, #7131c8, #5520a7);
+}
+
+.nav-icon {
+    width: 22px;
+    min-width: 22px;
+    text-align: center;
+    font-size: 18px;
+}
+
+.nav-label {
+    flex: 1;
+}
+
+.nav-arrow {
+    font-size: 12px;
+}
+
+.submenu {
+    display: none;
+    padding-left: 35px;
+    margin-bottom: 5px;
+}
+
+.submenu.show {
+    display: block;
+}
+
+.submenu a {
+    display: block;
+    color: rgba(255,255,255,0.9);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 6px;
+}
+
+.submenu a:hover {
+    background: rgba(255,255,255,0.08);
+}
+
+/* ================= SIDEBAR BOTTOM ================= */
+
+.sidebar-bottom {
+    padding: 8px 10px 14px;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: rgba(255,255,255,0.13);
+    margin: 5px 12px 10px;
+}
+
+/* ================= MAIN ================= */
+
+.main {
+    margin-left: 255px;
+    width: calc(100% - 255px);
+    min-height: 100vh;
+    padding-bottom: 48px;
+}
+
+/* ================= HEADER ================= */
+
+.header {
+    height: 78px;
+    background: white;
+    border-bottom: 1px solid #e5e8ee;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 28px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+/* Notification */
+
+.notification {
+    position: relative;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    cursor: pointer;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -1px;
+    right: -3px;
+    min-width: 18px;
+    height: 18px;
+    padding: 0 4px;
+    border-radius: 50px;
+    background: #ff3b30;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Profile */
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 43px;
+    height: 43px;
+    border-radius: 50%;
+    border: 2px solid #6429c1;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #6429c1;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.profile-info {
+    line-height: 17px;
+}
+
+.profile-name {
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.profile-role {
+    font-size: 10px;
+    color: #6429c1;
+}
+
+.profile-arrow {
+    font-size: 11px;
+}
+
+/* ================= CONTENT ================= */
+
+.content {
+    padding: 23px 18px 22px;
+}
+
+/* Welcome */
+
+.welcome {
+    margin-bottom: 18px;
+}
+
+.welcome h1 {
+    font-size: 29px;
+    color: #121826;
+    margin-bottom: 5px;
+}
+
+.welcome p {
+    font-size: 13px;
+    color: #555f70;
+}
+
+/* ================= STAT CARDS ================= */
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.stat-card {
+    background: white;
+    border: 1px solid #e7eaf0;
+    border-radius: 9px;
+    padding: 14px 12px;
+    min-height: 100px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.025);
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+.stat-purple {
+    background: #eee4ff;
+}
+
+.stat-green {
+    background: #e2f6e8;
+}
+
+.stat-blue {
+    background: #e1edff;
+}
+
+.stat-orange {
+    background: #fff0df;
+}
+
+.stat-red {
+    background: #ffe3e3;
+}
+
+.stat-title {
+    display: block;
+    font-size: 12px;
+    font-weight: bold;
+    color: #454d5c;
+    margin-bottom: 4px;
+}
+
+.stat-value {
+    display: block;
+    font-size: 23px;
+    font-weight: bold;
+    color: #111827;
+    margin-bottom: 4px;
+}
+
+.stat-change {
+    display: block;
+    font-size: 10px;
+    color: #16833c;
+    font-weight: bold;
+}
+
+.stat-change.red {
+    color: #ef3030;
+}
+
+/* ================= DASHBOARD GRID ================= */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 11px;
+    margin-bottom: 11px;
+}
+
+.card {
+    background: white;
+    border: 1px solid #e5e9ef;
+    border-radius: 9px;
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.025);
+}
+
+.card-header {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 14px;
+    border-bottom: 1px solid #edf0f3;
+}
+
+.card-title {
+    font-size: 15px;
+    font-weight: bold;
+    color: #202633;
+}
+
+.view-all {
+    font-size: 12px;
+    font-weight: bold;
+    color: #6c20cf;
+    text-decoration: none;
+}
+
+/* ================= CHART ================= */
+
+.chart-container {
+    height: 230px;
+    padding: 12px 12px 5px;
+}
+
+#userChart {
+    width: 100%;
+    height: 100%;
+}
+
+.chart-footer {
+    padding: 4px 13px 11px;
+    display: flex;
+    gap: 18px;
+    font-size: 12px;
+    color: #535b68;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.legend-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.legend-green {
+    background: #159447;
+}
+
+.legend-blue {
+    background: #2469e9;
+}
+
+.legend-orange {
+    background: #f47b20;
+}
+
+.legend-purple {
+    background: #7432c8;
+}
+
+.month-select {
+    border: 1px solid #dfe4ea;
+    border-radius: 6px;
+    padding: 7px 10px;
+    font-size: 12px;
+    background: white;
+}
+
+/* ================= DONUT ================= */
+
+.role-chart {
+    min-height: 275px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    padding: 15px;
+}
+
+.donut {
+    width: 145px;
+    height: 145px;
+    min-width: 145px;
+    border-radius: 50%;
+    background:
+        conic-gradient(
+            #159447 0deg 247deg,
+            #2469e9 247deg 315deg,
+            #f47b20 315deg 344deg,
+            #7432c8 344deg 360deg
+        );
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.donut::after {
+    content: "";
+    position: absolute;
+    width: 76px;
+    height: 76px;
+    background: white;
+    border-radius: 50%;
+}
+
+.role-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.role-legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    white-space: nowrap;
+}
+
+.role-color {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+}
+
+.role-color.green {
+    background: #159447;
+}
+
+.role-color.blue {
+    background: #2469e9;
+}
+
+.role-color.orange {
+    background: #f47b20;
+}
+
+.role-color.purple {
+    background: #7432c8;
+}
+
+.role-name {
+    font-weight: bold;
+}
+
+.role-number {
+    font-weight: bold;
+}
+
+/* ================= LOWER GRID ================= */
+
+.lower-grid {
+    display: grid;
+    grid-template-columns: 1.45fr 1fr;
+    gap: 11px;
+    margin-bottom: 11px;
+}
+
+/* ================= TABLE ================= */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    text-align: left;
+    font-size: 12px;
+    color: #323945;
+    padding: 9px 10px;
+    border-bottom: 1px solid #edf0f3;
+    white-space: nowrap;
+}
+
+td {
+    padding: 9px 10px;
+    border-bottom: 1px solid #f0f2f5;
+    font-size: 12px;
+    color: #343b47;
+    white-space: nowrap;
+}
+
+.person {
+    font-weight: bold;
+    color: #202633;
+}
+
+.role-small {
+    font-size: 12px;
+    color: #707887;
+    margin-top: 2px;
+}
+
+.status {
+    display: inline-block;
+    padding: 5px 7px;
+    border-radius: 5px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.status.open {
+    background: #ffe3e3;
+    color: #ec2929;
+}
+
+.status.review {
+    background: #fff0d6;
+    color: #d87600;
+}
+
+.status.resolved {
+    background: #def5e4;
+    color: #16833c;
+}
+
+.action-button {
+    border: 1px solid #7a36d1;
+    color: #6c20cf;
+    background: white;
+    border-radius: 5px;
+    padding: 6px 10px;
+    font-size: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* ================= RECENT ACTIVITY ================= */
+
+.activity-list {
+    padding: 4px 12px 9px;
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 0;
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.activity-icon {
+    width: 31px;
+    height: 31px;
+    min-width: 31px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.activity-icon.green {
+    background: #e0f5e6;
+}
+
+.activity-icon.orange {
+    background: #fff0dd;
+}
+
+.activity-icon.purple {
+    background: #eee3ff;
+}
+
+.activity-icon.red {
+    background: #ffe2e2;
+}
+
+.activity-text {
+    flex: 1;
+}
+
+.activity-title {
+    font-size: 12px;
+    font-weight: bold;
+    color: #262d39;
+    margin-bottom: 2px;
+}
+
+.activity-description {
+    font-size: 10px;
+    color: #667080;
+}
+
+.activity-time {
+    font-size: 12px;
+    color: #687180;
+    white-space: nowrap;
+}
+
+/* ================= QUICK ACTIONS ================= */
+
+.quick-actions {
+    background: white;
+    border: 1px solid #e5e9ef;
+    border-radius: 9px;
+    padding: 12px;
+}
+
+.quick-title {
+    font-size: 15px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.quick-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+}
+
+.quick-button {
+    min-height: 55px;
+    border: 1px solid #e4e8ed;
+    background: white;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    cursor: pointer;
+    text-decoration: none;
+    color: #222b39;
+}
+
+.quick-button:hover {
+    border-color: #8d55d1;
+    background: #fbf9fe;
+}
+
+.quick-icon {
+    width: 31px;
+    height: 31px;
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+}
+
+.quick-green {
+    background: #e2f6e8;
+}
+
+.quick-blue {
+    background: #e2edff;
+}
+
+.quick-orange {
+    background: #fff0df;
+}
+
+.quick-purple {
+    background: #eee4ff;
+}
+
+.quick-red {
+    background: #ffe2e2;
+}
+
+.quick-text {
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* ================= FOOTER ================= */
+
+.footer {
+    position: fixed;
+    left: 255px;
+    right: 0;
+    bottom: 0;
+    height: 42px;
+    background: #004d2a;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 13px;
+    font-size: 10px;
+    z-index: 800;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 1250px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 950px) {
+
+    .dashboard-grid,
+    .lower-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 850px) {
+
+    .sidebar {
+        transform: translateX(-100%);
+        transition: 0.25s;
+    }
+
+    .sidebar.open {
+        transform: translateX(0);
+    }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .footer {
+        left: 0;
+    }
+}
+
+@media (max-width: 650px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .quick-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .role-chart {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 450px) {
+
+    .stats-grid,
+    .quick-grid {
+        grid-template-columns: 1fr;
+    }
+}
+/* =====================================================
+           HELP & SUPPORT
+           ===================================================== */
+
+        .help-intro {
+            margin-bottom: 24px;
+        }
+
+        .help-intro h2 {
+            font-size: 22px;
+            color: #14532d;
+            margin-bottom: 6px;
+        }
+
+        .help-intro p {
+            color: #5b6b63;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .help-search {
+            position: relative;
+            max-width: 520px;
+        }
+
+        .help-search-icon {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 15px;
+            opacity: 0.6;
+        }
+
+        .help-search input {
+            width: 100%;
+            padding: 13px 16px 13px 42px;
+            border: 1px solid #d7e9dc;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: inherit;
+            background: #fff;
+            outline: none;
+        }
+
+        .help-search input:focus {
+            border-color: #17833c;
+        }
+
+        .help-layout {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 22px;
+            align-items: start;
+        }
+
+        .help-faq-column {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
+
+        .help-category {
+            background: #fff;
+            border: 1px solid #e6ede9;
+            border-radius: 12px;
+            padding: 6px 22px;
+        }
+
+        .help-category h3 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            color: #17833c;
+            padding: 16px 0 10px;
+            border-bottom: 1px solid #f0f3f1;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid #f0f3f1;
+        }
+
+        .faq-item:last-child {
+            border-bottom: none;
+        }
+
+        .faq-question {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            background: none;
+            border: none;
+            text-align: left;
+            font-family: inherit;
+            font-size: 14.5px;
+            font-weight: 600;
+            color: #1f2937;
+            padding: 16px 0;
+            cursor: pointer;
+        }
+
+        .faq-toggle {
+            flex-shrink: 0;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: #f1f7f3;
+            color: #17833c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            transition: transform 0.15s ease;
+        }
+
+        .faq-item.open .faq-toggle {
+            transform: rotate(45deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 300px;
+        }
+
+        .faq-answer p {
+            font-size: 13.5px;
+            color: #536159;
+            line-height: 1.6;
+            padding-bottom: 18px;
+        }
+
+        .help-category[hidden],
+        .faq-item[hidden] {
+            display: none;
+        }
+
+        .help-no-results {
+            background: #fff;
+            border: 1px solid #e6ede9;
+            border-radius: 12px;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .help-no-results-icon {
+            font-size: 34px;
+            margin-bottom: 10px;
+        }
+
+        .help-no-results h3 {
+            font-size: 15px;
+            color: #1f2937;
+            margin-bottom: 6px;
+        }
+
+        .help-no-results p {
+            font-size: 13px;
+            color: #7c8b82;
+        }
+
+        .help-contact-column {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .help-contact-card {
+            background: #fff;
+            border: 1px solid #e6ede9;
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .help-contact-card h3 {
+            font-size: 15px;
+            color: #1f2937;
+            margin-bottom: 6px;
+        }
+
+        .help-contact-card > p {
+            font-size: 13px;
+            color: #7c8b82;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+
+        .help-contact-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 11px 0;
+            border-top: 1px solid #f0f3f1;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .help-contact-row:first-of-type {
+            border-top: none;
+        }
+
+        .help-contact-icon {
+            font-size: 17px;
+            width: 22px;
+            flex-shrink: 0;
+        }
+
+        .help-contact-row strong {
+            display: block;
+            font-size: 13.5px;
+            color: #1f2937;
+        }
+
+        .help-contact-detail {
+            display: block;
+            font-size: 12.5px;
+            color: #7c8b82;
+            margin-top: 2px;
+        }
+
+        .help-report-card {
+            background: #f1f7f3;
+            border-color: #d7e9dc;
+        }
+
+        .help-report-button {
+            display: inline-block;
+            background: #17833c;
+            color: #fff;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        @media (max-width: 900px) {
+            .help-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+
+/* =====================================================
+   ACCESSIBILITY: VISIBLE KEYBOARD FOCUS
+   (WCAG 2.2 - operable interfaces must show a visible
+   focus indicator; restores it where outline was removed)
+   ===================================================== */
+
+:focus-visible {
+    outline: 2.5px solid #2563eb !important;
+    outline-offset: 2px !important;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     SIDEBAR
+===================================================== -->
+
+<aside class="sidebar">
+
+    <div class="sidebar-logo">
+
+        <!-- AgriConnect White Logo -->
+        <img
+            src="assets/agriconnect-logo-white.png"
+            alt="AgriConnect"
+        >
+
+    </div>
+
+
+    <div class="sidebar-content">
+
+        <!-- Dashboard -->
+
+        <a
+            href="admin-dashboard.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">▦</span>
+
+            <span class="nav-label">
+                Dashboard
+            </span>
+
+        </a>
+
+
+        <div class="nav-section-title">
+            Management
+        </div>
+
+
+        <!-- Manage Users -->
+
+        <div
+            class="nav-item"
+            id="manageUsersButton"
+        >
+
+            <span class="nav-icon">♙</span>
+
+            <span class="nav-label">
+                Manage Users
+            </span>
+
+            <span class="nav-arrow">
+                ▼
+            </span>
+
+        </div>
+
+
+        <div
+            class="submenu"
+            id="userSubmenu"
+        >
+
+            <a href="admin-manage-users.html?type=farmer">
+                Farmers
+            </a>
+
+            <a href="admin-manage-users.html?type=buyer">
+                Buyers
+            </a>
+
+            <a href="admin-manage-users.html?type=expert">
+                Agri Experts
+            </a>
+
+            <a href="admin-manage-users.html?type=provider">
+                Equipment Providers
+            </a>
+
+        </div>
+
+
+        <!-- Inspect Registration -->
+
+        <a
+            href="admin-registrations.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">▤</span>
+
+            <span class="nav-label">
+                Inspect Registration
+            </span>
+
+        </a>
+
+
+        <!-- Reported Conflicts -->
+
+        <a
+            href="admin-conflicts.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">⚿</span>
+
+            <span class="nav-label">
+                Reported Conflicts
+            </span>
+
+        </a>
+
+
+        <!-- Notifications -->
+
+        <a
+            href="admin-notifications.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">🔔</span>
+
+            <span class="nav-label">
+                Notifications
+            </span>
+
+        </a>
+
+
+        <!-- History -->
+
+        <a
+            href="admin-history.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">◷</span>
+
+            <span class="nav-label">
+                History
+            </span>
+
+        </a>
+
+    </div>
+
+
+    <!-- Bottom Navigation -->
+
+    <div class="sidebar-bottom">
+
+        <div class="sidebar-divider"></div>
+
+
+        <a
+            href="admin-help-support.html"
+            class="nav-item active"
+        >
+
+            <span class="nav-icon">?</span>
+
+            <span class="nav-label">
+                Help &amp; Support
+            </span>
+
+        </a>
+
+
+        <a
+            href="admin-settings.html"
+            class="nav-item"
+        >
+
+            <span class="nav-icon">⚙</span>
+
+            <span class="nav-label">
+                Settings
+            </span>
+
+        </a>
+
+
+        <a
+            href="#"
+            class="nav-item"
+            onclick="logout()"
+        >
+
+            <span class="nav-icon">↪</span>
+
+            <span class="nav-label">
+                Logout
+            </span>
+
+        </a>
+
+    </div>
+
+</aside>
+
+
+<!-- =====================================================
+     MAIN CONTENT
+===================================================== -->
+
+<main class="main">
+
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="header-right">
+
+            <!-- Notification -->
+
+            <div
+                class="notification"
+                onclick="openNotifications()"
+            >
+
+                🔔
+
+                <span class="notification-badge" id="headerNotificationBadge" style="display:none;">
+                    0
+                </span>
+
+            </div>
+
+
+            <!-- Admin Profile -->
+
+            <div class="profile">
+
+                <div class="profile-avatar" id="profileAvatar">
+                    AI
+                </div>
+
+                <div class="profile-info">
+
+                    <div class="profile-name" id="profileName">
+                        Admin
+                    </div>
+
+                    <div class="profile-role">
+                        Super Admin
+                    </div>
+
+                </div>
+
+                <span class="profile-arrow">
+                    ▼
+                </span>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <!-- CONTENT -->
+
+    <section class="content">
+
+
+        <!-- WELCOME -->
+
+        <div class="welcome">
+
+            <h1 id="welcomeHeading">
+                Welcome, Admin!
+            </h1>
+
+            <p>
+                Here to help with any questions.
+            </p>
+
+        </div>
+
+
+        <!-- =================================================
+             HELP & SUPPORT
+             ================================================= -->
+
+        <div class="help-intro">
+
+            <div class="help-search">
+
+                <span class="help-search-icon">🔍</span>
+
+                <input
+                    type="text"
+                    id="helpSearchInput"
+                    placeholder="Search for a topic, e.g. &quot;registration&quot; or &quot;conflict&quot;"
+                >
+
+            </div>
+
+        </div>
+
+
+        <div class="help-layout">
+
+
+            <!-- FAQ COLUMN -->
+
+            <div class="help-faq-column" id="helpFaqColumn">
+
+
+                <div class="help-category" data-category="Managing Users">
+
+                    <h3>Managing Users</h3>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How do I deactivate or remove a user?
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Open <strong>Manage Users</strong>, find the
+                                user's row, and use the status action to
+                                deactivate them, or the remove action to
+                                take their account down entirely.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How do I warn a user directly?
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Use the ✉ Mail action on their row in
+                                <strong>Manage Users</strong>. It sends a
+                                message straight to their notifications —
+                                useful after reviewing a complaint against
+                                them.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="help-category" data-category="Registrations">
+
+                    <h3>Registrations</h3>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How do I approve a new expert or provider?
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Open <strong>Inspect Registration</strong>,
+                                review their submitted NIC and supporting
+                                documents, then approve or reject from
+                                there.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What happens after I reject a registration?
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                It moves to the Rejected tab in
+                                <strong>History</strong>, and the applicant
+                                is notified. They're free to re-apply with
+                                corrected details.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="help-category" data-category="Reported Conflicts">
+
+                    <h3>Reported Conflicts</h3>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How do I review a reported conflict?
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Open <strong>Reported Conflicts</strong> and
+                                select Review on any row to see the full
+                                heading, description, and any proof the
+                                reporter submitted.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            How do I close out a resolved conflict?
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Select Complete on that row once you've
+                                resolved it. It then appears under
+                                Resolved Conflicts in
+                                <strong>History</strong>.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="help-category" data-category="Dashboard & Notifications">
+
+                    <h3>Dashboard &amp; Notifications</h3>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What does the User Overview chart show?
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                It plots new registrations per role, per
+                                week. Use the period dropdown to switch
+                                between this month, last month, the last
+                                3 months, or a custom date range.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            Why am I not seeing new notifications?
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Notifications are generated by real
+                                activity — a new report or registration.
+                                If nothing's happened since your last
+                                check, there's simply nothing new yet.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="help-category" data-category="Account & Security">
+
+                    <h3>Account &amp; Security</h3>
+
+                    <div class="faq-item">
+                        <button class="faq-question">
+                            What do I do if I forgot my admin password?
+                            <span class="faq-toggle">+</span>
+                        </button>
+                        <div class="faq-answer">
+                            <p>
+                                Contact your technical team directly — the
+                                admin account is managed separately from
+                                regular user accounts and isn't covered by
+                                the self-service reset flow.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="help-no-results" id="helpNoResults" style="display:none;">
+                    <div class="help-no-results-icon">🔎</div>
+                    <h3>No results for that search</h3>
+                    <p>Try a different word, or send us your question directly.</p>
+                </div>
+
+            </div>
+
+
+            <!-- CONTACT COLUMN -->
+
+            <aside class="help-contact-column">
+
+                <div class="help-contact-card">
+
+                    <h3>Still need help?</h3>
+
+                    <p>
+                        Our technical team typically replies within one
+                        business day.
+                    </p>
+
+                    <a href="mailto:support@agriconnect.lk" class="help-contact-row">
+                        <span class="help-contact-icon">✉️</span>
+                        <span>
+                            <strong>Email us</strong>
+                            <span class="help-contact-detail">support@agriconnect.lk</span>
+                        </span>
+                    </a>
+
+                    <a href="tel:+94112345678" class="help-contact-row">
+                        <span class="help-contact-icon">📞</span>
+                        <span>
+                            <strong>Call us</strong>
+                            <span class="help-contact-detail">011 234 5678</span>
+                        </span>
+                    </a>
+
+                    <div class="help-contact-row">
+                        <span class="help-contact-icon">🕒</span>
+                        <span>
+                            <strong>Hours</strong>
+                            <span class="help-contact-detail">Mon–Sat, 8:00 AM – 6:00 PM</span>
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="help-contact-card help-report-card">
+
+                    <h3>Reviewing a conflict?</h3>
+
+                    <p>
+                        Jump straight to Reported Conflicts to review and
+                        act on open cases.
+                    </p>
+
+                    <a href="admin-conflicts.html" class="help-report-button">
+                        Go to Reported Conflicts →
+                    </a>
+
+                </div>
+
+            </aside>
+
+
+        </div>
+
+
+    </section>
+
+</main>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <span>
+        🌱 © 2026 AgriConnect. All Rights Reserved
+    </span>
+
+    <span>|</span>
+
+    <a href="#">
+        Privacy Policy
+    </a>
+
+    <span>|</span>
+
+    <a href="#">
+        Terms of Service
+    </a>
+
+</footer>
+
+
+<script>
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+/* =====================================================
+   CURRENT ADMIN
+===================================================== */
+
+let currentAdmin = null;
+
+try {
+    currentAdmin = JSON.parse(sessionStorage.getItem("user") || "null");
+} catch (error) {
+    currentAdmin = null;
+}
+
+(function displayAdminIdentity() {
+
+    const name =
+        currentAdmin
+            ? `${currentAdmin.first_name || ""} ${currentAdmin.last_name || ""}`.trim() || "Admin"
+            : "Admin";
+
+    const initials =
+        name
+            .split(" ")
+            .filter(Boolean)
+            .map(part => part[0])
+            .slice(0, 2)
+            .join("")
+            .toUpperCase() || "AI";
+
+    const profileNameEl = document.getElementById("profileName");
+    if (profileNameEl) profileNameEl.textContent = name;
+
+    const profileAvatarEl = document.getElementById("profileAvatar");
+    if (profileAvatarEl) profileAvatarEl.textContent = initials;
+
+    // Restore the dynamic "Welcome, X!" greeting in the
+    // top header, matching the rest of the app.
+
+    const welcomeEl = document.getElementById("welcomeHeading");
+    if (welcomeEl) welcomeEl.textContent = `Welcome, ${name.split(" ")[0] || "Admin"}!`;
+
+})();
+
+
+function updateHeaderNotificationBadge() {
+
+    const userId = currentAdmin && currentAdmin.id;
+
+    if (!userId) return;
+
+    fetch(`/api/notifications/unread-count?user_id=${userId}`)
+        .then(response => response.json())
+        .then(data => {
+
+            const badge = document.getElementById("headerNotificationBadge");
+            if (!badge) return;
+
+            const unread = (data && data.success) ? data.unread : 0;
+
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = "flex";
+            } else {
+                badge.style.display = "none";
+            }
+
+        })
+        .catch(error => console.error("Unable to load notification count:", error));
+
+}
+
+updateHeaderNotificationBadge();
+
+
+/* =====================================================
+   MANAGE USERS DROPDOWN
+===================================================== */
+
+const manageUsersButton =
+    document.getElementById("manageUsersButton");
+
+const userSubmenu =
+    document.getElementById("userSubmenu");
+
+
+manageUsersButton.addEventListener(
+    "click",
+    function() {
+
+        userSubmenu.classList.toggle("show");
+
+    }
+);
+
+
+/* =====================================================
+   NOTIFICATIONS
+===================================================== */
+
+function openNotifications() {
+
+    window.location.href =
+        "admin-notifications.html";
+
+}
+
+
+/* =====================================================
+   LOGOUT
+===================================================== */
+
+async function logout() {
+
+    const confirmed =
+        await customConfirm("Are you sure you want to logout?");
+
+    if (!confirmed) {
+        return;
+    }
+
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("user");
+    sessionStorage.removeItem("selectedRole");
+
+    window.location.href =
+        "index.html";
+
+}
+
+
+
+
+/* =========================================================
+   HELP & SUPPORT: FAQ ACCORDION + SEARCH
+========================================================= */
+
+document.querySelectorAll(".faq-question").forEach(function (button) {
+
+    button.addEventListener("click", function () {
+
+        const item = button.closest(".faq-item");
+        const wasOpen = item.classList.contains("open");
+
+        item.classList.toggle("open", !wasOpen);
+        button.querySelector(".faq-toggle").textContent = wasOpen ? "+" : "−";
+
+    });
+
+});
+
+
+const helpSearchInput = document.getElementById("helpSearchInput");
+
+if (helpSearchInput) {
+
+    helpSearchInput.addEventListener("input", function () {
+
+        const term = helpSearchInput.value.trim().toLowerCase();
+        const categories = document.querySelectorAll(".help-category");
+        let anyVisible = false;
+
+        categories.forEach(function (category) {
+
+            let categoryHasMatch = false;
+            const categoryName = (category.dataset.category || "").toLowerCase();
+            const categoryNameMatches = !term || categoryName.includes(term);
+
+            category.querySelectorAll(".faq-item").forEach(function (item) {
+
+                const text = item.textContent.toLowerCase();
+                const matches = categoryNameMatches || !term || text.includes(term);
+
+                item.hidden = !matches;
+
+                if (matches) {
+                    categoryHasMatch = true;
+                }
+
+            });
+
+            category.hidden = !categoryHasMatch;
+
+            if (categoryHasMatch) {
+                anyVisible = true;
+            }
+
+        });
+
+        const noResults = document.getElementById("helpNoResults");
+
+        if (noResults) {
+            noResults.style.display = anyVisible ? "none" : "block";
+        }
+
+    });
+
+}
+
+
+
+
+
+
+
+/* =========================================================
+   APPLY STORED PROFILE PICTURE (account-wide, every page)
+========================================================= */
+
+(function () {
+
+    let currentUser = null;
+
+    try {
+        currentUser = JSON.parse(sessionStorage.getItem("user") || "null");
+    } catch (error) {
+        currentUser = null;
+    }
+
+    const currentUserId = currentUser && currentUser.id;
+
+    if (!currentUserId) return;
+
+    fetch(`/api/settings/${currentUserId}`)
+        .then(function (response) { return response.json(); })
+        .then(function (data) {
+
+            if (!data || !data.success || !data.settings || !data.settings.profile_picture) return;
+
+            const url = `/uploads/${data.settings.profile_picture}`;
+
+            document.querySelectorAll(".profile-picture, .profile-avatar, .avatar, .profile-pic")
+                .forEach(function (el) {
+
+                    if (el.tagName === "IMG") {
+
+                        el.src = url;
+
+                    } else if (!el.querySelector("img")) {
+
+                        el.innerHTML =
+                            `<img src="${url}" alt="Profile" style="width:100%;height:100%;object-fit:cover;border-radius:50%;">`;
+
+                    }
+
+                });
+
+        })
+        .catch(function (error) {
+
+            console.error("Unable to load profile picture:", error);
+
+        });
+
+})();
+
+
+/* =====================================================
+   CUSTOM LOGOUT CONFIRMATION DIALOG
+   (replaces the native browser confirm() popup)
+===================================================== */
+
+function customConfirm(message, title) {
+
+    let overlay = document.getElementById("logoutConfirmOverlay");
+
+    if (!overlay) {
+
+        overlay = document.createElement("div");
+        overlay.id = "logoutConfirmOverlay";
+        overlay.style.cssText =
+            "display:none;position:fixed;inset:0;background:rgba(15,23,20,0.55);z-index:99999;align-items:center;justify-content:center;padding:20px;";
+
+        overlay.innerHTML = `
+            <div style="background:#fff;border-radius:14px;padding:24px 26px;max-width:380px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.28);">
+                <div id="logoutConfirmTitle" style="font-size:15px;font-weight:700;color:#172033;margin-bottom:8px;"></div>
+                <div id="logoutConfirmMessage" style="font-size:13px;color:#536159;line-height:1.55;margin-bottom:20px;"></div>
+                <div style="display:flex;justify-content:flex-end;gap:10px;">
+                    <button type="button" id="logoutConfirmCancelBtn" style="padding:9px 18px;border-radius:8px;border:1px solid #dde3e0;background:#fff;color:#3f4a58;font-weight:600;cursor:pointer;font-size:13px;">Cancel</button>
+                    <button type="button" id="logoutConfirmOkBtn" style="padding:9px 20px;border-radius:8px;border:0;background:#c0392b;color:#fff;font-weight:700;cursor:pointer;font-size:13px;">Logout</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(overlay);
+
+    }
+
+    document.getElementById("logoutConfirmTitle").textContent = title || "Confirm Logout";
+    document.getElementById("logoutConfirmMessage").textContent = message || "";
+    overlay.style.display = "flex";
+
+    return new Promise(function (resolve) {
+
+        const okBtn = document.getElementById("logoutConfirmOkBtn");
+        const cancelBtn = document.getElementById("logoutConfirmCancelBtn");
+
+        function cleanup(result) {
+            overlay.style.display = "none";
+            okBtn.onclick = null;
+            cancelBtn.onclick = null;
+            document.removeEventListener("keydown", onKey);
+            resolve(result);
+        }
+
+        function onKey(e) {
+            if (e.key === "Escape") cleanup(false);
+            if (e.key === "Enter") cleanup(true);
+        }
+
+        okBtn.onclick = function () { cleanup(true); };
+        cancelBtn.onclick = function () { cleanup(false); };
+        document.addEventListener("keydown", onKey);
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
